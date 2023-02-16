@@ -2,7 +2,7 @@ const path = require('path')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/student',
+  basePath: process.env.BASE_URL,
   reactStrictMode: true,
   swcMinify: true,
   trailingSlash: true,
@@ -14,7 +14,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/student',
+        destination: process.env.BASE_URL,
         basePath: false,
         permanent: false
       }
@@ -29,8 +29,8 @@ const nextConfig = {
     return config
   },
   env: {
-    auth_Url: process.env.NEXT_PUBLIC_Auth_URL,
-    base_Url: process.env.NEXT_PUBLIC_BASE_URL
+    BACKEND_API: process.env.BACKEND_API,
+    BASE_URL: process.env.BASE_URL
   }
 }
 
