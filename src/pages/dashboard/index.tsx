@@ -1,7 +1,7 @@
 
 
 const StudentDashboard=()=>{
-  return <>My name is Vivek kumar Gupta</>
+  return <>DashBoard Page</>
 }
 
 export default StudentDashboard;
