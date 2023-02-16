@@ -13,8 +13,6 @@ import Box, { BoxProps } from '@mui/material/Box'
 // ** Layout Import
 import BlankLayout from 'src/settings/@core/layouts/BlankLayout'
 
-
-
 // ** Styled Components
 const BoxWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
@@ -55,7 +53,6 @@ const Error500 = () => {
           </Button>
         </Link>
       </Box>
-
     </Box>
   )
 }

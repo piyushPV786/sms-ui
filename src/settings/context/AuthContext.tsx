@@ -1,15 +1,15 @@
 // ** React Imports
 import { createContext, useEffect, useState, ReactNode } from 'react'
 import authConfig from 'src/settings/configs/auth'
+
 // ** Next Import
 import { useRouter } from 'next/router'
 
 // ** Axios
 import axios from 'axios'
 
-
 // ** Types
-import { AuthValuesType, RegisterParams, LoginParams, ErrCallbackType, UserDataType } from './types'
+import { AuthValuesType, LoginParams, UserDataType } from './types'
 
 // ** Defaults
 const defaultProvider: AuthValuesType = {
@@ -70,20 +70,21 @@ const AuthProvider = ({ children }: Props) => {
             setLoading(false)
           })
       } else {
-         setUser(userData)
+        setUser(userData)
         setLoading(false)
       }
     }
     initAuth()
   }, [])
 
+  const handleLogin = (params: LoginParams) => {
+      console.log('params====>', params)
+      const returnUrl = router.query.returnUrl
+      setUser(userData)
+      window.localStorage.setItem('userData', JSON.stringify(userData))
+      const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+      router.replace(redirectURL as string)
 
-  const handleLogin = (params: LoginParams, errorCallback?: ErrCallbackType) => {
-    const returnUrl = router.query.returnUrl
-    setUser(userData)
-    window.localStorage.setItem('userData', JSON.stringify(userData))
-    const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-    router.replace(redirectURL as string)
   }
 
   const handleLogout = () => {
@@ -94,9 +95,9 @@ const AuthProvider = ({ children }: Props) => {
     window.localStorage.removeItem('token')
     router.push('/login')
   }
- const handleRegister=()=>{
-  return""
- }
+  const handleRegister = () => {
+    return ''
+  }
   const values = {
     user,
     loading,

@@ -33,11 +33,8 @@ import FormatListNumbered from 'mdi-material-ui/FormatListNumbered'
 import ChartTimelineVariant from 'mdi-material-ui/ChartTimelineVariant'
 import SubdirectoryArrowLeft from 'mdi-material-ui/SubdirectoryArrowLeft'
 
-// ** Third Party Imports
-import axios from 'axios'
-
 // ** Types Imports
-import { AppBarSearchType } from 'src/settings/@fake-db/types'
+import { AppBarSearchType } from 'src/settings/context/types'
 import { Settings } from 'src/settings/@core/context/settingsContext'
 
 // ** Configs Imports
@@ -330,6 +327,7 @@ const AutocompleteComponent = ({ hidden }: Props) => {
 
   useEffect(() => {
     setIsMounted(true)
+    setOptions([])
 
     return () => setIsMounted(false)
   }, [])

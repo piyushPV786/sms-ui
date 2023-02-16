@@ -10,7 +10,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useAuth } from 'src/settings/hooks/useAuth'
 import BlankLayout from 'src/settings/@core/layouts/BlankLayout'
 
-
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(5).required()

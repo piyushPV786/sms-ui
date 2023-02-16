@@ -1,5 +1,5 @@
 // ** Icon imports
-import { CreditCardOutline, HomeOutline, AccountBox } from 'mdi-material-ui'
+import { HomeOutline } from 'mdi-material-ui'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/settings/@core/layouts/types'

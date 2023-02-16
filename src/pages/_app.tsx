@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import { ReactNode } from 'react'
 import type { AppProps } from 'next/app'
+
 // ** Emotion Imports
 import { CacheProvider } from '@emotion/react'
 import type { EmotionCache } from '@emotion/cache'
@@ -33,6 +34,7 @@ type GuardProps = {
   children: ReactNode
 }
 const clientSideEmotionCache = createEmotionCache()
+
 // ** Pace Loader
 if (themeConfig.routingLoader) {
   Router.events.on('routeChangeStart', () => {
@@ -57,6 +59,7 @@ const Guard = ({ children, authGuard, guestGuard }: GuardProps) => {
 }
 export default function App(props: ExtendedAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+
   // Variables
   const getLayout =
     Component.getLayout ??
