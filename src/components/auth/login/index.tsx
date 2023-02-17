@@ -1,11 +1,14 @@
-import { Button, Grid, TextField, Typography } from '@material-ui/core'
+import { Button, Grid, TextField, Typography } from "@mui/material"
 
+interface FormData {
+  email: string
+  password: string
+}
 interface ISignUpProps {
-  onSubmit: any
-  setIsForgotPassword: any
+  onSubmit: (arg0: FormData)=>void
 }
 
-const SignUp = ({ onSubmit, setIsForgotPassword }: ISignUpProps) => {
+const SignUp = ({ onSubmit }: ISignUpProps) => {
   return (
     <Grid container spacing={5}>
       <Grid item xs={12}>
@@ -24,7 +27,7 @@ const SignUp = ({ onSubmit, setIsForgotPassword }: ISignUpProps) => {
         </Button>
       </Grid>
       <Grid container justifyContent='center' xs={12}>
-        <div style={{ cursor: 'pointer', marginTop: '10px' }} onClick={() => setIsForgotPassword(true)}>
+        <div style={{ cursor: 'pointer', marginTop: '10px' }}>
           <Typography color='primary' variant='subtitle1'>
             Forgot Password ?
           </Typography>

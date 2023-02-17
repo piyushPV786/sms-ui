@@ -48,10 +48,10 @@ const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const initAuth = async (): Promise<void> => {
-      setIsInitialized(true)
+     // setIsInitialized(true)
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)!
       if (storedToken) {
-        setLoading(true)
+       // setLoading(true)
         await axios
           .get(authConfig.meEndpoint, {
             headers: {
@@ -63,14 +63,14 @@ const AuthProvider = ({ children }: Props) => {
             setUser({ ...response.data.userData })
           })
           .catch(() => {
-            localStorage.removeItem('userData')
-            localStorage.removeItem('refreshToken')
-            localStorage.removeItem('accessToken')
-            setUser(null)
+            // localStorage.removeItem('userData')
+            // localStorage.removeItem('refreshToken')
+            // localStorage.removeItem('accessToken')
+            // setUser(null)
+             setUser(userData)
             setLoading(false)
           })
       } else {
-        setUser(userData)
         setLoading(false)
       }
     }
@@ -82,17 +82,17 @@ const AuthProvider = ({ children }: Props) => {
     const returnUrl = router.query.returnUrl
     setUser(userData)
     window.localStorage.setItem('userData', JSON.stringify(userData))
+    window.localStorage.setItem("accessToken", "abcd")
     const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
     router.replace(redirectURL as string)
   }
 
   const handleLogout = () => {
-    console.log('logout ')
     setUser(null)
     setIsInitialized(false)
     window.localStorage.removeItem('userData')
-    window.localStorage.removeItem('token')
-    router.push('/login')
+    window.localStorage.removeItem('accessToken')
+    router.push('/auth/login')
   }
   const handleRegister = () => {
     return ''

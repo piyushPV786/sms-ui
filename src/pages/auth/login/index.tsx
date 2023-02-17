@@ -1,15 +1,16 @@
 // ** React Imports
-import { ReactNode, useState } from 'react'
-import SignUp from 'src/auth/login/signUp'
-import ForgetPassword from 'src/auth/login/forgetPassword'
+import { ReactNode } from 'react'
 
 // ** MUI Components
-import { Box, Container, CssBaseline, Grid, Typography, makeStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAuth } from 'src/hooks/useAuth'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
+import {Typography, Box, Container, CssBaseline, Grid } from '@mui/material'
+import SignUp from 'src/components/auth/login'
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -64,7 +65,6 @@ interface FormData {
 }
 
 const LoginPage = () => {
-  const [isForgotPassword, setIsForgotPassword] = useState<boolean>(false)
   const classes = useStyles()
 
   // ** Hooks
@@ -111,11 +111,7 @@ const LoginPage = () => {
                 />
               </Box>
               <Box className={classes.formFields}>
-                {isForgotPassword ? (
-                  <ForgetPassword setIsForgotPassword={setIsForgotPassword} />
-                ) : (
-                  <SignUp onSubmit={onSubmit} setIsForgotPassword={setIsForgotPassword} />
-                )}
+                <SignUp onSubmit={onSubmit} />
               </Box>
             </Box>
           </Grid>
