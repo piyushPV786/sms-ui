@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 // ** Next Imports
 import { useRouter } from 'next/router'
 
-import Spinner from 'src/settings/@core/components/spinner'
+import Spinner from 'src//@core/components/spinner'
 
 const Home = () => {
   const router = useRouter()
