@@ -78,13 +78,12 @@ const AuthProvider = ({ children }: Props) => {
   }, [])
 
   const handleLogin = (params: LoginParams) => {
-      console.log('params====>', params)
-      const returnUrl = router.query.returnUrl
-      setUser(userData)
-      window.localStorage.setItem('userData', JSON.stringify(userData))
-      const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-      router.replace(redirectURL as string)
-
+    console.log('params====>', params)
+    const returnUrl = router.query.returnUrl
+    setUser(userData)
+    window.localStorage.setItem('userData', JSON.stringify(userData))
+    const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+    router.replace(redirectURL as string)
   }
 
   const handleLogout = () => {
