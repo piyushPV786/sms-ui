@@ -17,11 +17,11 @@ import Typography from '@mui/material/Typography'
 import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 
 // ** Context
-import { useAuth } from 'src//hooks/useAuth'
+import { useAuth } from 'src/hooks/useAuth'
 
 // ** Type Imports
-import { Settings } from 'src//@core/context/settingsContext'
-import { getUserInfo } from 'src//utils'
+import { Settings } from 'src/@core/context/settingsContext'
+import { getUserInfo } from 'src/utils'
 
 interface Props {
   settings: Settings

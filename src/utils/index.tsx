@@ -1,4 +1,4 @@
-import { commonListTypes, documentTypes } from 'src//types/apps/dataTypes'
+import { commonListTypes, documentTypes } from 'src/types/dataTypes'
 
 interface userDetails {
   fullName: string

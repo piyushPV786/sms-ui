@@ -12,7 +12,7 @@ import { PaletteMode, Direction } from '@mui/material'
 import Circle from 'mdi-material-ui/Circle'
 
 // ** Types
-import { Skin, AppBar, Footer, ContentWidth, VerticalNavToggle, HorizontalMenuToggle } from 'src//@core/layouts/types'
+import { Skin, AppBar, Footer, ContentWidth, VerticalNavToggle, HorizontalMenuToggle } from 'src/@core/layouts/types'
 
 type ThemeConfig = {
   skin: Skin

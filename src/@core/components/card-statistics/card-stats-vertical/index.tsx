@@ -5,15 +5,15 @@ import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 
 // ** Custom Components Imports
-import CustomChip from 'src//@core/components/mui/chip'
-import CustomAvatar from 'src//@core/components/mui/avatar'
+import CustomChip from 'src/@core/components/mui/chip'
+import CustomAvatar from 'src/@core/components/mui/avatar'
 
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 
 // ** Types Imports
-import { CardStatsVerticalProps } from 'src//@core/components/card-statistics/types'
+import { CardStatsVerticalProps } from 'src/@core/components/card-statistics/types'
 
 const CardStatsVertical = (props: CardStatsVerticalProps) => {
   // ** Props

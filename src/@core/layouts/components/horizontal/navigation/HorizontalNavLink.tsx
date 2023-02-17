@@ -18,19 +18,19 @@ import MuiListItem, { ListItemProps } from '@mui/material/ListItem'
 import clsx from 'clsx'
 
 // ** Theme Config Import
-import themeConfig from 'src//configs/themeConfig'
+import themeConfig from 'src/configs/themeConfig'
 
 // ** Types
-import { NavLink } from 'src//@core/layouts/types'
-import { Settings } from 'src//@core/context/settingsContext'
+import { NavLink } from 'src/@core/layouts/types'
+import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Custom Components Imports
-import UserIcon from 'src//layouts/components/UserIcon'
-import Translations from 'src//layouts/components/Translations'
-import CanViewNavLink from 'src//layouts/components/acl/CanViewNavLink'
+import UserIcon from 'src/layouts/components/UserIcon'
+import Translations from 'src/layouts/components/Translations'
+import CanViewNavLink from 'src/layouts/components/acl/CanViewNavLink'
 
 // ** Util Import
-import { hexToRGBA } from 'src//@core/utils/hex-to-rgba'
+import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 
 interface Props {
   item: NavLink

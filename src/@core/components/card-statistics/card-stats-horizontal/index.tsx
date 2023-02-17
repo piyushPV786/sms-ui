@@ -7,14 +7,14 @@ import { AvatarProps } from '@mui/material/Avatar'
 import CardContent from '@mui/material/CardContent'
 
 // ** Custom Components Imports
-import CustomAvatar from 'src//@core/components/mui/avatar'
+import CustomAvatar from 'src/@core/components/mui/avatar'
 
 // ** Icons Imports
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 
 // ** Types Imports
-import { CardStatsHorizontalProps } from 'src//@core/components/card-statistics/types'
+import { CardStatsHorizontalProps } from 'src/@core/components/card-statistics/types'
 
 // ** Styled Avatar component
 const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({

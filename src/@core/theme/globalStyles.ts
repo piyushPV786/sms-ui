@@ -2,7 +2,7 @@
 import { Theme } from '@mui/material/styles'
 
 // ** Type Imports
-import { Settings } from 'src//@core/context/settingsContext'
+import { Settings } from 'src/@core/context/settingsContext'
 
 const GlobalStyles = (theme: Theme, settings: Settings) => {
   // ** Vars
