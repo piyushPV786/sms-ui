@@ -1,6 +1,6 @@
 // ** React Imports
 import { createContext, useEffect, useState, ReactNode } from 'react'
-import authConfig from 'src//configs/auth'
+import authConfig from 'src/configs/auth'
 
 // ** Next Import
 import { useRouter } from 'next/router'

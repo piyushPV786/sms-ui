@@ -5,7 +5,7 @@ import { ReactNode } from 'react'
 import Box from '@mui/material/Box'
 
 // ** Type Import
-import { Settings } from 'src//@core/context/settingsContext'
+import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Footer Content Component
 import FooterContent from './FooterContent'

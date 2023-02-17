@@ -9,23 +9,23 @@ import MuiToolbar, { ToolbarProps } from '@mui/material/Toolbar'
 import ArrowUp from 'mdi-material-ui/ArrowUp'
 
 // ** Theme Config Import
-import themeConfig from 'src//configs/themeConfig'
+import themeConfig from 'src/configs/themeConfig'
 
 // ** Type Import
-import { LayoutProps } from 'src//@core/layouts/types'
+import { LayoutProps } from 'src/@core/layouts/types'
 
 // ** Components
-import Customizer from 'src//@core/components/customizer'
+import Customizer from 'src/@core/components/customizer'
 import Footer from './components/shared-components/footer'
 import Navigation from './components/horizontal/navigation'
-import ScrollToTop from 'src//@core/components/scroll-to-top'
+import ScrollToTop from 'src/@core/components/scroll-to-top'
 import AppBarContent from './components/horizontal/app-bar-content'
 
 // ** Util Import
-import { hexToRGBA } from 'src//@core/utils/hex-to-rgba'
+import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 
 // ** Styled Component
-import DatePickerWrapper from 'src//@core/styles/libs/react-datepicker'
+import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
 const HorizontalLayoutWrapper = styled('div')({
   display: 'flex',

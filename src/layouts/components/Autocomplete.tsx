@@ -34,14 +34,14 @@ import ChartTimelineVariant from 'mdi-material-ui/ChartTimelineVariant'
 import SubdirectoryArrowLeft from 'mdi-material-ui/SubdirectoryArrowLeft'
 
 // ** Types Imports
-import { AppBarSearchType } from 'src//context/types'
-import { Settings } from 'src//@core/context/settingsContext'
+import { AppBarSearchType } from 'src/context/types'
+import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Configs Imports
-import themeConfig from 'src//configs/themeConfig'
+import themeConfig from 'src/configs/themeConfig'
 
 // ** Custom Components Imports
-import UserIcon from 'src//layouts/components/UserIcon'
+import UserIcon from 'src/layouts/components/UserIcon'
 
 // ** API Icon Import with object
 import { autocompleteIconObj } from './autocompleteIconObj'

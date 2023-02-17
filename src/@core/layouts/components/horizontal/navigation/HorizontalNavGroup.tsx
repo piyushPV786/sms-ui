@@ -26,21 +26,21 @@ import ChevronLeft from 'mdi-material-ui/ChevronLeft'
 import ChevronRight from 'mdi-material-ui/ChevronRight'
 
 // ** Theme Config Import
-import themeConfig from 'src//configs/themeConfig'
+import themeConfig from 'src/configs/themeConfig'
 
 // ** Types
-import { NavGroup } from 'src//@core/layouts/types'
-import { Settings } from 'src//@core/context/settingsContext'
+import { NavGroup } from 'src/@core/layouts/types'
+import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Custom Components Imports
 import HorizontalNavItems from './HorizontalNavItems'
-import UserIcon from 'src//layouts/components/UserIcon'
-import Translations from 'src//layouts/components/Translations'
-import CanViewNavGroup from 'src//layouts/components/acl/CanViewNavGroup'
+import UserIcon from 'src/layouts/components/UserIcon'
+import Translations from 'src/layouts/components/Translations'
+import CanViewNavGroup from 'src/layouts/components/acl/CanViewNavGroup'
 
 // ** Utils
-import { hexToRGBA } from 'src//@core/utils/hex-to-rgba'
-import { hasActiveChild } from 'src//@core/layouts/utils'
+import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+import { hasActiveChild } from 'src/@core/layouts/utils'
 
 interface Props {
   item: NavGroup

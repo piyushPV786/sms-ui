@@ -7,8 +7,8 @@ import Box from '@mui/material/Box'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useAuth } from 'src//hooks/useAuth'
-import BlankLayout from 'src//@core/layouts/BlankLayout'
+import { useAuth } from 'src/hooks/useAuth'
+import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),

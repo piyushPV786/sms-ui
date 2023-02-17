@@ -23,10 +23,10 @@ import Check from 'mdi-material-ui/Check'
 import Close from 'mdi-material-ui/Close'
 
 // ** Type Import
-import { Settings } from 'src//@core/context/settingsContext'
+import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Hook Import
-import { useSettings } from 'src//@core/hooks/useSettings'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const Toggler = styled(Box)<BoxProps>(({ theme }) => ({
   right: 0,

@@ -14,10 +14,10 @@ import Typography, { TypographyProps } from '@mui/material/Typography'
 import Close from 'mdi-material-ui/Close'
 
 // ** Type Import
-import { Settings } from 'src//@core/context/settingsContext'
+import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Configs
-import themeConfig from 'src//configs/themeConfig'
+import themeConfig from 'src/configs/themeConfig'
 
 interface Props {
   hidden: boolean
