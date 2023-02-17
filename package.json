@@ -43,6 +43,7 @@
     "@types/nprogress": "0.2.0",
     "@types/react": "^18.0.24",
     "@types/react-pdf": "^5.7.4",
+    "@types/prismjs": "1.16.6",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "5.6.0",
     "@typescript-eslint/parser": "5.11.0",
