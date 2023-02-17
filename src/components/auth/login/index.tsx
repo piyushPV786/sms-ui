@@ -1,11 +1,11 @@
-import { Button, Grid, TextField, Typography } from "@mui/material"
+import { Button, Grid, TextField, Typography } from '@mui/material'
 
 interface FormData {
   email: string
   password: string
 }
 interface ISignUpProps {
-  onSubmit: (arg0: FormData)=>void
+  onSubmit: (arg0: FormData) => void
 }
 
 const SignUp = ({ onSubmit }: ISignUpProps) => {

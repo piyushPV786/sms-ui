@@ -8,9 +8,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useAuth } from 'src/hooks/useAuth'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
-import {Typography, Box, Container, CssBaseline, Grid } from '@mui/material'
+import { Typography, Box, Container, CssBaseline, Grid } from '@mui/material'
 import SignUp from 'src/components/auth/login'
-
 
 const useStyles = makeStyles(theme => ({
   root: {

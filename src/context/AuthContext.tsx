@@ -48,10 +48,10 @@ const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const initAuth = async (): Promise<void> => {
-     // setIsInitialized(true)
+      // setIsInitialized(true)
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)!
       if (storedToken) {
-       // setLoading(true)
+        // setLoading(true)
         await axios
           .get(authConfig.meEndpoint, {
             headers: {
@@ -67,7 +67,7 @@ const AuthProvider = ({ children }: Props) => {
             // localStorage.removeItem('refreshToken')
             // localStorage.removeItem('accessToken')
             // setUser(null)
-             setUser(userData)
+            setUser(userData)
             setLoading(false)
           })
       } else {
@@ -82,7 +82,7 @@ const AuthProvider = ({ children }: Props) => {
     const returnUrl = router.query.returnUrl
     setUser(userData)
     window.localStorage.setItem('userData', JSON.stringify(userData))
-    window.localStorage.setItem("accessToken", "abcd")
+    window.localStorage.setItem('accessToken', 'abcd')
     const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
     router.replace(redirectURL as string)
   }
