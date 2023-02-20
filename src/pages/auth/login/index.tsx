@@ -10,6 +10,7 @@ import { useAuth } from 'src/hooks/useAuth'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 import { Typography, Box, Container, CssBaseline, Grid } from '@mui/material'
 import SignUp from 'src/components/auth/login'
+import ResetPassword from 'src/pages/auth/reset-password'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -88,7 +89,8 @@ const LoginPage = () => {
   }
 
   return (
-    <Box className={classes.root}>
+    <>
+      {/* <Box className={classes.root}>
       <CssBaseline />
       <Container>
         <Grid container spacing={2} justifyContent='center' className={classes.textCenter}>
@@ -116,7 +118,9 @@ const LoginPage = () => {
           </Grid>
         </Grid>
       </Container>
-    </Box>
+    </Box> */}
+      <ResetPassword />
+    </>
   )
 }
 
