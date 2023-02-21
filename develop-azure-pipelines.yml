@@ -4,53 +4,53 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- develop
+  - develop
 
 pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '18.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '18.x'
+    displayName: 'Install Node.js'
 
-- script: |
-    set -e
-    npm install --force
-    npm run build
-    mkdir apply-ui
-    tar -czvf student-ui-$(Build.BuildId).tar.gz .next public next.config.js package.json next-env.d.ts tsconfig.json .eslintrc.json .babelrc
-  displayName: 'npm install and build'
-# - task: CopyFiles@2
-#   inputs:
-#     sourceFolder: '$(system.defaultworkingdirectory)' 
-#     targetFolder: '$(Build.ArtifactStagingDirectory)/.next'
-#   displayName: 'Copy npm package'
+  - script: |
+      set -e
+      npm install --force
+      npm run build
+      mkdir apply-ui
+      tar -czvf student-ui-$(Build.BuildId).tar.gz .next public next.config.js package.json next-env.d.ts tsconfig.json .eslintrc.json .babelrc pm2.config.js
+    displayName: 'npm install and build'
+  # - task: CopyFiles@2
+  #   inputs:
+  #     sourceFolder: '$(system.defaultworkingdirectory)'
+  #     targetFolder: '$(Build.ArtifactStagingDirectory)/.next'
+  #   displayName: 'Copy npm package'
 
-# - task: ArchiveFiles@2
-#   inputs:
-#     rootFolderFile: '$(system.defaultworkingdirectory)/.next'
-#     includeRootFolder: true
-#     archiveType: tar
-#     replaceExistingArchive: true
-#     archiveFile: '$(system.defaultworkingdirectory)/.next/.next.tar.gz'
-# - task: ArchiveFiles@2
-#   inputs:
-#     rootFolderOrFile: '.next'
-#     includeRootFolder: true
-#     archiveType: 'tar'
-#     archiveFile: '$(Build.ArtifactStagingDirectory)/rbs-Ip-$(Build.BuildId).tar.gz'
-#     replaceExistingArchive: true
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)'
-    Contents: |
-      **/*tar.gz
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: '
-  inputs:
-       PathtoPublish: '$(Build.ArtifactStagingDirectory)/student-ui-$(Build.BuildId).tar.gz'
-       condition: succeededOrFailed()
+  # - task: ArchiveFiles@2
+  #   inputs:
+  #     rootFolderFile: '$(system.defaultworkingdirectory)/.next'
+  #     includeRootFolder: true
+  #     archiveType: tar
+  #     replaceExistingArchive: true
+  #     archiveFile: '$(system.defaultworkingdirectory)/.next/.next.tar.gz'
+  # - task: ArchiveFiles@2
+  #   inputs:
+  #     rootFolderOrFile: '.next'
+  #     includeRootFolder: true
+  #     archiveType: 'tar'
+  #     archiveFile: '$(Build.ArtifactStagingDirectory)/rbs-Ip-$(Build.BuildId).tar.gz'
+  #     replaceExistingArchive: true
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+    inputs:
+      SourceFolder: '$(Build.SourcesDirectory)'
+      Contents: |
+        **/*tar.gz
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: '
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/student-ui-$(Build.BuildId).tar.gz'
+      condition: succeededOrFailed()
