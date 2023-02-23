@@ -88,7 +88,7 @@ const VerticalLayout = (props: LayoutProps) => {
         )}
         <MainContentWrapper className='layout-content-wrapper'>
           {/* AppBar Component */}
-          <AppBar toggleNavVisibility={toggleNavVisibility} {...props} />
+          <AppBar collapsedNavWidth={collapsedNavWidth} navigationBorderWidth={navigationBorderWidth} navHover={navHover} toggleNavVisibility={toggleNavVisibility} {...props} />
 
           {/* Content */}
           <ContentWrapper
