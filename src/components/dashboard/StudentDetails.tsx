@@ -4,12 +4,11 @@ import Card from '@mui/material/Card'
 import { styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
-import { AvatarProps, Divider, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
+import { AvatarProps, Divider, Link, Typography } from '@mui/material'
 
 // ** Custom Components Imports
 import CustomAvatar from 'src/@core/components/mui/avatar'
 import { getUserInfo } from 'src/utils'
-import Stack from '@mui/material/Stack'
 
 // Styled CardContent component
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
@@ -46,26 +45,18 @@ const StudentDetails = () => {
               <Typography mb={6} variant='h6' sx={{ color: '#fff' }}>
                 Welcome back to Regenesys, Lets Start Learning
               </Typography>
-              <Box sx={{ width: '100%', maxWidth: 360 }}>
-                <List component={Stack} direction='row'>
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <ListItemText primary={<Typography sx={{ color: '#fff' }}>My Profile</Typography>} />
-                    </ListItemButton>
-                  </ListItem>
-                  <Divider sx={{ bgcolor: '#fff' }} orientation='vertical' flexItem />
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <ListItemText primary={<Typography sx={{ color: '#fff' }}>Calender</Typography>} />
-                    </ListItemButton>
-                  </ListItem>
-                  <Divider sx={{ bgcolor: '#fff' }} orientation='vertical' flexItem />
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <ListItemText primary={<Typography sx={{ color: '#fff' }}>Documents</Typography>} />
-                    </ListItemButton>
-                  </ListItem>
-                </List>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
+                <Link sx={{ color: '#fff' }} target='_blank' href='/'>
+                  My Profile
+                </Link>
+                <Divider orientation="vertical" sx={{ bgcolor: "#fff" }} flexItem/>
+                <Link sx={{ color: '#fff' }} target='_blank' href='/'>
+                  Calender
+                </Link>
+                 <Divider orientation="vertical" sx={{ bgcolor: "#fff" }} flexItem/>
+                <Link sx={{ color: '#fff' }} target='_blank' href='/'>
+                  My Document
+                </Link>
               </Box>
             </Box>
           </Grid>

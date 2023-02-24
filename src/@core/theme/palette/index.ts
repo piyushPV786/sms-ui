@@ -28,7 +28,8 @@ const DefaultPalette = (mode: PaletteMode, skin: Skin) => {
       bodyBg: mode === 'light' ? '#F7F7F9' : '#1f2b37', // Same as palette.background.default but doesn't consider bordered skin
       tooltipBg: mode === 'light' ? '#262732' : '#464A65',
       tableHeaderBg: mode === 'light' ? '#F5F5F7' : '#3A3E5B',
-      myDayBg: mode === 'light' ? '#fff6f8' : '#3A3E5B'
+      myDayBg: mode === 'light' ? '#fff6f8' : '#3A3E5B',
+      myClassesBg: mode === 'light' ? '#FFF' : '#3A3E5B'
     },
     common: {
       black: '#000',

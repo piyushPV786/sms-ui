@@ -17,15 +17,12 @@ const StudentDashboard = () => {
           <StudentDetails />
           <Grid container spacing={4} mt={5}>
             <Grid item xs={4} md={4}>
-              {' '}
               <Program />
             </Grid>
             <Grid item xs={4} md={4}>
-              {' '}
               <Classes />
             </Grid>
             <Grid item xs={4} md={4}>
-              {' '}
               <Assignments />
             </Grid>
           </Grid>
