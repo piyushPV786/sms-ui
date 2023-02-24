@@ -10,14 +10,14 @@ interface ISignUpProps {
 
 const SignUp = ({ onSubmit }: ISignUpProps) => {
   return (
-    <Grid container spacing={5}>
+    <Grid container rowSpacing={10}>
       <Grid item xs={12}>
         <TextField label='Email' variant='outlined' fullWidth />
       </Grid>
       <Grid item xs={12}>
         <TextField label='Password' variant='outlined' fullWidth />
       </Grid>
-      <Grid container justifyContent='center' xs={12}>
+      <Grid item justifyContent='center' xs={12} sx={{ display: 'flex' }}>
         <Button
           color='primary'
           variant='contained'
