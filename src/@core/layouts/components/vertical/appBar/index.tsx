@@ -34,7 +34,8 @@ const AppBar = styled(MuiAppBar)<AppBarProps>(({ theme }) => ({
   transition: 'none',
   alignItems: 'center',
   justifyContent: 'center',
-  background: 'linear-gradient(90deg, rgba(0,133,84,1) 65%, rgba(7,204,131,1) 97%, rgba(0,215,136,1) 100%)',
+  backgroundColor: 'rgb(80,149,142)',
+  background: 'linear-gradient(270deg, rgba(80,149,142,1) 0%, rgba(1,133,85,1) 100%)',
   padding: theme.spacing(0, 6),
   color: theme.palette.text.primary,
   minHeight: theme.mixins.toolbar.minHeight,
@@ -61,7 +62,7 @@ const LayoutAppBar = (props: Props) => {
     verticalAppBarContent: userVerticalAppBarContent,
     toggleNavVisibility,
     menuLockedIcon: userMenuLockedIcon,
-    menuUnlockedIcon: userMenuUnlockedIcon,
+    menuUnlockedIcon: userMenuUnlockedIcon
   } = props
 
   // ** Hooks
@@ -73,11 +74,9 @@ const LayoutAppBar = (props: Props) => {
 
   const svgRotationDeg = () => {
     if (navCollapsed) {
-       return 180
+      return 180
     } else {
-     
-        return 0
-
+      return 0
     }
   }
 

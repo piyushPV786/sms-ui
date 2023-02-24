@@ -18,8 +18,8 @@ import { CardStatsHorizontalProps } from 'src/@core/components/card-statistics/t
 
 // ** Styled Avatar component
 const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
-  width: 40,
-  height: 40,
+  width: '',
+  height: '100vh',
   marginRight: theme.spacing(4)
 }))
 

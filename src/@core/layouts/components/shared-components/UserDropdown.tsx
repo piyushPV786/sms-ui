@@ -9,9 +9,7 @@ import Box from '@mui/material/Box'
 import Menu from '@mui/material/Menu'
 import Badge from '@mui/material/Badge'
 import Avatar from '@mui/material/Avatar'
-import Divider from '@mui/material/Divider'
 import MenuItem from '@mui/material/MenuItem'
-import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 import LogoutVariant from 'mdi-material-ui/LogoutVariant'
@@ -26,15 +24,6 @@ import { getUserInfo } from 'src/utils'
 interface Props {
   settings: Settings
 }
-
-// ** Styled Components
-const BadgeContentSpan = styled('span')(({ theme }) => ({
-  width: 8,
-  height: 8,
-  borderRadius: '50%',
-  backgroundColor: theme.palette.success.main,
-  boxShadow: `0 0 0 2px ${theme.palette.background.paper}`
-}))
 
 const UserDropdown = (props: Props) => {
   // ** Props
@@ -89,7 +78,6 @@ const UserDropdown = (props: Props) => {
         overlap='circular'
         onClick={handleDropdownOpen}
         sx={{ ml: 2, cursor: 'pointer' }}
-        badgeContent={<BadgeContentSpan />}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right'
@@ -102,6 +90,16 @@ const UserDropdown = (props: Props) => {
           src={`${process.env.BASE_URL}/images/avatars/1.png`}
         />
       </Badge>
+      <Box
+        onClick={handleDropdownOpen}
+        sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}
+      >
+        <Typography sx={{ fontWeight: 600 }}>{getUserInfo()?.fullName}</Typography>
+        <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
+          {getUserInfo()?.email}
+        </Typography>
+      </Box>
+
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -111,62 +109,8 @@ const UserDropdown = (props: Props) => {
         transformOrigin={{ vertical: 'top', horizontal: direction === 'ltr' ? 'right' : 'left' }}
       >
         <Box sx={{ pt: 2, pb: 3, px: 4 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Badge
-              overlap='circular'
-              badgeContent={<BadgeContentSpan />}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-            >
-              <Avatar
-                alt='John Doe'
-                src={`${process.env.BASE_URL}/images/avatars/1.png`}
-                sx={{ width: '2.5rem', height: '2.5rem' }}
-              />
-            </Badge>
-            <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>{getUserInfo()?.fullName}</Typography>
-              <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                {getUserInfo()?.role}
-              </Typography>
-            </Box>
-          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}></Box>
         </Box>
-        <Divider sx={{ mt: 0, mb: 1 }} />
-        {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/user/view/12')}>
-          <Box sx={styles}>
-            <AccountOutline sx={{ mr: 2 }} />
-            Profile
-          </Box>
-        </MenuItem> */}
-        {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/email')}>
-          <Box sx={styles}>
-            <EmailOutline sx={{ mr: 2 }} />
-            Inbox
-          </Box>
-        </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/chat')}>
-          <Box sx={styles}>
-            <MessageOutline sx={{ mr: 2 }} />
-            Chat
-          </Box>
-        </MenuItem>
-        <Divider /> */}
-        {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/account-settings')}>
-          <Box sx={styles}>
-            <CogOutline sx={{ mr: 2 }} />
-            Settings
-          </Box>
-        </MenuItem> */}
-        {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/faq')}>
-          <Box sx={styles}>
-            <HelpCircleOutline sx={{ mr: 2 }} />
-            FAQ
-          </Box>
-        </MenuItem> 
-        <Divider />*/}
         <MenuItem sx={{ py: 2 }} onClick={handleLogout}>
           <LogoutVariant sx={{ mr: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout

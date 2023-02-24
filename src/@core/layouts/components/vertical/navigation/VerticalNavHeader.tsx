@@ -69,10 +69,8 @@ const VerticalNavHeader = (props: Props) => {
     verticalNavMenuBranding: userVerticalNavMenuBranding
   } = props
 
-
   const { direction, navCollapsed } = settings
   const menuCollapsedStyles = navCollapsed && !navHover ? { opacity: 0 } : { opacity: 1 }
-
 
   const menuHeaderPaddingLeft = () => {
     if (navCollapsed && !navHover) {
@@ -161,9 +159,7 @@ const VerticalNavHeader = (props: Props) => {
                 transform: `rotate(${svgRotationDeg()}deg)`,
                 transition: 'transform .25s ease-in-out .35s'
               }}
-            >
-           
-            </Box>
+            ></Box>
           )}
         </IconButton>
       )}
