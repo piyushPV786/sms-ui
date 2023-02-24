@@ -11,6 +11,12 @@ const navigation = (): VerticalNavItemsType => {
       icon: HomeOutline,
       path: '/dashboard',
       badgeColor: 'error'
+    },
+    {
+      title: ' Fee Payment',
+      icon: HomeOutline,
+      path: '/payment',
+      badgeColor: 'error'
     }
   ]
 }
