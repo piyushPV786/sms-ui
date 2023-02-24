@@ -1,7 +1,6 @@
 // ** React Imports
 import { ReactNode } from 'react'
 
-
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -9,8 +8,6 @@ import { useAuth } from 'src/hooks/useAuth'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 import { Typography, Box, Container, CssBaseline, Grid } from '@mui/material'
 import SignUp from 'src/components/auth/login'
-
-
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -28,7 +25,6 @@ interface FormData {
 }
 
 const LoginPage = () => {
-
   // ** Hooks
   const auth = useAuth()
 
@@ -51,7 +47,7 @@ const LoginPage = () => {
   }
 
   return (
-    <Box >
+    <Box>
       <CssBaseline />
       <Container>
         <Grid container spacing={2} justifyContent='center'>
@@ -61,9 +57,9 @@ const LoginPage = () => {
           <Grid item xs={12}>
             <Typography variant='h5'>Sign in by entering information below</Typography>
           </Grid>
-          <Grid container  xs={12} justifyContent='center'>
+          <Grid container xs={12} justifyContent='center'>
             <Box>
-              <Box >
+              <Box>
                 <img
                   src={`${process.env.BASE_URL}/images/login-icon.svg`}
                   alt='Login'
@@ -72,7 +68,7 @@ const LoginPage = () => {
                   loading='lazy'
                 />
               </Box>
-              <Box >
+              <Box>
                 <SignUp onSubmit={onSubmit} />
               </Box>
             </Box>

@@ -1,6 +1,7 @@
 declare module '@mui/material/styles' {
   interface Palette {
     customColors: {
+      myClassesBg: string
       dark: string
       main: string
       light: string
@@ -9,6 +10,7 @@ declare module '@mui/material/styles' {
       lightBg: string
       tooltipBg: string
       tableHeaderBg: string
+      myDayBg: string
     }
   }
   interface PaletteOptions {
