@@ -68,7 +68,7 @@ const LoginPage = () => {
               <CardContent sx={{ p: 12 }}>
                 <LogoBox>
                   <img
-                    src={`${process.env.BACKEND_API}/images/login-icon.svg`}
+                    src={`${process.env.BASE_URL}/images/login-icon.svg`}
                     alt='Login'
                     width='60px'
                     height='auto'
@@ -107,7 +107,7 @@ const LogoBox = styled(Box)<BoxProps>(({ theme }) => ({
   background: theme.palette.common.white
 }))
 const BackgroundBox = styled(Box)<BoxProps>(() => ({
-  backgroundImage: `url('${process.env.BACKEND_API}/images/login-bg-Image.png')`,
+  backgroundImage: `url('${process.env.BASE_URL}/images/login-bg-Image.png')`,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-evenly',
