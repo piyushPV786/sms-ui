@@ -48,7 +48,7 @@ const defaultColumns = [
     field: 'feeCategory',
     minWidth: 150,
     headerName: 'FEE CATEGORY',
-    
+
   },
   {
     flex: 0.1,
@@ -163,7 +163,7 @@ const PaymentList = () => {
               disableSelectionOnClick
               pageSize={Number(pageSize)}
               rowsPerPageOptions={[10, 25, 50]}
-              sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
+              sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0, bgcolor: "#bcdce5" } }}
               onSelectionModelChange={rows => setSelectedRows(rows)}
               onPageSizeChange={newPageSize => setPageSize(newPageSize)}
               onPageChange={newPage => setPageNumber(newPage + 1)}

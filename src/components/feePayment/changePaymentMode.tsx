@@ -86,41 +86,44 @@ const ManagementInfo = ({ addDiscount }: any) => {
         TransitionComponent={Transition}
         onBackdropClick={() => setShow(false)}
       >
-        <form>
-          <DialogContent sx={{ pb: 6, px: { xs: 8, sm: 15 }, pt: { xs: 8, sm: 12.5 }, position: 'relative' }}>
-            <IconButton
-              size='small'
-              onClick={() => setShow(false)}
-              sx={{ position: 'absolute', right: '1rem', top: '1rem' }}
-            >
-              <Close />
-            </IconButton>
-            <Box sx={{ mb: 4, textAlign: 'center' }}>
-              <Typography variant='h6' sx={{ mb: 3, lineHeight: '2rem', background: '#DBE7E3', color: '#71968D' }}>
-                CHANGE REQUEST FOR PAYMENT MODE
-              </Typography>
-              {/* <Button> CHANGE REQUEST FOR PAYMENT MODE</Button> */}
-            </Box>
-            <Box sx={{ mb: 4, textAlign: 'center' }}>
-              <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
-                <Typography variant='h6'>current Payment Mode</Typography>
+        <Box sx={{ background: '#DBE7E3', height: 50, alignItems: "center", justifyContent: "center" }} display="flex" >
+          <Typography variant='h6'  >
+            CHANGE REQUEST FOR PAYMENT MODE
+          </Typography>
+          {/* <Button> CHANGE REQUEST FOR PAYMENT MODE</Button> */}
+        </  Box>
+        <DialogContent >
+
+          <form>
+
+            <Box sx={{ mb: 20, textAlign: 'center', mt: 5 }}>
+              <Typography sx={{ fontSize: 14 }}>current Payment Mode</Typography>
+              <Typography sx={{ mb: 3, lineHeight: '2rem', fontWeight: "bold", fontSize: 16 }}>
                 SEMESTER R(21,00000)
               </Typography>
+
             </Box>
-            <Box sx={{ mb: 8, textAlign: 'center' }}>
+
+            <Box sx={{ mb: 2, textAlign: 'center' }}>
               <Typography variant='h6'>Select Payment Mode</Typography>
+
+
             </Box>
-            <Grid container xs={12} spacing={6}>
+
+            <Grid container xs={12} spacing={6} >
+
               <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+
                 <RadioGroup name='radio-buttons-group'>
                   <Stack direction='row' spacing={6}>
+
                     <Button
                       variant='outlined'
                       color='secondary'
                       //onClick={() => setShow(false)}
-                      endIcon={<FormControlLabel value='Monthly' label='' control={<Radio />} />}
+                      endIcon={<FormControlLabel value='Monthly' label='' sx={{ justifySelf: "flex-end" }} control={<Radio />} />}
                     >
-                      MONTHLY
+                      <Typography sx={{ paddingBottom: 5, fontSize: 10, paddingRight: 5 }}> MONTHLY</Typography>
                     </Button>
                     <Button
                       variant='outlined'
@@ -134,18 +137,19 @@ const ManagementInfo = ({ addDiscount }: any) => {
                 </RadioGroup>
               </Grid>
             </Grid>
-          </DialogContent>
-          <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
-            <Button variant='outlined' color='secondary' onClick={() => setShow(false)}>
-              Discard
-            </Button>
-            <Button variant='contained' sx={{ mr: 2 }} type='submit'>
-              Save
-            </Button>
-          </DialogActions>
-        </form>
+
+            <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
+              <Button variant='outlined' color='secondary' onClick={() => setShow(false)}>
+                Discard
+              </Button>
+              <Button variant='contained' sx={{ mr: 2 }} type='submit'>
+                Save
+              </Button>
+            </DialogActions>
+          </form>
+        </DialogContent>
       </Dialog>
-    </Grid>
+    </Grid >
   )
 }
 
