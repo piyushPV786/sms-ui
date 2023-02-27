@@ -1,8 +1,6 @@
-
 /* eslint-disable react-hooks/exhaustive-deps */
 // ** React Imports
 import { useState } from 'react'
-
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -35,7 +33,6 @@ const userStatusObj: UserStatusType = {
 }
 
 interface CellType {
-
   // row: InvoiceType
   row: any
 }
@@ -45,14 +42,13 @@ const initialState = {
   data: []
 }
 
-
 const defaultColumns = [
   {
     flex: 0.1,
     field: 'feeCategory',
     minWidth: 150,
     headerName: 'FEE CATEGORY',
-   
+    
   },
   {
     flex: 0.1,
@@ -84,8 +80,7 @@ const defaultColumns = [
     flex: 0.1,
     minWidth: 50,
     field: 'paidDate',
-    headerName: 'PAID DATE',
-    
+    headerName: 'PAID DATE'
   }
 ]
 interface DataParams {
@@ -99,7 +94,10 @@ const PaymentList = () => {
   // ** State
   const [value, setValue] = useState<string>('')
   const [selectedRows, setSelectedRows] = useState<GridRowId[]>([])
- 
+  const [pageSize, setPageSize] = useState<number>(10)
+  const [pageNumber, setPageNumber] = useState<number>(1)
+  const [response, setResponse] = useState<any>(initialState)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const handleFilter = (val: string) => {
     setValue(val)
@@ -112,20 +110,20 @@ const PaymentList = () => {
       minWidth: 150,
       field: 'dueDate',
       headerName: 'DUE DATE',
-     
+      renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.percent}</Typography>
     },
     {
       flex: 0.1,
       minWidth: 150,
       field: 'paymenttype',
-      headerName: 'PAYMENT TYPE',
+      headerName: 'PAYMENT TYPE'
     },
 
     {
       flex: 0.1,
       minWidth: 200,
       field: 'refernceId',
-      headerName: 'TANSACTION/REFERNCE ID',
+      headerName: 'TANSACTION/REFERNCE ID'
     }
   ]
 
@@ -136,6 +134,14 @@ const PaymentList = () => {
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Grid item xs={12}>
               <Typography className='page-header'>FEE & PAYMENT HISTORY</Typography>
+              <Grid item xs={12}>
+                <Box>
+                  <Typography>
+                    {' '}
+                    <span style={{ color: '#4C9457' }}>Dashboard </span>/ Fee & Payment History
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
             <Grid item xs={12}>
               <ManagementInfo />
@@ -145,7 +151,23 @@ const PaymentList = () => {
         <Grid item md={8} xs={12}>
           <Card>
             <TableHeader value={value} selectedRows={selectedRows} handleFilter={handleFilter} />
-            
+            <DataGrid
+              loading={loading}
+              autoHeight
+              pagination
+              disableColumnMenu
+              disableColumnFilter
+              disableColumnSelector
+              rows={response.data}
+              columns={columns}
+              disableSelectionOnClick
+              pageSize={Number(pageSize)}
+              rowsPerPageOptions={[10, 25, 50]}
+              sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0 } }}
+              onSelectionModelChange={rows => setSelectedRows(rows)}
+              onPageSizeChange={newPageSize => setPageSize(newPageSize)}
+              onPageChange={newPage => setPageNumber(newPage + 1)}
+            />
           </Card>
         </Grid>
         <Grid item xs={12} md={4}>

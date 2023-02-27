@@ -14,13 +14,17 @@ const updatepayment = () => {
       <Card>
         <CardContent>
           <Grid item xs={12}>
-            <Typography>UPCOMING PAYMENT</Typography>
+            <Typography variant='h6' sx={{ color: '#509898', mb: '15px' }}>
+              UPCOMING PAYMENT
+            </Typography>
           </Grid>
-          <Card>
+          <Card sx={{ backgroundColor: '#BCDCE5' }}>
             <CardContent>
               <Grid container rowSpacing={1}>
                 <Grid item>
-                  <Typography>THIRD SEMESTER</Typography>
+                  <Typography variant='h6' sx={{ mb: '15px' }}>
+                    THIRD SEMESTER
+                  </Typography>
                 </Grid>
                 <Grid item xs={4} className='text-right'></Grid>
               </Grid>
@@ -32,15 +36,14 @@ const updatepayment = () => {
                 </Grid>
                 <Grid item xs={4}>
                   <label>total amount</label>
-                  <Typography>$1500</Typography>
+                  <Typography>R 1500</Typography>
                 </Grid>
                 <Grid item xs={4}>
                   <Button
                     size='small'
                     variant='contained'
-
                     //onClick={() => setShow(true)}
-                    sx={{ position: 'absolute', borderRadius: '25px', }}
+                    sx={{ position: 'absolute', borderRadius: '25px' }}
                   >
                     Pay
                   </Button>

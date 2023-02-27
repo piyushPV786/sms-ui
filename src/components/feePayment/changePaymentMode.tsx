@@ -71,7 +71,7 @@ const ManagementInfo = ({ addDiscount }: any) => {
           size='small'
           variant='contained'
           onClick={() => setShow(true)}
-          sx={{ position: 'absolute' }}
+          sx={{ position: 'absolute', backgroundColor: 'white', color: '#018A77', borderColor: '#018564' }}
         >
           CHANGE PAYMENT MODE
         </Button>
@@ -96,9 +96,10 @@ const ManagementInfo = ({ addDiscount }: any) => {
               <Close />
             </IconButton>
             <Box sx={{ mb: 4, textAlign: 'center' }}>
-              <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
+              <Typography variant='h6' sx={{ mb: 3, lineHeight: '2rem', background: '#DBE7E3', color: '#71968D' }}>
                 CHANGE REQUEST FOR PAYMENT MODE
               </Typography>
+              {/* <Button> CHANGE REQUEST FOR PAYMENT MODE</Button> */}
             </Box>
             <Box sx={{ mb: 4, textAlign: 'center' }}>
               <Typography variant='h5' sx={{ mb: 3, lineHeight: '2rem' }}>
@@ -109,14 +110,13 @@ const ManagementInfo = ({ addDiscount }: any) => {
             <Box sx={{ mb: 8, textAlign: 'center' }}>
               <Typography variant='h6'>Select Payment Mode</Typography>
             </Box>
-            <Grid container spacing={6}>
-              <Grid item sm={4} xs={12}>
+            <Grid container xs={12} spacing={6}>
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <RadioGroup name='radio-buttons-group'>
-                  <Stack direction='row' spacing={6} sx={{ pl: 50, textAlign: 'center' }}>
+                  <Stack direction='row' spacing={6}>
                     <Button
                       variant='outlined'
                       color='secondary'
-
                       //onClick={() => setShow(false)}
                       endIcon={<FormControlLabel value='Monthly' label='' control={<Radio />} />}
                     >
@@ -125,7 +125,6 @@ const ManagementInfo = ({ addDiscount }: any) => {
                     <Button
                       variant='outlined'
                       color='secondary'
-
                       //onClick={() => setShow(false)}
                       endIcon={<FormControlLabel value='yearly' label='' control={<Radio />} />}
                     >

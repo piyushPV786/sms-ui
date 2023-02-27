@@ -27,7 +27,7 @@ const TableHeader = (props: TableHeaderProps) => {
       }}
     >
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'end' }}>
-        <Typography className='page-header' variant='h6'>
+        <Typography variant='h6' sx={{ color: '#509898' }}>
           FEE & PAYMENT HISTORY
         </Typography>
       </Box>
