@@ -136,6 +136,17 @@ const ForgetPassword = () => {
                     <Grid container spacing={5}>
                       <Grid item xs={12}>
                         <TextField
+                          {...register('tempPassword')}
+                          label='Enter temporary password'
+                          variant='outlined'
+                          type='password'
+                          fullWidth
+                          error={!!errors?.tempPassword?.message}
+                          helperText={errors?.tempPassword?.message}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
                           {...register('password')}
                           onChange={handleOnChangePassword}
                           label='Enter New Password'

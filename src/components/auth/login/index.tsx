@@ -1,4 +1,5 @@
 import { Button, Grid, TextField, Typography } from '@mui/material'
+import { useRouter } from 'next/router'
 
 interface FormData {
   email: string
@@ -9,6 +10,11 @@ interface ISignUpProps {
 }
 
 const SignUp = ({ onSubmit }: ISignUpProps) => {
+  const router = useRouter()
+  const onClickHandle = () => {
+    router.replace('/auth/request-link')
+  }
+
   return (
     <Grid container rowSpacing={10}>
       <Grid item xs={12}>
@@ -27,7 +33,7 @@ const SignUp = ({ onSubmit }: ISignUpProps) => {
         </Button>
       </Grid>
       <Grid container justifyContent='center' xs={12}>
-        <div style={{ cursor: 'pointer', marginTop: '10px' }}>
+        <div role='button' style={{ cursor: 'pointer', marginTop: '10px' }} onClick={onClickHandle}>
           <Typography color='primary' variant='subtitle1'>
             Forgot Password ?
           </Typography>
