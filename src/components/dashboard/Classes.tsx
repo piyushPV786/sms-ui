@@ -9,7 +9,7 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     paddingBottom: '0 !important'
   },
-   backgroundColor: theme.palette.customColors.myDayBg,
+  backgroundColor: theme.palette.customColors.myDayBg
 }))
 interface DataType {
   name: string
@@ -54,7 +54,7 @@ const CustomBox = styled(Box)<BoxProps>(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: '8px',
-   backgroundColor: theme.palette.customColors.myClassesBg,
+  backgroundColor: theme.palette.customColors.myClassesBg
 }))
 const Classes = () => {
   return (
@@ -66,37 +66,42 @@ const Classes = () => {
           </Typography>
           <Box>
             {data.map((item: DataType, index: number) => {
-            return (
-              <CustomBox
-                key={item.name}
-                sx={{
-                  mb: index !== data.length - 1 ? 5.75 : undefined
-                }}
-              >
-                <img width={34} height={34} alt={'profile image'} src={item.imgSrc} />
-                <Box
-                  sx={{ ml: 3, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+              return (
+                <CustomBox
+                  key={item.name}
+                  sx={{
+                    mb: index !== data.length - 1 ? 5.75 : undefined
+                  }}
                 >
-                  <Box sx={{ mr: 2, display: 'flex', flexDirection: 'column' }}>
-                    <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
-                      {item.name}
-                    </Typography>
-                    <Typography variant='caption'>{item.program}</Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
+                  <img width={34} height={34} alt={'profile image'} src={item.imgSrc} />
+                  <Box
+                    sx={{
+                      ml: 3,
+                      width: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Box sx={{ mr: 2, display: 'flex', flexDirection: 'column' }}>
                       <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
-                        {item.date}
+                        {item.name}
                       </Typography>
-                      <Typography variant='caption'>{item.time}</Typography>
-                    </Typography>
+                      <Typography variant='caption'>{item.program}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end' }}>
+                      <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
+                        <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
+                          {item.date}
+                        </Typography>
+                        <Typography variant='caption'>{item.time}</Typography>
+                      </Typography>
+                    </Box>
                   </Box>
-                </Box>
-              </CustomBox>
-            )
-          })}
+                </CustomBox>
+              )
+            })}
           </Box>
-          
         </Box>
       </CardContent>
     </Card>

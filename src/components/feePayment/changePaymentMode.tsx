@@ -8,8 +8,6 @@ import Grid from '@mui/material/Grid'
 import Dialog from '@mui/material/Dialog'
 import Button from '@mui/material/Button'
 
-import TextField from '@mui/material/TextField'
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 
 import Fade, { FadeProps } from '@mui/material/Fade'
@@ -19,15 +17,9 @@ import DialogActions from '@mui/material/DialogActions'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
 
 // ** Icons Imports
-import Close from 'mdi-material-ui/Close'
 
-import FileDocumentEdit from 'mdi-material-ui/FileDocumentEdit'
-
-import { useForm } from 'react-hook-form'
 import { Stack } from '@mui/system'
 
 const Transition = forwardRef(function Transition(
@@ -37,30 +29,7 @@ const Transition = forwardRef(function Transition(
   return <Fade ref={ref} {...props} />
 })
 
-const ManagementInfo = ({ addDiscount }: any) => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors }
-  } = useForm()
-
-  const onSubmitt = async (data: any) => {
-    const dataa = {
-      managementCode: data.managmentCode,
-      percent: data.discountPercent,
-      maxAmount: data.discountMaxAmmount,
-      validThrough: data.validThrough,
-      studentEmail: data.studentEmail,
-      studentPhone: data.studentPhone,
-      applicationCode: data.applicationCode,
-      enrolmentCode: data.enrollmentCode
-    }
-
-    addDiscount(dataa)
-    setShow(false)
-  }
-
+const ManagementInfo = () => {
   // ** States
   const [show, setShow] = useState<boolean>(false)
 
@@ -69,9 +38,14 @@ const ManagementInfo = ({ addDiscount }: any) => {
       <Box display='flex' justifyContent='flex-end'>
         <Button
           size='small'
-          variant='contained'
+          variant='outlined'
           onClick={() => setShow(true)}
-          sx={{ position: 'absolute', backgroundColor: 'white', color: '#018A77', borderColor: '#018564' }}
+          sx={{
+            position: 'absolute',
+            backgroundColor: theme => theme.palette.common.white,
+            color: theme => theme.palette.primary.light,
+            borderColor: theme => theme.palette.primary.light
+          }}
         >
           CHANGE PAYMENT MODE
         </Button>
@@ -86,52 +60,60 @@ const ManagementInfo = ({ addDiscount }: any) => {
         TransitionComponent={Transition}
         onBackdropClick={() => setShow(false)}
       >
-        <Box sx={{ background: '#DBE7E3', height: 50, alignItems: "center", justifyContent: "center" }} display="flex" >
-          <Typography variant='h6'  >
+        <Box sx={{ background: '#DBE7E3', height: 50, alignItems: 'center', justifyContent: 'center' }} display='flex'>
+          <Typography variant='h6' sx={{ color: theme => theme.palette.primary.main }}>
             CHANGE REQUEST FOR PAYMENT MODE
           </Typography>
-          {/* <Button> CHANGE REQUEST FOR PAYMENT MODE</Button> */}
-        </  Box>
-        <DialogContent >
-
+        </Box>
+        <DialogContent>
           <form>
-
             <Box sx={{ mb: 20, textAlign: 'center', mt: 5 }}>
-              <Typography sx={{ fontSize: 14 }}>current Payment Mode</Typography>
-              <Typography sx={{ mb: 3, lineHeight: '2rem', fontWeight: "bold", fontSize: 16 }}>
+              <Typography sx={{ fontSize: 14, pb: '10px' }}>current Payment Mode</Typography>
+              <Typography sx={{ mb: 3, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
                 SEMESTER R(21,00000)
               </Typography>
-
             </Box>
 
-            <Box sx={{ mb: 2, textAlign: 'center' }}>
+            <Box sx={{ mb: 5, textAlign: 'center' }}>
               <Typography variant='h6'>Select Payment Mode</Typography>
-
-
             </Box>
 
-            <Grid container xs={12} spacing={6} >
-
+            <Grid container xs={12} spacing={6} sx={{ pb: '20px' }}>
               <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-
                 <RadioGroup name='radio-buttons-group'>
                   <Stack direction='row' spacing={6}>
-
                     <Button
                       variant='outlined'
                       color='secondary'
+
                       //onClick={() => setShow(false)}
-                      endIcon={<FormControlLabel value='Monthly' label='' sx={{ justifySelf: "flex-end" }} control={<Radio />} />}
                     >
-                      <Typography sx={{ paddingBottom: 5, fontSize: 10, paddingRight: 5 }}> MONTHLY</Typography>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Box>
+                          <Typography sx={{ fontWeight: 'bold', fontSize: 16, pb: '7px' }}> Monthly</Typography>
+                          <Typography sx={{ fontWeight: 'bold', fontSize: 16 }}> R 3670.0</Typography>
+                        </Box>
+                        <Box justifySelf='end'>
+                          {' '}
+                          <FormControlLabel value='Monthly' sx={{ margin: 0 }} label='' control={<Radio />} />
+                        </Box>
+                      </Box>
                     </Button>
                     <Button
                       variant='outlined'
                       color='secondary'
+
                       //onClick={() => setShow(false)}
-                      endIcon={<FormControlLabel value='yearly' label='' control={<Radio />} />}
                     >
-                      YEARLY
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Box>
+                          <Typography sx={{ fontWeight: 'bold', fontSize: 16, pb: '7px' }}> Yearly</Typography>
+                          <Typography sx={{ fontWeight: 'bold', fontSize: 16 }}> R 40000.0</Typography>
+                        </Box>
+                        <Box>
+                          <FormControlLabel value='Yearly' label='' sx={{ margin: 0 }} control={<Radio />} />
+                        </Box>
+                      </Box>
                     </Button>
                   </Stack>
                 </RadioGroup>
@@ -149,7 +131,7 @@ const ManagementInfo = ({ addDiscount }: any) => {
           </form>
         </DialogContent>
       </Dialog>
-    </Grid >
+    </Grid>
   )
 }
 

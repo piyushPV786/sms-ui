@@ -12,7 +12,7 @@ interface TableHeaderProps {
 
 const TableHeader = (props: TableHeaderProps) => {
   // ** Props
-  const { value, handleFilter } = props
+  const { value } = props
 
   return (
     <Box
@@ -27,19 +27,10 @@ const TableHeader = (props: TableHeaderProps) => {
       }}
     >
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'end' }}>
-        <Typography variant='h6' sx={{ color: '#509898' }}>
-          FEE & PAYMENT HISTORY
-        </Typography>
+        <Typography variant='h6'>FEE & PAYMENT HISTORY</Typography>
       </Box>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'end' }}>
-        <TextField
-          size='small'
-          value={value}
-          placeholder='Search...'
-          sx={{ mr: 4, mb: 2, maxWidth: '280px' }}
-
-          //onChange={e => handleFilter(e.target.value)}
-        />
+        <TextField size='small' value={value} placeholder='Search...' sx={{ mr: 4, mb: 2, maxWidth: '280px' }} />
       </Box>
     </Box>
   )

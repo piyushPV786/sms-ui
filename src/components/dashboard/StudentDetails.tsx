@@ -49,11 +49,11 @@ const StudentDetails = () => {
                 <Link sx={{ color: '#fff' }} target='_blank' href='/'>
                   My Profile
                 </Link>
-                <Divider orientation="vertical" sx={{ bgcolor: "#fff" }} flexItem/>
+                <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
                 <Link sx={{ color: '#fff' }} target='_blank' href='/'>
                   Calender
                 </Link>
-                 <Divider orientation="vertical" sx={{ bgcolor: "#fff" }} flexItem/>
+                <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
                 <Link sx={{ color: '#fff' }} target='_blank' href='/'>
                   My Document
                 </Link>

@@ -1,5 +1,4 @@
 // ** Next Import
-import Link from 'next/link'
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
@@ -9,40 +8,50 @@ import CardContent from '@mui/material/CardContent'
 import { Button } from '@mui/material'
 
 const updatepayment = () => {
+  const handlePay = () => {
+    // setShow(true)
+  }
+
   return (
     <>
       <Card>
-        <CardContent>
+        <CardContent sx={{ backgroundColor: '#4f958e' }}>
           <Grid item xs={12}>
-            <Typography variant='h6' sx={{ color: '#509898', mb: '15px' }}>
+            <Typography variant='h6' sx={{ color: theme => theme.palette.common.white, mb: '15px' }}>
               UPCOMING PAYMENT
             </Typography>
           </Grid>
-          <Card sx={{ backgroundColor: '#BCDCE5' }}>
-            <CardContent>
-              <Grid container rowSpacing={1}>
-                <Grid item>
-                  <Typography variant='h6' sx={{ mb: '15px' }}>
-                    THIRD SEMESTER
-                  </Typography>
-                </Grid>
-                <Grid item xs={4} className='text-right'></Grid>
-              </Grid>
 
-              <Grid container sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                <Grid item xs={4}>
-                  <label>Due Date</label>
-                  <Typography>20-05-2023</Typography>
+          <Card sx={{ backgroundColor: theme => theme.palette.customColors.bodyBg }}>
+            <CardContent>
+              <Grid xs={12} sx={{ display: 'flex' }}>
+                <Grid container rowSpacing={1}>
+                  <Grid item xs={12}>
+                    <Typography variant='h6' sx={{ mb: 3, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
+                      THIRD SEMESTER
+                    </Typography>
+                  </Grid>
+
+                  <Grid container sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                    <Grid item xs={6}>
+                      <label>Due Date</label>
+                      <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
+                        20-05-2023
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <label>total amount</label>
+                      <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
+                        R 1500
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <label>total amount</label>
-                  <Typography>R 1500</Typography>
-                </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <Button
                     size='small'
                     variant='contained'
-                    //onClick={() => setShow(true)}
+                    onClick={handlePay}
                     sx={{ position: 'absolute', borderRadius: '25px' }}
                   >
                     Pay

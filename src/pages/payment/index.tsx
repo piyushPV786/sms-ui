@@ -6,10 +6,8 @@ import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
-import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
-import { ThemeColor } from 'src/@core/layouts/types'
 
 //import { InvoiceType } from 'src/types/apps/invoiceTypes'
 
@@ -21,21 +19,6 @@ import ManagementInfo from 'src/components/feePayment/changePaymentMode'
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
 
-interface UserStatusType {
-  [key: string]: ThemeColor
-}
-
-const userStatusObj: UserStatusType = {
-  enrolled: 'primary',
-  'RESUB-APP-FEE-PROOF': 'warning',
-  sales: 'info',
-  ' APP-FEE-ACCEPTED': 'error'
-}
-
-interface CellType {
-  // row: InvoiceType
-  row: any
-}
 const initialState = {
   statusCode: 1,
   message: '',
@@ -47,34 +30,13 @@ const defaultColumns = [
     flex: 0.1,
     field: 'feeCategory',
     minWidth: 150,
-    headerName: 'FEE CATEGORY',
-
+    headerName: 'FEE CATEGORY'
   },
   {
     flex: 0.1,
     field: 'amount',
     minWidth: 50,
-    headerName: 'AMOUNT',
-    renderCell: ({ row }: CellType) => {
-      const { firstName, lastName, email } = row?.lead
-
-      return (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography
-              noWrap
-              variant='body2'
-              sx={{ color: 'text.primary', fontWeight: 500, lineHeight: '22px', letterSpacing: '.1px' }}
-            >
-              {`${firstName} ${lastName}`}
-            </Typography>
-            <Typography noWrap variant='caption'>
-              {email}
-            </Typography>
-          </Box>
-        </Box>
-      )
-    }
+    headerName: 'AMOUNT'
   },
   {
     flex: 0.1,
@@ -83,12 +45,6 @@ const defaultColumns = [
     headerName: 'PAID DATE'
   }
 ]
-interface DataParams {
-  q: string
-  status: string
-  pageSize: number
-  pageNumber: number
-}
 
 const PaymentList = () => {
   // ** State
@@ -98,6 +54,10 @@ const PaymentList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [response, setResponse] = useState<any>(initialState)
   const [loading, setLoading] = useState<boolean>(false)
+
+  console.log(pageNumber)
+  console.log(setResponse)
+  console.log(setLoading)
 
   const handleFilter = (val: string) => {
     setValue(val)
@@ -109,8 +69,7 @@ const PaymentList = () => {
       flex: 0.1,
       minWidth: 150,
       field: 'dueDate',
-      headerName: 'DUE DATE',
-      renderCell: ({ row }: CellType) => <Typography variant='body2'>{row.percent}</Typography>
+      headerName: 'DUE DATE'
     },
     {
       flex: 0.1,
@@ -133,7 +92,9 @@ const PaymentList = () => {
         <Grid item xs={12}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Grid item xs={12}>
-              <Typography className='page-header'>FEE & PAYMENT HISTORY</Typography>
+              <Typography sx={{ mb: 3, lineHeight: '2rem', fontWeight: 'bold', fontSize: 18 }}>
+                FEE & PAYMENT HISTORY
+              </Typography>
               <Grid item xs={12}>
                 <Box>
                   <Typography>
@@ -143,7 +104,7 @@ const PaymentList = () => {
                 </Box>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{ pt: '10px' }}>
               <ManagementInfo />
             </Grid>
           </Box>
@@ -163,7 +124,12 @@ const PaymentList = () => {
               disableSelectionOnClick
               pageSize={Number(pageSize)}
               rowsPerPageOptions={[10, 25, 50]}
-              sx={{ '& .MuiDataGrid-columnHeaders': { borderRadius: 0, bgcolor: "#bcdce5" } }}
+              sx={{
+                '& .MuiDataGrid-columnHeaders': {
+                  borderRadius: 0,
+                  bgcolor: theme => theme.palette.customColors.tableHeaderBg
+                }
+              }}
               onSelectionModelChange={rows => setSelectedRows(rows)}
               onPageSizeChange={newPageSize => setPageSize(newPageSize)}
               onPageChange={newPage => setPageNumber(newPage + 1)}
