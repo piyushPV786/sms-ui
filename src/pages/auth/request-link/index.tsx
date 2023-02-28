@@ -31,14 +31,15 @@ import {
   TextField
 } from '@mui/material'
 import { useRouter } from 'next/router'
+import { EnvPaths, PathTypes } from 'src/context/common'
 
 const RequestLink = () => {
   const router = useRouter()
   const onSubmit = () => {
-    router.replace('/auth/reset-password')
+    router.replace(PathTypes.resetpassword)
   }
   const handleChange = () => {
-    router.replace('/auth/login')
+    router.replace(PathTypes.login)
   }
 
   return (
@@ -69,7 +70,7 @@ const RequestLink = () => {
               <CardContent sx={{ p: 12 }}>
                 <LogoBox>
                   <img
-                    src={`${process.env.BASE_URL}/images/login-icon.svg`}
+                    src={`${EnvPaths.Base}/images/login-icon.svg`}
                     alt='Login'
                     width='60px'
                     height='auto'
@@ -117,7 +118,7 @@ RequestLink.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
 RequestLink.guestGuard = true
 
 const BackgroundBox = styled(Box)<BoxProps>(() => ({
-  backgroundImage: `url('${process.env.BASE_URL}/images/login-bg-Image.png')`,
+  backgroundImage: `url('${EnvPaths.Base}/images/login-bg-Image.png')`,
   textAlign: 'center',
   display: 'flex',
   flexDirection: 'column',

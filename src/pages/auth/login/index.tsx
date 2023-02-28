@@ -8,6 +8,7 @@ import { useAuth } from 'src/hooks/useAuth'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 import { Typography, Box, Container, CssBaseline, Grid, Card, CardContent, styled, BoxProps } from '@mui/material'
 import SignUp from 'src/components/auth/login'
+import { EnvPaths } from 'src/context/common'
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -68,7 +69,7 @@ const LoginPage = () => {
               <CardContent sx={{ p: 12 }}>
                 <LogoBox>
                   <img
-                    src={`${process.env.BASE_URL}/images/login-icon.svg`}
+                    src={`${EnvPaths.Base}/images/login-icon.svg`}
                     alt='Login'
                     width='60px'
                     height='auto'
@@ -107,7 +108,7 @@ const LogoBox = styled(Box)<BoxProps>(({ theme }) => ({
   background: theme.palette.common.white
 }))
 const BackgroundBox = styled(Box)<BoxProps>(() => ({
-  backgroundImage: `url('${process.env.BASE_URL}/images/login-bg-Image.png')`,
+  backgroundImage: `url('${EnvPaths.Base}/images/login-bg-Image.png')`,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-evenly',

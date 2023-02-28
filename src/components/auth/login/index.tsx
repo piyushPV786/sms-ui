@@ -1,5 +1,6 @@
 import { Button, Grid, TextField, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
+import { PathTypes } from 'src/context/common'
 
 interface FormData {
   email: string
@@ -12,7 +13,7 @@ interface ISignUpProps {
 const SignUp = ({ onSubmit }: ISignUpProps) => {
   const router = useRouter()
   const onClickHandle = () => {
-    router.replace('/auth/request-link')
+    router.replace(PathTypes.resetlink)
   }
 
   return (

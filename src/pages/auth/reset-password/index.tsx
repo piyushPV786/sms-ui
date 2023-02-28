@@ -23,6 +23,7 @@ import {
 } from '@mui/material'
 import { CheckCircle, Circle } from 'mdi-material-ui'
 import { useRouter } from 'next/router'
+import { EnvPaths, PathTypes } from 'src/context/common'
 
 const schema = yup.object().shape({
   tempPassword: yup.string().required('Please Type your temporary password'),
@@ -58,7 +59,7 @@ const ForgetPassword = () => {
   // ** Functions
 
   const onHandle = () => {
-    router.replace('/auth/login')
+    router.replace(PathTypes.login)
   }
 
   const checkRequirements = () => {
@@ -124,7 +125,7 @@ const ForgetPassword = () => {
               <CardContent sx={{ p: 12 }}>
                 <LogoBox>
                   <img
-                    src={`${process.env.BASE_URL}/images/login-icon.svg`}
+                    src={`${EnvPaths.Base}/images/login-icon.svg`}
                     alt='Login'
                     width='60px'
                     height='auto'
@@ -252,7 +253,7 @@ const LogoBox = styled(Box)<BoxProps>(({ theme }) => ({
   background: theme.palette.common.white
 }))
 const BackgroundBox = styled(Box)<BoxProps>(() => ({
-  backgroundImage: `url('${process.env.BASE_URL}/images/login-bg-Image.png')`,
+  backgroundImage: `url('${EnvPaths.Base}/images/login-bg-Image.png')`,
   textAlign: 'center',
   display: 'flex',
   flexDirection: 'column',
