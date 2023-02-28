@@ -224,7 +224,7 @@ const ForgetPassword = () => {
       </Container>
       <Snackbar open={open} autoHideDuration={6000} onClose={() => setOpen(false)}>
         <Alert onClose={() => setOpen(false)} severity='success' sx={{ width: '100%' }}>
-          You have sucessfully updated your password.{' '}
+          Password changed sucessfully.
         </Alert>
       </Snackbar>
     </BackgroundBox>
