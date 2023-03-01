@@ -4,6 +4,10 @@ export type LoginParams = {
   email: string
   password: string
 }
+export type ResetPasswordParams = {
+  password: string
+  confirmPassword: string
+}
 
 export type RegisterParams = {
   email: string
@@ -30,6 +34,7 @@ export type AuthValuesType = {
   setUser: (value: UserDataType | null) => void
   setIsInitialized: (value: boolean) => void
   login: (params: LoginParams, errorCallback?: ErrCallbackType) => void
+  resetPassword: (params: ResetPasswordParams, errorCallback?: ErrCallbackType) => void
   register: (params: RegisterParams, errorCallback?: ErrCallbackType) => void
 }
 
