@@ -11,6 +11,12 @@ const navigation = (): VerticalNavItemsType => {
       icon: HomeOutline,
       path: '/dashboard',
       badgeColor: 'error'
+    },
+    {
+      title: 'Academic Records',
+      icon: HomeOutline,
+      path: '/academicRecord',
+      badgeColor: 'error'
     }
   ]
 }
