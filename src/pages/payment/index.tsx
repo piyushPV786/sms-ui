@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // ** React Imports
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -12,6 +12,7 @@ import { DataGrid, GridRowId } from '@mui/x-data-grid'
 //import { InvoiceType } from 'src/types/apps/invoiceTypes'
 import { FeePaymentService } from 'src/service'
 import { status } from 'src/context/common'
+
 // ** Custom Components Imports
 import TableHeader from 'src/components/feePayment/TableHeader'
 import UpdatePayment from 'src/components/feePayment/updatepayment'
@@ -26,12 +27,12 @@ const initialState = {
   data: []
 }
 
-interface DataParams {
-  q: string
-  status: string
-  pageSize: number
-  pageNumber: number
-}
+// interface DataParams {
+//   q: string
+//   status: string
+//   pageSize: number
+//   pageNumber: number
+// }
 
 const defaultColumns = [
   {
@@ -115,11 +116,8 @@ const PaymentList = () => {
                 FEE & PAYMENT HISTORY
               </Typography>
               <Grid item xs={12}>
-                <Box>
-                  <Typography>
-                    {' '}
-                    <span style={{ color: '#4C9457' }}>Dashboard </span>/ Fee & Payment History
-                  </Typography>
+                <Box display={'flex'}>
+                  <Typography sx={{ color: '#4c9457' }}>Dashboard </Typography> / Fee & Payment History
                 </Box>
               </Grid>
             </Grid>
