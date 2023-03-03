@@ -15,9 +15,16 @@ const navigation = (): VerticalNavItemsType => {
     {
       title: ' Fee Payment',
       icon: HomeOutline,
-      path: '/payment',
+      path: '/payment'
+    },
+    {
+      title: 'Academic Records',
+      icon: HomeOutline,
+      path: '/academicRecord',
       badgeColor: 'error'
     }
+      
+    
   ]
 }
 

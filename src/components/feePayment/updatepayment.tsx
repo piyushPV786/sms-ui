@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import { Button } from '@mui/material'
 
-const updatepayment = () => {
+const UpdatePayment = () => {
   const handlePay = () => {
     // setShow(true)
   }
@@ -66,4 +66,4 @@ const updatepayment = () => {
   )
 }
 
-export default updatepayment
+export default UpdatePayment;

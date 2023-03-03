@@ -40,6 +40,7 @@ module.exports = withTM({
   },
   env: {
     // eslint-disable-next-line no-undef
+    BACKEND_API: process.env.BACKEND_API,
     BASE_URL: process.env.STUDENT_BASE_URL
   }
 })

@@ -29,7 +29,7 @@ const Transition = forwardRef(function Transition(
   return <Fade ref={ref} {...props} />
 })
 
-const ManagementInfo = () => {
+const ChangePayment = () => {
   // ** States
   const [show, setShow] = useState<boolean>(false)
 
@@ -135,4 +135,4 @@ const ManagementInfo = () => {
   )
 }
 
-export default ManagementInfo
+export default ChangePayment;

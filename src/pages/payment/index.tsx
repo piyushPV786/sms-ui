@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -10,11 +10,12 @@ import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
 
 //import { InvoiceType } from 'src/types/apps/invoiceTypes'
-
+import { FeePaymentService } from 'src/service'
+import { status } from 'src/context/common'
 // ** Custom Components Imports
 import TableHeader from 'src/components/feePayment/TableHeader'
-import PreviewActions from 'src/components/feePayment/updatepayment'
-import ManagementInfo from 'src/components/feePayment/changePaymentMode'
+import UpdatePayment from 'src/components/feePayment/updatepayment'
+import ChangePayment from 'src/components/feePayment/changePaymentMode'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
@@ -23,6 +24,13 @@ const initialState = {
   statusCode: 1,
   message: '',
   data: []
+}
+
+interface DataParams {
+  q: string
+  status: string
+  pageSize: number
+  pageNumber: number
 }
 
 const defaultColumns = [
@@ -54,6 +62,17 @@ const PaymentList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [response, setResponse] = useState<any>(initialState)
   const [loading, setLoading] = useState<boolean>(false)
+
+  const getFeePaymentList = async () => {
+    const response = await FeePaymentService?.getFeePaymentList()
+    if (response?.data?.statusCode === status.successCode && response?.data) {
+      setResponse(response?.data?.data)
+    }
+  }
+
+  console.log('response', response)
+
+  console.log('FeePaymentList', getFeePaymentList)
 
   console.log(pageNumber)
   console.log(setResponse)
@@ -105,7 +124,7 @@ const PaymentList = () => {
               </Grid>
             </Grid>
             <Grid item xs={12} sx={{ pt: '10px' }}>
-              <ManagementInfo />
+              <ChangePayment />
             </Grid>
           </Box>
         </Grid>
@@ -137,7 +156,7 @@ const PaymentList = () => {
           </Card>
         </Grid>
         <Grid item xs={12} md={4}>
-          <PreviewActions />
+          <UpdatePayment />
         </Grid>
       </Grid>
     </>
