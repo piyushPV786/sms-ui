@@ -31,13 +31,13 @@ const Program = () => {
               Master of Computer Application (MBA)
             </Typography>
           </Box>
-           <Box>
+          <Box>
             <Typography variant='caption'>Current Program</Typography>
             <Typography variant='body2' sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}>
               Master of Computer Application (MBA)
             </Typography>
           </Box>
-           <Box>
+          <Box>
             <Typography variant='caption'>Current Program</Typography>
             <Typography variant='body2' sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}>
               Master of Computer Application (MBA)
