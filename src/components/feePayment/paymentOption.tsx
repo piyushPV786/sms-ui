@@ -46,6 +46,7 @@ const PaymentOption = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [paymentPayload, setPaymentTypePayload] = useState<any>(null)
   const [selectedPayment, setSelectedPaymentOption] = useState<string>('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [paymentProof, setPaymentProof] = useState<File[] | null>(null)
   const fileUploadRef = useRef<any>(null)
 
