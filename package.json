@@ -9,7 +9,7 @@
     "lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
   },
-   "dependencies": {
+  "dependencies": {
     "@auth0/auth0-react": "1.10.1",
     "@aws-amplify/auth": "4.5.3",
     "@aws-amplify/ui-react": "2.16.1",
@@ -39,6 +39,7 @@
     "chart.js": "3.7.1",
     "cleave.js": "1.6.0",
     "clipboard-copy": "4.0.1",
+    "bootstrap": "^5.2.2",
     "clsx": "1.1.1",
     "date-fns": "2.27.0",
     "draft-js": "0.11.7",

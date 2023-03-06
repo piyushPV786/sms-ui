@@ -6,10 +6,13 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import { Button } from '@mui/material'
+import { useRouter } from 'next/router'
 
-const UpdatePayment = () => {
+const Updatepayment = () => {
+  const router = useRouter()
+
   const handlePay = () => {
-    // setShow(true)
+    router.push('/payment/checkout')
   }
 
   return (
@@ -66,4 +69,4 @@ const UpdatePayment = () => {
   )
 }
 
-export default UpdatePayment;
+export default Updatepayment
