@@ -34,8 +34,9 @@ export type AuthValuesType = {
   setUser: (value: UserDataType | null) => void
   setIsInitialized: (value: boolean) => void
   login: (params: LoginParams, errorCallback?: ErrCallbackType) => void
-  resetPassword: (params: ResetPasswordParams, errorCallback?: ErrCallbackType) => void
   register: (params: RegisterParams, errorCallback?: ErrCallbackType) => void
+  resetPassword?: (params: ResetPasswordParams, errorCallback?: ErrCallbackType) => void
+
 }
 
 export type AppBarSearchType = {

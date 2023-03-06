@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // ** React Imports
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -12,6 +12,7 @@ import { DataGrid, GridRowId } from '@mui/x-data-grid'
 //import { InvoiceType } from 'src/types/apps/invoiceTypes'
 import { FeePaymentService } from 'src/service'
 import { status } from 'src/context/common'
+
 // ** Custom Components Imports
 import TableHeader from 'src/components/feePayment/TableHeader'
 import UpdatePayment from 'src/components/feePayment/updatepayment'
@@ -19,18 +20,12 @@ import ChangePayment from 'src/components/feePayment/changePaymentMode'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
+import { useRouter } from 'next/router'
 
 const initialState = {
   statusCode: 1,
   message: '',
   data: []
-}
-
-interface DataParams {
-  q: string
-  status: string
-  pageSize: number
-  pageNumber: number
 }
 
 const defaultColumns = [
@@ -74,6 +69,7 @@ const PaymentList = () => {
 
   console.log('FeePaymentList', getFeePaymentList)
 
+  const router = useRouter()
   console.log(pageNumber)
   console.log(setResponse)
   console.log(setLoading)
@@ -104,6 +100,11 @@ const PaymentList = () => {
       headerName: 'TANSACTION/REFERNCE ID'
     }
   ]
+  const handleBreadcrum = (e: any) => {
+    e.preventDefault()
+    const route = e.target.id
+    router.push(`/${route}`)
+  }
 
   return (
     <>
@@ -118,7 +119,15 @@ const PaymentList = () => {
                 <Box>
                   <Typography>
                     {' '}
-                    <span style={{ color: '#4C9457' }}>Dashboard </span>/ Fee & Payment History
+                    <span
+                      className='cursor-pointer'
+                      onClick={handleBreadcrum}
+                      id='dashboard'
+                      style={{ color: '#4C9457' }}
+                    >
+                      Dashboard{' '}
+                    </span>{' '}
+                    / <span>Fee & Payment History</span>
                   </Typography>
                 </Box>
               </Grid>

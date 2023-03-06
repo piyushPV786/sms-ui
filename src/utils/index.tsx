@@ -1,4 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { commonListTypes, documentTypes } from 'src/types/dataTypes'
+
+const ImagePayu = require('/public/images/payu.png') as string
+const ImagePayFast = require('/public/images/payfastImage.png') as string
 
 interface userDetails {
   fullName: string
@@ -74,4 +79,15 @@ export const getSelectedDocument = (selectedDocument: Array<string | number>, do
   })
 
   return result
+}
+
+export const GetPaymentImage = (type: string) => {
+  if (type === 'payu') {
+    return ImagePayu
+  }
+  if (type === 'payfast') {
+    return ImagePayFast 
+  }
+  if (type === 'Stripe') {
+  }
 }
