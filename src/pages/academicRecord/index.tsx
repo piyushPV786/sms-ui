@@ -3,9 +3,9 @@ import * as React from 'react'
 import Card from '@mui/material/Card'
 import MuiCardContent from '@mui/material/CardContent'
 import { styled } from '@mui/material'
-
+import { AcademicService } from 'src/service'
 import TableHeader from 'src/components/apps/academicRecords/tableHeader'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import {
 
@@ -22,42 +22,25 @@ import {
 
 const StudentDashboard = () => {
   const [open, setOpen] = useState<boolean>(false)
+  const [data, setData] = useState<any>()
+  const getStudentList = async () => {
+
+    const response = await AcademicService?.getStudentAcademicDetails()
+    setData(response?.data.data)
 
 
+  }
 
+  useEffect(() => {
+    getStudentList()
+  }, [])
 
   const handleOnDownloadClick = () => {
     //Call API
     setOpen(true)
   }
-  const data = [
-    {
-      id: 1,
-      year: '2022',
-      courseCode: 'MBA',
-      courseName: 'Business Research',
-      contact: 'Business Research',
-      digitalAssessment: '12.0',
-      assignments: '12.5',
-      examination: '40.0',
-      total: '64.5',
-      symbol: 'B',
-      status: 'pass'
-    },
-    {
-      id: 2,
-      year: '2022',
-      courseCode: 'MBA',
-      courseName: 'Business Research',
-      contact: 'Business Research',
-      digitalAssessment: '12.0',
-      assignments: '12.5',
-      examination: '40.0',
-      total: '64.5',
-      symbol: 'B',
-      status: 'pass'
-    }
-  ]
+
+
 
 
   function Row(props: any) {
@@ -70,7 +53,7 @@ const StudentDashboard = () => {
           <TableCell sx={{ minWidth: 76, flex: 0.1, }}><Typography variant='body2'>{row.year}</Typography></TableCell>
           <TableCell sx={{ minWidth: 240, flex: 0.25 }}><Typography variant='body2'>{row.courseCode}</Typography></TableCell>
           <TableCell sx={{ minWidth: 240, flex: 0.25 }}><Typography variant='body2'>{row.courseName}</Typography></TableCell>
-          <TableCell sx={{ minWidth: 240, flex: 0.1, bgcolor: "#58555e" }}><AcademicTypography variant='body2'>{row.digitalAssessment}</AcademicTypography></TableCell>
+          <TableCell sx={{ minWidth: 240, flex: 0.1, bgcolor: "#58555e" }}><AcademicTypography variant='body2'>{row.assessment}</AcademicTypography></TableCell>
           <TableCell sx={{ minWidth: 150, flex: 0.1, bgcolor: "#726262" }}><AcademicTypography variant='body2'>{row.assignments}</AcademicTypography></TableCell>
           <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: "#5f5870" }}><AcademicTypography variant='body2'>{row.examination}</AcademicTypography></TableCell>
           <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: "#3c7360" }}><AcademicTypography variant='body2'>{row.total}</AcademicTypography></TableCell>
@@ -177,7 +160,7 @@ const StudentDashboard = () => {
                 </TableRow>
 
                 <TableBody>
-                  {data.map(row => (
+                  {data?.map((row: any) => (
                     <Row key={row.id} row={row} />
                   ))}
                 </TableBody>
