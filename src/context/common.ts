@@ -15,7 +15,8 @@ export const status: LoginParams = {
 export enum PathTypes {
   login = '/auth/login',
   resetlink = '/auth/request-link',
-  resetpassword = '/auth/reset-password'
+  resetpassword = '/auth/reset-password',
+  document = '/pages/my-document'
 }
 
 export const EnvPaths = {

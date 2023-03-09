@@ -116,6 +116,7 @@ const PaymentList = () => {
                 FEE & PAYMENT HISTORY
               </Typography>
               <Grid item xs={12}>
+<<<<<<< Updated upstream
                 <Box>
                   <Typography>
                     {' '}
@@ -129,6 +130,10 @@ const PaymentList = () => {
                     </span>{' '}
                     / <span>Fee & Payment History</span>
                   </Typography>
+=======
+                <Box display={'flex'}>
+                  <Typography style={{ color: '#4C9457' }}>Dashboard</Typography>/ Fee & Payment History
+>>>>>>> Stashed changes
                 </Box>
               </Grid>
             </Grid>
