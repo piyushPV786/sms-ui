@@ -5,7 +5,9 @@ import MuiCardContent from '@mui/material/CardContent'
 import { styled } from '@mui/material'
 import { AcademicService } from 'src/service'
 import TableHeader from 'src/components/apps/academicRecords/tableHeader'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 import {
 
@@ -19,6 +21,8 @@ import {
   TableRow,
 
 } from '@mui/material'
+
+
 
 const StudentDashboard = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -35,12 +39,24 @@ const StudentDashboard = () => {
     getStudentList()
   }, [])
 
+
+
+  const inputRef = useRef<any>();
+  const printDocument = () => {
+    html2canvas(inputRef.current).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "JPEG", 0, 0, 0, 0);
+      pdf.save("download.pdf");
+    });
+  };
+
+
   const handleOnDownloadClick = () => {
     //Call API
     setOpen(true)
+    printDocument()
   }
-
-
 
 
   function Row(props: any) {
@@ -68,7 +84,7 @@ const StudentDashboard = () => {
 
 
   return (
-    <Grid container spacing={6}>
+    <Grid container spacing={6} ref={inputRef}>
       <Grid item xs={12}>
         <Typography variant='h5' gutterBottom>
           Academic Records
@@ -144,6 +160,7 @@ const StudentDashboard = () => {
 
 
 
+
             <TableContainer>
               <Table aria-label='collapsible table'>
 
@@ -180,6 +197,6 @@ const StudentDashboard = () => {
 
 export default StudentDashboard
 
-const AcademicTypography = styled(Typography)(({ theme }) => ({
+const AcademicTypography = styled(Typography)(({ theme }: any) => ({
   color: theme.palette.common.white
 }))
