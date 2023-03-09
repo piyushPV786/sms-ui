@@ -79,6 +79,9 @@ input[type='radio']:checked {
 .mt-5 {
   margin-top: 2rem;
 }
+a {
+  text-decoration-color: #008554;
+}
 
 .MuiButton-sizeSmall {
   text-transform: capitalize !important;
