@@ -5,6 +5,7 @@ import { Grid, Box, Paper, Typography, Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { PaymentTypes } from './constant'
 import { GetPaymentImage } from 'src/utils'
+import { DeleteCircleOutline } from 'mdi-material-ui'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const DragDropImg = require('../../../public/images/drag_drop.png')
@@ -35,7 +36,7 @@ const PaymentCard = styled<any>('div')(() => {
   }
 })
 
-const DragDropContainer = styled<any>('div')(() => ({
+export const DragDropContainer = styled<any>('div')(() => ({
   background: '#dbe7e3',
   maxHeight: '300px',
   display: 'flex',
@@ -47,7 +48,7 @@ const PaymentOption = () => {
   const [paymentPayload, setPaymentTypePayload] = useState<any>(null)
   const [selectedPayment, setSelectedPaymentOption] = useState<string>('')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [paymentProof, setPaymentProof] = useState<File[] | null>(null)
+  const [paymentProof, setPaymentProof] = useState<File | null>(null)
   const fileUploadRef = useRef<any>(null)
 
   const handlePay = () => {
@@ -155,7 +156,7 @@ const PaymentOption = () => {
                     type='file'
                     onChange={e => {
                       if (e?.target) {
-                        const files = [e.target?.files![0]]
+                        const files = e.target?.files![0]
                         setPaymentProof(files)
                       }
                     }}
@@ -170,6 +171,20 @@ const PaymentOption = () => {
                 <Typography className='w-100 text-center' variant='body2' mb={1} color={'secondary'}>
                   Only PNG, JPEG and PDF files with max size of 2MB
                 </Typography>
+                <div onClick={e => e.stopPropagation()} className='d-flex flex-wrap'>
+                  {paymentProof && (
+                    <span
+                      style={{
+                        color: '#000',
+                        wordBreak: 'break-all'
+                      }}
+                      className='w-100'
+                      key={paymentProof.lastModified}
+                    >
+                      {paymentProof?.name} <DeleteCircleOutline onClick={() => setPaymentProof(null)} />
+                    </span>
+                  )}
+                </div>
               </DragDropContainer>
               <Grid
                 item
@@ -180,7 +195,7 @@ const PaymentOption = () => {
                   size='large'
                   variant='contained'
                   onClick={handlePay}
-                  disabled={!selectedPayment}
+                  disabled={!paymentProof}
                   sx={{ position: 'absolute', borderRadius: '5', width: '130px' }}
                 >
                   Submit
