@@ -14,7 +14,7 @@ export default class FeePayment {
   }
 
     async getFeePaymentList(params?: DataParams) {
-      let endUrlName = apiEndPoints.paymentList
+      const endUrlName = apiEndPoints.paymentList
 
       try {
         const response = await this.apiServer.get<any>(endUrlName)
