@@ -36,7 +36,6 @@ export type AuthValuesType = {
   login: (params: LoginParams, errorCallback?: ErrCallbackType) => void
   register: (params: RegisterParams, errorCallback?: ErrCallbackType) => void
   resetPassword?: (params: ResetPasswordParams, errorCallback?: ErrCallbackType) => void
-
 }
 
 export type AppBarSearchType = {
@@ -45,4 +44,12 @@ export type AppBarSearchType = {
   icon: string
   title: string
   category: string
+}
+
+export interface IDocumentTypes {
+  id: number
+  name: string
+  type: string
+  size: string
+  datetime: string
 }

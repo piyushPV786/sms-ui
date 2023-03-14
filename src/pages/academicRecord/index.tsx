@@ -6,51 +6,32 @@ import { styled } from '@mui/material'
 import { AcademicService } from 'src/service'
 import TableHeader from 'src/components/apps/academicRecords/tableHeader'
 import { useState, useEffect, useRef } from 'react'
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas'
+import { jsPDF } from 'jspdf'
 
-import {
-
-
-
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-
-  TableRow,
-
-} from '@mui/material'
-
-
+import { Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
 
 const StudentDashboard = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [data, setData] = useState<any>()
   const getStudentList = async () => {
-
     const response = await AcademicService?.getStudentAcademicDetails()
     setData(response?.data.data)
-
-
   }
 
   useEffect(() => {
     getStudentList()
   }, [])
 
-
-
-  const inputRef = useRef<any>();
+  const inputRef = useRef<any>()
   const printDocument = () => {
-    html2canvas(inputRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "JPEG", 0, 0, 0, 0);
-      pdf.save("download.pdf");
-    });
-  };
-
+    html2canvas(inputRef.current).then(canvas => {
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF()
+      pdf.addImage(imgData, 'JPEG', 0, 0, 0, 0)
+      pdf.save('download.pdf')
+    })
+  }
 
   const handleOnDownloadClick = () => {
     //Call API
@@ -58,30 +39,43 @@ const StudentDashboard = () => {
     printDocument()
   }
 
-
   function Row(props: any) {
     const { row } = props
-
 
     return (
       <React.Fragment>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-          <TableCell sx={{ minWidth: 76, flex: 0.1, }}><Typography variant='body2'>{row.year}</Typography></TableCell>
-          <TableCell sx={{ minWidth: 240, flex: 0.25 }}><Typography variant='body2'>{row.courseCode}</Typography></TableCell>
-          <TableCell sx={{ minWidth: 240, flex: 0.25 }}><Typography variant='body2'>{row.courseName}</Typography></TableCell>
-          <TableCell sx={{ minWidth: 240, flex: 0.1, bgcolor: "#58555e" }}><AcademicTypography variant='body2'>{row.assessment}</AcademicTypography></TableCell>
-          <TableCell sx={{ minWidth: 150, flex: 0.1, bgcolor: "#726262" }}><AcademicTypography variant='body2'>{row.assignments}</AcademicTypography></TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: "#5f5870" }}><AcademicTypography variant='body2'>{row.examination}</AcademicTypography></TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: "#3c7360" }}><AcademicTypography variant='body2'>{row.total}</AcademicTypography></TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1 }}><Typography variant='body2'>{row.symbol}</Typography></TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1 }}><Typography variant='body2'>{row.status}</Typography></TableCell>
+          <TableCell sx={{ minWidth: 76, flex: 0.1 }}>
+            <Typography variant='body2'>{row.year}</Typography>
+          </TableCell>
+          <TableCell sx={{ minWidth: 240, flex: 0.25 }}>
+            <Typography variant='body2'>{row.courseCode}</Typography>
+          </TableCell>
+          <TableCell sx={{ minWidth: 240, flex: 0.25 }}>
+            <Typography variant='body2'>{row.courseName}</Typography>
+          </TableCell>
+          <TableCell sx={{ minWidth: 240, flex: 0.1, bgcolor: '#58555e' }}>
+            <AcademicTypography variant='body2'>{row.assessment}</AcademicTypography>
+          </TableCell>
+          <TableCell sx={{ minWidth: 150, flex: 0.1, bgcolor: '#726262' }}>
+            <AcademicTypography variant='body2'>{row.assignments}</AcademicTypography>
+          </TableCell>
+          <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: '#5f5870' }}>
+            <AcademicTypography variant='body2'>{row.examination}</AcademicTypography>
+          </TableCell>
+          <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: '#3c7360' }}>
+            <AcademicTypography variant='body2'>{row.total}</AcademicTypography>
+          </TableCell>
+          <TableCell sx={{ minWidth: 160, flex: 0.1 }}>
+            <Typography variant='body2'>{row.symbol}</Typography>
+          </TableCell>
+          <TableCell sx={{ minWidth: 160, flex: 0.1 }}>
+            <Typography variant='body2'>{row.status}</Typography>
+          </TableCell>
         </TableRow>
-
-
       </React.Fragment>
     )
   }
-
 
   return (
     <Grid container spacing={6} ref={inputRef}>
@@ -158,22 +152,36 @@ const StudentDashboard = () => {
           <Card>
             <TableHeader handleOnDownloadClick={handleOnDownloadClick} />
 
-
-
-
             <TableContainer>
               <Table aria-label='collapsible table'>
-
                 <TableRow>
-                  <TableCell sx={{ minWidth: 76, flex: 0.1, }}><Typography variant='h6'>Year</Typography></TableCell>
-                  <TableCell sx={{ minWidth: 240, flex: 0.25 }}><Typography variant='h6'>Course Code</Typography></TableCell>
-                  <TableCell sx={{ minWidth: 240, flex: 0.25 }}><Typography variant='h6'>Course Name</Typography></TableCell>
-                  <TableCell sx={{ minWidth: 240, flex: 0.1, bgcolor: "#58555e", color: "white" }}><AcademicTypography variant='h6'>Digital Assessment</AcademicTypography></TableCell>
-                  <TableCell sx={{ minWidth: 150, flex: 0.1, bgcolor: "#726262" }}><AcademicTypography variant='h6'>Assignments</AcademicTypography></TableCell>
-                  <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: "#5f5870" }}><AcademicTypography variant='h6'>Examination</AcademicTypography></TableCell>
-                  <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: "#3c7360" }}><AcademicTypography variant='h6'>Total(100%)</AcademicTypography></TableCell>
-                  <TableCell sx={{ minWidth: 160, flex: 0.1 }}><Typography variant='h6'>Symbol</Typography></TableCell>
-                  <TableCell sx={{ minWidth: 160, flex: 0.1 }}><Typography variant='h6'>Status</Typography></TableCell>
+                  <TableCell sx={{ minWidth: 76, flex: 0.1 }}>
+                    <Typography variant='h6'>Year</Typography>
+                  </TableCell>
+                  <TableCell sx={{ minWidth: 240, flex: 0.25 }}>
+                    <Typography variant='h6'>Course Code</Typography>
+                  </TableCell>
+                  <TableCell sx={{ minWidth: 240, flex: 0.25 }}>
+                    <Typography variant='h6'>Course Name</Typography>
+                  </TableCell>
+                  <TableCell sx={{ minWidth: 240, flex: 0.1, bgcolor: '#58555e', color: 'white' }}>
+                    <AcademicTypography variant='h6'>Digital Assessment</AcademicTypography>
+                  </TableCell>
+                  <TableCell sx={{ minWidth: 150, flex: 0.1, bgcolor: '#726262' }}>
+                    <AcademicTypography variant='h6'>Assignments</AcademicTypography>
+                  </TableCell>
+                  <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: '#5f5870' }}>
+                    <AcademicTypography variant='h6'>Examination</AcademicTypography>
+                  </TableCell>
+                  <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: '#3c7360' }}>
+                    <AcademicTypography variant='h6'>Total(100%)</AcademicTypography>
+                  </TableCell>
+                  <TableCell sx={{ minWidth: 160, flex: 0.1 }}>
+                    <Typography variant='h6'>Symbol</Typography>
+                  </TableCell>
+                  <TableCell sx={{ minWidth: 160, flex: 0.1 }}>
+                    <Typography variant='h6'>Status</Typography>
+                  </TableCell>
                 </TableRow>
 
                 <TableBody>

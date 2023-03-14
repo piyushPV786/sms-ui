@@ -1,4 +1,5 @@
 // ** Next Import
+import React, { useRef } from 'react'
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
@@ -6,10 +7,15 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import { Button } from '@mui/material'
+import styled from '@emotion/styled'
+import Image from 'next/image'
 
 const FileUpload = () => {
-  const handlePay = () => {
-    // setShow(true)
+  const fileUploadRef = useRef<any>(null)
+
+  const onDocUploadClick = () => {
+    const fileElement = fileUploadRef.current?.childNodes[1] as any
+    fileElement.click() as any
   }
 
   return (
@@ -30,12 +36,31 @@ const FileUpload = () => {
               alignItems: 'center'
             }}
           >
-            <Card sx={{ backgroundColor: theme => theme.palette.customColors.bodyBg }}>
-              <CardContent>
-                <Grid xs={12} sx={{ display: 'flex' }}>
-                  <Grid container rowSpacing={1}>
-                    skdahfgksahdgkhdsg sdagsadgsadg sadgsagsgasg asdgsagsagdasgsadg sadgsaggsa
-                  </Grid>
+            <Card sx={{ backgroundColor: theme => theme.palette.customColors.bodyBg, padding: 0 }}>
+              <CardContent sx={{ p: 0 }}>
+                <Grid sx={{ display: 'flex' }}>
+                  <div className='d-flex justify-content-center w-100 '>
+                    <UploadDocsContainer onClick={onDocUploadClick} className='w-100'>
+                      <div ref={fileUploadRef} className='text-center'>
+                        <Image
+                          src={`${process.env.BASE_URL}/images/drag_drop.png`}
+                          height='35'
+                          width='35'
+                          alt='file-upload-svgrepo'
+                        />
+                        <input className='d-none' accept='image/jpeg, application/pdf' type='file' />
+                        <GreenFormHeading>
+                          <h5 style={{ color: 'black' }}>
+                            Drag and drop, or <span style={{ color: '#008554' }}>browse</span> your files
+                          </h5>
+                        </GreenFormHeading>
+                        <p className='grey-text'>Only PNG, JPEG and PDF files with max size of 2MB</p>
+                        <div onClick={e => e.stopPropagation()} className='d-flex flex-wrap'></div>
+
+                        <div className='invalid-feedback'>Only "PDF" or "JPEG" file can be upload.</div>
+                      </div>
+                    </UploadDocsContainer>
+                  </div>
                 </Grid>
               </CardContent>
             </Card>
@@ -51,7 +76,7 @@ const FileUpload = () => {
             >
               <Button
                 size='small'
-                onClick={handlePay}
+                onClick={onDocUploadClick}
                 sx={{
                   position: 'absolute',
                   borderRadius: '5px',
@@ -69,3 +94,37 @@ const FileUpload = () => {
 }
 
 export default FileUpload
+
+export const MainContainer = styled.div`
+  background: #fff;
+  width: 100%;
+  margin: 1rem 0;
+  height: 100%;
+`
+const UploadDocsContainer = styled.div`
+  background: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  min-width: 400px;
+  min-height: 150px;
+  width: 100%;
+  overflow: hidden;
+  @media (max-width: 900px) {
+    padding: 1rem 4.7rem;
+  }
+`
+export const GreenFormHeading = styled.p`
+  font-size: 17px;
+  font-weight: 300;
+  color: #a8bdce;
+  margin: 0;
+  @media (max-width: 510px) {
+    font-size: 11px;
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+`

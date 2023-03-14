@@ -86,7 +86,7 @@ export const GetPaymentImage = (type: string) => {
     return ImagePayu
   }
   if (type === 'payfast') {
-    return ImagePayFast 
+    return ImagePayFast
   }
   if (type === 'Stripe') {
   }

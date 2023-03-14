@@ -22,3 +22,15 @@ export enum PathTypes {
 export const EnvPaths = {
   Base: process.env.BASE_URL
 }
+
+interface FileTypes {
+  doc: string
+  ppt: string
+  pdf: string
+}
+
+export const fileType: FileTypes = {
+  doc: 'DOC',
+  ppt: 'PPT',
+  pdf: 'PDF'
+}

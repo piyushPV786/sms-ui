@@ -8,14 +8,12 @@ export const axiosConfig = {
   }
 }
 
-
 export const academicAxiosConfig = {
   baseURL: NEXT_PUBLIC_ACADEMIC_BACKEND_API,
   headers: {
     Authorization: `Bearer ${typeof window !== 'undefined' && window.localStorage.getItem('TOKEN')}`
   }
 }
-
 
 export const apiEndPoints = Object.freeze({
   paymentList: '/payment',

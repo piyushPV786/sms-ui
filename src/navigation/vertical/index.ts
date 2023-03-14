@@ -23,8 +23,6 @@ const navigation = (): VerticalNavItemsType => {
       path: '/academicRecord',
       badgeColor: 'error'
     }
-      
-    
   ]
 }
 
