@@ -10,7 +10,7 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
-import { Alert, IconButton, Snackbar } from '@mui/material'
+import { IconButton } from '@mui/material'
 import { Download } from 'mdi-material-ui'
 
 // import { InvoiceType } from 'src/types/apps/invoiceTypes'
@@ -19,7 +19,8 @@ import { Download } from 'mdi-material-ui'
 
 // ** Custom Components Imports
 import TableHeader from 'src/components/uploaddocument/TableHeader'
-import { fileType } from 'src/context/common'
+import { downloadSuccess, fileType } from 'src/context/common'
+import { successToast } from '../../@core/components/common/Toast'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
@@ -56,7 +57,6 @@ const defaultColumns = [
 
 const DocumentList = () => {
   // ** State
-  const [open, setOpen] = useState<boolean>(false)
   const [response, setResponse] = useState([])
   const [value, setValue] = useState<string>('')
   const [selectedRows, setSelectedRows] = useState<GridRowId[]>([])
@@ -73,7 +73,8 @@ const DocumentList = () => {
   }
 
   const Downloaddoc = () => {
-    setOpen(true)
+    console.log('afasdfag')
+    successToast(downloadSuccess.download)
     setResponse([])
   }
 
@@ -116,8 +117,14 @@ const DocumentList = () => {
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Tooltip title='Download'>
             <Box>
-              <IconButton size='small' component='a' color='primary' sx={{ textDecoration: 'none', mr: 0.5 }}>
-                <Download onClick={Downloaddoc} />
+              <IconButton
+                size='small'
+                component='a'
+                color='primary'
+                sx={{ textDecoration: 'none', mr: 0.5, pt: 2 }}
+                onClick={Downloaddoc}
+              >
+                <Download />
               </IconButton>
             </Box>
           </Tooltip>
@@ -172,21 +179,6 @@ const DocumentList = () => {
         <Grid item xs={12} md={4}>
           <FileUpload />
         </Grid>
-
-        <Snackbar
-          autoHideDuration={6000}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
-          }}
-          open={open}
-          onClose={() => setOpen(false)}
-          key={'bottom'}
-        >
-          <Alert onClose={() => setOpen(false)} severity='success' sx={{ width: '100%' }}>
-            File downloaded Sucessfully.{' '}
-          </Alert>
-        </Snackbar>
       </Grid>
     </>
   )

@@ -4,19 +4,7 @@ import { Ref, useState, forwardRef, ReactElement } from 'react'
 //**  API Services
 
 // ** MUI Imports
-import {
-  Alert,
-  Snackbar,
-  Box,
-  Grid,
-  Dialog,
-  Button,
-  IconButton,
-  DialogContent,
-  DialogActions,
-  Fade,
-  Typography
-} from '@mui/material'
+import { Box, Grid, Dialog, Button, IconButton, DialogContent, DialogActions, Fade, Typography } from '@mui/material'
 import { FadeProps } from '@mui/material/Fade'
 
 // ** Icons Imports
@@ -25,6 +13,8 @@ import Close from 'mdi-material-ui/Close'
 // ** Third Party Library
 import { Delete } from 'mdi-material-ui'
 import Tooltip from '@mui/material/Tooltip'
+import { successToast } from 'src/@core/components/common/Toast'
+import { deleteDocument } from 'src/context/common'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -33,21 +23,12 @@ const Transition = forwardRef(function Transition(
   return <Fade ref={ref} {...props} />
 })
 
-// const schema = yup.object().shape({
-//     name: yup.string().required('Program Name is Required'),
-//     code: yup.string().required('Short Code is Required'),
-//     nqfLevel: yup.string().required('NQF Level is Required'),
-//     noOfYear: yup.number().required('Number Of Years is Required'),
-//     category: yup.string().required('Category is Required')
-// })
-
 const DeleteDialog = () => {
   // ** States
   const [dialogShow, setDialogShow] = useState<boolean>(false)
-  const [snackbarShow, setSnackbarShow] = useState<boolean>(false)
 
   const onSubmit = () => {
-    setSnackbarShow(true)
+    successToast(deleteDocument.delete)
     setDialogShow(false)
   }
 
@@ -109,20 +90,6 @@ const DeleteDialog = () => {
           </DialogActions>
         </form>
       </Dialog>
-      <Snackbar
-        autoHideDuration={5000}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right'
-        }}
-        open={snackbarShow}
-        onClose={() => setSnackbarShow(false)}
-        key={'bottom'}
-      >
-        <Alert onClose={() => setSnackbarShow(false)} severity='success' sx={{ width: '100%' }}>
-          Program details saved successfully.
-        </Alert>
-      </Snackbar>
     </Grid>
   )
 }

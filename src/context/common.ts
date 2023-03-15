@@ -23,6 +23,22 @@ export const EnvPaths = {
   Base: process.env.BASE_URL
 }
 
+interface deleteDocument {
+  delete: string
+}
+
+export const deleteDocument: deleteDocument = {
+  delete: 'File deleted Sucessfully.'
+}
+
+interface downloadSuccess {
+  download: string
+}
+
+export const downloadSuccess: downloadSuccess = {
+  download: 'File downloaded Sucessfully.'
+}
+
 interface FileTypes {
   doc: string
   ppt: string

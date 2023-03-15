@@ -24,6 +24,8 @@ import Spinner from 'src/@core/components/spinner'
 import AclGuard from 'src/@core/components/auth/AclGuard'
 import { defaultACLObj } from 'src/configs/acl'
 import { AuthProvider } from 'src/context/AuthContext'
+import ReactHotToast from 'src/@core/styles/libs/react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 type ExtendedAppProps = AppProps & {
   Component: NextPage
@@ -100,6 +102,9 @@ export default function App(props: ExtendedAppProps) {
                       </AclGuard>
                     </Guard>
                   </WindowWrapper>
+                  <ReactHotToast>
+                    <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+                  </ReactHotToast>
                 </ThemeComponent>
               )
             }}
