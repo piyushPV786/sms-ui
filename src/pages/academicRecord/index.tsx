@@ -1,4 +1,4 @@
-import { Alert, Grid, Snackbar, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
 import MuiCardContent from '@mui/material/CardContent'
@@ -11,12 +11,10 @@ import { AcademicTypography, TableCard } from 'src/styles/styled'
 import { successToast } from 'src/components/common'
 
 const StudentDashboard = () => {
-  const [open, setOpen] = useState<boolean>(false)
   const [response, setResponse] = useState([])
 
   const handleOnDownloadClick = () => {
     //Call API
-    setOpen(true)
     setResponse([])
     successToast('Academic Records downloaded successfully.')
   }

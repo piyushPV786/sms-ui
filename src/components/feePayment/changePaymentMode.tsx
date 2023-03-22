@@ -135,4 +135,4 @@ const ChangePayment = () => {
   )
 }
 
-export default ChangePayment;
+export default ChangePayment

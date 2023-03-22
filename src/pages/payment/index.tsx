@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
+import { Theme } from '@mui/material'
 
 //import { InvoiceType } from 'src/types/apps/invoiceTypes'
 import { FeePaymentService } from 'src/service'
@@ -139,7 +140,7 @@ const PaymentList = () => {
               sx={{
                 '& .MuiDataGrid-columnHeaders': {
                   borderRadius: 0,
-                  bgcolor: theme => theme.palette.customColors.tableHeaderBg
+                  bgcolor: (theme: Theme) => theme.palette.customColors.tableHeaderBg
                 }
               }}
               onSelectionModelChange={rows => setSelectedRows(rows)}

@@ -9,7 +9,6 @@ export const FeePaymentService = new FeePayment(appAPIServer)
 const AcademicAPIServer: AxiosInstance = axios.create(academicAxiosConfig)
 export const AcademicService = new Academic(AcademicAPIServer)
 
-
 appAPIServer.interceptors.response.use(undefined, err => {
   const router = useRouter()
   const error = err.response
