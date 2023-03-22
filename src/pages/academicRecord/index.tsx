@@ -1,11 +1,14 @@
 import { Alert, Button, Grid, Snackbar, Typography } from '@mui/material'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from '@mui/material/Card'
+import Box from '@mui/material/Box'
 import MuiCardContent from '@mui/material/CardContent'
 import { styled } from '@mui/material'
 import { AcademicService } from 'src/service'
-import TableHeader from 'src/components/apps/academicRecords/tableHeader'
+
 import { Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
+
+import TextField from '@mui/material/TextField'
 
 import Pdf from 'react-to-pdf'
 import { Download } from 'mdi-material-ui'
@@ -15,41 +18,24 @@ const options = {
   unit: 'in',
   format: [13, 20]
 }
-const ref:any = React.createRef()
+const ref: any = React.createRef()
 
 const StudentDashboard = () => {
-  const initialData = [
-    {
-      year: '2023',
-      courseCode: 'BDSCI',
-      courseName: 'Basics Data Science',
-      assessment: 'Done',
-      assignments: 'Done',
-      examination: 'Pass',
-      total: 2020,
-      symbol: 'INR',
-      status: true
-    }
-  ]
-
   const [open, setOpen] = useState<boolean>(false)
   const [data, setData] = useState<any>()
+
   const getStudentList = async () => {
     const response = await AcademicService?.getStudentAcademicDetails()
-    setData(initialData)
+    setData(response?.data?.data)
   }
 
   useEffect(() => {
     getStudentList()
   }, [])
 
-  const handleOnDownloadClick = () => {
-    //Call API
-    setOpen(true)
-  }
-
   function Row(props: any) {
     const { row } = props
+
     return (
       <React.Fragment>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -159,27 +145,39 @@ const StudentDashboard = () => {
           </Card>
           <Grid item xs={12} mt={12}>
             <Card>
-                <Pdf targetRef={ref} filename='code-example.pdf' options={options}>
-                {({ toPdf }: any) => (
-                  <Button
-                    size='medium'
-                    startIcon={<Download />}
-                    variant='outlined'
-                    sx={{
-                      backgroundColor: theme => theme.palette.common.white,
-                      color: theme => theme.palette.primary.light,
-                      borderColor: theme => theme.palette.primary.light
-                    }}
-                    onClick={() => {
-                      toPdf()
-                    }}
-                  >
-                    DOWNLOAD PDF
-                  </Button>
-                )}
-              </Pdf>
-              <TableHeader handleOnDownloadClick={handleOnDownloadClick} />
-            
+              <Box
+                sx={{
+                  p: 5,
+                  pb: 3,
+                  display: 'flex'
+                }}
+              >
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex' }}>
+                  <TextField size='small' placeholder='Search...' sx={{ mr: 4, mb: 2, maxWidth: '280px' }} />
+                </Box>
+
+                <Box>
+                  <Pdf targetRef={ref} filename='code-example.pdf' options={options}>
+                    {({ toPdf }: any) => (
+                      <Button
+                        size='medium'
+                        startIcon={<Download />}
+                        variant='outlined'
+                        sx={{
+                          backgroundColor: theme => theme.palette.common.white,
+                          color: theme => theme.palette.primary.light,
+                          borderColor: theme => theme.palette.primary.light
+                        }}
+                        onClick={() => {
+                          toPdf()
+                        }}
+                      >
+                        DOWNLOAD
+                      </Button>
+                    )}
+                  </Pdf>
+                </Box>
+              </Box>
               <TableContainer>
                 <Table aria-label='collapsible table'>
                   <TableRow>
