@@ -20,19 +20,13 @@ import ChangePayment from 'src/components/feePayment/changePaymentMode'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
+import { InlineTypography, StyledTypography } from 'src/styles/styled'
 
 const initialState = {
   statusCode: 1,
   message: '',
   data: []
 }
-
-// interface DataParams {
-//   q: string
-//   status: string
-//   pageSize: number
-//   pageNumber: number
-// }
 
 const defaultColumns = [
   {
@@ -117,7 +111,8 @@ const PaymentList = () => {
               </Typography>
               <Grid item xs={12}>
                 <Box display={'flex'}>
-                  <Typography sx={{ color: '#4c9457' }}>Dashboard </Typography> / Fee & Payment History
+                  <StyledTypography>Dashboard </StyledTypography>
+                  <InlineTypography> / Fee & Payment History</InlineTypography>
                 </Box>
               </Grid>
             </Grid>

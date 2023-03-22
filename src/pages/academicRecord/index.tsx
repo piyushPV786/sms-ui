@@ -2,87 +2,89 @@ import { Alert, Grid, Snackbar, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
 import MuiCardContent from '@mui/material/CardContent'
-import { styled } from '@mui/material'
 
 import TableHeader from 'src/components/apps/academicRecords/tableHeader'
 import { useState } from 'react'
 
-import {
-
-
-
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-
-  TableRow,
-
-} from '@mui/material'
+import { DataGrid } from '@mui/x-data-grid'
+import { AcademicTypography, TableCard } from 'src/styles/styled'
+import { successToast } from 'src/components/common'
 
 const StudentDashboard = () => {
   const [open, setOpen] = useState<boolean>(false)
-
-
-
+  const [response, setResponse] = useState([])
 
   const handleOnDownloadClick = () => {
     //Call API
     setOpen(true)
+    setResponse([])
+    successToast('Academic Records downloaded successfully.')
   }
-  const data = [
+
+  const columns = [
     {
-      id: 1,
-      year: '2022',
-      courseCode: 'MBA',
-      courseName: 'Business Research',
-      contact: 'Business Research',
-      digitalAssessment: '12.0',
-      assignments: '12.5',
-      examination: '40.0',
-      total: '64.5',
-      symbol: 'B',
-      status: 'pass'
+      minWidth: 76,
+      flex: 0.1,
+      field: 'year',
+      headerName: 'Year'
     },
     {
-      id: 2,
-      year: '2022',
-      courseCode: 'MBA',
-      courseName: 'Business Research',
-      contact: 'Business Research',
-      digitalAssessment: '12.0',
-      assignments: '12.5',
-      examination: '40.0',
-      total: '64.5',
-      symbol: 'B',
-      status: 'pass'
+      minWidth: 240,
+      flex: 0.25,
+      field: 'courseCode',
+      headerName: 'Course Code'
+    },
+    {
+      minWidth: 240,
+      flex: 0.25,
+      field: 'courseName',
+      headerName: 'Course Name'
+    },
+    {
+      minWidth: 240,
+      flex: 0.1,
+      field: 'digitalAssessment',
+      headerClassName: 'digital-assessment',
+      cellClassName: 'digital-assessment',
+      renderHeader: () => <AcademicTypography>Digital Assessment</AcademicTypography>
+    },
+    {
+      minWidth: 150,
+      flex: 0.1,
+      field: 'assignments',
+      headerClassName: 'assignments',
+      cellClassName: 'assignments',
+      renderHeader: () => <AcademicTypography>Assignments</AcademicTypography>
+    },
+    {
+      minWidth: 160,
+      flex: 0.1,
+      field: 'examination',
+      headerClassName: 'examination',
+      cellClassName: 'examination',
+      renderHeader: () => <AcademicTypography>Examination</AcademicTypography>
+    },
+    {
+      minWidth: 160,
+      flex: 0.1,
+      field: 'total',
+      headerClassName: 'total',
+      cellClassName: 'total',
+      renderHeader: () => <AcademicTypography>Total(100%)</AcademicTypography>
+    },
+    {
+      minWidth: 160,
+      flex: 0.1,
+      field: 'symbol',
+      headerName: 'Symbol'
+    },
+    {
+      minWidth: 160,
+      flex: 0.1,
+      field: 'status',
+      headerName: 'Status'
     }
   ]
-
-
-  function Row(props: any) {
-    const { row } = props
-
-
-    return (
-      <React.Fragment>
-        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-          <TableCell sx={{ minWidth: 76, flex: 0.1, }}><Typography variant='body2'>{row.year}</Typography></TableCell>
-          <TableCell sx={{ minWidth: 240, flex: 0.25 }}><Typography variant='body2'>{row.courseCode}</Typography></TableCell>
-          <TableCell sx={{ minWidth: 240, flex: 0.25 }}><Typography variant='body2'>{row.courseName}</Typography></TableCell>
-          <TableCell sx={{ minWidth: 240, flex: 0.1, bgcolor: "#58555e" }}><AcademicTypography variant='body2'>{row.digitalAssessment}</AcademicTypography></TableCell>
-          <TableCell sx={{ minWidth: 150, flex: 0.1, bgcolor: "#726262" }}><AcademicTypography variant='body2'>{row.assignments}</AcademicTypography></TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: "#5f5870" }}><AcademicTypography variant='body2'>{row.examination}</AcademicTypography></TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: "#3c7360" }}><AcademicTypography variant='body2'>{row.total}</AcademicTypography></TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1 }}><Typography variant='body2'>{row.symbol}</Typography></TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1 }}><Typography variant='body2'>{row.status}</Typography></TableCell>
-        </TableRow>
-
-
-      </React.Fragment>
-    )
-  }
-
 
   return (
     <Grid container spacing={6}>
@@ -156,47 +158,22 @@ const StudentDashboard = () => {
           </MuiCardContent>
         </Card>
         <Grid item xs={12} mt={12}>
-          <Card>
+          <TableCard>
             <TableHeader handleOnDownloadClick={handleOnDownloadClick} />
-
-
-
-            <TableContainer>
-              <Table aria-label='collapsible table'>
-
-                <TableRow>
-                  <TableCell sx={{ minWidth: 76, flex: 0.1, }}><Typography variant='h6'>Year</Typography></TableCell>
-                  <TableCell sx={{ minWidth: 240, flex: 0.25 }}><Typography variant='h6'>Course Code</Typography></TableCell>
-                  <TableCell sx={{ minWidth: 240, flex: 0.25 }}><Typography variant='h6'>Course Name</Typography></TableCell>
-                  <TableCell sx={{ minWidth: 240, flex: 0.1, bgcolor: "#58555e", color: "white" }}><AcademicTypography variant='h6'>Digital Assessment</AcademicTypography></TableCell>
-                  <TableCell sx={{ minWidth: 150, flex: 0.1, bgcolor: "#726262" }}><AcademicTypography variant='h6'>Assignments</AcademicTypography></TableCell>
-                  <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: "#5f5870" }}><AcademicTypography variant='h6'>Examination</AcademicTypography></TableCell>
-                  <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: "#3c7360" }}><AcademicTypography variant='h6'>Total(100%)</AcademicTypography></TableCell>
-                  <TableCell sx={{ minWidth: 160, flex: 0.1 }}><Typography variant='h6'>Symbol</Typography></TableCell>
-                  <TableCell sx={{ minWidth: 160, flex: 0.1 }}><Typography variant='h6'>Status</Typography></TableCell>
-                </TableRow>
-
-                <TableBody>
-                  {data.map(row => (
-                    <Row key={row.id} row={row} />
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Card>
+            <DataGrid
+              autoHeight
+              disableColumnMenu
+              disableColumnFilter
+              disableColumnSelector
+              rows={response}
+              columns={columns}
+              disableSelectionOnClick
+            />
+          </TableCard>
         </Grid>
       </Grid>
-      <Snackbar open={open} autoHideDuration={6000} onClose={() => setOpen(false)}>
-        <Alert onClose={() => setOpen(false)} severity='success' sx={{ width: '100%' }}>
-          Academic Records downloaded successfully.
-        </Alert>
-      </Snackbar>
     </Grid>
   )
 }
 
 export default StudentDashboard
-
-const AcademicTypography = styled(Typography)(({ theme }) => ({
-  color: theme.palette.common.white
-}))
