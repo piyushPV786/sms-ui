@@ -1,237 +1,222 @@
-import { Alert, Button, Grid, Snackbar, Typography } from '@mui/material'
-import React, { useState, useEffect } from 'react'
+import { Box, Button, Grid, TextField, Theme, Typography } from '@mui/material'
+import * as React from 'react'
 import Card from '@mui/material/Card'
-import Box from '@mui/material/Box'
 import MuiCardContent from '@mui/material/CardContent'
-import { styled } from '@mui/material'
+import Pdf from 'react-to-pdf'
+import { useState } from 'react'
+
+import { DataGrid } from '@mui/x-data-grid'
+import { AcademicTypography, TableCard } from 'src/styles/styled'
+import { successToast } from 'src/components/common'
+import { Download } from 'mdi-material-ui'
 import { AcademicService } from 'src/service'
 
-import { Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
-
-import TextField from '@mui/material/TextField'
-
-import Pdf from 'react-to-pdf'
-import { Download } from 'mdi-material-ui'
-
+const ref: any = React.createRef()
 const options = {
   orientation: 'landscape',
   unit: 'in',
   format: [13, 20]
 }
-const ref: any = React.createRef()
 
 const StudentDashboard = () => {
-  const [open, setOpen] = useState<boolean>(false)
-  const [data, setData] = useState<any>()
+  const [data, setData] = useState([])
 
+  const handleOnDownloadClick = (toPdf: () => void) => {
+    //Call API
+    toPdf()
+    successToast('Academic Records downloaded successfully.')
+  }
   const getStudentList = async () => {
     const response = await AcademicService?.getStudentAcademicDetails()
     setData(response?.data?.data)
   }
-
-  useEffect(() => {
+  React.useEffect(() => {
     getStudentList()
   }, [])
 
-  function Row(props: any) {
-    const { row } = props
-
-    return (
-      <React.Fragment>
-        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-          <TableCell sx={{ minWidth: 76, flex: 0.1 }}>
-            <Typography variant='body2'>{row.year}</Typography>
-          </TableCell>
-          <TableCell sx={{ minWidth: 240, flex: 0.25 }}>
-            <Typography variant='body2'>{row.courseCode}</Typography>
-          </TableCell>
-          <TableCell sx={{ minWidth: 240, flex: 0.25 }}>
-            <Typography variant='body2'>{row.courseName}</Typography>
-          </TableCell>
-          <TableCell sx={{ minWidth: 240, flex: 0.1, bgcolor: '#58555e' }}>
-            <AcademicTypography variant='body2'>{row.assessment}</AcademicTypography>
-          </TableCell>
-          <TableCell sx={{ minWidth: 150, flex: 0.1, bgcolor: '#726262' }}>
-            <AcademicTypography variant='body2'>{row.assignments}</AcademicTypography>
-          </TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: '#5f5870' }}>
-            <AcademicTypography variant='body2'>{row.examination}</AcademicTypography>
-          </TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: '#3c7360' }}>
-            <AcademicTypography variant='body2'>{row.total}</AcademicTypography>
-          </TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1 }}>
-            <Typography variant='body2'>{row.symbol}</Typography>
-          </TableCell>
-          <TableCell sx={{ minWidth: 160, flex: 0.1 }}>
-            <Typography variant='body2'>{row.status}</Typography>
-          </TableCell>
-        </TableRow>
-      </React.Fragment>
-    )
-  }
+  const columns = [
+    {
+      minWidth: 76,
+      flex: 0.1,
+      field: 'year',
+      headerName: 'Year'
+    },
+    {
+      minWidth: 240,
+      flex: 0.25,
+      field: 'courseCode',
+      headerName: 'Course Code'
+    },
+    {
+      minWidth: 240,
+      flex: 0.25,
+      field: 'courseName',
+      headerName: 'Course Name'
+    },
+    {
+      minWidth: 240,
+      flex: 0.1,
+      field: 'assessment',
+      headerClassName: 'digital-assessment',
+      cellClassName: 'digital-assessment',
+      renderHeader: () => <AcademicTypography>Digital Assessment</AcademicTypography>
+    },
+    {
+      minWidth: 150,
+      flex: 0.1,
+      field: 'assignments',
+      headerClassName: 'assignments',
+      cellClassName: 'assignments',
+      renderHeader: () => <AcademicTypography>Assignments</AcademicTypography>
+    },
+    {
+      minWidth: 160,
+      flex: 0.1,
+      field: 'examination',
+      headerClassName: 'examination',
+      cellClassName: 'examination',
+      renderHeader: () => <AcademicTypography>Examination</AcademicTypography>
+    },
+    {
+      minWidth: 160,
+      flex: 0.1,
+      field: 'total',
+      headerClassName: 'total',
+      cellClassName: 'total',
+      renderHeader: () => <AcademicTypography>Total(100%)</AcademicTypography>
+    },
+    {
+      minWidth: 160,
+      flex: 0.1,
+      field: 'symbol',
+      headerName: 'Symbol'
+    },
+    {
+      minWidth: 160,
+      flex: 0.1,
+      field: 'status',
+      headerName: 'Status'
+    }
+  ]
 
   return (
-    <Grid container spacing={6}>
-      <div ref={ref}>
-        <Grid item xs={12}>
-          <Typography variant='h5' gutterBottom>
-            Academic Records
-            <Typography variant='h6'>Dashboard/Academic Records</Typography>
-          </Typography>
-          <Card>
-            <MuiCardContent sx={{ backgroundColor: 'rgb(80,149,142)' }}>
-              <Grid container>
-                <Grid item xs={2.4}>
-                  <AcademicTypography variant='body2'>Student Number</AcademicTypography>
-                  <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                    REG12536253
-                  </AcademicTypography>
-                </Grid>
-                <Grid item xs={2.4}>
-                  <AcademicTypography variant='body2'>Full Name</AcademicTypography>
-                  <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                    Student Number
-                  </AcademicTypography>
-                </Grid>
-                <Grid item xs={2.4}>
-                  <AcademicTypography variant='body2'>ID Number</AcademicTypography>
-                  <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                    128918291829812
-                  </AcademicTypography>
-                </Grid>
-                <Grid item xs={2.4}>
-                  <AcademicTypography variant='body2'>Date Of Birth</AcademicTypography>
-                  <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                    25-08-1986
-                  </AcademicTypography>
-                </Grid>
-                <Grid item xs={2.4}>
-                  <AcademicTypography variant='body2'>Qualification</AcademicTypography>
-                  <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                    Master of Business Administration
-                  </AcademicTypography>
-                </Grid>
+    <Grid container spacing={6} ref={ref}>
+      <Grid item xs={12}>
+        <Typography variant='h5' gutterBottom>
+          Academic Records
+          <Typography variant='h6'>Dashboard/Academic Records</Typography>
+        </Typography>
+        <Card>
+          <MuiCardContent sx={{ backgroundColor: 'rgb(80,149,142)' }}>
+            <Grid container>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Student Number</AcademicTypography>
+                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
+                  REG12536253
+                </AcademicTypography>
               </Grid>
-              <Grid container sx={{ mt: 4 }}>
-                <Grid item xs={2.4}>
-                  <AcademicTypography variant='body2'>NQF Level</AcademicTypography>
-                  <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                    5
-                  </AcademicTypography>
-                </Grid>
-                <Grid item xs={2.4}>
-                  <AcademicTypography variant='body2'>Date of Registration</AcademicTypography>
-                  <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                    09 February 2022
-                  </AcademicTypography>
-                </Grid>
-                <Grid item xs={2.4}>
-                  <AcademicTypography variant='body2'>Status</AcademicTypography>
-                  <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                    Qualification in Progress
-                  </AcademicTypography>
-                </Grid>
-                <Grid item xs={2.5}>
-                  <AcademicTypography variant='body2'>
-                    Graduation Date
-                    <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                      -
-                    </AcademicTypography>
-                  </AcademicTypography>
-                </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Full Name</AcademicTypography>
+                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
+                  Student Number
+                </AcademicTypography>
               </Grid>
-            </MuiCardContent>
-          </Card>
-          <Grid item xs={12} mt={12}>
-            <Card>
-              <Box
-                sx={{
-                  p: 5,
-                  pb: 3,
-                  display: 'flex'
-                }}
-              >
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex' }}>
-                  <TextField size='small' placeholder='Search...' sx={{ mr: 4, mb: 2, maxWidth: '280px' }} />
-                </Box>
-
-                <Box>
-                  <Pdf targetRef={ref} filename='code-example.pdf' options={options}>
-                    {({ toPdf }: any) => (
-                      <Button
-                        size='medium'
-                        startIcon={<Download />}
-                        variant='outlined'
-                        sx={{
-                          backgroundColor: theme => theme.palette.common.white,
-                          color: theme => theme.palette.primary.light,
-                          borderColor: theme => theme.palette.primary.light
-                        }}
-                        onClick={() => {
-                          toPdf()
-                        }}
-                      >
-                        DOWNLOAD
-                      </Button>
-                    )}
-                  </Pdf>
-                </Box>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>ID Number</AcademicTypography>
+                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
+                  128918291829812
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Date Of Birth</AcademicTypography>
+                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
+                  25-08-1986
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Qualification</AcademicTypography>
+                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
+                  Master of Business Administration
+                </AcademicTypography>
+              </Grid>
+            </Grid>
+            <Grid container sx={{ mt: 4 }}>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>NQF Level</AcademicTypography>
+                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
+                  5
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Date of Registration</AcademicTypography>
+                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
+                  09 February 2022
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Status</AcademicTypography>
+                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
+                  Qualification in Progress
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.5}>
+                <AcademicTypography variant='body2'>
+                  Graduation Date
+                  <AcademicTypography sx={{ mt: 2 }} variant='body2'>
+                    -
+                  </AcademicTypography>
+                </AcademicTypography>
+              </Grid>
+            </Grid>
+          </MuiCardContent>
+        </Card>
+        <Grid item xs={12} mt={12}>
+          <TableCard>
+            <Box
+              sx={{
+                p: 5,
+                pb: 3,
+                display: 'flex'
+              }}
+            >
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex' }}>
+                <TextField size='small' placeholder='Search...' sx={{ mr: 4, mb: 2, maxWidth: '280px' }} />
               </Box>
-              <TableContainer>
-                <Table aria-label='collapsible table'>
-                  <TableRow>
-                    <TableCell sx={{ minWidth: 76, flex: 0.1 }}>
-                      <Typography variant='h6'>Year</Typography>
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 240, flex: 0.25 }}>
-                      <Typography variant='h6'>Course Code</Typography>
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 240, flex: 0.25 }}>
-                      <Typography variant='h6'>Course Name</Typography>
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 240, flex: 0.1, bgcolor: '#58555e', color: 'white' }}>
-                      <AcademicTypography variant='h6'>Digital Assessment</AcademicTypography>
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 150, flex: 0.1, bgcolor: '#726262' }}>
-                      <AcademicTypography variant='h6'>Assignments</AcademicTypography>
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: '#5f5870' }}>
-                      <AcademicTypography variant='h6'>Examination</AcademicTypography>
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 160, flex: 0.1, bgcolor: '#3c7360' }}>
-                      <AcademicTypography variant='h6'>Total(100%)</AcademicTypography>
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 160, flex: 0.1 }}>
-                      <Typography variant='h6'>Symbol</Typography>
-                    </TableCell>
-                    <TableCell sx={{ minWidth: 160, flex: 0.1 }}>
-                      <Typography variant='h6'>Status</Typography>
-                    </TableCell>
-                  </TableRow>
 
-                  <TableBody>
-                    {data?.map((row: any) => (
-                      <Row key={row.id} row={row} />
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Card>
-          </Grid>
+              <Box>
+                <Pdf targetRef={ref} filename='code-example.pdf' options={options}>
+                  {({ toPdf }: any) => (
+                    <Button
+                      size='medium'
+                      startIcon={<Download />}
+                      variant='outlined'
+                      sx={{
+                        backgroundColor: (theme: Theme) => theme.palette.common.white,
+                        color: (theme: Theme) => theme.palette.primary.light,
+                        borderColor: (theme: Theme) => theme.palette.primary.light
+                      }}
+                      onClick={() => handleOnDownloadClick(toPdf)}
+                    >
+                      DOWNLOAD
+                    </Button>
+                  )}
+                </Pdf>
+              </Box>
+            </Box>
+            <DataGrid
+              autoHeight
+              disableColumnMenu
+              disableColumnFilter
+              disableColumnSelector
+              rows={data}
+              columns={columns}
+              disableSelectionOnClick
+            />
+          </TableCard>
         </Grid>
-      </div>
-      <Snackbar open={open} autoHideDuration={6000} onClose={() => setOpen(false)}>
-        <Alert onClose={() => setOpen(false)} severity='success' sx={{ width: '100%' }}>
-          Academic Records downloaded successfully.
-        </Alert>
-      </Snackbar>
+      </Grid>
     </Grid>
   )
 }
 
 export default StudentDashboard
-
-const AcademicTypography = styled(Typography)(({ theme }: any) => ({
-  color: theme.palette.common.white
-}))
