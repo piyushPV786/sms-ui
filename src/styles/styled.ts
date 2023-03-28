@@ -1,4 +1,5 @@
-import { Card, styled, Typography, Theme } from '@mui/material'
+import { Card, styled, Typography, Theme, DialogContent } from '@mui/material'
+import MuiCardContent from '@mui/material/CardContent'
 
 export const AcademicTypography = styled(Typography)(({ theme }: { theme: Theme }) => ({
   color: theme.palette.common.white
@@ -29,4 +30,15 @@ export const TableCard = styled(Card)(({ theme }: { theme: Theme }) => ({
     backgroundColor: '#3c7360',
     color: theme.palette.common.white
   }
+}))
+
+export const CardContent = styled(MuiCardContent)(() => ({
+  backgroundColor: 'rgb(80,149,142)'
+}))
+
+export const PopupDialog = styled(DialogContent)(() => ({
+  position: 'relative',
+  pb: 6,
+  px: { xs: 5 },
+  pt: { xs: 8 }
 }))

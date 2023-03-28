@@ -4,7 +4,7 @@ import { Ref, useState, forwardRef, ReactElement } from 'react'
 //**  API Services
 
 // ** MUI Imports
-import { Box, Grid, Dialog, Button, IconButton, DialogContent, DialogActions, Fade, Typography } from '@mui/material'
+import { Box, Grid, Dialog, Button, IconButton, DialogActions, Fade, Typography } from '@mui/material'
 import { FadeProps } from '@mui/material/Fade'
 
 // ** Icons Imports
@@ -15,6 +15,7 @@ import { Delete } from 'mdi-material-ui'
 import Tooltip from '@mui/material/Tooltip'
 import { successToast } from 'src/@core/components/common/Toast'
 import { deleteDocument } from 'src/context/common'
+import { PopupDialog } from 'src/styles/styled'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -58,7 +59,7 @@ const DeleteDialog = () => {
         TransitionComponent={Transition}
       >
         <form onSubmit={onSubmit}>
-          <DialogContent sx={{ pb: 6, px: { xs: 5 }, pt: { xs: 8 }, position: 'relative' }}>
+          <PopupDialog>
             <IconButton
               size='small'
               onClick={() => setDialogShow(false)}
@@ -79,7 +80,7 @@ const DeleteDialog = () => {
                 process cannot be undone
               </p>
             </Box>
-          </DialogContent>
+          </PopupDialog>
           <DialogActions sx={{ pb: { xs: 8, sm: 12.5 }, justifyContent: 'center' }}>
             <Button variant='outlined' color='secondary' onClick={() => setDialogShow(false)}>
               Cancle

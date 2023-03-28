@@ -1,15 +1,15 @@
 import { Box, Button, Grid, TextField, Theme, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
-import MuiCardContent from '@mui/material/CardContent'
 import Pdf from 'react-to-pdf'
 import { useState } from 'react'
 
 import { DataGrid } from '@mui/x-data-grid'
-import { AcademicTypography, TableCard } from 'src/styles/styled'
+import { AcademicTypography, CardContent, TableCard } from 'src/styles/styled'
 import { successToast } from 'src/components/common'
 import { Download } from 'mdi-material-ui'
 import { AcademicService } from 'src/service'
+import { info } from 'src/context/common'
 
 const ref: any = React.createRef()
 const options = {
@@ -107,68 +107,18 @@ const StudentDashboard = () => {
           <Typography variant='h6'>Dashboard/Academic Records</Typography>
         </Typography>
         <Card>
-          <MuiCardContent sx={{ backgroundColor: 'rgb(80,149,142)' }}>
+          <CardContent>
             <Grid container>
-              <Grid item xs={2.4}>
-                <AcademicTypography variant='body2'>Student Number</AcademicTypography>
-                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                  REG12536253
-                </AcademicTypography>
-              </Grid>
-              <Grid item xs={2.4}>
-                <AcademicTypography variant='body2'>Full Name</AcademicTypography>
-                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                  Student Number
-                </AcademicTypography>
-              </Grid>
-              <Grid item xs={2.4}>
-                <AcademicTypography variant='body2'>ID Number</AcademicTypography>
-                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                  128918291829812
-                </AcademicTypography>
-              </Grid>
-              <Grid item xs={2.4}>
-                <AcademicTypography variant='body2'>Date Of Birth</AcademicTypography>
-                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                  25-08-1986
-                </AcademicTypography>
-              </Grid>
-              <Grid item xs={2.4}>
-                <AcademicTypography variant='body2'>Qualification</AcademicTypography>
-                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                  Master of Business Administration
-                </AcademicTypography>
-              </Grid>
-            </Grid>
-            <Grid container sx={{ mt: 4 }}>
-              <Grid item xs={2.4}>
-                <AcademicTypography variant='body2'>NQF Level</AcademicTypography>
-                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                  5
-                </AcademicTypography>
-              </Grid>
-              <Grid item xs={2.4}>
-                <AcademicTypography variant='body2'>Date of Registration</AcademicTypography>
-                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                  09 February 2022
-                </AcademicTypography>
-              </Grid>
-              <Grid item xs={2.4}>
-                <AcademicTypography variant='body2'>Status</AcademicTypography>
-                <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                  Qualification in Progress
-                </AcademicTypography>
-              </Grid>
-              <Grid item xs={2.5}>
-                <AcademicTypography variant='body2'>
-                  Graduation Date
-                  <AcademicTypography sx={{ mt: 2 }} variant='body2'>
-                    -
+              {info.map((item: any) => (
+                <Grid item xs={2.4} key={item.title}>
+                  <AcademicTypography variant='body2'>{item.title}</AcademicTypography>
+                  <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
+                    {item.description}
                   </AcademicTypography>
-                </AcademicTypography>
-              </Grid>
+                </Grid>
+              ))}
             </Grid>
-          </MuiCardContent>
+          </CardContent>
         </Card>
         <Grid item xs={12} mt={12}>
           <TableCard>
