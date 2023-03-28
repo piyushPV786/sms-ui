@@ -10,9 +10,9 @@ interface TableHeaderProps {
   handleFilter: (val: string) => void
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const TableHeader = (props: TableHeaderProps) => {
   // ** Props
-  const { value } = props
 
   return (
     <Box
@@ -30,7 +30,7 @@ const TableHeader = (props: TableHeaderProps) => {
         <Typography variant='h6'>FEE & PAYMENT HISTORY</Typography>
       </Box>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'end' }}>
-        <TextField size='small' value={value} placeholder='Search...' sx={{ mr: 4, mb: 2, maxWidth: '280px' }} />
+        <TextField size='small' id='filled-search' placeholder='Search...' type='search' variant='standard' />
       </Box>
     </Box>
   )

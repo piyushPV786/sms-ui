@@ -3,7 +3,7 @@ import PaymentResponsePage from 'src/components/feePayment/paymentResponse'
 
 const PaymentResponse = () => {
   const router = useRouter()
-  const pageType = router.query.response as string
+  const pageType = router.query.paymentResponse as string
 
   return <PaymentResponsePage pageType={pageType?.toLowerCase()} />
 }

@@ -1,5 +1,5 @@
 // ** Icon imports
-import { HomeOutline } from 'mdi-material-ui'
+import { HomeOutline, SchoolOutline, CreditCard } from 'mdi-material-ui'
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -14,13 +14,13 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: ' Fee Payment',
-      icon: HomeOutline,
+      icon: CreditCard,
       path: '/payment'
     },
     {
       title: 'Academic Records',
-      icon: HomeOutline,
-      path: '/academicRecord',
+      icon: SchoolOutline,
+      path: '/academic-record',
       badgeColor: 'error'
     }
   ]

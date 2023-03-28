@@ -1,13 +1,6 @@
 import { AxiosInstance } from 'axios'
 import { apiEndPoints } from '../Config'
 
-// interface DataParams {
-//   q: string
-//   status: string
-//   pageSize: number
-//   pageNumber: number
-// }
-
 export default class FeePayment {
   apiServer: AxiosInstance
   constructor(apiServer: AxiosInstance) {

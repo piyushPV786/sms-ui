@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
+import { Theme } from '@mui/material'
 
 //import { InvoiceType } from 'src/types/apps/invoiceTypes'
 import { FeePaymentService } from 'src/service'
@@ -20,7 +21,7 @@ import ChangePayment from 'src/components/feePayment/changePaymentMode'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
-import { useRouter } from 'next/router'
+import { InlineTypography, StyledTypography } from 'src/styles/styled'
 
 const initialState = {
   statusCode: 1,
@@ -69,7 +70,6 @@ const PaymentList = () => {
 
   console.log('FeePaymentList', getFeePaymentList)
 
-  const router = useRouter()
   console.log(pageNumber)
   console.log(setResponse)
   console.log(setLoading)
@@ -100,11 +100,6 @@ const PaymentList = () => {
       headerName: 'TANSACTION/REFERNCE ID'
     }
   ]
-  const handleBreadcrum = (e: any) => {
-    e.preventDefault()
-    const route = e.target.id
-    router.push(`/${route}`)
-  }
 
   return (
     <>
@@ -116,19 +111,9 @@ const PaymentList = () => {
                 FEE & PAYMENT HISTORY
               </Typography>
               <Grid item xs={12}>
-                <Box>
-                  <Typography>
-                    {' '}
-                    <span
-                      className='cursor-pointer'
-                      onClick={handleBreadcrum}
-                      id='dashboard'
-                      style={{ color: '#4C9457' }}
-                    >
-                      Dashboard{' '}
-                    </span>{' '}
-                    / <span>Fee & Payment History</span>
-                  </Typography>
+                <Box display={'flex'}>
+                  <StyledTypography>Dashboard </StyledTypography>
+                  <InlineTypography> / Fee & Payment History</InlineTypography>
                 </Box>
               </Grid>
             </Grid>
@@ -155,7 +140,7 @@ const PaymentList = () => {
               sx={{
                 '& .MuiDataGrid-columnHeaders': {
                   borderRadius: 0,
-                  bgcolor: theme => theme.palette.customColors.tableHeaderBg
+                  bgcolor: (theme: Theme) => theme.palette.customColors.tableHeaderBg
                 }
               }}
               onSelectionModelChange={rows => setSelectedRows(rows)}

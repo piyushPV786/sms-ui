@@ -1,5 +1,7 @@
 // ** MUI Imports
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+
 import IconButton from '@mui/material/IconButton'
 
 // ** Icons Imports
@@ -13,6 +15,7 @@ import Autocomplete from 'src/layouts/components/Autocomplete'
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
 import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
+import { Typography } from '@mui/material'
 
 interface Props {
   hidden: boolean
@@ -36,6 +39,9 @@ const AppBarContent = (props: Props) => {
         <Autocomplete hidden={hidden} settings={settings} />
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
+        <Button variant='contained' size='small' sx={{ borderRadius: 10, bgcolor: 'white' }}>
+          <Typography sx={{ fontSize: 15 }}>Start Learning</Typography>
+        </Button>
         <ModeToggler settings={settings} saveSettings={saveSettings} />
         <NotificationDropdown settings={settings} />
         <UserDropdown settings={settings} />
