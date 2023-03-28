@@ -40,3 +40,11 @@ export type AppBarSearchType = {
   title: string
   category: string
 }
+
+export interface IDocumentTypes {
+  id: number
+  name: string
+  type: string
+  size: string
+  datetime: string
+}
