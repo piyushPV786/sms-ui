@@ -1,7 +1,9 @@
 import { Card, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
+import { Launch } from 'mdi-material-ui'
 import { Box } from '@mui/system'
+import Link from 'next/link'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(3)} !important`,
@@ -9,6 +11,15 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     paddingBottom: '0 !important'
   }
+}))
+
+const StyledLink = styled('a')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  textDecoration: 'none',
+
+  alignSelf: 'flex-end',
+  color: '#008554'
 }))
 
 const Program = () => {
@@ -43,6 +54,10 @@ const Program = () => {
               Master of Computer Application (MBA)
             </Typography>
           </Box>
+          <StyledLink href='/'>
+            <Launch />
+            Apply New Program
+          </StyledLink>
         </Box>
       </CardContent>
     </Card>

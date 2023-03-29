@@ -2,7 +2,7 @@ import { Card, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
 import Box, { BoxProps } from '@mui/material/Box'
-
+import { Launch } from 'mdi-material-ui'
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(3)} !important`,
   borderTop: '8px solid #EF2B58',
@@ -56,6 +56,16 @@ const CustomBox = styled(Box)<BoxProps>(({ theme }) => ({
   padding: '8px',
   backgroundColor: theme.palette.customColors.myClassesBg
 }))
+
+const StyledLink = styled('a')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  textDecoration: 'none',
+
+  alignSelf: 'flex-end',
+  color: '#008554'
+}))
+
 const Classes = () => {
   return (
     <Card sx={{ position: 'relative', borderRadius: '0px' }}>
@@ -102,6 +112,10 @@ const Classes = () => {
               )
             })}
           </Box>
+          <StyledLink href='/'>
+            <Launch />
+            More Classes
+          </StyledLink>
         </Box>
       </CardContent>
     </Card>
