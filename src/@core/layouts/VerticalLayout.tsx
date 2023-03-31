@@ -1,6 +1,8 @@
 // ** React Imports
 import { useState } from 'react'
 
+import { EnvPaths } from 'src/context/common'
+
 // ** MUI Imports
 import Fab from '@mui/material/Fab'
 import { styled } from '@mui/material/styles'
@@ -24,6 +26,8 @@ import ScrollToTop from 'src/@core/components/scroll-to-top'
 
 // ** Styled Component
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
+import { IconButton } from '@mui/material'
+import Link from 'next/link'
 
 const VerticalLayoutWrapper = styled('div')({
   height: '100%',
@@ -109,7 +113,26 @@ const VerticalLayout = (props: LayoutProps) => {
           >
             {children}
           </ContentWrapper>
-
+          <Box
+            sx={{
+              px: [4, 10],
+              ...(contentWidth === 'boxed' && {
+                mx: 'auto',
+                '@media (min-width:1440px)': { maxWidth: 1440 },
+                '@media (min-width:1200px)': { maxWidth: '100%' }
+              }),
+              display: 'flex',
+              justifyContent: 'flex-end'
+            }}
+          >
+            <Link href='https://regeniusuat.regenesys.net/login/index.php'>
+              <a target='_blank'>
+                <IconButton sx={{ backgroundColor: theme => theme.palette.primary.main }}>
+                  <img src={`${EnvPaths.Base}/images/ticket.svg`} alt='Raise-Ticket' />
+                </IconButton>
+              </a>
+            </Link>
+          </Box>
           {/* Footer Component */}
           <Footer {...props} />
 
