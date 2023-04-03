@@ -1,0 +1,7 @@
+.styledLink {
+  display: flex;
+  align-items: center;
+  underline: none;
+  align-self: flex-end;
+  color: #008554;
+}
