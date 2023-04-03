@@ -13,7 +13,7 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   }
 }))
 
-const StyledLink = styled('a')(({ theme }) => ({
+const StyledLink = styled('a')(({}) => ({
   display: 'flex',
   alignItems: 'center',
   textDecoration: 'none',

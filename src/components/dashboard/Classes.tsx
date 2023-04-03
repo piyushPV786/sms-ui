@@ -57,7 +57,7 @@ const CustomBox = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: theme.palette.customColors.myClassesBg
 }))
 
-const StyledLink = styled('a')(({ theme }) => ({
+const StyledLink = styled('a')(({}) => ({
   display: 'flex',
   alignItems: 'center',
   textDecoration: 'none',
