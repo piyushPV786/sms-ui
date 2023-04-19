@@ -130,7 +130,7 @@ const StudentDashboard = () => {
               }}
             >
               <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex' }}>
-                <TextField size='small' placeholder='Search...' sx={{ mr: 4, mb: 2, maxWidth: '280px' }} />
+                <TextField variant="standard" size='small' placeholder='Search...' sx={{ mr: 4, mb: 2, maxWidth: '280px' }} />
               </Box>
 
               <Box>
