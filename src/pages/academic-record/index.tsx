@@ -28,7 +28,7 @@ const StudentDashboard = () => {
   }
   const getStudentList = async () => {
     const response = await AcademicService?.getStudentAcademicDetails()
-    setData(response?.data?.data)
+    setData(response?.data?.data?.total)
   }
   React.useEffect(() => {
     getStudentList()
