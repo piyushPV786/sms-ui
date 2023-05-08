@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
 import Box, { BoxProps } from '@mui/material/Box'
 import { Launch } from 'mdi-material-ui'
+
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(3)} !important`,
   borderTop: '8px solid #EF2B58',
