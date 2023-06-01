@@ -13,7 +13,7 @@ const withTM = require('next-transpile-modules')([
 ])
 
 module.exports = withTM({
-  basePath: process.env.STUDENT_BASE_URL,
+  basePath: process.env.NEXT_PUBLIC_STUDENT_BASE_URL,
   trailingSlash: true,
   reactStrictMode: false,
   experimental: {
@@ -24,7 +24,7 @@ module.exports = withTM({
     return [
       {
         source: '/',
-        destination: process.env.STUDENT_BASE_URL,
+        destination: process.env.NEXT_PUBLIC_STUDENT_BASE_URL,
         basePath: false,
         permanent: false
       }
@@ -37,10 +37,5 @@ module.exports = withTM({
     }
 
     return config
-  },
-  env: {
-    // eslint-disable-next-line no-undef
-    BACKEND_API: process.env.BACKEND_API,
-    BASE_URL: process.env.STUDENT_BASE_URL
   }
 })
