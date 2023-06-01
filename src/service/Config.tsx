@@ -1,4 +1,4 @@
-const BACKEND_API = process.env.BACKEND_API
+const BACKEND_API = process.env.NEXT_PUBLIC_ENROLMENT_BACKEND_API
 const NEXT_PUBLIC_ACADEMIC_BACKEND_API = process.env.NEXT_PUBLIC_ACADEMIC_BACKEND_API
 
 export const axiosConfig = {
