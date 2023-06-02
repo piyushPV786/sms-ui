@@ -20,7 +20,7 @@ steps:
       npm install --force
       npm run build
       mkdir apply-ui
-      tar -czvf student-ui-$(Build.BuildId).tar.gz .next public next.config.js package.json next-env.d.ts tsconfig.json .eslintrc.json .babelrc pm2.config.js
+      tar -czvf student-ui-$(Build.BuildId).tar.gz .next public next.config.js package.json next-env.d.ts tsconfig.json .eslintrc.json .babelrc pm2.config.js src
     displayName: 'npm install and build'
   # - task: CopyFiles@2
   #   inputs:
