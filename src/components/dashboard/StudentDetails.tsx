@@ -4,7 +4,8 @@ import Card from '@mui/material/Card'
 import { styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
-import { AvatarProps, Divider, Link, Typography } from '@mui/material'
+import { AvatarProps, Divider, Typography } from '@mui/material'
+import Link from 'next/link'
 
 // ** Custom Components Imports
 import CustomAvatar from 'src/@core/components/mui/avatar'
@@ -47,18 +48,18 @@ const StudentDetails = () => {
                 Welcome back to Regenesys, Lets Start Learning
               </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
-                <Link sx={{ color: '#fff' }} target='_blank' href='/'>
-                  My Profile
+                <Link href={`/myProfile`} passHref>
+                  <a href='' style={{ color: '#fff' }}>
+                    My Profile
+                  </a>
                 </Link>
+
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
-                <Link sx={{ color: '#fff' }} target='_blank' href='/'>
+                <Link target='_blank' href='/'>
                   Calender
                 </Link>
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
-                <Link sx={{ color: '#fff' }} href={`${EnvPaths.Base}/my-document`}>
-                  {' '}
-                  My Document
-                </Link>
+                <Link href={`${EnvPaths.Base}/my-document`}>My Document</Link>
               </Box>
             </Box>
           </Grid>
