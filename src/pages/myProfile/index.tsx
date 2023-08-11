@@ -16,7 +16,7 @@ import { AvatarProps, Typography } from '@mui/material'
 
 const PreviewCard = () => {
   const router = useRouter()
-  const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
+  const Avatar = styled(CustomAvatar)<AvatarProps>(({}) => ({
     width: 150,
     height: 150
   }))
