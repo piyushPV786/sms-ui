@@ -116,7 +116,11 @@ const VerticalNavHeader = (props: Props) => {
         <Link href='/' passHref>
           <StyledLink>
             <Box sx={{ mb: 6, mt: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img src={`${process.env.BASE_URL}/images/reggie-logo-small.png`} width='40' alt='ERP logo' />
+              <img
+                src={`${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/images/reggie-logo-small.png`}
+                width='40'
+                alt='ERP logo'
+              />
             </Box>
             <HeaderTitle variant='h6' sx={{ ...menuCollapsedStyles, ...(navCollapsed && !navHover ? {} : { ml: 2 }) }}>
               {themeConfig.templateName}

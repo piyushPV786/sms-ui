@@ -148,7 +148,7 @@ const NotificationDropdown = (props: Props) => {
         <ScrollWrapper>
           <MenuItem onClick={handleDropdownClose}>
             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-              <Avatar alt='Flora' src={`${process.env.BASE_URL}/images/avatars/4.png`} />
+              <Avatar alt='Flora' src={`${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/images/avatars/4.png`} />
               <Box sx={{ mx: 4, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
                 <MenuItemTitle>Congratulation Flora! 🎉</MenuItemTitle>
                 <MenuItemSubtitle variant='body2'>Won the monthly best seller badge</MenuItemSubtitle>
@@ -172,7 +172,7 @@ const NotificationDropdown = (props: Props) => {
           </MenuItem>
           <MenuItem onClick={handleDropdownClose}>
             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-              <Avatar alt='message' src={`${process.env.BASE_URL}/images/avatars/5.png`} />
+              <Avatar alt='message' src={`${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/images/avatars/5.png`} />
               <Box sx={{ mx: 4, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
                 <MenuItemTitle>New message received 👋🏻</MenuItemTitle>
                 <MenuItemSubtitle variant='body2'>You have 10 unread messages</MenuItemSubtitle>
@@ -184,7 +184,12 @@ const NotificationDropdown = (props: Props) => {
           </MenuItem>
           <MenuItem onClick={handleDropdownClose}>
             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-              <img width={38} height={38} alt='paypal' src={`${process.env.BASE_URL}/images/misc/paypal.png`} />
+              <img
+                width={38}
+                height={38}
+                alt='paypal'
+                src={`${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/images/misc/paypal.png`}
+              />
               <Box sx={{ mx: 4, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
                 <MenuItemTitle>Paypal</MenuItemTitle>
                 <MenuItemSubtitle variant='body2'>Received Payment</MenuItemSubtitle>
@@ -196,7 +201,7 @@ const NotificationDropdown = (props: Props) => {
           </MenuItem>
           <MenuItem onClick={handleDropdownClose}>
             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-              <Avatar alt='order' src={`${process.env.BASE_URL}/images/avatars/3.png`} />
+              <Avatar alt='order' src={`${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/images/avatars/3.png`} />
               <Box sx={{ mx: 4, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
                 <MenuItemTitle>Revised Order 📦</MenuItemTitle>
                 <MenuItemSubtitle variant='body2'>New order revised from john</MenuItemSubtitle>
@@ -208,7 +213,12 @@ const NotificationDropdown = (props: Props) => {
           </MenuItem>
           <MenuItem onClick={handleDropdownClose}>
             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-              <img width={38} height={38} alt='chart' src={`${process.env.BASE_URL}/images/misc/chart.png`} />
+              <img
+                width={38}
+                height={38}
+                alt='chart'
+                src={`${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/images/misc/chart.png`}
+              />
               <Box sx={{ mx: 4, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
                 <MenuItemTitle>Finance report has been generated</MenuItemTitle>
                 <MenuItemSubtitle variant='body2'>25 hrs ago</MenuItemSubtitle>

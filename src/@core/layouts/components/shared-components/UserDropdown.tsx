@@ -87,7 +87,7 @@ const UserDropdown = (props: Props) => {
           alt='John Doe'
           onClick={handleDropdownOpen}
           sx={{ width: 40, height: 40 }}
-          src={`${process.env.BASE_URL}/images/avatars/1.png`}
+          src={`${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/images/avatars/1.png`}
         />
       </Badge>
       <Box

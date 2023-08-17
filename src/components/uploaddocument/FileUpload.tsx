@@ -43,7 +43,7 @@ const FileUpload = () => {
                     <UploadDocsContainer onClick={onDocUploadClick} className='w-100'>
                       <div ref={fileUploadRef} className='text-center'>
                         <Image
-                          src={`${process.env.BASE_URL}/images/drag_drop.png`}
+                          src={`${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/images/drag_drop.png`}
                           height='35'
                           width='35'
                           alt='file-upload-svgrepo'
