@@ -46,7 +46,7 @@ const Error401 = () => {
           </Typography>
           <Typography variant='body2'>You don&prime;t have permission to access this page. Go Home!</Typography>
         </BoxWrapper>
-        <Img alt='error-illustration' src={`${process.env.BASE_URL}/images/pages/401.png`} />
+        <Img alt='error-illustration' src={`${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/images/pages/401.png`} />
         <Link passHref href='/'>
           <Button component='a' variant='contained' sx={{ px: 5.5 }}>
             Back to Home

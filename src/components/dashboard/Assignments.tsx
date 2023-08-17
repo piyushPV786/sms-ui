@@ -17,9 +17,10 @@ const StyledLink = styled('a')(({}) => ({
   display: 'flex',
   alignItems: 'center',
   textDecoration: 'none',
-
+  fontSize: '14px',
   alignSelf: 'flex-end',
-  color: '#008554'
+  color: '#008554',
+  marginTop: '10px'
 }))
 
 const Assignments = () => {
@@ -42,9 +43,8 @@ const Assignments = () => {
               Master of Computer Application (MBA)
             </Typography>
           </Box>
-          <StyledLink href='/'>
-            <Launch />
-            More Assignmnets
+          <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>
+            <Launch fontSize='inherit' /> More Assignments
           </StyledLink>
         </Box>
       </CardContent>

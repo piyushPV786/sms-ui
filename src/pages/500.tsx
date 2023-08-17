@@ -46,7 +46,7 @@ const Error500 = () => {
           </Typography>
           <Typography variant='body2'>Oops, something went wrong!</Typography>
         </BoxWrapper>
-        <Img alt='error-illustration' src={`${process.env.BASE_URL}/imagespages/500.png`} />
+        <Img alt='error-illustration' src={`${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/imagespages/500.png`} />
         <Link passHref href='/'>
           <Button component='a' variant='contained' sx={{ px: 5.5 }}>
             Back to Home

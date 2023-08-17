@@ -62,9 +62,10 @@ const StyledLink = styled('a')(({}) => ({
   display: 'flex',
   alignItems: 'center',
   textDecoration: 'none',
-
+  fontSize: '14px',
   alignSelf: 'flex-end',
-  color: '#008554'
+  color: '#008554',
+  marginTop: '10px'
 }))
 
 const Classes = () => {
@@ -113,9 +114,8 @@ const Classes = () => {
               )
             })}
           </Box>
-          <StyledLink href='/'>
-            <Launch />
-            More Classes
+          <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>
+            <Launch fontSize='inherit' /> More Classes
           </StyledLink>
         </Box>
       </CardContent>

@@ -20,7 +20,7 @@ export enum PathTypes {
 }
 
 export const EnvPaths = {
-  Base: process.env.BASE_URL
+  Base: process.env.NEXT_PUBLIC_STUDENT_BASE_URL
 }
 
 interface deleteDocument {
