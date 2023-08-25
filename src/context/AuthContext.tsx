@@ -10,6 +10,7 @@ import axios from 'axios'
 
 // ** Types
 import { AuthValuesType, LoginParams, UserDataType } from './types'
+import { StudentService } from 'src/service'
 
 // ** Defaults
 const defaultProvider: AuthValuesType = {
@@ -87,7 +88,8 @@ const AuthProvider = ({ children }: Props) => {
     router.replace(redirectURL as string)
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await StudentService?.logOut()
     setUser(null)
     setIsInitialized(false)
     window.localStorage.removeItem('userData')
