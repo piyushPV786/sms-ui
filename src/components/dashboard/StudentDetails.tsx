@@ -10,7 +10,6 @@ import Link from 'next/link'
 // ** Custom Components Imports
 import CustomAvatar from 'src/@core/components/mui/avatar'
 import { getUserInfo } from 'src/utils'
-import { EnvPaths } from 'src/context/common'
 
 // Styled CardContent component
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
@@ -59,7 +58,7 @@ const StudentDetails = () => {
                   Calender
                 </Link>
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
-                <Link href={`${EnvPaths.Base}/my-document`}>My Document</Link>
+                <Link href={`/my-document`}>My Document</Link>
               </Box>
             </Box>
           </Grid>

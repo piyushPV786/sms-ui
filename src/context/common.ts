@@ -89,3 +89,26 @@ export const info = [
     description: '-'
   }
 ]
+
+interface IDynamicObject {
+  [key: string]: any
+}
+
+export const projectStudentDocumentMessage: IDynamicObject = {
+  'file-invalid-type': 'Only PNG, JPEG and PDF files are Allowed',
+  'file-too-large': 'File is larger than 2 MB'
+}
+
+export enum FileSize {
+  maxSize = 2000 * 1024
+}
+
+export const response = [
+  {
+    id: 1,
+    fileName: 'ppt',
+    type: 'doc',
+    filesize: '1.2 kb',
+    datetime: '05-08-2023'
+  }
+]
