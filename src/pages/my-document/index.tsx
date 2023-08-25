@@ -19,7 +19,7 @@ import { Download } from 'mdi-material-ui'
 
 // ** Custom Components Imports
 import TableHeader from 'src/components/uploaddocument/TableHeader'
-import { downloadSuccess, fileType } from 'src/context/common'
+import { downloadSuccess, fileType, response } from 'src/context/common'
 import { successToast } from '../../@core/components/common/Toast'
 
 // ** Third Party Styles Imports
@@ -44,12 +44,12 @@ const defaultColumns = [
   {
     flex: 0.1,
     field: 'id',
-    minWidth: 30,
+    minWidth: 10,
     headerName: '#'
   },
   {
     flex: 0.1,
-    field: 'name',
+    field: 'fileName',
     minWidth: 200,
     headerName: 'File Name'
   }
@@ -57,7 +57,7 @@ const defaultColumns = [
 
 const DocumentList = () => {
   // ** State
-  const [response, setResponse] = useState([])
+
   const [value, setValue] = useState<string>('')
   const [selectedRows, setSelectedRows] = useState<GridRowId[]>([])
   const [pageSize, setPageSize] = useState<number>(10)
@@ -73,9 +73,7 @@ const DocumentList = () => {
   }
 
   const Downloaddoc = () => {
-    console.log('afasdfag')
     successToast(downloadSuccess.download)
-    setResponse([])
   }
 
   const columns = [
@@ -97,8 +95,8 @@ const DocumentList = () => {
     },
     {
       flex: 0.1,
-      field: 'size',
-      minWidth: 70,
+      field: 'filesize',
+      minWidth: 100,
       headerName: 'File Size'
     },
     {
@@ -109,7 +107,7 @@ const DocumentList = () => {
     },
     {
       flex: 0.1,
-      minWidth: 130,
+      minWidth: 150,
       sortable: false,
       field: 'actions',
       headerName: 'Actions',
@@ -143,7 +141,7 @@ const DocumentList = () => {
               <Typography sx={{ mb: 3, lineHeight: '2rem', fontWeight: 'bold', fontSize: 18 }}>My Documents</Typography>
               <Grid item xs={12}>
                 <Box display={'flex'}>
-                  <Typography style={{ color: '#4C9457' }}>Dashboard</Typography>/ My Documents
+                  <Typography style={{ color: '#4C9457' }}>Dashboard</Typography> / My Documents
                 </Box>
               </Grid>
             </Grid>
