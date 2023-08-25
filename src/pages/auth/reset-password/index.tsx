@@ -24,10 +24,12 @@ import {
 import { CheckCircle, Circle } from 'mdi-material-ui'
 import { useRouter } from 'next/router'
 import { EnvPaths, PathTypes } from 'src/context/common'
+import { StudentService } from 'src/service'
+import { IPasswordUpdateRequest } from 'src/service/Student'
 
 const schema = yup.object().shape({
   tempPassword: yup.string().required('Please Type your temporary password'),
-  password: yup.string().required('Please Type your password'),
+  newPassword: yup.string().required('Please Type your password'),
   confirmPassword: yup
     .string()
     .required('Please Type again your new password')
@@ -49,35 +51,43 @@ const ForgetPassword = () => {
     setError,
     handleSubmit,
     register,
+    clearErrors,
     formState: { errors }
   } = useForm({
     resolver: yupResolver(schema)
   })
-
+  console.log({ errors, validationProps })
   const router = useRouter()
-
-  // ** Functions
 
   const onHandle = () => {
     router.replace(PathTypes.login)
   }
 
   const checkRequirements = () => {
-    setError('password', {
-      type: 'manual',
-      message: Object.values(validationProps).includes(false)
-        ? 'Please enter a password that meets all of the requirements below'
-        : ''
-    })
+    if (Object.values(validationProps).includes(false)) {
+      setError('password', {
+        type: 'manual',
+        message: Object.values(validationProps).includes(false)
+          ? 'Please enter a password that meets all of the requirements below'
+          : ''
+      })
+    } else {
+      clearErrors('password')
+    }
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => checkRequirements, [validationProps])
-
-  const onSubmit = () => {
-    checkRequirements()
+  const resetPassword = async (payload: IPasswordUpdateRequest) => {
+    const response = await StudentService?.updatePassword(payload)
     setOpen(true)
 
-    //  Call API
+    console.log({ response })
+  }
+  const onSubmit = (data: any) => {
+    checkRequirements()
+    if (Object.keys(errors).length === 0 && !Object.values(validationProps).includes(false)) {
+      resetPassword(data)
+    }
   }
   const updateValidationPropsValue = (name: string, value: boolean) => {
     setValidationProps(prev => ({ ...prev, [name]: value }))
@@ -137,14 +147,25 @@ const ForgetPassword = () => {
                     <Grid container spacing={5}>
                       <Grid item xs={12}>
                         <TextField
-                          {...register('password')}
+                          {...register('tempPassword')}
+                          label='Temporary Password'
+                          variant='outlined'
+                          type='password'
+                          fullWidth
+                          error={!!errors?.tempPassword?.message}
+                          helperText={errors?.tempPassword?.message}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          {...register('newPassword')}
                           onChange={handleOnChangePassword}
                           label='Enter New Password'
                           variant='outlined'
                           type='password'
                           fullWidth
-                          error={!!errors?.password?.message}
-                          helperText={errors?.password?.message}
+                          error={!!errors?.newPassword?.message}
+                          helperText={errors?.newPassword?.message}
                         />
                       </Grid>
                       <Grid container spacing={2} style={{ paddingTop: 20, paddingLeft: 20 }} textAlign='start' xs={12}>
@@ -182,6 +203,7 @@ const ForgetPassword = () => {
                           variant='outlined'
                           type='password'
                           fullWidth
+                          onBlur={checkRequirements}
                           error={!!errors?.confirmPassword?.message}
                           helperText={errors?.confirmPassword?.message}
                         />

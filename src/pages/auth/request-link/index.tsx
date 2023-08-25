@@ -1,5 +1,5 @@
 // ** React Imports
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 const LogoBox = styled(Box)<BoxProps>(({ theme }) => ({
@@ -32,10 +32,18 @@ import {
 } from '@mui/material'
 import { useRouter } from 'next/router'
 import { EnvPaths, PathTypes } from 'src/context/common'
+import { StudentService } from 'src/service'
 
 const RequestLink = () => {
   const router = useRouter()
+  const [email, setEmailValue] = useState<string>('')
+
+  const requestReseLink = async (email: string) => {
+    const response = await StudentService?.ResetPasswordLink(email)
+    console.log({ response,email })
+  }
   const onSubmit = () => {
+    requestReseLink(email)
     router.replace(PathTypes.resetpassword)
   }
   const handleChange = () => {
@@ -80,7 +88,14 @@ const RequestLink = () => {
                 <Box>
                   <Grid container spacing={5}>
                     <Grid item xs={12}>
-                      <TextField label='Email' variant='outlined' fullWidth />
+                      <TextField
+                        onChange={e => {
+                          setEmailValue(e.target.value)
+                        }}
+                        label='Email'
+                        variant='outlined'
+                        fullWidth
+                      />
                     </Grid>
 
                     <Grid item justifyContent='center' xs={12} sx={{ display: 'flex' }}>
