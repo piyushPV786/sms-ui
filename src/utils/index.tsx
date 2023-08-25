@@ -91,3 +91,6 @@ export const GetPaymentImage = (type: string) => {
   if (type === 'Stripe') {
   }
 }
+export const calculateFileSize = (size: number) => {
+  return size / 1024 > 1024 ? `${(size / 1024 / 1024).toFixed(2)} MB` : `${Math.round(size / 1024)} KB`
+}
