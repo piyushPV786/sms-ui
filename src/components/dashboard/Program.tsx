@@ -1,7 +1,6 @@
 import { Card, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
-import { Launch } from 'mdi-material-ui'
 import { Box } from '@mui/system'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
@@ -12,15 +11,15 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   }
 }))
 
-const StyledLink = styled('a')(({}) => ({
-  display: 'flex',
-  alignItems: 'center',
-  textDecoration: 'none',
-  fontSize: '14px',
-  alignSelf: 'flex-end',
-  color: '#008554',
-  marginTop: '10px'
-}))
+// const StyledLink = styled('a')(({}) => ({
+//   display: 'flex',
+//   alignItems: 'center',
+//   textDecoration: 'none',
+//   fontSize: '14px',
+//   alignSelf: 'flex-end',
+//   color: '#008554',
+//   marginTop: '10px'
+// }))
 
 const Program = () => {
   return (
@@ -54,9 +53,9 @@ const Program = () => {
               Master of Computer Application (MBA)
             </Typography>
           </Box>
-          <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>
+          {/* <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>
             <Launch fontSize='inherit' /> Apply New Program
-          </StyledLink>
+          </StyledLink> */}
         </Box>
       </CardContent>
     </Card>

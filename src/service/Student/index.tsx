@@ -43,4 +43,19 @@ export default class Student {
     }
     nProgress.done()
   }
+
+  async logOut() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.logout
+    try {
+      const response = await this.apiServer.post(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error ResetPasswordLink ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
 }
