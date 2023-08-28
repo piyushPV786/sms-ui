@@ -86,14 +86,16 @@ const AuthProvider = ({ children }: Props) => {
 
       if (userProfileResponse?.data?.data?.length) {
         const userInfo = userProfileResponse?.data?.data[0]
-        setUser({
+        const data = {
           id: userInfo?.id,
           role: 'admin',
           password: '',
           fullName: `${userInfo?.firstName} ${userInfo?.lastName}`,
           username: userInfo?.username,
           email: userInfo?.email
-        })
+        }
+        await window.localStorage.setItem('userData', JSON.stringify(data))
+        setUser(data)
       }
 
       const returnUrl = router.query.returnUrl
