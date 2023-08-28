@@ -1,52 +1,12 @@
 // ** React Imports
 import { ReactNode } from 'react'
 
-import * as yup from 'yup'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useAuth } from 'src/hooks/useAuth'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 import { Typography, Box, Container, CssBaseline, Grid, Card, CardContent, styled, BoxProps } from '@mui/material'
 import SignUp from 'src/components/auth/login'
 import { EnvPaths } from 'src/context/common'
 
-const schema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().min(5).required()
-})
-
-const defaultValues = {
-  password: 'admin',
-  email: 'admin@materialize.com'
-}
-
-interface FormData {
-  email: string
-  password: string
-}
-
 const LoginPage = () => {
-  // ** Hooks
-  const auth = useAuth()
-
-  // ** Vars
-
-  const { setError } = useForm({
-    defaultValues,
-    mode: 'onBlur',
-    resolver: yupResolver(schema)
-  })
-
-  const onSubmit = (data: FormData) => {
-    const { email, password } = data
-    auth.login({ email, password }, () => {
-      setError('email', {
-        type: 'manual',
-        message: 'Email or Password is invalid'
-      })
-    })
-  }
-
   return (
     <BackgroundBox className='text-center'>
       <Container>
@@ -77,7 +37,7 @@ const LoginPage = () => {
                   />
                 </LogoBox>
                 <Box>
-                  <SignUp onSubmit={onSubmit} />
+                  <SignUp />
                 </Box>
               </CardContent>
             </Card>

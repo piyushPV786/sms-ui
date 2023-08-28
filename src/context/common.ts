@@ -1,13 +1,15 @@
-type LoginParams = {
+type IStatusParams = {
   successCode: number
   successCodeOne: number
+  unauthorizedStatus: number
   approve: string
   reject: string
 }
 
-export const status: LoginParams = {
+export const status: IStatusParams = {
   successCode: 200,
   successCodeOne: 201,
+  unauthorizedStatus: 401,
   approve: 'APPROVED',
   reject: 'REJECT'
 }

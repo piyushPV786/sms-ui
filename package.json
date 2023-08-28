@@ -74,7 +74,8 @@
     "recharts": "^2.2.0",
     "stylis": "4.0.10",
     "stylis-plugin-rtl": "2.1.1",
-    "yup": "0.32.9"
+    "yup": "0.32.9",
+    "mem": "^9.0.2"
   },
   "devDependencies": {
     "@types/cleave.js": "1.4.6",
