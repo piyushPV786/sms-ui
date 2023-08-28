@@ -21,7 +21,8 @@ import CalendarWrapper from 'src/@core/styles/libs/fullcalendar'
 import 'react-datepicker/dist/react-datepicker.css'
 import Calendar from 'src/components/calender/Calendar'
 import SidebarLeft from 'src/components/calender/SidebarLeft'
-import AddEventSidebar from 'src/components/calender/AddEventSidebar'
+
+// import AddEventSidebar from 'src/components/calender/AddEventSidebar'
 
 // ** CalendarColors
 const calendarsColor: CalendarColors = {
@@ -170,19 +171,27 @@ const AppCalendar = () => {
 
   const handleAddEventSidebarToggle = () => setAddEventSidebarOpen(!addEventSidebarOpen)
 
-  const addEvent = () => {}
+  //   const addEvent = () => {}
 
-  const fetchEvents = () => {}
+  //   const fetchEvents = () => {}
 
-  const deleteEvent = () => {}
+  //   const deleteEvent = () => {}
 
-  const updateEvent = () => {}
+  const updateEvent = (data: any) => {
+    console.log(data)
+  }
 
-  const handleSelectEvent = () => {}
+  const handleSelectEvent = (data: any) => {
+    console.log(data)
+  }
 
-  const handleAllCalendars = () => {}
+  const handleAllCalendars = (data: any) => {
+    console.log(data)
+  }
 
-  const handleCalendarsUpdate = () => {}
+  const handleCalendarsUpdate = (data: any) => {
+    console.log(data)
+  }
 
   return (
     <CalendarWrapper
