@@ -22,6 +22,12 @@ const navigation = (): VerticalNavItemsType => {
       icon: SchoolOutline,
       path: '/academic-record',
       badgeColor: 'error'
+    },
+    {
+      title: 'Calender',
+      icon: SchoolOutline,
+      path: '/calendar',
+      badgeColor: 'error'
     }
   ]
 }
