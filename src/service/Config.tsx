@@ -28,5 +28,8 @@ export const apiEndPoints = Object.freeze({
   academics: '/academics/',
   forgotPassword: 'user/forgot-password',
   updatePassword: 'user/update-password',
-  logout: '/user/logout'
+  logout: '/user/logout',
+  login: '/user/login',
+  userProfile: '/user/my-profile/',
+  refreshToken: '/auth/refresh-token'
 })

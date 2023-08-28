@@ -10,14 +10,15 @@ import DyncamicBreadcrumb from 'src/components/Dynamicbreadcrumb'
 import { useRouter } from 'next/router'
 import { styled } from '@mui/material/styles'
 import CustomAvatar from 'src/@core/components/mui/avatar'
-import styles from './profile.module.css'
-import { AvatarProps, Typography } from '@mui/material'
+import { AvatarProps } from '@mui/material'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert from '@mui/material/Alert'
 import { useState } from 'react'
 import EditPostalAddressDialog from './editPostalddressDialog'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Pencil } from 'mdi-material-ui'
+import { ProfileInfo } from 'src/components/profile'
+import { personalInformationData } from 'src/components/profile/data'
 
 const editIconStyle = {
   position: 'absolute',
@@ -170,46 +171,9 @@ const PreviewCard = () => {
             </Grid>
 
             <Grid container xs={12} sx={{ marginTop: 10 }}>
-              <Grid sm={4} xs={4} item>
-                <Typography className={styles.childLable}>Name</Typography>
-                <Typography className={styles.lable}>Sam Anderson</Typography>
-              </Grid>
-              <Grid sm={4} xs={4} item>
-                <Typography className={styles.childLable}>Gender</Typography>
-                <Typography className={styles.lable}>Male</Typography>
-              </Grid>
-              <Grid sm={4} xs={4} item>
-                <Typography className={styles.childLable}>Date of Birth</Typography>
-                <Typography className={styles.lable}>05/05/1986</Typography>
-              </Grid>
-            </Grid>
-            <Grid container sx={{ marginTop: 10 }}>
-              <Grid sm={4} xs={4} item>
-                <Typography className={styles.childLable}>Email</Typography>
-                <Typography className={styles.lable}>Samanderson@gmail.com</Typography>
-              </Grid>
-              <Grid sm={4} xs={4} item>
-                <Typography className={styles.childLable}>Mobile Number</Typography>
-                <Typography className={styles.lable}>+91 2323232323</Typography>
-              </Grid>
-              <Grid sm={4} xs={4} item>
-                <Typography className={styles.childLable}>Race</Typography>
-                <Typography className={styles.lable}>Asian</Typography>
-              </Grid>
-            </Grid>
-            <Grid container sx={{ marginTop: 10 }}>
-              <Grid sm={4} xs={4} item>
-                <Typography className={styles.childLable}>Nationality</Typography>
-                <Typography className={styles.lable}>Indian</Typography>
-              </Grid>
-              <Grid sm={4} xs={4} item>
-                <Typography className={styles.childLable}>Home Language</Typography>
-                <Typography className={styles.lable}>Hindi</Typography>
-              </Grid>
-              <Grid sm={4} xs={4} item>
-                <Typography className={styles.childLable}>Identification Document Type / Id No</Typography>
-                <Typography className={styles.lable}>Passport / Z9850526</Typography>
-              </Grid>
+              {personalInformationData?.map(item => (
+                <ProfileInfo key={item?.name} label={item?.name} info={item?.info} />
+              ))}
             </Grid>
             <Grid container sx={{ marginTop: 10 }} columnGap={25}>
               <Grid sm={5} xs={12} item>
