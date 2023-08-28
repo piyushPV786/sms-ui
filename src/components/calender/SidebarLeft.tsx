@@ -1,5 +1,5 @@
 // ** MUI Imports
-import Button from '@mui/material/Button'
+// import Button from '@mui/material/Button'
 import Drawer from '@mui/material/Drawer'
 import Checkbox from '@mui/material/Checkbox'
 import Typography from '@mui/material/Typography'
@@ -15,11 +15,9 @@ const SidebarLeft = (props: SidebarLeftType) => {
     calendarsColor,
     leftSidebarOpen,
     leftSidebarWidth,
-    handleSelectEvent,
     handleAllCalendars,
     handleCalendarsUpdate,
-    handleLeftSidebarToggle,
-    handleAddEventSidebarToggle
+    handleLeftSidebarToggle
   } = props
 
   const colorsArr = calendarsColor ? Object.entries(calendarsColor) : []
@@ -43,10 +41,10 @@ const SidebarLeft = (props: SidebarLeftType) => {
       })
     : null
 
-  const handleSidebarToggleSidebar = () => {
-    handleAddEventSidebarToggle()
-    handleSelectEvent(null)
-  }
+  // const handleSidebarToggleSidebar = () => {
+  //   handleAddEventSidebarToggle()
+  //   handleSelectEvent(null)
+  // }
 
   if (renderFilters) {
     return (
@@ -80,9 +78,9 @@ const SidebarLeft = (props: SidebarLeftType) => {
           }
         }}
       >
-        <Button variant='contained' onClick={handleSidebarToggleSidebar}>
+        {/* <Button variant='contained' onClick={handleSidebarToggleSidebar}>
           Add Event
-        </Button>
+        </Button> */}
 
         <Typography variant='body2' sx={{ mt: 7, mb: 2.5, textTransform: 'uppercase' }}>
           Calendars

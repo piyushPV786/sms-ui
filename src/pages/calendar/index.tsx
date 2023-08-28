@@ -25,11 +25,11 @@ import AddEventSidebar from 'src/components/calender/AddEventSidebar'
 
 // ** CalendarColors
 const calendarsColor: CalendarColors = {
-  Personal: 'error',
-  Business: 'primary',
-  Family: 'warning',
+  Assessments: 'error',
+  Schedules: 'primary',
+  Announcements: 'warning',
   Holiday: 'success',
-  ETC: 'info'
+  Others: 'info'
 }
 
 const store = {
@@ -42,7 +42,7 @@ const store = {
       end: '2023-08-29T13:55:01.838Z',
       allDay: false,
       extendedProps: {
-        calendar: 'Business'
+        calendar: 'Schedules'
       }
     },
     {
@@ -53,7 +53,7 @@ const store = {
       end: '2023-08-20T18:30:00.000Z',
       allDay: true,
       extendedProps: {
-        calendar: 'Business'
+        calendar: 'Schedules'
       }
     },
     {
@@ -75,7 +75,7 @@ const store = {
       end: '2023-08-20T18:30:00.000Z',
       allDay: true,
       extendedProps: {
-        calendar: 'Personal'
+        calendar: 'Assessments'
       }
     },
     {
@@ -86,7 +86,7 @@ const store = {
       end: '2023-08-18T18:30:00.000Z',
       allDay: true,
       extendedProps: {
-        calendar: 'ETC'
+        calendar: 'Others'
       }
     },
     {
@@ -97,7 +97,7 @@ const store = {
       end: '2023-08-18T18:30:00.000Z',
       allDay: true,
       extendedProps: {
-        calendar: 'Personal'
+        calendar: 'Assessments'
       }
     },
     {
@@ -108,7 +108,7 @@ const store = {
       end: '2023-08-18T18:30:00.000Z',
       allDay: true,
       extendedProps: {
-        calendar: 'Family'
+        calendar: 'Announcements'
       }
     },
     {
@@ -119,7 +119,7 @@ const store = {
       end: '2023-08-18T18:30:00.000Z',
       allDay: true,
       extendedProps: {
-        calendar: 'Business'
+        calendar: 'Schedules'
       }
     },
     {
@@ -130,7 +130,7 @@ const store = {
       end: '2023-08-31T18:30:00.000Z',
       allDay: true,
       extendedProps: {
-        calendar: 'Business'
+        calendar: 'Schedules'
       }
     },
     {
@@ -141,12 +141,12 @@ const store = {
       end: '2023-06-30T18:30:00.000Z',
       allDay: true,
       extendedProps: {
-        calendar: 'Personal'
+        calendar: 'Assessments'
       }
     }
   ],
   selectedEvent: null,
-  selectedCalendars: ['Personal', 'Business', 'Family', 'Holiday', 'ETC']
+  selectedCalendars: ['Assessments', 'Schedules', 'Announcements', 'Holiday', 'Others']
 }
 
 const AppCalendar = () => {
@@ -160,7 +160,9 @@ const AppCalendar = () => {
 
   // ** Vars
   const leftSidebarWidth = 260
-  const addEventSidebarWidth = 400
+
+  //const addEventSidebarWidth = 400
+
   const { skin, direction } = settings
   const mdAbove = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
 
@@ -181,8 +183,6 @@ const AppCalendar = () => {
   const handleAllCalendars = () => {}
 
   const handleCalendarsUpdate = () => {}
-
-  const dispatch = () => {}
 
   return (
     <CalendarWrapper
@@ -218,7 +218,6 @@ const AppCalendar = () => {
       >
         <Calendar
           store={store}
-          dispatch={dispatch}
           direction={direction}
           updateEvent={updateEvent}
           calendarApi={calendarApi}
@@ -229,9 +228,8 @@ const AppCalendar = () => {
           handleAddEventSidebarToggle={handleAddEventSidebarToggle}
         />
       </Box>
-      <AddEventSidebar
+      {/* <AddEventSidebar
         store={store}
-        dispatch={dispatch}
         addEvent={addEvent}
         updateEvent={updateEvent}
         deleteEvent={deleteEvent}
@@ -240,7 +238,7 @@ const AppCalendar = () => {
         handleSelectEvent={handleSelectEvent}
         addEventSidebarOpen={addEventSidebarOpen}
         handleAddEventSidebarToggle={handleAddEventSidebarToggle}
-      />
+      /> */}
     </CalendarWrapper>
   )
 }

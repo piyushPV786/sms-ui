@@ -1,19 +1,16 @@
-// ** Types
-import { Dispatch } from 'redux'
-
 // ** Theme Type Import
 import { ThemeColor } from 'src/@core/layouts/types'
 
-export type CalendarFiltersType = 'Personal' | 'Business' | 'Family' | 'Holiday' | 'ETC'
+export type CalendarFiltersType = 'Assessments' | 'Schedules' | 'Announcements' | 'Holiday' | 'Others'
 
 export type EventDateType = Date | null | undefined
 
 export type CalendarColors = {
-  ETC: ThemeColor
-  Family: ThemeColor
+  Others: ThemeColor
+  Schedules: ThemeColor
   Holiday: ThemeColor
-  Personal: ThemeColor
-  Business: ThemeColor
+  Announcements: ThemeColor
+  Assessments: ThemeColor
 }
 
 export type EventType = {
@@ -64,7 +61,6 @@ export type CalendarStoreType = {
 
 export type CalendarType = {
   calendarApi: any
-  dispatch: Dispatch<any>
   store: CalendarStoreType
   direction: 'ltr' | 'rtl'
   calendarsColor: CalendarColors

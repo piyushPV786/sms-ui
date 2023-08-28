@@ -32,7 +32,6 @@ const Calendar = (props: CalendarType) => {
   // ** Props
   const {
     store,
-    dispatch,
     direction,
     updateEvent,
     calendarApi,
@@ -105,7 +104,7 @@ const Calendar = (props: CalendarType) => {
       },
 
       eventClick({ event: clickedEvent }: any) {
-        dispatch(handleSelectEvent(clickedEvent))
+        handleSelectEvent(clickedEvent)
         handleAddEventSidebarToggle()
 
         // * Only grab required field otherwise it goes in infinity loop
@@ -131,7 +130,7 @@ const Calendar = (props: CalendarType) => {
         ev.allDay = true
 
         // @ts-ignore
-        dispatch(handleSelectEvent(ev))
+        handleSelectEvent(ev)
         handleAddEventSidebarToggle()
       },
 
@@ -141,7 +140,7 @@ const Calendar = (props: CalendarType) => {
       ? We can use `eventDragStop` but it doesn't return updated event so we have to use `eventDrop` which returns updated event
     */
       eventDrop({ event: droppedEvent }: any) {
-        dispatch(updateEvent(droppedEvent))
+        updateEvent(droppedEvent)
       },
 
       /*
@@ -149,7 +148,7 @@ const Calendar = (props: CalendarType) => {
       ? Docs: https://fullcalendar.io/docs/eventResize
     */
       eventResize({ event: resizedEvent }: any) {
-        dispatch(updateEvent(resizedEvent))
+        updateEvent(resizedEvent)
       },
 
       ref: calendarRef,
