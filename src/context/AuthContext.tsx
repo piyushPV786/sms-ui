@@ -27,14 +27,7 @@ const AuthContext = createContext(defaultProvider)
 type Props = {
   children: ReactNode
 }
-const userData = {
-  id: 1,
-  role: 'admin',
-  password: 'admin',
-  fullName: 'John Doe',
-  username: 'johndoe',
-  email: 'admin@materialize.com'
-}
+
 const AuthProvider = ({ children }: Props) => {
   // ** States
   const [user, setUser] = useState<UserDataType | null>(defaultProvider.user)
@@ -60,13 +53,13 @@ const AuthProvider = ({ children }: Props) => {
             password: '',
             fullName: `${userInfo?.firstName} ${userInfo?.lastName}`,
             username: userInfo?.username,
-            email: userInfo?.email
+            email: userInfo?.email,
+            studentCode: userInfo?.studentCode
           })
           setLoading(false)
         } else {
           window.localStorage.clear()
           setUser(null)
-          setUser(userData)
           setLoading(false)
         }
       } else {
@@ -92,7 +85,8 @@ const AuthProvider = ({ children }: Props) => {
           password: '',
           fullName: `${userInfo?.firstName} ${userInfo?.lastName}`,
           username: userInfo?.username,
-          email: userInfo?.email
+          email: userInfo?.email,
+          studentCode: userInfo?.studentCode
         }
         await window.localStorage.setItem('userData', JSON.stringify(data))
         setUser(data)

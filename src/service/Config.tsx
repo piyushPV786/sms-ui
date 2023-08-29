@@ -23,7 +23,7 @@ export const academicAxiosConfig = {
 }
 
 export const apiEndPoints = Object.freeze({
-  paymentList: '/payment',
+  paymentList: '/payments/payment-history/',
   admission: '/admissions/',
   academics: '/academics/',
   forgotPassword: 'user/forgot-password',
@@ -31,5 +31,6 @@ export const apiEndPoints = Object.freeze({
   logout: '/user/logout',
   login: '/user/login',
   userProfile: '/user/my-profile/',
-  refreshToken: '/auth/refresh-token'
+  refreshToken: '/auth/refresh-token',
+  studentApplication: '/user/student-application-details/'
 })

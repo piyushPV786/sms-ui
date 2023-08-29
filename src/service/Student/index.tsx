@@ -14,6 +14,12 @@ interface ILogin {
   password: string
 }
 
+export interface DataParams {
+  q?: string
+  pageSize: number
+  pageNumber: number
+}
+
 export default class Student {
   apiServer: AxiosInstance
   constructor(apiServer: AxiosInstance) {
@@ -107,5 +113,32 @@ export default class Student {
       nProgress.done()
     }
     nProgress.done()
+  }
+
+  async getUserProfileDetails(studentCode: string) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.studentApplication}${studentCode}`
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error ResetPasswordLink ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+  async getFeePaymentList(params: DataParams, studentCode: string) {
+    let endUrlName = `${apiEndPoints.paymentList}?studentCode=${studentCode}&&pageNumber=${params?.pageNumber}&&pageSize=${params?.pageSize}`
+    if (params?.q) endUrlName = `${endUrlName}&&search=${params?.q}`
+
+    try {
+      const response = await this.apiServer.get<any>(endUrlName)
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching payment list ========>', err?.message)
+    }
   }
 }

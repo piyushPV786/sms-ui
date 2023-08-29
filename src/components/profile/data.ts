@@ -1,42 +1,45 @@
-export const personalInformationData = [
+export const personalkeyrmationData = [
   {
     name: 'Name',
-    info: 'Sam Anderson'
+    key: 'firstName',
+    key2: 'lastName'
   },
   {
     name: 'Gender',
-    info: 'Male'
+    key: 'gender'
   },
   {
     name: 'Date of Birth',
-    info: '05/06/1986'
+    key: 'dateOfBirth'
   },
   {
     name: 'Email',
-    info: 'Sam.ander02@gmail.com'
+    key: 'email'
   },
   {
     name: 'Mobile Number',
-    info: '+91 9999999999'
+    key2: 'mobileCountryCode',
+    key: 'mobileNo'
   },
   {
     name: 'Home Language',
-    info: 'Hindi'
+    key: 'homeLanguage'
   },
   {
     name: 'Race',
-    info: 'Asian'
+    key: 'race'
   },
   {
     name: 'Nationality Status',
-    info: 'Other Nationality with Study Permission in SA'
+    key: 'nationality'
   },
   {
     name: 'Nationality',
-    info: 'Indian'
+    key: 'nationality'
   },
   {
     name: 'Identification Document Type / Id No',
-    info: 'Passport / Z9850526'
+    key: 'identificationDocumentType',
+    key2: 'idNo'
   }
 ]
