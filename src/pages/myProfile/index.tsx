@@ -10,29 +10,21 @@ import DyncamicBreadcrumb from 'src/components/Dynamicbreadcrumb'
 import { useRouter } from 'next/router'
 import { styled } from '@mui/material/styles'
 import CustomAvatar from 'src/@core/components/mui/avatar'
-import { AvatarProps } from '@mui/material'
+import { AvatarProps, Tab } from '@mui/material'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert from '@mui/material/Alert'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import EditPostalAddressDialog from './editPostalddressDialog'
 import { FormProvider, useForm } from 'react-hook-form'
-import { Pencil } from 'mdi-material-ui'
-import { ProfileInfo } from 'src/components/profile'
-import { personalInformationData } from 'src/components/profile/data'
 
-const editIconStyle = {
-  position: 'absolute',
-  left: '90%',
-  top: 10,
-  background: '#4f958d',
-  width: '30px',
-  height: '30px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  borderRadius: '50%',
-  padding: '1rem'
-}
+import TabContext from '@mui/lab/TabContext'
+import TabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
+import { useAuth } from 'src/hooks/useAuth'
+import { StudentService } from 'src/service'
+import PersonalInformation from 'src/components/profile/personalInformation'
+import { status } from 'src/context/common'
+import EducationInformation from 'src/components/profile/educationInformation'
 
 const defaultValues = {
   address: '110 Church Street',
@@ -48,11 +40,13 @@ const Alert = (props: any) => {
 const PreviewCard = () => {
   const router = useRouter()
   const methods = useForm({ defaultValues: defaultValues, reValidateMode: 'onChange', criteriaMode: 'all' })
+  const auth = useAuth()
 
   const FormProviderComp = ({ children }: any) => {
     return <FormProvider {...methods}>{children}</FormProvider>
   }
-
+  const [userProfileDetails, setUserProfileDetails] = useState<any>(null)
+  const [studentDetails, setStudentDetails] = useState(null)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
@@ -101,6 +95,35 @@ const PreviewCard = () => {
     console.log(data)
     handleEditDialogClose()
   }
+  const [value, setValue] = useState('1')
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue)
+  }
+
+  useEffect(() => {
+    getUserProfileDetails()
+    getStudentDetails()
+  }, [])
+
+  const getStudentDetails = async () => {
+    if (auth?.user?.studentCode) {
+      const userProfileResponse = await StudentService?.UserProfile(auth?.user?.studentCode)
+      console.log('userProfileResponse', userProfileResponse)
+      if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
+        setStudentDetails(userProfileResponse?.data?.data)
+      }
+    }
+  }
+
+  const getUserProfileDetails = async () => {
+    if (auth?.user?.studentCode) {
+      const userProfileResponse = await StudentService?.getUserProfileDetails(auth?.user?.studentCode)
+      if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
+        setUserProfileDetails(userProfileResponse?.data?.data)
+      }
+    }
+  }
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -147,51 +170,26 @@ const PreviewCard = () => {
 
         <Grid sm={9} xs={12} item>
           <Card sx={{ padding: 5 }}>
-            <Grid sm={12} xs={12} columnGap={4} container>
-              <Grid sm={3} xs={12} item>
-                <Button variant='contained' fullWidth>
-                  PERSONAL INFORMATION
-                </Button>
-              </Grid>
-              <Grid sm={3.6} xs={12} item>
-                <Button variant='outlined' fullWidth>
-                  EDUCATION & COURSE DETAILS
-                </Button>
-              </Grid>
-              <Grid sm={2.4} xs={12} item>
-                <Button variant='outlined' fullWidth>
-                  SPONSOR DETAILS
-                </Button>
-              </Grid>
-              <Grid sm={2} xs={12} item>
-                <Button variant='outlined' fullWidth>
-                  KIN DETAILS
-                </Button>
-              </Grid>
-            </Grid>
-
-            <Grid container xs={12} sx={{ marginTop: 10 }}>
-              {personalInformationData?.map(item => (
-                <ProfileInfo key={item?.name} label={item?.name} info={item?.info} />
-              ))}
-            </Grid>
-            <Grid container sx={{ marginTop: 10 }} columnGap={25}>
-              <Grid sm={5} xs={12} item>
-                POSTAL ADDRESS{' '}
-                <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative' }}>
-                  110 Church Street, Western Cape Mumbai, MaharastraIndia, 636809
-                  <div onClick={handleEditDialogOpen} style={editIconStyle as any}>
-                    <Pencil style={{ color: 'white' }} />
-                  </div>
-                </Card>
-              </Grid>
-              <Grid sm={5} xs={12} item>
-                RESIDENTAL ADDRESS
-                <Card sx={{ height: 130, padding: 7, marginTop: 1 }}>
-                  110 Church Street, Western Cape Mumbai, MaharastraIndia, 636809
-                </Card>
-              </Grid>
-            </Grid>
+            <Box sx={{ width: '100%', typography: 'body1' }}>
+              <TabContext value={value}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <TabList onChange={handleChange} aria-label='lab API tabs example'>
+                    <Tab label='Personal Information' value='1' />
+                    {!!userProfileDetails?.education?.id && <Tab label='Education & Course Details' value='2' />}
+                    {!!userProfileDetails?.sponsor?.id && <Tab label='Sponsor Details' value='3' />}
+                    {!!userProfileDetails?.kin?.id && <Tab label='Kin Details' value='4' />}
+                  </TabList>
+                </Box>
+                <TabPanel value='1'>
+                  <PersonalInformation handleEditDialogOpen={handleEditDialogOpen} studentDetails={studentDetails} />
+                </TabPanel>
+                <TabPanel value='2'>
+                  <EducationInformation userProfileDetails={userProfileDetails} />
+                </TabPanel>
+                <TabPanel value='3'>Item Three</TabPanel>
+                <TabPanel value='4'>Item Three</TabPanel>
+              </TabContext>
+            </Box>
           </Card>
         </Grid>
       </Grid>

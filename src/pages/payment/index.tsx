@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // ** React Imports
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -11,7 +11,7 @@ import { DataGrid, GridRowId } from '@mui/x-data-grid'
 import { Theme } from '@mui/material'
 
 //import { InvoiceType } from 'src/types/apps/invoiceTypes'
-import { FeePaymentService } from 'src/service'
+import { StudentService } from 'src/service'
 import { status } from 'src/context/common'
 
 // ** Custom Components Imports
@@ -22,6 +22,7 @@ import ChangePayment from 'src/components/feePayment/changePaymentMode'
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
 import { InlineTypography, StyledTypography } from 'src/styles/styled'
+import { useAuth } from 'src/hooks/useAuth'
 
 const initialState = {
   statusCode: 1,
@@ -59,20 +60,27 @@ const PaymentList = () => {
   const [response, setResponse] = useState<any>(initialState)
   const [loading, setLoading] = useState<boolean>(false)
 
+  const auth = useAuth()
+
   const getFeePaymentList = async () => {
-    const response = await FeePaymentService?.getFeePaymentList()
-    if (response?.data?.statusCode === status.successCode && response?.data) {
-      setResponse(response?.data?.data)
+    const payload = {
+      q: value,
+      pageSize: pageSize,
+      pageNumber: pageNumber
     }
+    setLoading(true)
+    if (auth?.user?.studentCode) {
+      const response = await StudentService?.getFeePaymentList(payload, auth?.user?.studentCode)
+      if (response?.data?.statusCode === status.successCode && response?.data) {
+        setResponse(response?.data)
+      }
+    }
+    setLoading(false)
   }
 
-  console.log('response', response)
-
-  console.log('FeePaymentList', getFeePaymentList)
-
-  console.log(pageNumber)
-  console.log(setResponse)
-  console.log(setLoading)
+  useEffect(() => {
+    getFeePaymentList()
+  }, [value, pageNumber, pageSize])
 
   const handleFilter = (val: string) => {
     setValue(val)
@@ -132,7 +140,7 @@ const PaymentList = () => {
               disableColumnMenu
               disableColumnFilter
               disableColumnSelector
-              rows={response.data}
+              rows={response?.data}
               columns={columns}
               disableSelectionOnClick
               pageSize={Number(pageSize)}
