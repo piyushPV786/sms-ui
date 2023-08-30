@@ -1,19 +1,22 @@
 import axios, { AxiosInstance } from 'axios'
-import { axiosConfig, academicAxiosConfig, studentBaseConfig, apiEndPoints } from './Config'
+import { axiosConfig, academicAxiosConfig, studentBaseConfig, apiEndPoints, commonAxiosConfig } from './Config'
 import FeePayment from './FeePayment'
 import Academic from './Academic'
 import Student from './Student'
 import authConfig from 'src/configs/auth'
 import mem from 'mem'
 import { status } from 'src/context/common'
+import Common from './Common'
 
 const appAPIServer: AxiosInstance = axios.create(axiosConfig)
 const AcademicAPIServer: AxiosInstance = axios.create(academicAxiosConfig)
 const StudentBaseApiServer: AxiosInstance = axios.create(studentBaseConfig)
+const CommonBaseApiServer: AxiosInstance = axios.create(commonAxiosConfig)
 
 export const StudentService = new Student(StudentBaseApiServer)
 export const FeePaymentService = new FeePayment(appAPIServer)
 export const AcademicService = new Academic(AcademicAPIServer)
+export const CommonService = new Common(CommonBaseApiServer)
 
 // StudentBaseApiServer.interceptors.request.use(
 //   config => {
@@ -33,6 +36,7 @@ export const AcademicService = new Academic(AcademicAPIServer)
 // )
 
 const refreshTokenFunction = async () => {
+  console.log('refresh token')
   const response = await StudentService.GetRefreshToken()
   const { data } = response?.data
   if (data?.access_token && data?.refresh_token) {
@@ -79,6 +83,7 @@ const errorInterceptor = async (err: any) => {
   }
 
   if (error.status === status.unauthorizedStatus && !config?.sent && !config?.__isRetryRequest) {
+    console.log('401 ===========>')
     config.sent = true
     const response = await memoizedRefreshToken()
     if (response?.status === 200 && response?.access_token && response?.refresh_token) {
@@ -99,3 +104,4 @@ const addInterceptorToAxiosInstances = (axiosInstance: AxiosInstance) => {
 addInterceptorToAxiosInstances(StudentBaseApiServer)
 addInterceptorToAxiosInstances(appAPIServer)
 addInterceptorToAxiosInstances(AcademicAPIServer)
+addInterceptorToAxiosInstances(CommonBaseApiServer)
