@@ -28,7 +28,7 @@ export const commonAxiosConfig = {
 }
 
 export const apiEndPoints = Object.freeze({
-  paymentList: '/payments/payment-history/',
+  paymentList: '/payments/payment-details',
   admission: '/admissions/',
   academics: '/academics/',
   forgotPassword: 'user/forgot-password',

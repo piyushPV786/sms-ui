@@ -30,27 +30,6 @@ const initialState = {
   data: []
 }
 
-const defaultColumns = [
-  {
-    flex: 0.1,
-    field: 'feeCategory',
-    minWidth: 150,
-    headerName: 'FEE CATEGORY'
-  },
-  {
-    flex: 0.1,
-    field: 'amount',
-    minWidth: 50,
-    headerName: 'AMOUNT'
-  },
-  {
-    flex: 0.1,
-    minWidth: 50,
-    field: 'paidDate',
-    headerName: 'PAID DATE'
-  }
-]
-
 const PaymentList = () => {
   // ** State
   const [value, setValue] = useState<string>('')
@@ -71,8 +50,9 @@ const PaymentList = () => {
     setLoading(true)
     if (auth?.user?.studentCode) {
       const response = await StudentService?.getFeePaymentList(payload, auth?.user?.studentCode)
-      if (response?.data?.statusCode === status.successCode && response?.data) {
-        setResponse(response?.data)
+      if (response?.data?.statusCode === status.successCode && response?.data?.data) {
+        console.log('payment response =============>', response)
+        setResponse(response?.data?.data)
       }
     }
     setLoading(false)
@@ -87,7 +67,30 @@ const PaymentList = () => {
   }
 
   const columns = [
-    ...defaultColumns,
+    {
+      flex: 0.1,
+      field: 'program',
+      minWidth: 150,
+      headerName: 'Program'
+    },
+    {
+      flex: 0.1,
+      field: 'feeModeCode',
+      minWidth: 50,
+      headerName: 'Payment Mode'
+    },
+    {
+      flex: 0.1,
+      minWidth: 100,
+      field: 'totalAmount',
+      headerName: 'Amount'
+    },
+    {
+      flex: 0.1,
+      minWidth: 150,
+      field: 'paymentDate',
+      headerName: 'PAID DATE'
+    },
     {
       flex: 0.1,
       minWidth: 150,
@@ -97,15 +100,15 @@ const PaymentList = () => {
     {
       flex: 0.1,
       minWidth: 150,
-      field: 'paymenttype',
+      field: 'paymentType',
       headerName: 'PAYMENT TYPE'
     },
 
     {
       flex: 0.1,
       minWidth: 200,
-      field: 'refernceId',
-      headerName: 'TANSACTION/REFERNCE ID'
+      field: 'referenceNumber',
+      headerName: 'TRANSACTION / REFERENCE ID'
     }
   ]
 
