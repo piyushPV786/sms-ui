@@ -1,6 +1,5 @@
 import { Box, Card, Grid } from '@mui/material'
 import { ProfileInfo } from '.'
-import { personalkeyrmationData } from './data'
 import { Pencil } from 'mdi-material-ui'
 
 interface IProps {
@@ -13,17 +12,22 @@ const PersonalInformation = ({ handleEditDialogOpen, studentDetails }: IProps) =
     <Box>
       {!!studentDetails && (
         <Grid container xs={12} sx={{ marginTop: 10 }}>
-          {personalkeyrmationData?.map((item: any) => (
-            <ProfileInfo
-              key={item?.name}
-              label={item?.name}
-              info={
-                item?.key2
-                  ? `${studentDetails[0][item?.key]} ${studentDetails[0][item?.key2]}`
-                  : studentDetails[0][item?.key]
-              }
-            />
-          ))}
+          <ProfileInfo label='Name' info={`${studentDetails[0]['firstName']} ${studentDetails[0]['lastName']}`} />
+          <ProfileInfo label='Gender' info={`${studentDetails[0]['gender']}`} />
+          <ProfileInfo label='Date of Birth' info={`${studentDetails[0]['dateOfBirth']}}`} />
+          <ProfileInfo label='Email' info={`${studentDetails[0]['email']}`} />
+          <ProfileInfo
+            label='Mobile Number'
+            info={`+${studentDetails[0]['mobileCountryCode']} ${studentDetails[0]['mobileNo']}`}
+          />
+          <ProfileInfo label='Home Language' info={`${studentDetails[0]['homeLanguage']}`} />
+          <ProfileInfo label='Race' info={`${studentDetails[0]['race']}`} />
+          <ProfileInfo label='Nationality Status' info={`${studentDetails[0]['nationality']}`} />
+          <ProfileInfo label='Nationality' info={`${studentDetails[0]['nationality']}`} />
+          <ProfileInfo
+            label='Identification Document Type / Id No'
+            info={`${studentDetails[0]['identificationDocumentType']} / ${studentDetails[0]['idNo']}`}
+          />
         </Grid>
       )}
       {!!studentDetails && studentDetails[0]?.address && (

@@ -70,33 +70,40 @@ const AuthProvider = ({ children }: Props) => {
   }, [])
 
   const handleLogin = async (params: LoginParams, errorCallback?: ErrCallbackType) => {
-    const response = await StudentService?.Login(params)
-    if (response?.data?.data?.tokens) {
-      await window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.data?.tokens?.access_token)
-      await window.localStorage.setItem(authConfig.refreshToken, response.data.data?.tokens?.refresh_token)
-      await window.localStorage.setItem(authConfig.studentCode, response.data.data?.studentCode)
-      const userProfileResponse = await StudentService?.UserProfile(response.data.data?.studentCode)
+    try {
+      const response = await StudentService?.Login(params)
+      if (response?.data?.data?.tokens) {
+        await window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.data?.tokens?.access_token)
+        await window.localStorage.setItem(authConfig.refreshToken, response.data.data?.tokens?.refresh_token)
+        await window.localStorage.setItem(authConfig.studentCode, response.data.data?.studentCode)
 
-      if (userProfileResponse?.data?.data?.length) {
-        const userInfo = userProfileResponse?.data?.data[0]
-        const data = {
-          id: userInfo?.id,
-          role: 'admin',
-          password: '',
-          fullName: `${userInfo?.firstName} ${userInfo?.lastName}`,
-          username: userInfo?.username,
-          email: userInfo?.email,
-          studentCode: userInfo?.studentCode
+        const userProfileResponse = await StudentService?.UserProfile(response.data.data?.studentCode)
+
+        console.log('userProfileResponse =================>', userProfileResponse)
+
+        if (userProfileResponse?.data?.data?.length) {
+          const userInfo = userProfileResponse?.data?.data[0]
+          const data = {
+            id: userInfo?.id,
+            role: 'admin',
+            password: '',
+            fullName: `${userInfo?.firstName} ${userInfo?.lastName}`,
+            username: userInfo?.username,
+            email: userInfo?.email,
+            studentCode: userInfo?.studentCode
+          }
+          await window.localStorage.setItem('userData', JSON.stringify(data))
+          setUser(data)
         }
-        await window.localStorage.setItem('userData', JSON.stringify(data))
-        setUser(data)
-      }
 
-      const returnUrl = router.query.returnUrl
-      const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-      router.replace(redirectURL as string)
-    } else {
-      if (errorCallback) errorCallback(response?.data?.data?.message)
+        const returnUrl = router.query.returnUrl
+        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+        router.replace(redirectURL as string)
+      } else {
+        if (errorCallback) errorCallback(response?.data?.data?.message)
+      }
+    } catch (err: any) {
+      if (errorCallback) errorCallback(err)
     }
   }
 

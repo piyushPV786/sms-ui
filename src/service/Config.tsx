@@ -1,6 +1,7 @@
 const BACKEND_API = process.env.NEXT_PUBLIC_ENROLMENT_BACKEND_API
 const NEXT_PUBLIC_ACADEMIC_BACKEND_API = process.env.NEXT_PUBLIC_ACADEMIC_BACKEND_API
 const BaseStudentApi = process.env.NEXT_PUBLIC_STUDENT_BASE_API
+const commonBaseApiUrl = process.env.NEXT_PUBLIC_COMMON_BASE_API
 
 export const axiosConfig = {
   baseURL: BACKEND_API,
@@ -22,6 +23,10 @@ export const academicAxiosConfig = {
   }
 }
 
+export const commonAxiosConfig = {
+  baseURL: commonBaseApiUrl
+}
+
 export const apiEndPoints = Object.freeze({
   paymentList: '/payments/payment-history/',
   admission: '/admissions/',
@@ -32,5 +37,6 @@ export const apiEndPoints = Object.freeze({
   login: '/user/login',
   userProfile: '/user/my-profile/',
   refreshToken: '/auth/refresh-token',
-  studentApplication: '/user/student-application-details/'
+  studentApplication: '/user/student-application-details/',
+  qualification: '/common/qualification'
 })
