@@ -76,7 +76,7 @@ const PaymentList = () => {
     {
       flex: 0.1,
       field: 'feeModeCode',
-      minWidth: 50,
+      minWidth: 150,
       headerName: 'Payment Mode'
     },
     {
