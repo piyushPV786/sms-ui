@@ -14,8 +14,7 @@ import { AvatarProps, Tab, Tabs } from '@mui/material'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert from '@mui/material/Alert'
 import { useEffect, useState } from 'react'
-import EditPostalAddressDialog from './editPostalddressDialog'
-import { FormProvider, useForm } from 'react-hook-form'
+import EditPostalAddressDialog from '../../components/profile/editPostalddressDialog'
 
 import { useAuth } from 'src/hooks/useAuth'
 import { CommonService, StudentService } from 'src/service'
@@ -25,26 +24,15 @@ import EducationInformation from 'src/components/profile/educationInformation'
 import SponsorInformation from 'src/components/profile/sponsorInformation'
 import EmploymentInformation from 'src/components/profile/employmetInformation'
 import KinInformation from 'src/components/profile/kinInformation'
-
-const defaultValues = {
-  address: '110 Church Street',
-  city: 'Mumbai',
-  state: 'Maharashtra',
-  country: 'India',
-  pincode: '636809'
-}
+import { successToast } from 'src/components/common'
 
 const Alert = (props: any) => {
   return <MuiAlert elevation={6} variant='filled' {...props} />
 }
 const PreviewCard = () => {
   const router = useRouter()
-  const methods = useForm({ defaultValues: defaultValues, reValidateMode: 'onChange', criteriaMode: 'all' })
   const auth = useAuth()
 
-  const FormProviderComp = ({ children }: any) => {
-    return <FormProvider {...methods}>{children}</FormProvider>
-  }
   const [qualificationData, setQualificationData] = useState<any>(null)
   const [userProfileDetails, setUserProfileDetails] = useState<any>(null)
   const [studentDetails, setStudentDetails] = useState(null)
@@ -52,6 +40,8 @@ const PreviewCard = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
   const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [countryData, setCountryData] = useState(null)
+  const [stateData, setStateData] = useState(null)
   const AvatarWithStyles = styled(CustomAvatar)<AvatarProps>(({}) => ({
     width: 150,
     height: 150
@@ -90,11 +80,15 @@ const PreviewCard = () => {
     setEditDialogOpen(false)
   }
 
-  const onSubmit = (data: any) => {
-    // You can handle the form submission here
-    // data will contain the form values
-    console.log(data)
-    handleEditDialogClose()
+  const onSubmit = async (data: any) => {
+    if (auth?.user?.studentCode) {
+      const addressUpdateResponse = await StudentService?.updateAddress(data, auth?.user?.studentCode)
+      if (addressUpdateResponse?.status === status?.successCode) {
+        successToast('Data Updated Successfully')
+        getStudentDetails()
+        handleEditDialogClose()
+      }
+    }
   }
   const [value, setValue] = useState(0)
 
@@ -106,6 +100,7 @@ const PreviewCard = () => {
     getUserProfileDetails()
     getStudentDetails()
     getQualificationData()
+    getCountryData()
   }, [])
 
   const getStudentDetails = async () => {
@@ -130,6 +125,20 @@ const PreviewCard = () => {
     const qualificationResponse = await CommonService?.getQualificationData()
     if (qualificationResponse?.data?.data) {
       setQualificationData(qualificationResponse?.data?.data)
+    }
+  }
+
+  const getCountryData = async () => {
+    const countryResponse = await CommonService?.getCountryData()
+    if (countryResponse?.data?.data) {
+      setCountryData(countryResponse?.data?.data)
+    }
+  }
+
+  const getStateData = async (countryCode: string) => {
+    const stateResponse = await CommonService?.getStateData(countryCode)
+    if (stateResponse?.data?.data) {
+      setStateData(stateResponse?.data?.data)
     }
   }
 
@@ -220,15 +229,15 @@ const PreviewCard = () => {
           </Card>
         </Grid>
       </Grid>
-      <FormProviderComp>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <EditPostalAddressDialog
-            onSubmit={onSubmit}
-            editDialogOpen={editDialogOpen}
-            handleEditDialogClose={handleEditDialogClose}
-          />
-        </form>
-      </FormProviderComp>
+      <EditPostalAddressDialog
+        studentDetails={studentDetails}
+        onSubmit={onSubmit}
+        editDialogOpen={editDialogOpen}
+        handleEditDialogClose={handleEditDialogClose}
+        getStateData={getStateData}
+        countryData={countryData}
+        stateData={stateData}
+      />
 
       <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
         <Alert onClose={handleCloseSnackbar} severity='error'>

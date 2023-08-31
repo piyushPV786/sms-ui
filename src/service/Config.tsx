@@ -38,5 +38,8 @@ export const apiEndPoints = Object.freeze({
   userProfile: '/user/my-profile/',
   refreshToken: '/auth/refresh-token',
   studentApplication: '/user/student-application-details/',
-  qualification: '/common/qualification'
+  qualification: '/common/qualification',
+  country: '/common/country',
+  state: '/common/state',
+  address: '/user/update-address/'
 })
