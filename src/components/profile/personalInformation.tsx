@@ -1,4 +1,4 @@
-import { Box, Card, Grid } from '@mui/material'
+import { Box, Card, Grid, IconButton } from '@mui/material'
 import { ProfileInfo } from '.'
 import { Pencil } from 'mdi-material-ui'
 
@@ -35,11 +35,18 @@ const PersonalInformation = ({ handleEditDialogOpen, studentDetails }: IProps) =
           {studentDetails[0]?.address?.map((item: any) => (
             <Grid sm={5} xs={12} item key={item?.id}>
               {item?.addressType}
-              <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative' }}>
+              <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative', background: '#e0ece8' }}>
                 {`${item?.street} ${item?.state} ${item?.state} ${item?.city} ${item?.country} ${item?.zipcode}`}
-                <div onClick={handleEditDialogOpen}>
-                  <Pencil style={{ color: 'white' }} />
-                </div>
+                {item?.addressType === 'POSTAL' && (
+                  <IconButton
+                    aria-label='fingerprint'
+                    color='success'
+                    onClick={handleEditDialogOpen}
+                    sx={{ position: 'absolute', top: '5px', right: '5px', background: '#4f958d' }}
+                  >
+                    <Pencil style={{ color: 'white' }} />
+                  </IconButton>
+                )}
               </Card>
             </Grid>
           ))}

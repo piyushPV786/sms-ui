@@ -22,4 +22,32 @@ export default class Common {
     }
     nProgress.done()
   }
+  async getCountryData() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.country
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching student detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+  async getStateData(countryCode: string) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.state}/${countryCode}`
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching student detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
 }

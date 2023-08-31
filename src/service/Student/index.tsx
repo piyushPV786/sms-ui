@@ -14,6 +14,14 @@ interface ILogin {
   password: string
 }
 
+interface IAddressP {
+  street: string
+  country: string
+  state: string
+  city: string
+  zipcode: number
+}
+
 export interface DataParams {
   q?: string
   pageSize: number
@@ -140,5 +148,20 @@ export default class Student {
     } catch (err: any) {
       console.log('Error fetching payment list ========>', err?.message)
     }
+  }
+
+  async updateAddress(payload: IAddressP, studentCode: string) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.address}${studentCode}`
+    try {
+      const response = await this.apiServer.patch(endUrlName, payload)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error ResetPasswordLink ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
   }
 }
