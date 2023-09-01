@@ -24,11 +24,17 @@ import Tooltip from '@mui/material/Tooltip'
 import { successToast } from 'src/@core/components/common/Toast'
 import { deleteDocument } from 'src/context/common'
 
-const DeleteDialog = () => {
+interface IDeleteDialogProps {
+  deleteStudentDocument: (arg0: string) => void
+  data: any
+}
+
+const DeleteDialog = ({ deleteStudentDocument, data }: IDeleteDialogProps) => {
   // ** States
   const [dialogShow, setDialogShow] = useState<boolean>(false)
 
   const onSubmit = () => {
+    deleteStudentDocument(data?.row?.code)
     successToast(deleteDocument.delete)
     setDialogShow(false)
   }

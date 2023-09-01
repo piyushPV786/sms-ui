@@ -50,7 +50,7 @@ interface FileTypes {
 export const fileType: FileTypes = {
   doc: 'DOC',
   ppt: 'PPT',
-  pdf: 'PDF'
+  pdf: 'pdf'
 }
 
 export const info = [
@@ -104,13 +104,3 @@ export const projectStudentDocumentMessage: IDynamicObject = {
 export enum FileSize {
   maxSize = 2000 * 1024
 }
-
-export const response = [
-  {
-    id: 1,
-    fileName: 'ppt',
-    type: 'doc',
-    filesize: '1.2 kb',
-    datetime: '05-08-2023'
-  }
-]

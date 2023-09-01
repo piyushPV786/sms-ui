@@ -49,3 +49,18 @@ export interface IDocumentTypes {
   size: string
   datetime: string
 }
+
+export interface IDocumentType {
+  code: string
+  createdAt: string
+  documentTypeCode: string
+  fileExtension: string
+  id: number
+  name: string
+  status: string
+  studentCode: string
+}
+
+export interface IUploadDocumentParam {
+  file: File & { isNewlyAdded?: boolean }
+}
