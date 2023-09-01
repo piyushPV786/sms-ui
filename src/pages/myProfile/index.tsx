@@ -11,8 +11,6 @@ import { useRouter } from 'next/router'
 import { styled } from '@mui/material/styles'
 import CustomAvatar from 'src/@core/components/mui/avatar'
 import { AvatarProps, Tab, Tabs } from '@mui/material'
-import Snackbar from '@mui/material/Snackbar'
-import MuiAlert from '@mui/material/Alert'
 import { useEffect, useState } from 'react'
 import EditPostalAddressDialog from '../../components/profile/editPostalddressDialog'
 
@@ -25,10 +23,8 @@ import SponsorInformation from 'src/components/profile/sponsorInformation'
 import EmploymentInformation from 'src/components/profile/employmetInformation'
 import KinInformation from 'src/components/profile/kinInformation'
 import { successToast } from 'src/components/common'
+import ProfilePictureDialog from 'src/components/profile/profilePictureDialog'
 
-const Alert = (props: any) => {
-  return <MuiAlert elevation={6} variant='filled' {...props} />
-}
 const PreviewCard = () => {
   const router = useRouter()
   const auth = useAuth()
@@ -37,8 +33,6 @@ const PreviewCard = () => {
   const [userProfileDetails, setUserProfileDetails] = useState<any>(null)
   const [studentDetails, setStudentDetails] = useState(null)
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
-  const [openSnackbar, setOpenSnackbar] = useState(false)
-  const [snackbarMessage, setSnackbarMessage] = useState('')
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [countryData, setCountryData] = useState(null)
   const [stateData, setStateData] = useState(null)
@@ -46,30 +40,12 @@ const PreviewCard = () => {
     width: 150,
     height: 150
   }))
-  const handleCloseSnackbar = (event: any, reason: string) => {
-    if (reason === 'clickaway') {
-      return
-    }
 
-    setOpenSnackbar(false)
-  }
-  const handleImageChange = (event: any) => {
-    const imageFile = event.target.files[0]
+  const handleImageChange = (file: any) => {
+    const imageFile = file[0]
 
-    if (imageFile) {
-      if (imageFile.type === 'image/jpeg' || imageFile.type === 'image/png') {
-        if (imageFile.size <= 800000) {
-          const imageUrl = URL.createObjectURL(imageFile)
-          setSelectedImage(imageUrl)
-        } else {
-          setSnackbarMessage('Image size should be less than 800KB')
-          setOpenSnackbar(true)
-        }
-      } else {
-        setSnackbarMessage('Only JPEG or PNG images are allowed')
-        setOpenSnackbar(true)
-      }
-    }
+    const imageUrl = URL.createObjectURL(imageFile)
+    setSelectedImage(imageUrl)
   }
 
   const handleEditDialogOpen = () => {
@@ -157,6 +133,7 @@ const PreviewCard = () => {
         </Grid>
       </Grid>
       <Grid container xs={12} sx={{ display: 'flex' }}>
+        <ProfilePictureDialog handleImageChange={handleImageChange} selectedImage={selectedImage} />
         <Grid className='d-flex' sm={3} xs={12} item>
           <Grid xs={12} sm={11}>
             <Card sx={{ padding: 8 }}>
@@ -238,12 +215,6 @@ const PreviewCard = () => {
         countryData={countryData}
         stateData={stateData}
       />
-
-      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity='error'>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
     </Box>
   )
 }
