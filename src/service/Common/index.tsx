@@ -77,4 +77,19 @@ export default class Common {
       return response
     }
   }
+
+  async getFileUrl(fileName: string) {
+    nProgress.start()
+    const endUrlName = apiEndPoints.getFileUrl
+    try {
+      const response = await this.apiServer.get(`${endUrlName}?filename=${fileName}`)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching student detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
 }

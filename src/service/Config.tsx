@@ -43,5 +43,6 @@ export const apiEndPoints = Object.freeze({
   state: '/common/state',
   address: '/user/update-address/',
   userDocument: '/user/documnents',
-  uploadFileUrl: '/common/document/upload'
+  uploadFileUrl: '/common/document/upload',
+  getFileUrl: '/common/document'
 })

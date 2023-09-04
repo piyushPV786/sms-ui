@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { commonListTypes, documentTypes } from 'src/types/dataTypes'
+import axios from 'axios'
+import nProgress from 'nprogress'
+import { Dispatch, SetStateAction } from 'react'
+import { status } from 'src/context/common'
+import { CommonService } from 'src/service'
 
 const ImagePayu = require('/public/images/payu.png') as string
 const ImagePayFast = require('/public/images/payfastImage.png') as string
@@ -101,4 +106,82 @@ export const serialNumber = (params: number, pageNumber: number, pageSize: numbe
 
 export const minTwoDigits = (n: number) => {
   return (n < 10 ? '0' : '') + n
+}
+
+export const viewProofDetails = (
+  url: string,
+  setViewFileLoader?: Dispatch<SetStateAction<{ [key: string]: boolean } | undefined>>,
+  fileCode?: string
+) => {
+  const fileUrl = url.split('?')
+  const data = fileUrl[0]
+  const ext = data.split('.').pop()
+  nProgress.start()
+  axios
+    .get(url, {
+      responseType: 'arraybuffer'
+    })
+    .then(response => {
+      const file = new Blob([response.data], {
+        type: ext === 'pdf' ? 'application/pdf' : 'image/jpeg'
+      })
+      !!setViewFileLoader && !!fileCode && setViewFileLoader(prev => ({ ...prev, [fileCode]: false }))
+      const fileURL = URL.createObjectURL(file)
+      window.open(fileURL)
+      nProgress.done()
+    })
+    .catch(error => {
+      console.log('Error viewing file', error.message)
+      nProgress.done()
+    })
+}
+
+export const downloadFile = (
+  url: any,
+  fileName: string,
+  setViewFileLoader?: Dispatch<SetStateAction<{ [key: string]: boolean } | undefined>>,
+  fileCode?: string
+) => {
+  const fileUrl = url?.split('?')
+  const data = fileUrl[0]
+  const ext = data.split('.').pop()
+
+  axios
+    .get(url, {
+      responseType: 'arraybuffer'
+    })
+    .then(response => {
+      const file = new Blob([response.data], {
+        type:
+          ext === 'pdf'
+            ? 'application/pdf'
+            : ext === 'xls'
+            ? 'application/xls'
+            : ext === 'xlsx'
+            ? 'application/xlsx'
+            : 'image/jpeg'
+      })
+      !!setViewFileLoader && !!fileCode && setViewFileLoader(prev => ({ ...prev, [fileCode]: false }))
+      const fileURL = URL.createObjectURL(file)
+      const aElement = document.createElement('a')
+      aElement.setAttribute('download', fileName)
+      const href = fileURL
+      aElement.href = href
+      aElement.setAttribute('target', '_blank')
+      aElement.click()
+      URL.revokeObjectURL(href)
+    })
+    .catch(error => {
+      console.log('Error viewing file', error.message)
+    })
+}
+export const getFileUrl = async (
+  fileName: string,
+  setViewFileLoader?: Dispatch<SetStateAction<{ [key: string]: boolean } | undefined>>,
+  fileCode?: string
+) => {
+  const response = await CommonService.getFileUrl(fileName)
+  if (response?.data?.statusCode === status?.successCode) {
+    downloadFile(response?.data?.data, fileName, setViewFileLoader, fileCode)
+  }
 }

@@ -45,12 +45,14 @@ interface FileTypes {
   doc: string
   ppt: string
   pdf: string
+  png: string
 }
 
 export const fileType: FileTypes = {
   doc: 'DOC',
   ppt: 'PPT',
-  pdf: 'pdf'
+  pdf: 'pdf',
+  png: 'png'
 }
 
 export const info = [
