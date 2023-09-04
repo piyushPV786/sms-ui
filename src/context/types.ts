@@ -59,6 +59,7 @@ export interface IDocumentType {
   name: string
   status: string
   studentCode: string
+  fileSize: string
 }
 
 export interface IUploadDocumentParam {

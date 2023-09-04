@@ -37,7 +37,8 @@ interface fileTypes {
 const fileTypeObj: fileTypes = {
   [fileType.doc]: 'info',
   [fileType.ppt]: 'error',
-  [fileType.pdf]: 'error'
+  [fileType.pdf]: 'error',
+  [fileType.png]: 'error'
 }
 
 interface IIndex {
@@ -167,7 +168,8 @@ const DocumentList = () => {
       flex: 0.1,
       field: 'fileSize',
       minWidth: 100,
-      headerName: 'File Size'
+      headerName: 'File Size',
+      renderCell: ({ row }: CellType) => <Typography>{row.fileSize ? row.fileSize : '-'}</Typography>
     },
     {
       flex: 0.1,

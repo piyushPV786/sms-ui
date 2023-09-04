@@ -135,6 +135,46 @@ export const viewProofDetails = (
       nProgress.done()
     })
 }
+
+export const downloadFile = (
+  url: any,
+  fileName: string,
+  setViewFileLoader?: Dispatch<SetStateAction<{ [key: string]: boolean } | undefined>>,
+  fileCode?: string
+) => {
+  const fileUrl = url?.split('?')
+  const data = fileUrl[0]
+  const ext = data.split('.').pop()
+
+  axios
+    .get(url, {
+      responseType: 'arraybuffer'
+    })
+    .then(response => {
+      const file = new Blob([response.data], {
+        type:
+          ext === 'pdf'
+            ? 'application/pdf'
+            : ext === 'xls'
+            ? 'application/xls'
+            : ext === 'xlsx'
+            ? 'application/xlsx'
+            : 'image/jpeg'
+      })
+      !!setViewFileLoader && !!fileCode && setViewFileLoader(prev => ({ ...prev, [fileCode]: false }))
+      const fileURL = URL.createObjectURL(file)
+      const aElement = document.createElement('a')
+      aElement.setAttribute('download', fileName)
+      const href = fileURL
+      aElement.href = href
+      aElement.setAttribute('target', '_blank')
+      aElement.click()
+      URL.revokeObjectURL(href)
+    })
+    .catch(error => {
+      console.log('Error viewing file', error.message)
+    })
+}
 export const getFileUrl = async (
   fileName: string,
   setViewFileLoader?: Dispatch<SetStateAction<{ [key: string]: boolean } | undefined>>,
@@ -142,6 +182,6 @@ export const getFileUrl = async (
 ) => {
   const response = await CommonService.getFileUrl(fileName)
   if (response?.data?.statusCode === status?.successCode) {
-    viewProofDetails(response?.data?.data, setViewFileLoader, fileCode)
+    downloadFile(response?.data?.data, fileName, setViewFileLoader, fileCode)
   }
 }
