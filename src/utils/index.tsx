@@ -94,3 +94,11 @@ export const GetPaymentImage = (type: string) => {
 export const calculateFileSize = (size: number) => {
   return size / 1024 > 1024 ? `${(size / 1024 / 1024).toFixed(2)} MB` : `${Math.round(size / 1024)} KB`
 }
+
+export const serialNumber = (params: number, pageNumber: number, pageSize: number) => {
+  return pageNumber === 1 ? params + 1 : (pageNumber - 1) * pageSize + (params + 1)
+}
+
+export const minTwoDigits = (n: number) => {
+  return (n < 10 ? '0' : '') + n
+}

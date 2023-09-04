@@ -16,14 +16,20 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { calculateFileSize } from 'src/utils'
 import { FileSize, projectStudentDocumentMessage } from 'src/context/common'
+import { IUploadDocumentParam } from 'src/context/types'
 
 const schema = yup.object().shape({
   file: yup.mixed().required('Please upload any File')
 })
 
-const FileUploadCard = () => {
+interface IFileUploadProps {
+  uploadFile: (param: IUploadDocumentParam) => void
+}
+
+const FileUploadCard = ({ uploadFile }: IFileUploadProps) => {
   const onSubmit = (param: any) => {
-    console.log('fileData', param) //when api call remove console
+    uploadFile(param)
+    reset()
   }
 
   const {
@@ -32,6 +38,7 @@ const FileUploadCard = () => {
     handleSubmit,
     setValue,
     unregister,
+    reset,
     clearErrors,
     formState: { errors }
   } = useForm({ resolver: yupResolver(schema) })
