@@ -126,6 +126,7 @@ const DocumentList = () => {
     const formattedTime = currentDate?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     const formattedDate = currentDate?.toLocaleDateString()
     const formattedDateTime = `${formattedDate} ${formattedTime}`
+
     return formattedDateTime
   }
 
