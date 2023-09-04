@@ -26,8 +26,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 import FileUpload from 'src/components/uploaddocument/FileUpload'
 import DeleteDialog from 'src/components/dialog/DeleteDialog'
 import { useAuth } from 'src/hooks/useAuth'
-import { minTwoDigits, serialNumber } from 'src/utils'
+import { getFileUrl, minTwoDigits, serialNumber } from 'src/utils'
 import { IDocumentType, IUploadDocumentParam } from 'src/context/types'
+import { CircularProgress } from '@mui/material'
 
 interface fileTypes {
   [key: string]: ThemeColor
@@ -61,6 +62,7 @@ const DocumentList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [documentResponse, setDocumentResponse] = useState<any>([])
   const [loading, setLoading] = useState<boolean>(false)
+  const [viewFileLoader, setViewFileLoader] = useState<{ [key: string]: boolean }>()
 
   const auth = useAuth()
 
@@ -117,8 +119,10 @@ const DocumentList = () => {
     setValue(val)
   }
 
-  const Downloaddoc = () => {
+  const handleView = (fileName: string, fileCode: string) => {
     successToast(downloadSuccess.download)
+    setViewFileLoader(prev => ({ ...prev, [fileCode]: true }))
+    getFileUrl(fileName, setViewFileLoader, fileCode)
   }
 
   const setCurrentDateTime = (createdAt: string) => {
@@ -178,24 +182,32 @@ const DocumentList = () => {
       sortable: false,
       field: 'actions',
       headerName: 'Actions',
-      renderCell: (row: CellType) => (
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Tooltip title='Download'>
-            <Box>
-              <IconButton
-                size='small'
-                component='a'
-                color='primary'
-                sx={{ textDecoration: 'none', mr: 0.5, pt: 2 }}
-                onClick={Downloaddoc}
-              >
-                <Download />
-              </IconButton>
-            </Box>
-          </Tooltip>
-          <DeleteDialog deleteStudentDocument={deleteDocument} data={row} />
-        </Box>
-      )
+      renderCell: (row: CellType) => {
+        const { code, name } = row?.row
+
+        return (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {viewFileLoader && viewFileLoader[code] ? (
+              <CircularProgress color='primary' size={20} />
+            ) : (
+              <Tooltip title='Download'>
+                <Box>
+                  <IconButton
+                    size='small'
+                    component='a'
+                    color='primary'
+                    sx={{ textDecoration: 'none', mr: 0.5, pt: 2 }}
+                    onClick={() => handleView(name, code)}
+                  >
+                    <Download />
+                  </IconButton>
+                </Box>
+              </Tooltip>
+            )}
+            <DeleteDialog deleteStudentDocument={deleteDocument} data={row} />
+          </Box>
+        )
+      }
     }
   ]
 
