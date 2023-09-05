@@ -36,6 +36,7 @@ const PreviewCard = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [countryData, setCountryData] = useState(null)
   const [stateData, setStateData] = useState(null)
+  const [openProfileModal, setProfileModal] = useState<boolean>(false)
   const AvatarWithStyles = styled(CustomAvatar)<AvatarProps>(({}) => ({
     width: 150,
     height: 150
@@ -133,7 +134,12 @@ const PreviewCard = () => {
         </Grid>
       </Grid>
       <Grid container xs={12} sx={{ display: 'flex' }}>
-        <ProfilePictureDialog handleImageChange={handleImageChange} selectedImage={selectedImage} />
+        <ProfilePictureDialog
+          handleImageChange={handleImageChange}
+          selectedImage={selectedImage}
+          setProfileModal={setProfileModal}
+          openProfileModal={openProfileModal}
+        />
         <Grid className='d-flex' sm={3} xs={12} item>
           <Grid xs={12} sm={11}>
             <Card sx={{ padding: 8 }}>
@@ -145,22 +151,14 @@ const PreviewCard = () => {
                 )}
               </Grid>
               <Grid className='d-flex' sx={{ justifyContent: 'center', marginTop: 8 }}>
-                <input
-                  accept='image/jpeg, image/png'
-                  type='file'
-                  style={{ display: 'none' }}
-                  id='upload-image-input'
-                  onChange={handleImageChange}
-                />
-                <label htmlFor='upload-image-input'>
-                  <Button
-                    variant='contained'
-                    component='span'
-                    sx={{ background: 'linear-gradient(90deg, rgba(80,149,142,1) 100%, rgba(1,133,85,1) 0%)' }}
-                  >
-                    CHANGE PHOTO
-                  </Button>
-                </label>
+                <Button
+                  variant='contained'
+                  component='span'
+                  sx={{ background: 'linear-gradient(90deg, rgba(80,149,142,1) 100%, rgba(1,133,85,1) 0%)' }}
+                  onClick={() => setProfileModal(!openProfileModal)}
+                >
+                  CHANGE PHOTO
+                </Button>
               </Grid>
               <Grid className='d-flex' sx={{ justifyContent: 'center', marginTop: 12 }}>
                 Allowed PNG or JPEG. Max size of 800K

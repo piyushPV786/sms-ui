@@ -30,9 +30,11 @@ const AcceptanceLatterContainer = styled(Box)(() => ({
 interface IProps {
   handleImageChange: (arg0: any) => void
   selectedImage: any
+  setProfileModal: any
+  openProfileModal: boolean
 }
 
-const ProfilePictureDialog = ({ handleImageChange, selectedImage }: IProps) => {
+const ProfilePictureDialog = ({ handleImageChange, selectedImage, setProfileModal, openProfileModal }: IProps) => {
   const [profileImage, setProfileImage] = useState<any>(null)
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
@@ -51,7 +53,7 @@ const ProfilePictureDialog = ({ handleImageChange, selectedImage }: IProps) => {
   }
 
   return (
-    <Dialog open={true} PaperProps={{ style: { minWidth: '500px' } }}>
+    <Dialog open={openProfileModal} PaperProps={{ style: { minWidth: '500px' } }}>
       <DialogTitle align='center' color='primary' style={{ background: '#dbe7e3', maxHeight: '70px' }}>
         CHANGE PHOTO
       </DialogTitle>
@@ -107,6 +109,7 @@ const ProfilePictureDialog = ({ handleImageChange, selectedImage }: IProps) => {
             <Button
               variant='contained'
               style={{ background: 'white', color: 'grey', borderColor: 'grey', marginRight: '10px' }}
+              onClick={() => setProfileModal(!openProfileModal)}
             >
               Cancel
             </Button>
