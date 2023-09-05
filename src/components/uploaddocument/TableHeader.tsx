@@ -32,7 +32,13 @@ const TableHeader = (props: TableHeaderProps) => {
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'end' }}>
-        <TextField size='small' value={value} placeholder='Search...' sx={{ mr: 4, mb: 2, maxWidth: '280px' }} />
+        <TextField
+          size='small'
+          variant='standard'
+          value={value}
+          placeholder='Search...'
+          sx={{ mr: 4, mb: 2, maxWidth: '280px' }}
+        />
       </Box>
     </Box>
   )

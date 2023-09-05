@@ -150,6 +150,21 @@ export default class Student {
     }
   }
 
+  async getUserDocument(studentCode: string) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.userDocument}/${studentCode}`
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching user document list ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+
   async updateAddress(payload: IAddressP, studentCode: string) {
     nProgress.start()
     const endUrlName = `${apiEndPoints.address}${studentCode}`
@@ -177,5 +192,29 @@ export default class Student {
       nProgress.done()
     }
     nProgress.done()
+  }
+  async addStudentDocument(params: any) {
+    const endUrlName = `${apiEndPoints.userDocument}`
+    try {
+      const response = await this.apiServer.post<any>(endUrlName, { ...params })
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching  Add student document ========>', err?.message)
+    }
+  }
+  async deleteStudentDocuments(documentCode: string) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.userDocument}/${documentCode}`
+
+    try {
+      const response = await this.apiServer.delete(endUrlName)
+
+      return response.data
+    } catch (err: any) {
+      console.log('Error Deleting student Document ========>', err?.message)
+    } finally {
+      nProgress.done()
+    }
   }
 }

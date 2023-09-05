@@ -54,7 +54,7 @@ const StudentDetails = () => {
                 </Link>
 
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
-                <Link target='_blank' href='/'>
+                <Link target='_blank' href={`/calendar`}>
                   Calender
                 </Link>
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
