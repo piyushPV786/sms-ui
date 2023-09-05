@@ -2,11 +2,16 @@ import { Grid, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import Assignments from 'src/components/dashboard/Assignments'
 import Classes from 'src/components/dashboard/Classes'
+import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import MyDays from 'src/components/dashboard/MyDays'
 import Program from 'src/components/dashboard/Program'
 import StudentDetails from 'src/components/dashboard/StudentDetails'
 
 const StudentDashboard = () => {
+  const { scheduler } = DashboardCustomHooks()
+
+  console.log('scheduler', scheduler)
+
   return (
     <Box>
       <Typography mt={5} mb={5} sx={{ fontWeight: 'bold' }}>

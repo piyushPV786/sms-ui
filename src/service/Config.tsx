@@ -42,6 +42,7 @@ export const apiEndPoints = Object.freeze({
   country: '/common/country',
   state: '/common/state',
   address: '/user/update-address/',
+  studentSchedule: '/scheduler/',
   userDocument: '/user/documnents',
   uploadFileUrl: '/common/document/upload',
   getFileUrl: '/common/document'
