@@ -100,6 +100,7 @@ const DocumentList = () => {
         file: payload.file
       })
       if (documentUploadResponse) {
+        successToast(downloadSuccess.upload)
         getUserDocumentList()
       }
     }
