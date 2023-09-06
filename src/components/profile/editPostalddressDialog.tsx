@@ -81,8 +81,8 @@ const EditPostalAddressDialog = ({
   const zipcodeWatch = watch('zipcode')
 
   useEffect(() => {
-    if (studentDetails && studentDetails[0]?.address?.length) {
-      const postalAddress = studentDetails[0]?.address?.find((item: any) => item?.addressType === 'POSTAL')
+    if (studentDetails && studentDetails?.address?.length) {
+      const postalAddress = studentDetails?.address?.find((item: any) => item?.addressType === 'POSTAL')
       setValue('country', postalAddress?.country)
       setValue('city', postalAddress?.city)
       setValue('state', postalAddress?.state)
