@@ -35,10 +35,14 @@ export const deleteDocument: deleteDocument = {
 
 interface downloadSuccess {
   download: string
+  upload: string
+  searchErrorMessage: string
 }
 
 export const downloadSuccess: downloadSuccess = {
-  download: 'File downloaded Sucessfully.'
+  download: 'File downloaded Sucessfully.',
+  upload: 'File uploaded Sucessfully.',
+  searchErrorMessage: 'Type minimum 3 characters'
 }
 
 interface FileTypes {

@@ -54,11 +54,17 @@ const StudentDetails = () => {
                 </Link>
 
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
-                <Link target='_blank' href={`/calendar`}>
-                  Calender
+                <Link href={`/calendar`} passHref>
+                  <a href='' style={{ color: '#fff' }}>
+                    Calender
+                  </a>
                 </Link>
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
-                <Link href={`/my-document`}>My Document</Link>
+                <Link href={`/my-document`} passHref>
+                  <a href='' style={{ color: '#fff' }}>
+                    My Documents
+                  </a>
+                </Link>
               </Box>
             </Box>
           </Grid>
