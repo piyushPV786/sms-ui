@@ -42,6 +42,22 @@ export default class Common {
     }
     nProgress.done()
   }
+
+  async getProfileSource(filename: string) {
+    nProgress.start()
+    const endUrlName = apiEndPoints.document
+    try {
+      const response = await this.apiServer.get(`${endUrlName}?filename=${filename}`)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching student detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+
   async getStateData(countryCode: string) {
     nProgress.start()
     const endUrlName = `${apiEndPoints.state}/${countryCode}`

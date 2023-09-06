@@ -2,6 +2,7 @@
 
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
+import axios from 'axios'
 
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
@@ -29,10 +30,21 @@ const PreviewCard = () => {
   const router = useRouter()
   const auth = useAuth()
 
+  interface imageFile {
+    name: string
+    type: string
+  }
+  interface payload {
+    name: string | undefined
+    fileExtension: string | undefined
+    status: string
+  }
+
   const [qualificationData, setQualificationData] = useState<any>(null)
   const [userProfileDetails, setUserProfileDetails] = useState<any>(null)
-  const [studentDetails, setStudentDetails] = useState(null)
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [studentDetails, setStudentDetails] = useState<any>()
+  const [selectedImage, setSelectedImage] = useState<imageFile | undefined>()
+  const [profileImage, setProfileImage] = useState<string | undefined>()
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [countryData, setCountryData] = useState(null)
   const [stateData, setStateData] = useState(null)
@@ -45,8 +57,7 @@ const PreviewCard = () => {
   const handleImageChange = (file: any) => {
     const imageFile = file[0]
 
-    const imageUrl = URL.createObjectURL(imageFile)
-    setSelectedImage(imageUrl)
+    setSelectedImage(imageFile)
   }
 
   const handleEditDialogOpen = () => {
@@ -84,7 +95,9 @@ const PreviewCard = () => {
     if (auth?.user?.studentCode) {
       const userProfileResponse = await StudentService?.UserProfile(auth?.user?.studentCode)
       if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
-        setStudentDetails(userProfileResponse?.data?.data)
+        setStudentDetails(userProfileResponse?.data?.data[0])
+        const imgsrc = await CommonService.getProfileSource(userProfileResponse?.data?.data[0].documentCode)
+        setProfileImage(imgsrc?.data?.data)
       }
     }
   }
@@ -103,6 +116,35 @@ const PreviewCard = () => {
     if (qualificationResponse?.data?.data) {
       setQualificationData(qualificationResponse?.data?.data)
     }
+  }
+
+  const uploadDocuments = async (uploadFileUrl: string, file: any) => {
+    try {
+      const response = await axios.put(uploadFileUrl, file)
+
+      if (response.status === 200) {
+        return response.data
+      } else {
+        return response.data
+      }
+    } catch (error: any) {
+      console.log(error.message)
+
+      return error
+    }
+  }
+
+  const updateProfilePhoto = async () => {
+    const payload: payload = {
+      name: selectedImage?.name,
+      fileExtension: selectedImage?.type,
+      status: 'uploaded'
+    }
+    const qualificationResponse = await StudentService?.ProfilePhoto(payload, studentDetails && studentDetails?.email)
+    uploadDocuments(qualificationResponse?.data?.data?.awsUploadUrl, selectedImage)
+
+    const imgsrc = await CommonService.getProfileSource(qualificationResponse?.data?.data?.userDetail?.documentCode)
+    setProfileImage(imgsrc?.data?.data)
   }
 
   const getCountryData = async () => {
@@ -139,16 +181,13 @@ const PreviewCard = () => {
           selectedImage={selectedImage}
           setProfileModal={setProfileModal}
           openProfileModal={openProfileModal}
+          updateProfilePhoto={updateProfilePhoto}
         />
         <Grid className='d-flex' sm={3} xs={12} item>
           <Grid xs={12} sm={11}>
             <Card sx={{ padding: 8 }}>
               <Grid className='d-flex' sx={{ justifyContent: 'center' }}>
-                {selectedImage ? (
-                  <AvatarWithStyles alt='R' src={selectedImage} />
-                ) : (
-                  <AvatarWithStyles alt='R' src='/student/images/avatars/1.png' />
-                )}
+                <AvatarWithStyles alt='R' src={`${profileImage}`} />
               </Grid>
               <Grid className='d-flex' sx={{ justifyContent: 'center', marginTop: 8 }}>
                 <Button

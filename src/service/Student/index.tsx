@@ -9,6 +9,12 @@ export interface IPasswordUpdateRequest {
   confirmPassword: string
 }
 
+interface payload {
+  name: string | undefined
+  fileExtension: string | undefined
+  status: string
+}
+
 interface ILogin {
   username: string
   password: string
@@ -68,6 +74,21 @@ export default class Student {
     const endUrlName = apiEndPoints.login
     try {
       const response = await this.apiServer.post(endUrlName, { ...payload })
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error ResetPasswordLink ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+
+  async ProfilePhoto(payload: payload, email: string) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.profilePhoto}${email}`
+    try {
+      const response = await this.apiServer.patch(endUrlName, { ...payload })
       nProgress.done()
 
       return response

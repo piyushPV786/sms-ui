@@ -32,9 +32,16 @@ interface IProps {
   selectedImage: any
   setProfileModal: any
   openProfileModal: boolean
+  updateProfilePhoto: any
 }
 
-const ProfilePictureDialog = ({ handleImageChange, selectedImage, setProfileModal, openProfileModal }: IProps) => {
+const ProfilePictureDialog = ({
+  handleImageChange,
+  selectedImage,
+  setProfileModal,
+  openProfileModal,
+  updateProfilePhoto
+}: IProps) => {
   const [profileImage, setProfileImage] = useState<any>(null)
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
@@ -113,7 +120,16 @@ const ProfilePictureDialog = ({ handleImageChange, selectedImage, setProfileModa
             >
               Cancel
             </Button>
-            <Button style={{ background: '#4f958d', color: 'white' }} variant='contained' type='submit'>
+            <Button
+              style={{ background: '#4f958d', color: 'white' }}
+              variant='contained'
+              type='submit'
+              onClick={() => {
+                updateProfilePhoto()
+                setProfileImage(null)
+                setProfileModal(false)
+              }}
+            >
               Save
             </Button>
           </Box>

@@ -12,27 +12,27 @@ const PersonalInformation = ({ handleEditDialogOpen, studentDetails }: IProps) =
     <Box>
       {!!studentDetails && (
         <Grid container xs={12} sx={{ marginTop: 10 }}>
-          <ProfileInfo label='Name' info={`${studentDetails[0]['firstName']} ${studentDetails[0]['lastName']}`} />
-          <ProfileInfo label='Gender' info={`${studentDetails[0]['gender']}`} />
-          <ProfileInfo label='Date of Birth' info={`${studentDetails[0]['dateOfBirth']}}`} />
-          <ProfileInfo label='Email' info={`${studentDetails[0]['email']}`} />
+          <ProfileInfo label='Name' info={`${studentDetails['firstName']} ${studentDetails['lastName']}`} />
+          <ProfileInfo label='Gender' info={`${studentDetails['gender']}`} />
+          <ProfileInfo label='Date of Birth' info={`${studentDetails['dateOfBirth']}}`} />
+          <ProfileInfo label='Email' info={`${studentDetails['email']}`} />
           <ProfileInfo
             label='Mobile Number'
-            info={`+${studentDetails[0]['mobileCountryCode']} ${studentDetails[0]['mobileNo']}`}
+            info={`+${studentDetails['mobileCountryCode']} ${studentDetails['mobileNo']}`}
           />
-          <ProfileInfo label='Home Language' info={`${studentDetails[0]['homeLanguage']}`} />
-          <ProfileInfo label='Race' info={`${studentDetails[0]['race']}`} />
-          <ProfileInfo label='Nationality Status' info={`${studentDetails[0]['nationality']}`} />
-          <ProfileInfo label='Nationality' info={`${studentDetails[0]['nationality']}`} />
+          <ProfileInfo label='Home Language' info={`${studentDetails['homeLanguage']}`} />
+          <ProfileInfo label='Race' info={`${studentDetails['race']}`} />
+          <ProfileInfo label='Nationality Status' info={`${studentDetails['nationality']}`} />
+          <ProfileInfo label='Nationality' info={`${studentDetails['nationality']}`} />
           <ProfileInfo
             label='Identification Document Type / Id No'
-            info={`${studentDetails[0]['identificationDocumentType']} / ${studentDetails[0]['idNo']}`}
+            info={`${studentDetails['identificationDocumentType']} / ${studentDetails['idNo']}`}
           />
         </Grid>
       )}
-      {!!studentDetails && studentDetails[0]?.address && (
+      {!!studentDetails && studentDetails?.address && (
         <Grid container xs={12} display={'flex'} justifyContent={'space-between'}>
-          {studentDetails[0]?.address?.map((item: any) => (
+          {studentDetails?.address?.map((item: any) => (
             <Grid sm={5} xs={12} item key={item?.id}>
               {item?.addressType}
               <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative', background: '#e0ece8' }}>

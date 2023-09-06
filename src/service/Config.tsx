@@ -45,5 +45,7 @@ export const apiEndPoints = Object.freeze({
   studentSchedule: '/scheduler/',
   userDocument: '/user/documnents',
   uploadFileUrl: '/common/document/upload',
-  getFileUrl: '/common/document'
+  getFileUrl: '/common/document',
+  profilePhoto: '/user/upload-profile-picture/',
+  document: '/common/document'
 })
