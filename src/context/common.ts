@@ -110,3 +110,24 @@ export const projectStudentDocumentMessage: IDynamicObject = {
 export enum FileSize {
   maxSize = 2000 * 1024
 }
+
+export interface ICommonData {
+  id: number
+  code: string
+  name: string
+}
+export interface ICourses {
+  id: number
+  name: string
+  code: string
+  program: ICommonData
+}
+export interface ISchedule {
+  id: number
+  individualAssignmentDueDate: Date
+  course: ICourses
+}
+export interface IScheduleData {
+  id: number
+  schedule: ISchedule[]
+}

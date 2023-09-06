@@ -2,7 +2,6 @@ import { Card, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
 import Box, { BoxProps } from '@mui/material/Box'
-import { Launch } from 'mdi-material-ui'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(3)} !important`,
@@ -58,21 +57,21 @@ const CustomBox = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: theme.palette.customColors.myClassesBg
 }))
 
-const StyledLink = styled('a')(({}) => ({
-  display: 'flex',
-  alignItems: 'center',
-  textDecoration: 'none',
-  fontSize: '14px',
-  alignSelf: 'flex-end',
-  color: '#008554',
-  marginTop: '10px'
-}))
+// const StyledLink = styled('a')(({}) => ({
+//   display: 'flex',
+//   alignItems: 'center',
+//   textDecoration: 'none',
+//   fontSize: '14px',
+//   alignSelf: 'flex-end',
+//   color: '#008554',
+//   marginTop: '10px'
+// }))
 
 const Classes = () => {
   return (
     <Card sx={{ position: 'relative', borderRadius: '0px' }}>
       <CardContent>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', pb: 10 }}>
           <Typography variant='h6' mb={5} color={'primary'}>
             MY CLASSES
           </Typography>
@@ -114,9 +113,9 @@ const Classes = () => {
               )
             })}
           </Box>
-          <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>
+          {/* <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>
             <Launch fontSize='inherit' /> More Classes
-          </StyledLink>
+          </StyledLink> */}
         </Box>
       </CardContent>
     </Card>
