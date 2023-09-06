@@ -2,6 +2,7 @@ import { Card, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
 import { Box } from '@mui/system'
+import { ICommonData } from 'src/context/common'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(3)} !important`,
@@ -20,8 +21,11 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
 //   color: '#008554',
 //   marginTop: '10px'
 // }))
+interface IProgramProps {
+  programData: ICommonData[]
+}
 
-const Program = () => {
+const Program = ({ programData }: IProgramProps) => {
   return (
     <Card sx={{ position: 'relative', borderRadius: '0px' }}>
       <CardContent>
@@ -29,30 +33,15 @@ const Program = () => {
           <Typography variant='h6' mb={5} color={'primary'}>
             My PROGRAM
           </Typography>
-          <Box>
-            <Typography variant='caption'>Current Program</Typography>
-            <Typography variant='body2' sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}>
-              Master of Computer Application (MBA)
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant='caption'>Current Program</Typography>
-            <Typography variant='body2' sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}>
-              Master of Computer Application (MBA)
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant='caption'>Current Program</Typography>
-            <Typography variant='body2' sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}>
-              Master of Computer Application (MBA)
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant='caption'>Current Program</Typography>
-            <Typography variant='body2' sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}>
-              Master of Computer Application (MBA)
-            </Typography>
-          </Box>
+          {programData?.map((program: ICommonData) => (
+            <Box key={program?.id}>
+              <Typography variant='body2'>Current Program</Typography>
+              <Typography
+                variant='caption'
+                sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}
+              >{`${program.name}(${program?.code})`}</Typography>
+            </Box>
+          ))}
           {/* <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>
             <Launch fontSize='inherit' /> Apply New Program
           </StyledLink> */}

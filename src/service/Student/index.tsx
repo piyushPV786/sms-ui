@@ -179,9 +179,10 @@ export default class Student {
     }
     nProgress.done()
   }
-  async studentScheduler(studentCode: string) {
+  async studentScheduler(studentCode: string, date?: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.studentSchedule}${studentCode}`
+    let endUrlName = `${apiEndPoints.studentSchedule}${studentCode}`
+    if (date) endUrlName = `${endUrlName}?startDate=${date}&endDate=${date}`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()

@@ -29,7 +29,8 @@ const DefaultPalette = (mode: PaletteMode, skin: Skin) => {
       tooltipBg: mode === 'light' ? '#262732' : '#464A65',
       tableHeaderBg: mode === 'light' ? '#F5F5F7' : '#3A3E5B',
       myDayBg: mode === 'light' ? '#fff6f8' : '#3A3E5B',
-      myClassesBg: mode === 'light' ? '#FFF' : '#3A3E5B'
+      myClassesBg: mode === 'light' ? '#FFF' : '#3A3E5B',
+      myAssignmentBg: mode === 'light' ? '#f7f3eb' : '#3A3E5B'
     },
     common: {
       black: '#000',

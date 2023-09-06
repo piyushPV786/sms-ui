@@ -185,3 +185,40 @@ export const getFileUrl = async (
     downloadFile(response?.data?.data, fileName, setViewFileLoader, fileCode)
   }
 }
+
+export const DDMMYYYDateFormat = (date: Date) => {
+  const newDate = new Date(date)
+
+  return `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear()}`
+}
+
+export const DateFormat = (date: Date) => {
+  const newDate: Date = new Date(date)
+  const weekday: Array<number | string> = new Array(7)
+
+  weekday[0] = 'Sunday'
+  weekday[1] = 'Monday'
+  weekday[2] = 'Tuesday'
+  weekday[3] = 'Wednesday'
+  weekday[4] = 'Thursday'
+  weekday[5] = 'Friday'
+  weekday[6] = 'Saturday'
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ]
+
+  return `${weekday[newDate.getDay()]}, ${newDate.getDate()} ${
+    monthNames[newDate.getMonth()]
+  }, ${newDate.getFullYear()}`
+}
