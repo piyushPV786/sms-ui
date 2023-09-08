@@ -24,7 +24,7 @@ const StudentDashboard = () => {
   const handleOnDownloadClick = (toPdf: () => void) => {
     //Call API
     toPdf()
-    successToast('Academic Records downloaded successfully.')
+    successToast('Academic Transcript downloaded successfully.')
   }
   const getStudentList = async () => {
     const response = await AcademicService?.getStudentAcademicDetails()
@@ -103,8 +103,8 @@ const StudentDashboard = () => {
     <Grid container spacing={6} ref={ref}>
       <Grid item xs={12}>
         <Typography variant='h5' gutterBottom>
-          Academic Records
-          <Typography variant='h6'>Dashboard/Academic Records</Typography>
+          Academic Transcript
+          <Typography variant='h6'>Dashboard/Academic Transcript</Typography>
         </Typography>
         <Card>
           <CardContent>
@@ -130,7 +130,12 @@ const StudentDashboard = () => {
               }}
             >
               <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex' }}>
-                <TextField variant="standard" size='small' placeholder='Search...' sx={{ mr: 4, mb: 2, maxWidth: '280px' }} />
+                <TextField
+                  variant='standard'
+                  size='small'
+                  placeholder='Search...'
+                  sx={{ mr: 4, mb: 2, maxWidth: '280px' }}
+                />
               </Box>
 
               <Box>

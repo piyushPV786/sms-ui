@@ -40,7 +40,7 @@ const RequestLink = () => {
 
   const requestReseLink = async (email: string) => {
     const response = await StudentService?.ResetPasswordLink(email)
-    console.log({ response,email })
+    console.log({ response, email })
   }
   const onSubmit = () => {
     requestReseLink(email)

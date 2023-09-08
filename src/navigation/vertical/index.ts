@@ -18,9 +18,9 @@ const navigation = (): VerticalNavItemsType => {
       path: '/payment'
     },
     {
-      title: 'Academic Records',
+      title: 'Academic Transcript',
       icon: SchoolOutline,
-      path: '/academic-record',
+      path: '/academic-transcript',
       badgeColor: 'error'
     },
     {
