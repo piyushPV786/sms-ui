@@ -9,10 +9,12 @@ import StudentDetails from 'src/components/dashboard/StudentDetails'
 import { ISchedule, IScheduleData } from 'src/context/common'
 
 const StudentDashboard = () => {
-  const { scheduler, myDayData } = DashboardCustomHooks()
+  const { scheduler, myDayData, profileImage } = DashboardCustomHooks()
   const program = scheduler?.map((data: IScheduleData) => data?.schedule?.find((i: ISchedule) => i)?.course?.program)
   const courses = scheduler?.map((data: IScheduleData) => data?.schedule?.find((i: ISchedule) => i))
   const dayData = myDayData?.map((data: IScheduleData) => data?.schedule?.find((i: ISchedule) => i))
+
+  console.log('profileImage', profileImage)
 
   return (
     <Box>
@@ -21,7 +23,7 @@ const StudentDashboard = () => {
       </Typography>
       <Grid container spacing={6}>
         <Grid item xs={12} md={9}>
-          <StudentDetails />
+          <StudentDetails profileImage={profileImage} />
           <Grid container spacing={4} mt={5}>
             <Grid item xs={4} md={4}>
               <Program programData={program} />

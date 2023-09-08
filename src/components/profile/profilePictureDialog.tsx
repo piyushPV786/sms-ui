@@ -43,11 +43,28 @@ const ProfilePictureDialog = ({
   updateProfilePhoto
 }: IProps) => {
   const [profileImage, setProfileImage] = useState<any>(null)
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+  const { acceptedFiles, getRootProps, getInputProps, fileRejections } = useDropzone({
     maxFiles: 1,
     accept: { 'file/doc': ['.jpg', '.jpeg', '.png'] },
     maxSize: 1024 * 1024,
     onDrop: file => onFileChange(file)
+  })
+
+  const fileRejectionItems = fileRejections.map(({ file, errors }) => {
+    return (
+      <>
+        <Typography key={profileImage?.name} color='error'>
+          {Math.round(file.size / 100) / 10 > 1000
+            ? `${(Math.round(file.size / 100) / 10000).toFixed(1)} mb`
+            : `${(Math.round(file.size / 100) / 10).toFixed(1)} kb`}
+        </Typography>
+        {errors.map(e => (
+          <Typography color='error' key={e.code}>
+            {e.message}
+          </Typography>
+        ))}
+      </>
+    )
   })
 
   const onFileChange = (file: any) => {
@@ -78,7 +95,7 @@ const ProfilePictureDialog = ({
               </Typography>
             </Box>
           </AcceptanceLatterContainer>
-          {profileImage && (
+          {profileImage?.length > 0 && (
             <Box
               mt={5}
               style={{
@@ -96,7 +113,11 @@ const ProfilePictureDialog = ({
                 <Avatar alt='Cindy Baker' src={selectedImage} />
                 <Box ml={3}>
                   <Typography>{profileImage[0]?.name}</Typography>
-                  <Typography variant='body2'>{profileImage[0]?.size / 1024}</Typography>
+                  <Typography variant='body2'>
+                    {Math.round(acceptedFiles[0]?.size / 100) / 10 > 1000
+                      ? `${(Math.round(acceptedFiles[0]?.size / 100) / 10000).toFixed(1)} mb`
+                      : `${(Math.round(acceptedFiles[0]?.size / 100) / 10).toFixed(1)} kb`}
+                  </Typography>
                 </Box>
               </Box>
 
@@ -110,13 +131,21 @@ const ProfilePictureDialog = ({
               </Box>
             </Box>
           )}
+          {fileRejectionItems && (
+            <Typography className='file-size' variant='body2'>
+              {fileRejectionItems}
+            </Typography>
+          )}
         </Box>
         <DialogActions>
           <Box sx={{ width: '100%', textAlign: 'center' }}>
             <Button
               variant='contained'
               style={{ background: 'white', color: 'grey', borderColor: 'grey', marginRight: '10px' }}
-              onClick={() => setProfileModal(!openProfileModal)}
+              onClick={() => {
+                setProfileModal(!openProfileModal)
+                setProfileImage(null)
+              }}
             >
               Cancel
             </Button>
