@@ -134,21 +134,6 @@ export default class Student {
     nProgress.done()
   }
 
-  async GetRefreshToken() {
-    nProgress.start()
-    const endUrlName = apiEndPoints.userProfile
-    try {
-      const response = await this.apiServer.get(endUrlName)
-      nProgress.done()
-
-      return response
-    } catch (err: any) {
-      console.log('Error ResetPasswordLink ========>', err?.message)
-      nProgress.done()
-    }
-    nProgress.done()
-  }
-
   async getUserProfileDetails(studentCode: string) {
     nProgress.start()
     const endUrlName = `${apiEndPoints.studentApplication}${studentCode}`
