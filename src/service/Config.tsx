@@ -47,5 +47,7 @@ export const apiEndPoints = Object.freeze({
   uploadFileUrl: '/common/document/upload',
   getFileUrl: '/common/document',
   profilePhoto: '/user/upload-profile-picture/',
-  document: '/common/document'
+  document: '/common/document',
+  resetPassword: 'user/reset-password',
+  newPassword: 'user/update-new-password'
 })

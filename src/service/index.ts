@@ -34,10 +34,15 @@ export const CommonService = new Common(CommonBaseApiServer)
 //     return Promise.reject(error)
 //   }
 // )
+export const refreshBaseAuth = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_STUDENT_BASE_API}`
+})
 
 const refreshTokenFunction = async () => {
-  console.log('refresh token')
-  const response = await StudentService.GetRefreshToken()
+  const response = await refreshBaseAuth.get('/auth/refresh-token', {
+    headers: { Authorization: `Bearer ${window.localStorage.getItem('refreshToken')}` }
+  })
+
   const { data } = response?.data
   if (data?.access_token && data?.refresh_token) {
     await window.localStorage.setItem(authConfig.storageTokenKeyName, data.access_token)
@@ -83,7 +88,6 @@ const errorInterceptor = async (err: any) => {
   }
 
   if (error.status === status.unauthorizedStatus && !config?.sent && !config?.__isRetryRequest) {
-    console.log('401 ===========>')
     config.sent = true
     const response = await memoizedRefreshToken()
     if (response?.status === 200 && response?.access_token && response?.refresh_token) {
