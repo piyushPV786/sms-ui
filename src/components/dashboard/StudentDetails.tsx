@@ -28,14 +28,14 @@ const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
   marginRight: theme.spacing(4)
 }))
 
-const StudentDetails = () => {
+const StudentDetails = ({ profileImage }: any) => {
   return (
     <Card sx={{ position: 'relative' }}>
       <CardContent sx={{ p: theme => `${theme.spacing(7, 7.5)} !important` }}>
         <Grid container>
           <Grid item xs={2} md={3} sm={4}>
             <Box>
-              <Avatar alt='R' src='/student/images/avatars/1.png' />
+              <Avatar alt='R' src={profileImage} />
             </Box>
           </Grid>
           <Grid item xs={10} md={9} sm={8}>

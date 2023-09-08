@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react'
+import { status } from 'src/context/common'
 import { useAuth } from 'src/hooks/useAuth'
-import { StudentService } from 'src/service'
+import { CommonService, StudentService } from 'src/service'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const DashboardCustomHooks = () => {
   const [scheduler, setScheduler] = useState<any>(null)
   const [myDayData, setMyDay] = useState<any>(null)
+  const [profileImage, setProfileImage] = useState<string | undefined>()
 
   const auth = useAuth()
 
   useEffect(() => {
     getStudentScheduler()
     getStudentMyDay()
+    getStudentDetails()
   }, [])
 
   const getStudentScheduler = async () => {
@@ -33,7 +36,18 @@ const DashboardCustomHooks = () => {
     }
   }
 
-  return { scheduler, myDayData }
+  const getStudentDetails = async () => {
+    if (auth?.user?.studentCode) {
+      const userProfileResponse = await StudentService?.UserProfile(auth?.user?.studentCode)
+
+      if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
+        const imgsrc = await CommonService.getProfileSource(userProfileResponse?.data?.data[0].documentCode)
+        setProfileImage(imgsrc?.data?.data)
+      }
+    }
+  }
+
+  return { scheduler, myDayData, profileImage }
 }
 
 export default DashboardCustomHooks
