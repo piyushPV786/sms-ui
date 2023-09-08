@@ -135,10 +135,13 @@ export default class Student {
   }
 
   async GetRefreshToken() {
+    console.log('enter')
     nProgress.start()
-    const endUrlName = apiEndPoints.userProfile
+    const endUrlName = apiEndPoints.refreshToken
     try {
-      const response = await this.apiServer.get(endUrlName)
+      const response = await this.apiServer.get(endUrlName, {
+        headers: { Authorization: `Bearer ${window.localStorage.getItem('refreshToken')}` }
+      })
       nProgress.done()
 
       return response
