@@ -32,12 +32,10 @@ import {
   FormHelperText
 } from '@mui/material'
 import { useRouter } from 'next/router'
-import { EnvPaths, PathTypes, downloadSuccess, ErrorMessage, status } from 'src/context/common'
-import { StudentService } from 'src/service'
+import { EnvPaths, PathTypes, ErrorMessage } from 'src/context/common'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { successToast } from '../../../@core/components/common/Toast'
 
 const schema = yup.object().shape({
   email: yup.string().email(ErrorMessage.emailError).required()
@@ -46,7 +44,6 @@ const schema = yup.object().shape({
 const RequestLink = () => {
   const router = useRouter()
   const [email, setEmailValue] = useState<string>('')
-  const [apiResponse, setApiResponse] = useState(null)
 
   const {
     handleSubmit,
@@ -116,7 +113,6 @@ const RequestLink = () => {
                         {errors.email && (
                           <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>
                         )}
-                        {apiResponse && <FormHelperText sx={{ color: 'error.main' }}>{apiResponse}</FormHelperText>}
                       </Grid>
 
                       <Grid item justifyContent='center' xs={12} sx={{ display: 'flex' }}>

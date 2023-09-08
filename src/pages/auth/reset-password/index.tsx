@@ -17,9 +17,7 @@ import {
   styled,
   BoxProps,
   Button,
-  TextField,
-  Snackbar,
-  Alert
+  TextField
 } from '@mui/material'
 import { CheckCircle, Circle } from 'mdi-material-ui'
 import { useRouter } from 'next/router'
@@ -39,7 +37,6 @@ const schema = yup.object().shape({
 const ForgetPassword = () => {
   // ** Vars
 
-  const [open, setOpen] = useState<boolean>(false)
   const [validationProps, setValidationProps] = useState({
     min8: false,
     lowercase: false,
@@ -79,7 +76,7 @@ const ForgetPassword = () => {
   useEffect(() => checkRequirements, [validationProps])
   const updateNewPassword = async (payload: INewPassword) => {
     const response = await StudentService?.userNewPassword(payload)
-    setOpen(true)
+    console.log(response)
   }
   const onSubmit = (data: any) => {
     checkRequirements()
