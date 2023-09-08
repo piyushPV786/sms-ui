@@ -75,20 +75,19 @@ const errorInterceptor = async (err: any) => {
 
   // if error is 401
 
-  // if (
-  //   error.status === status.unauthorizedStatus &&
-  //   !config?.sent &&
-  //   !config?.__isRetryRequest &&
-  //   config.url === apiEndPoints.refreshToken
-  // ) {
-  //   let pathName = window.location.pathname
-  //   pathName = pathName.replace(/^\/[\w\d]+\//, '')
-  //   await window.localStorage.clear()
-  //   window.location.href = `/student/login?returnUrl=/${pathName}`
-  // }
+  if (
+    error.status === status.unauthorizedStatus &&
+    !config?.sent &&
+    !config?.__isRetryRequest &&
+    config.url === apiEndPoints.refreshToken
+  ) {
+    let pathName = window.location.pathname
+    pathName = pathName.replace(/^\/[\w\d]+\//, '')
+    await window.localStorage.clear()
+    window.location.href = `/student/login?returnUrl=/${pathName}`
+  }
 
   if (error.status === status.unauthorizedStatus && !config?.sent && !config?.__isRetryRequest) {
-    console.log('401 ===========>')
     config.sent = true
     const response = await memoizedRefreshToken()
     if (response?.status === 200 && response?.access_token && response?.refresh_token) {
