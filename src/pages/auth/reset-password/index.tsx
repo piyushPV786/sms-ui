@@ -23,17 +23,17 @@ import {
 } from '@mui/material'
 import { CheckCircle, Circle } from 'mdi-material-ui'
 import { useRouter } from 'next/router'
-import { EnvPaths, PathTypes } from 'src/context/common'
+import { EnvPaths, PathTypes, downloadSuccess } from 'src/context/common'
 import { StudentService } from 'src/service'
-import { IPasswordUpdateRequest } from 'src/service/Student'
+import { INewPassword } from 'src/service/Student'
+import { successToast } from '../../../@core/components/common/Toast'
 
 const schema = yup.object().shape({
-  tempPassword: yup.string().required('Please Type your temporary password'),
   newPassword: yup.string().required('Please Type your password'),
   confirmPassword: yup
     .string()
     .required('Please Type again your new password')
-    .oneOf([yup.ref('password')], `Those Password didn't match. Try again`)
+    .oneOf([yup.ref('newPassword')], `Those Password didn't match. Try again`)
 })
 
 const ForgetPassword = () => {
@@ -77,17 +77,16 @@ const ForgetPassword = () => {
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => checkRequirements, [validationProps])
-  const resetPassword = async (payload: IPasswordUpdateRequest) => {
-    const response = await StudentService?.updatePassword(payload)
+  const updateNewPassword = async (payload: INewPassword) => {
+    const response = await StudentService?.userNewPassword(payload)
     setOpen(true)
-
-    console.log({ response })
   }
   const onSubmit = (data: any) => {
     checkRequirements()
     if (Object.keys(errors).length === 0 && !Object.values(validationProps).includes(false)) {
-      resetPassword(data)
+      updateNewPassword(data)
     }
+    successToast(downloadSuccess.passwordUpdate)
   }
   const updateValidationPropsValue = (name: string, value: boolean) => {
     setValidationProps(prev => ({ ...prev, [name]: value }))
@@ -145,17 +144,6 @@ const ForgetPassword = () => {
                 <Box>
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={5}>
-                      <Grid item xs={12}>
-                        <TextField
-                          {...register('tempPassword')}
-                          label='Temporary Password'
-                          variant='outlined'
-                          type='password'
-                          fullWidth
-                          error={!!errors?.tempPassword?.message}
-                          helperText={errors?.tempPassword?.message}
-                        />
-                      </Grid>
                       <Grid item xs={12}>
                         <TextField
                           {...register('newPassword')}
@@ -233,11 +221,6 @@ const ForgetPassword = () => {
           </Grid>
         </Grid>
       </Container>
-      <Snackbar open={open} autoHideDuration={6000} onClose={() => setOpen(false)}>
-        <Alert onClose={() => setOpen(false)} severity='success' sx={{ width: '100%' }}>
-          You have sucessfully updated your password.{' '}
-        </Alert>
-      </Snackbar>
     </BackgroundBox>
   )
 }

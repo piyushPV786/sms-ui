@@ -28,22 +28,36 @@ import {
   styled,
   BoxProps,
   Button,
-  TextField
+  TextField,
+  FormHelperText
 } from '@mui/material'
 import { useRouter } from 'next/router'
-import { EnvPaths, PathTypes } from 'src/context/common'
+import { EnvPaths, PathTypes, downloadSuccess, ErrorMessage, status } from 'src/context/common'
 import { StudentService } from 'src/service'
+import * as yup from 'yup'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { successToast } from '../../../@core/components/common/Toast'
+
+const schema = yup.object().shape({
+  email: yup.string().email(ErrorMessage.emailError).required()
+})
 
 const RequestLink = () => {
   const router = useRouter()
   const [email, setEmailValue] = useState<string>('')
+  const [apiResponse, setApiResponse] = useState(null)
 
-  const requestReseLink = async (email: string) => {
-    const response = await StudentService?.ResetPasswordLink(email)
-    console.log({ response, email })
-  }
-  const onSubmit = () => {
-    requestReseLink(email)
+  const {
+    handleSubmit,
+    register,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(schema)
+  })
+
+  const onSubmit = (data: any) => {
+    console.log('data', data) //when api call remove console
     router.replace(PathTypes.resetpassword)
   }
   const handleChange = () => {
@@ -55,12 +69,12 @@ const RequestLink = () => {
       <Container>
         <Grid item xs={12}>
           <Typography variant='h3' color='white'>
-            Reset your Password
+            Forgot your Password
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography sx={{ p: 2 }} variant='h6' color='white'>
-            Strong password include numbers, letters and punctuation marks
+            Please enter the email-address you'd like your password reset information sent to
           </Typography>
         </Grid>
       </Container>
@@ -86,36 +100,44 @@ const RequestLink = () => {
                   />
                 </LogoBox>
                 <Box>
-                  <Grid container spacing={5}>
-                    <Grid item xs={12}>
-                      <TextField
-                        onChange={e => {
-                          setEmailValue(e.target.value)
-                        }}
-                        label='Email'
-                        variant='outlined'
-                        fullWidth
-                      />
-                    </Grid>
+                  <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+                    <Grid container spacing={5}>
+                      <Grid item xs={12}>
+                        <TextField
+                          {...register('email')}
+                          value={email}
+                          onChange={e => {
+                            setEmailValue(e.target.value)
+                          }}
+                          label='Email'
+                          variant='outlined'
+                          fullWidth
+                        />
+                        {errors.email && (
+                          <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>
+                        )}
+                        {apiResponse && <FormHelperText sx={{ color: 'error.main' }}>{apiResponse}</FormHelperText>}
+                      </Grid>
 
-                    <Grid item justifyContent='center' xs={12} sx={{ display: 'flex' }}>
-                      <Button color='primary' type='submit' variant='contained' onClick={onSubmit}>
-                        REQUEST RESET LINK
-                      </Button>
+                      <Grid item justifyContent='center' xs={12} sx={{ display: 'flex' }}>
+                        <Button color='primary' type='submit' variant='contained'>
+                          REQUEST RESET LINK
+                        </Button>
+                      </Grid>
+                      <Grid container justifyContent='center' xs={12}>
+                        <div
+                          style={{
+                            cursor: 'pointer',
+                            marginTop: '10px'
+                          }}
+                        >
+                          <Typography color='primary' variant='subtitle1' onClick={handleChange}>
+                            Back to Login
+                          </Typography>
+                        </div>
+                      </Grid>
                     </Grid>
-                    <Grid container justifyContent='center' xs={12}>
-                      <div
-                        style={{
-                          cursor: 'pointer',
-                          marginTop: '10px'
-                        }}
-                      >
-                        <Typography color='primary' variant='subtitle1' onClick={handleChange}>
-                          Back to Login
-                        </Typography>
-                      </div>
-                    </Grid>
-                  </Grid>
+                  </form>
                 </Box>
               </CardContent>
             </Card>

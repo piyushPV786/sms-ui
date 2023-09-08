@@ -37,12 +37,16 @@ interface downloadSuccess {
   download: string
   upload: string
   searchErrorMessage: string
+  passwordReset: string
+  passwordUpdate: string
 }
 
 export const downloadSuccess: downloadSuccess = {
   download: 'File downloaded Sucessfully.',
   upload: 'File uploaded Sucessfully.',
-  searchErrorMessage: 'Type minimum 3 characters'
+  searchErrorMessage: 'Type minimum 3 characters',
+  passwordReset: 'password Reset Request was sent sucessfully please check your email to reset your password',
+  passwordUpdate: 'password update sucessfully'
 }
 
 interface FileTypes {
@@ -130,4 +134,8 @@ export interface ISchedule {
 export interface IScheduleData {
   id: number
   schedule: ISchedule[]
+}
+export enum ErrorMessage {
+  emailError = 'please enter a valid email address',
+  emailRegenesysError = 'Email is not associated with regenesys account'
 }
