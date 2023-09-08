@@ -14,11 +14,6 @@ interface payload {
   fileExtension: string | undefined
   status: string
 }
-export interface INewPassword {
-  email: string
-  newPassword: string
-  confirmPassword: string
-}
 
 interface ILogin {
   username: string
@@ -134,24 +129,6 @@ export default class Student {
     nProgress.done()
   }
 
-  async GetRefreshToken() {
-    console.log('enter')
-    nProgress.start()
-    const endUrlName = apiEndPoints.refreshToken
-    try {
-      const response = await this.apiServer.get(endUrlName, {
-        headers: { Authorization: `Bearer ${window.localStorage.getItem('refreshToken')}` }
-      })
-      nProgress.done()
-
-      return response
-    } catch (err: any) {
-      console.log('Error ResetPasswordLink ========>', err?.message)
-      nProgress.done()
-    }
-    nProgress.done()
-  }
-
   async getUserProfileDetails(studentCode: string) {
     nProgress.start()
     const endUrlName = `${apiEndPoints.studentApplication}${studentCode}`
@@ -246,35 +223,5 @@ export default class Student {
     } finally {
       nProgress.done()
     }
-  }
-  async userResetPassword(email: string) {
-    nProgress.start()
-    const endUrlName = apiEndPoints.resetPassword
-    try {
-      const response = await this.apiServer.patch(endUrlName, { email })
-      nProgress.done()
-
-      return response
-    } catch (err: any) {
-      console.log('Error Reset Password Link ========>', err?.data?.message)
-      nProgress.done()
-      return err?.data?.message
-    }
-    nProgress.done()
-  }
-
-  async userNewPassword(request: INewPassword) {
-    nProgress.start()
-    const endUrlName = apiEndPoints.newPassword
-    try {
-      const response = await this.apiServer.patch(endUrlName, { ...request })
-      nProgress.done()
-
-      return response
-    } catch (err: any) {
-      console.log('Error update new Password ========>', err?.message)
-      nProgress.done()
-    }
-    nProgress.done()
   }
 }
