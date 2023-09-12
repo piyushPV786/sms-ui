@@ -2,8 +2,6 @@
   font-size: 15px;
   font-weight: 700;
   color: black;
-  padding-top: 15px;
-  padding-bottom: 10px;
 }
 .UploadDocsContainer {
   width: 100%;
@@ -11,8 +9,6 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  min-width: 400px;
-  min-height: 135px;
   padding: 1rem;
   width: 100%;
   overflow: hidden;
@@ -27,7 +23,6 @@
 .Document {
   display: flex;
   justify-content: space-between;
-  background-color: white;
   padding: 5px 9px 5px 13px;
   border-radius: 5px;
   margin-top: 4px;

@@ -108,4 +108,19 @@ export default class Common {
     }
     nProgress.done()
   }
+
+  async getDocumentType(projectDocument: boolean) {
+    nProgress.start()
+    const endUrlName = apiEndPoints.documentType
+    try {
+      const response = await this.apiServer.get(`${endUrlName}?projectDocument=${projectDocument}`)
+      nProgress.done()
+
+      return response?.data?.data
+    } catch (err: any) {
+      console.log('Error fetching student detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
 }

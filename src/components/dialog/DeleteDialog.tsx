@@ -16,10 +16,9 @@ import {
 } from '@mui/material'
 
 // ** Icons Imports
-import { ProgressClose } from 'mdi-material-ui'
+import { ProgressClose, TrashCanOutline } from 'mdi-material-ui'
 
 // ** Third Party Library
-import { Delete } from 'mdi-material-ui'
 import Tooltip from '@mui/material/Tooltip'
 import { successToast } from 'src/@core/components/common/Toast'
 import { deleteDocument } from 'src/context/common'
@@ -50,7 +49,7 @@ const DeleteDialog = ({ deleteStudentDocument, data }: IDeleteDialogProps) => {
               sx={{ textDecoration: 'none', mr: 0.5, color: 'red' }}
               onClick={() => setDialogShow(true)}
             >
-              <Delete />
+              <TrashCanOutline />
             </IconButton>
           </Box>
         </Tooltip>

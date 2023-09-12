@@ -42,3 +42,9 @@ export const PopupDialog = styled(DialogContent)(() => ({
   px: { xs: 5 },
   pt: { xs: 8 }
 }))
+
+export const StyledLink = styled('a')(({}) => ({
+  fontSize: '14px',
+  color: '#008554',
+  textDecoration: 'underline'
+}))

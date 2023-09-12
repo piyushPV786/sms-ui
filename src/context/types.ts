@@ -64,4 +64,5 @@ export interface IDocumentType {
 
 export interface IUploadDocumentParam {
   file: File & { isNewlyAdded?: boolean }
+  fileType: string
 }
