@@ -10,13 +10,13 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
-import { IconButton } from '@mui/material'
+import { CardContent, IconButton, Link } from '@mui/material'
 import { Download } from 'mdi-material-ui'
 import Chip from '@mui/material/Chip'
 
 // ** Custom Components Imports
 import TableHeader from 'src/components/uploaddocument/TableHeader'
-import { downloadSuccess, fileType } from 'src/context/common'
+import { ICommonData, downloadSuccess, fileType } from 'src/context/common'
 import { successToast } from '../../@core/components/common/Toast'
 import { StudentService, CommonService } from 'src/service'
 import { status } from 'src/context/common'
@@ -29,6 +29,7 @@ import { useAuth } from 'src/hooks/useAuth'
 import { getFileUrl, minTwoDigits, serialNumber } from 'src/utils'
 import { IDocumentType, IUploadDocumentParam } from 'src/context/types'
 import { CircularProgress } from '@mui/material'
+import { StyledLink } from 'src/styles/styled'
 
 interface fileTypes {
   [key: string]: ThemeColor
@@ -64,6 +65,7 @@ const DocumentList = () => {
   const [documentResponse, setDocumentResponse] = useState<any>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [viewFileLoader, setViewFileLoader] = useState<{ [key: string]: boolean }>()
+  const [documentType, setDocumentType] = useState<ICommonData[]>([])
 
   const auth = useAuth()
 
@@ -83,9 +85,10 @@ const DocumentList = () => {
       fileName: payload.file.name,
       fileType: payload.file.type.split('/').pop(),
       studentCode: auth?.user?.studentCode,
-      documentTypeCode: payload.file.type,
+      documentTypeCode: payload.fileType,
       status: 'ADMISSION-APPROVED'
     }
+
     const myArray: any = []
     const newArray = [...myArray, newPayload]
     const body = {
@@ -106,6 +109,12 @@ const DocumentList = () => {
     }
   }
 
+  const fetchDocumentType = async () => {
+    const projectDocument = false
+    const response = await CommonService.getDocumentType(projectDocument)
+    setDocumentType(response)
+  }
+
   const deleteDocument = async (documentCode: string) => {
     const deleteResponse = await StudentService.deleteStudentDocuments(documentCode)
     if (deleteResponse?.statusCode == status?.successCode) {
@@ -114,6 +123,7 @@ const DocumentList = () => {
   }
 
   useEffect(() => {
+    fetchDocumentType()
     getUserDocumentList()
   }, [])
 
@@ -140,6 +150,7 @@ const DocumentList = () => {
     {
       field: 'id',
       minWidth: 10,
+      maxWidth: 50,
       headerName: '#',
       renderCell: (index: IIndex) => {
         return <Box>{`${minTwoDigits(serialNumber(index.api.getRowIndex(index.row.id), pageNumber, pageSize))}`}</Box>
@@ -149,12 +160,15 @@ const DocumentList = () => {
       flex: 0.1,
       field: 'name',
       minWidth: 200,
-      headerName: 'File Name'
+      headerName: 'File Name',
+      renderCell: ({ row }: CellType) => {
+        return <StyledLink>{row?.name}</StyledLink>
+      }
     },
     {
       flex: 0.1,
       field: 'fileExtension',
-      minWidth: 70,
+      minWidth: 100,
       headerName: 'File Type',
       renderCell: ({ row }: CellType) => (
         <Chip
@@ -167,21 +181,21 @@ const DocumentList = () => {
     },
     {
       flex: 0.1,
-      field: 'fileSize',
-      minWidth: 100,
-      headerName: 'File Size',
-      renderCell: ({ row }: CellType) => <Typography>{row.fileSize ? row.fileSize : '-'}</Typography>
+      field: 'documentType',
+      minWidth: 140,
+      headerName: 'Document Type',
+      renderCell: ({ row }: CellType) => <Typography>{row.documentTypeCode ? row.documentTypeCode : '-'}</Typography>
     },
     {
       flex: 0.1,
-      minWidth: 180,
+      minWidth: 170,
       field: 'createdAt',
       headerName: 'Upload DATE & Time',
       renderCell: ({ row }: CellType) => <Typography>{setCurrentDateTime(row.createdAt)}</Typography>
     },
     {
       flex: 0.1,
-      minWidth: 150,
+      minWidth: 100,
       sortable: false,
       field: 'actions',
       headerName: 'Actions',
@@ -220,10 +234,10 @@ const DocumentList = () => {
         <Grid item xs={12}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Grid item xs={12}>
-              <Typography sx={{ mb: 3, lineHeight: '2rem', fontWeight: 'bold', fontSize: 18 }}>My Documents</Typography>
+              <Typography sx={{ lineHeight: '2rem', fontWeight: 'bold', fontSize: 18 }}>My Documents</Typography>
               <Grid item xs={12}>
                 <Box display={'flex'}>
-                  <Typography style={{ color: '#4C9457' }}>Dashboard</Typography> / My Documents
+                  <Link href='/student/dashboard/'>Dashboard</Link> / My Documents
                 </Box>
               </Grid>
             </Grid>
@@ -232,32 +246,37 @@ const DocumentList = () => {
         <Grid item md={8} xs={12}>
           <Card>
             <TableHeader value={value} selectedRows={selectedRows} handleFilter={handleFilter} />
-            <DataGrid
-              loading={loading}
-              autoHeight
-              pagination
-              disableColumnMenu
-              disableColumnFilter
-              disableColumnSelector
-              rows={documentResponse}
-              columns={columns}
-              disableSelectionOnClick
-              pageSize={Number(pageSize)}
-              rowsPerPageOptions={[10, 25, 50]}
-              sx={{
-                '& .MuiDataGrid-columnHeaders': {
-                  borderRadius: 0,
-                  bgcolor: theme => theme.palette.customColors.tableHeaderBg
-                }
-              }}
-              onSelectionModelChange={rows => setSelectedRows(rows)}
-              onPageSizeChange={newPageSize => setPageSize(newPageSize)}
-              onPageChange={newPage => setPageNumber(newPage + 1)}
-            />
+            <CardContent>
+              <DataGrid
+                loading={loading}
+                autoHeight
+                pagination
+                disableColumnMenu
+                disableColumnFilter
+                disableColumnSelector
+                rows={documentResponse}
+                columns={columns}
+                disableSelectionOnClick
+                pageSize={Number(pageSize)}
+                rowsPerPageOptions={[10, 25, 50]}
+                sx={{
+                  '& .MuiDataGrid-columnHeaders': {
+                    borderRadius: 0,
+                    bgcolor: '#d7e2de'
+                  },
+                  '& .MuiDataGrid-columnHeaderTitle': {
+                    fontWeight: '600'
+                  }
+                }}
+                onSelectionModelChange={rows => setSelectedRows(rows)}
+                onPageSizeChange={newPageSize => setPageSize(newPageSize)}
+                onPageChange={newPage => setPageNumber(newPage + 1)}
+              />
+            </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} md={4}>
-          <FileUpload uploadFile={uploadFile} />
+          <FileUpload uploadFile={uploadFile} documentType={documentType} />
         </Grid>
       </Grid>
     </>

@@ -14,8 +14,6 @@ const StudentDashboard = () => {
   const courses = scheduler?.map((data: IScheduleData) => data?.schedule?.find((i: ISchedule) => i))
   const dayData = myDayData?.map((data: IScheduleData) => data?.schedule?.find((i: ISchedule) => i))
 
-  console.log('profileImage', profileImage)
-
   return (
     <Box>
       <Typography mt={5} mb={5} sx={{ fontWeight: 'bold' }}>
