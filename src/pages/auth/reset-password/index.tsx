@@ -21,7 +21,7 @@ import {
 } from '@mui/material'
 import { CheckCircle, Circle } from 'mdi-material-ui'
 import { useRouter } from 'next/router'
-import { EnvPaths, PathTypes, downloadSuccess } from 'src/context/common'
+import { EnvPaths, PathTypes, downloadSuccess, status } from 'src/context/common'
 import { StudentService } from 'src/service'
 import { INewPassword } from 'src/service/Student'
 import { successToast } from '../../../@core/components/common/Toast'
@@ -55,6 +55,7 @@ const ForgetPassword = () => {
   })
   console.log({ errors, validationProps })
   const router = useRouter()
+  const { token } = router.query
 
   const onHandle = () => {
     router.replace(PathTypes.login)
@@ -75,15 +76,21 @@ const ForgetPassword = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => checkRequirements, [validationProps])
   const updateNewPassword = async (payload: INewPassword) => {
-    const response = await StudentService?.userNewPassword(payload)
-    console.log(response)
+    const newPayload = {
+      ...payload,
+      token
+    }
+    const response = await StudentService?.userNewPassword(newPayload)
+    if (response?.status === status?.successCode) {
+      successToast(downloadSuccess.passwordUpdate)
+      router.replace(PathTypes.login)
+    }
   }
   const onSubmit = (data: any) => {
     checkRequirements()
     if (Object.keys(errors).length === 0 && !Object.values(validationProps).includes(false)) {
       updateNewPassword(data)
     }
-    successToast(downloadSuccess.passwordUpdate)
   }
   const updateValidationPropsValue = (name: string, value: boolean) => {
     setValidationProps(prev => ({ ...prev, [name]: value }))

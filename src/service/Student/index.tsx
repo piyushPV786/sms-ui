@@ -242,8 +242,9 @@ export default class Student {
       nProgress.done()
 
       return err?.data?.message
+    } finally {
+      nProgress.done()
     }
-    nProgress.done()
   }
 
   async userNewPassword(request: INewPassword) {
