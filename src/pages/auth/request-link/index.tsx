@@ -32,10 +32,12 @@ import {
   FormHelperText
 } from '@mui/material'
 import { useRouter } from 'next/router'
-import { EnvPaths, PathTypes, ErrorMessage } from 'src/context/common'
+import { EnvPaths, PathTypes, ErrorMessage, downloadSuccess, status } from 'src/context/common'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { StudentService } from 'src/service'
+import { successToast } from 'src/components/common'
 
 const schema = yup.object().shape({
   email: yup.string().email(ErrorMessage.emailError).required()
@@ -53,9 +55,15 @@ const RequestLink = () => {
     resolver: yupResolver(schema)
   })
 
+  const resetPassword = async (email: string) => {
+    const response = await StudentService?.userResetPassword(email)
+    if (response?.status === status?.successCode) {
+      successToast(downloadSuccess.passwordReset)
+    }
+  }
+
   const onSubmit = (data: any) => {
-    console.log('data', data) //when api call remove console
-    router.replace(PathTypes.resetpassword)
+    resetPassword(data.email)
   }
   const handleChange = () => {
     router.replace(PathTypes.login)
@@ -97,7 +105,7 @@ const RequestLink = () => {
                   />
                 </LogoBox>
                 <Box>
-                  <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+                  <form autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={5}>
                       <Grid item xs={12}>
                         <TextField
