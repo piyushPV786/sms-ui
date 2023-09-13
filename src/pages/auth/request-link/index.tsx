@@ -37,7 +37,7 @@ import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { StudentService } from 'src/service'
-import { successToast } from 'src/components/common'
+import { successToast, errorToast } from 'src/components/common'
 
 const schema = yup.object().shape({
   email: yup.string().email(ErrorMessage.emailError).required()
@@ -46,6 +46,7 @@ const schema = yup.object().shape({
 const RequestLink = () => {
   const router = useRouter()
   const [email, setEmailValue] = useState<string>('')
+  const [errorMsg, setErrorMsg] = useState<string>('')
 
   const {
     handleSubmit,
@@ -59,6 +60,10 @@ const RequestLink = () => {
     const response = await StudentService?.userResetPassword(email)
     if (response?.status === status?.successCode) {
       successToast(downloadSuccess.passwordReset)
+    }
+    if (response?.data?.statusCode === status.errorCode) {
+      setErrorMsg(response?.data?.message)
+      errorToast(downloadSuccess.emailmatch)
     }
   }
 
@@ -111,6 +116,7 @@ const RequestLink = () => {
                         <TextField
                           {...register('email')}
                           value={email}
+                          error={errors.email}
                           onChange={e => {
                             setEmailValue(e.target.value)
                           }}
@@ -121,6 +127,7 @@ const RequestLink = () => {
                         {errors.email && (
                           <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>
                         )}
+                        {errorMsg && <FormHelperText sx={{ color: 'error.main' }}>{errorMsg}</FormHelperText>}
                       </Grid>
 
                       <Grid item justifyContent='center' xs={12} sx={{ display: 'flex' }}>

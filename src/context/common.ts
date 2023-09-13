@@ -4,6 +4,7 @@ type IStatusParams = {
   unauthorizedStatus: number
   approve: string
   reject: string
+  errorCode: number
 }
 
 export const status: IStatusParams = {
@@ -11,7 +12,8 @@ export const status: IStatusParams = {
   successCodeOne: 201,
   unauthorizedStatus: 401,
   approve: 'APPROVED',
-  reject: 'REJECT'
+  reject: 'REJECT',
+  errorCode: 400
 }
 
 export enum PathTypes {
@@ -39,6 +41,7 @@ interface downloadSuccess {
   searchErrorMessage: string
   passwordReset: string
   passwordUpdate: string
+  emailmatch: string
 }
 
 export const downloadSuccess: downloadSuccess = {
@@ -46,7 +49,8 @@ export const downloadSuccess: downloadSuccess = {
   upload: 'File uploaded Sucessfully.',
   searchErrorMessage: 'Type minimum 3 characters',
   passwordReset: 'password Reset Request was sent sucessfully please check your email to reset your password',
-  passwordUpdate: 'password update sucessfully'
+  passwordUpdate: 'password update sucessfully',
+  emailmatch: 'Email does not match with rengenesys account'
 }
 
 interface FileTypes {

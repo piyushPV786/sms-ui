@@ -241,7 +241,7 @@ export default class Student {
       console.log('Error Reset Password Link ========>', err?.data?.message)
       nProgress.done()
 
-      return err?.data?.message
+      return err
     } finally {
       nProgress.done()
     }
