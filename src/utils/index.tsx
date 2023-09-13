@@ -189,7 +189,7 @@ export const getFileUrl = async (
 export const DDMMYYYDateFormat = (date: Date) => {
   const newDate = new Date(date)
 
-  return `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear()}`
+  return `${newDate.getMonth() + 1}-${newDate.getDate()}-${newDate.getFullYear()}`
 }
 
 export const DateFormat = (date: Date) => {
