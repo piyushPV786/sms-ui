@@ -51,12 +51,6 @@ interface IIndex {
   }
 }
 
-interface IDataParams {
-  q?: string
-  pageSize: number
-  pageNumber: number
-}
-
 interface CellType {
   row: IDocumentType
 }
@@ -75,9 +69,13 @@ const DocumentList = () => {
 
   const auth = useAuth()
 
-  const getUserDocumentList = async (params: IDataParams) => {
+  const getUserDocumentList = async () => {
     setLoading(true)
-
+    const params = {
+      q: value,
+      pageSize: pageSize,
+      pageNumber: pageNumber
+    }
     if (auth?.user?.studentCode) {
       const response = await StudentService?.getUserDocument(params, auth?.user?.studentCode)
 
@@ -112,11 +110,7 @@ const DocumentList = () => {
       })
       if (documentUploadResponse) {
         successToast(downloadSuccess.upload)
-        getUserDocumentList({
-          q: value,
-          pageSize: pageSize,
-          pageNumber: pageNumber
-        })
+        getUserDocumentList()
       }
     }
   }
@@ -130,21 +124,13 @@ const DocumentList = () => {
   const deleteDocument = async (documentCode: string) => {
     const deleteResponse = await StudentService.deleteStudentDocuments(documentCode)
     if (deleteResponse?.statusCode == status?.successCode) {
-      getUserDocumentList({
-        q: value,
-        pageSize: pageSize,
-        pageNumber: pageNumber
-      })
+      getUserDocumentList()
     }
   }
 
   useEffect(() => {
     fetchDocumentType()
-    getUserDocumentList({
-      q: value,
-      pageSize: pageSize,
-      pageNumber: pageNumber
-    })
+    getUserDocumentList()
   }, [value, pageSize, pageNumber])
 
   const handleFilter = (val: string) => {
