@@ -161,9 +161,10 @@ export default class Student {
     }
   }
 
-  async getUserDocument(studentCode: string) {
+  async getUserDocument(params: DataParams, studentCode: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.userDocument}/${studentCode}`
+    let endUrlName = `${apiEndPoints.userDocument}/${studentCode}?pageNumber=${params?.pageNumber}&&pageSize=${params?.pageSize}`
+    if (params?.q) endUrlName = `${endUrlName}&&searchString=${params?.q}`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()

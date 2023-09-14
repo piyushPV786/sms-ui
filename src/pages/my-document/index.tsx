@@ -71,9 +71,15 @@ const DocumentList = () => {
 
   const getUserDocumentList = async () => {
     setLoading(true)
+    const params = {
+      q: value,
+      pageSize: pageSize,
+      pageNumber: pageNumber
+    }
     if (auth?.user?.studentCode) {
-      const response = await StudentService?.getUserDocument(auth?.user?.studentCode)
-      if (response?.data?.statusCode === status.successCode && response?.data?.data) {
+      const response = await StudentService?.getUserDocument(params, auth?.user?.studentCode)
+
+      if (response?.data?.statusCode === status.successCode && response?.data?.data?.data) {
         setDocumentResponse(response?.data?.data)
       }
     }
@@ -125,7 +131,7 @@ const DocumentList = () => {
   useEffect(() => {
     fetchDocumentType()
     getUserDocumentList()
-  }, [])
+  }, [value, pageSize, pageNumber])
 
   const handleFilter = (val: string) => {
     setValue(val)
@@ -247,31 +253,35 @@ const DocumentList = () => {
           <Card>
             <TableHeader value={value} selectedRows={selectedRows} handleFilter={handleFilter} />
             <CardContent>
-              <DataGrid
-                loading={loading}
-                autoHeight
-                pagination
-                disableColumnMenu
-                disableColumnFilter
-                disableColumnSelector
-                rows={documentResponse}
-                columns={columns}
-                disableSelectionOnClick
-                pageSize={Number(pageSize)}
-                rowsPerPageOptions={[10, 25, 50]}
-                sx={{
-                  '& .MuiDataGrid-columnHeaders': {
-                    borderRadius: 0,
-                    bgcolor: '#d7e2de'
-                  },
-                  '& .MuiDataGrid-columnHeaderTitle': {
-                    fontWeight: '600'
-                  }
-                }}
-                onSelectionModelChange={rows => setSelectedRows(rows)}
-                onPageSizeChange={newPageSize => setPageSize(newPageSize)}
-                onPageChange={newPage => setPageNumber(newPage + 1)}
-              />
+              {documentResponse?.data?.length > 0 && (
+                <DataGrid
+                  loading={loading}
+                  autoHeight
+                  pagination
+                  paginationMode='server'
+                  disableColumnMenu
+                  disableColumnFilter
+                  disableColumnSelector
+                  rows={documentResponse?.data}
+                  rowCount={documentResponse?.count}
+                  columns={columns}
+                  disableSelectionOnClick
+                  pageSize={Number(pageSize)}
+                  rowsPerPageOptions={[10, 25, 50]}
+                  sx={{
+                    '& .MuiDataGrid-columnHeaders': {
+                      borderRadius: 0,
+                      bgcolor: '#d7e2de'
+                    },
+                    '& .MuiDataGrid-columnHeaderTitle': {
+                      fontWeight: '600'
+                    }
+                  }}
+                  onSelectionModelChange={rows => setSelectedRows(rows)}
+                  onPageSizeChange={newPageSize => setPageSize(newPageSize)}
+                  onPageChange={newPage => setPageNumber(newPage + 1)}
+                />
+              )}
             </CardContent>
           </Card>
         </Grid>
