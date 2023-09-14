@@ -41,6 +41,7 @@ interface downloadSuccess {
   searchErrorMessage: string
   passwordReset: string
   passwordUpdate: string
+  academicDownload: string
 }
 
 export const downloadSuccess: downloadSuccess = {
@@ -48,7 +49,8 @@ export const downloadSuccess: downloadSuccess = {
   upload: 'File uploaded Sucessfully.',
   searchErrorMessage: 'Type minimum 3 characters',
   passwordReset: 'password Reset Request was sent sucessfully please check your email to reset your password',
-  passwordUpdate: 'password update sucessfully'
+  passwordUpdate: 'password update sucessfully',
+  academicDownload: 'Academic Transcripts downloaded successfully.'
 }
 
 interface IDynamicEmailObject {

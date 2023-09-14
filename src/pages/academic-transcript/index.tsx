@@ -6,10 +6,11 @@ import { useState } from 'react'
 
 import { DataGrid } from '@mui/x-data-grid'
 import { AcademicTypography, CardContent, TableCard } from 'src/styles/styled'
-import { successToast } from 'src/components/common'
+import { successToastBottomRight } from 'src/components/common'
 import { Download } from 'mdi-material-ui'
 import { AcademicService } from 'src/service'
-import { info } from 'src/context/common'
+import { downloadSuccess, info } from 'src/context/common'
+import SearchBox from 'src/@core/components/searchinput'
 
 const ref: any = React.createRef()
 const options = {
@@ -20,11 +21,12 @@ const options = {
 
 const StudentDashboard = () => {
   const [data, setData] = useState([])
+  const [value, setValue] = useState<string>('')
 
   const handleOnDownloadClick = (toPdf: () => void) => {
     //Call API
     toPdf()
-    successToast('Academic Transcript downloaded successfully.')
+    successToastBottomRight(downloadSuccess.academicDownload)
   }
   const getStudentList = async () => {
     const response = await AcademicService?.getStudentAcademicDetails()
@@ -99,6 +101,10 @@ const StudentDashboard = () => {
     }
   ]
 
+  const handleFilter = (val: string) => {
+    setValue(val)
+  }
+
   return (
     <Grid container spacing={6} ref={ref}>
       <Grid item xs={12}>
@@ -126,16 +132,13 @@ const StudentDashboard = () => {
               sx={{
                 p: 5,
                 pb: 3,
-                display: 'flex'
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end'
               }}
             >
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex' }}>
-                <TextField
-                  variant='standard'
-                  size='small'
-                  placeholder='Search...'
-                  sx={{ mr: 4, mb: 2, maxWidth: '280px' }}
-                />
+              <Box sx={{ mr: 5 }}>
+                <SearchBox handleFilter={handleFilter} />
               </Box>
 
               <Box>
