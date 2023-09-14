@@ -13,22 +13,30 @@ export const StyledTypography = styled(Typography)(({ theme }: { theme: Theme })
   color: theme.palette.primary.main
 }))
 
-export const TableCard = styled(Card)(({ theme }: { theme: Theme }) => ({
+export const TableCard = styled(Card)(({}: { theme: Theme }) => ({
   '& .digital-assessment': {
-    backgroundColor: '#58555e',
-    color: theme.palette.common.white
+    backgroundColor: 'rgb(106, 118, 124, 0.1)',
+    '& p': {
+      color: '#6A767C'
+    }
   },
   '& .assignments': {
-    backgroundColor: '#726262',
-    color: theme.palette.common.white
+    backgroundColor: 'rgb(42, 107, 100, 0.1)',
+    '& p': {
+      color: '#2A6B64'
+    }
   },
   '& .examination': {
-    backgroundColor: '#5f5870',
-    color: theme.palette.common.white
+    backgroundColor: 'rgb(91, 70, 78, 0.1)',
+    '& p': {
+      color: '#5B464E'
+    }
   },
   '& .total': {
-    backgroundColor: '#3c7360',
-    color: theme.palette.common.white
+    backgroundColor: 'rgb(75, 183, 74, 0.1)',
+    '& p': {
+      color: '#4BB74A'
+    }
   }
 }))
 
