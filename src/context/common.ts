@@ -41,7 +41,6 @@ interface downloadSuccess {
   searchErrorMessage: string
   passwordReset: string
   passwordUpdate: string
-  emailmatch: string
 }
 
 export const downloadSuccess: downloadSuccess = {
@@ -49,8 +48,15 @@ export const downloadSuccess: downloadSuccess = {
   upload: 'File uploaded Sucessfully.',
   searchErrorMessage: 'Type minimum 3 characters',
   passwordReset: 'password Reset Request was sent sucessfully please check your email to reset your password',
-  passwordUpdate: 'password update sucessfully',
-  emailmatch: 'Email does not match with rengenesys account'
+  passwordUpdate: 'password update sucessfully'
+}
+
+interface IDynamicEmailObject {
+  [key: string]: any
+}
+
+export const LoginEmailStatusTypes: IDynamicEmailObject = {
+  'Incorrect email address.': 'Email address is not associated with Regenesys account'
 }
 
 interface FileTypes {
@@ -140,6 +146,7 @@ export interface IScheduleData {
   schedule: ISchedule[]
 }
 export enum ErrorMessage {
-  emailError = 'please enter a valid email address',
-  emailRegenesysError = 'Email is not associated with regenesys account'
+  emailRequired = 'Email is required',
+  emailError = 'Please enter a valid email address',
+  emailRegenesysError = 'Email address is not associated with Regenesys account'
 }
