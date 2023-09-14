@@ -32,15 +32,15 @@ import {
   FormHelperText
 } from '@mui/material'
 import { useRouter } from 'next/router'
-import { EnvPaths, PathTypes, ErrorMessage, downloadSuccess, status } from 'src/context/common'
+import { EnvPaths, PathTypes, ErrorMessage, downloadSuccess, status, LoginEmailStatusTypes } from 'src/context/common'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { StudentService } from 'src/service'
-import { successToast, errorToast } from 'src/components/common'
+import { successToastBottomRight } from 'src/components/common'
 
 const schema = yup.object().shape({
-  email: yup.string().email(ErrorMessage.emailError).required()
+  email: yup.string().email(ErrorMessage.emailError).required(ErrorMessage.emailRequired)
 })
 
 const RequestLink = () => {
@@ -59,11 +59,10 @@ const RequestLink = () => {
   const resetPassword = async (email: string) => {
     const response = await StudentService?.userResetPassword(email)
     if (response?.status === status?.successCode) {
-      successToast(downloadSuccess.passwordReset)
+      successToastBottomRight(downloadSuccess.passwordReset)
     }
     if (response?.data?.statusCode === status.errorCode) {
       setErrorMsg(response?.data?.message)
-      errorToast(downloadSuccess.emailmatch)
     }
   }
 
@@ -116,7 +115,7 @@ const RequestLink = () => {
                         <TextField
                           {...register('email')}
                           value={email}
-                          error={errors.email}
+                          error={errors.email || errorMsg}
                           onChange={e => {
                             setEmailValue(e.target.value)
                           }}
@@ -127,7 +126,11 @@ const RequestLink = () => {
                         {errors.email && (
                           <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>
                         )}
-                        {errorMsg && <FormHelperText sx={{ color: 'error.main' }}>{errorMsg}</FormHelperText>}
+                        {errorMsg && (
+                          <FormHelperText sx={{ color: 'error.main' }}>
+                            {LoginEmailStatusTypes[errorMsg]}
+                          </FormHelperText>
+                        )}
                       </Grid>
 
                       <Grid item justifyContent='center' xs={12} sx={{ display: 'flex' }}>
