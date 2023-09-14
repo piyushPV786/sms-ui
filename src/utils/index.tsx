@@ -6,6 +6,7 @@ import nProgress from 'nprogress'
 import { Dispatch, SetStateAction } from 'react'
 import { status } from 'src/context/common'
 import { CommonService } from 'src/service'
+import { IProgram } from 'src/types/common'
 
 const ImagePayu = require('/public/images/payu.png') as string
 const ImagePayFast = require('/public/images/payfastImage.png') as string
@@ -221,4 +222,16 @@ export const DateFormat = (date: Date) => {
   return `${weekday[newDate.getDay()]}, ${newDate.getDate()} ${
     monthNames[newDate.getMonth()]
   }, ${newDate.getFullYear()}`
+}
+
+export const programCodeToName = (programList: IProgram | undefined, code: string) => {
+  let programName = ''
+  if (programList?.length) {
+    const program = programList?.find(item => item?.code === code)
+    if (program?.name) {
+      programName = program?.name
+    }
+  }
+
+  return programName
 }

@@ -50,5 +50,6 @@ export const apiEndPoints = Object.freeze({
   document: '/common/document',
   resetPassword: 'user/reset-link',
   newPassword: 'user/update-new-password',
-  documentType: 'common/document-type'
+  documentType: 'common/document-type',
+  allPrograms: '/programs/all'
 })
