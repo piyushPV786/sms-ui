@@ -30,7 +30,14 @@ const TableHeader = (props: TableHeaderProps) => {
         <Typography variant='h6'>FEE & PAYMENT HISTORY</Typography>
       </Box>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'end' }}>
-        <TextField size='small' id='filled-search' placeholder='Search...' type='search' variant='standard' />
+        <TextField
+          onChange={e => props?.handleFilter(e.target.value)}
+          size='small'
+          id='filled-search'
+          placeholder='Search...'
+          type='search'
+          variant='standard'
+        />
       </Box>
     </Box>
   )

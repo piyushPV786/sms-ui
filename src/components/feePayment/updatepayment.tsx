@@ -43,7 +43,7 @@ const Updatepayment = () => {
                       </Typography>
                     </Grid>
                     <Grid item xs={6}>
-                      <label>total amount</label>
+                      <label>Total Amount</label>
                       <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
                         R 1500
                       </Typography>

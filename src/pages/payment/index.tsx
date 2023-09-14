@@ -11,7 +11,7 @@ import { DataGrid, GridRowId } from '@mui/x-data-grid'
 import { Theme } from '@mui/material'
 
 //import { InvoiceType } from 'src/types/apps/invoiceTypes'
-import { StudentService } from 'src/service'
+import { AcademicService, StudentService } from 'src/service'
 import { status } from 'src/context/common'
 
 // ** Custom Components Imports
@@ -23,11 +23,13 @@ import ChangePayment from 'src/components/feePayment/changePaymentMode'
 import 'react-datepicker/dist/react-datepicker.css'
 import { InlineTypography, StyledTypography } from 'src/styles/styled'
 import { useAuth } from 'src/hooks/useAuth'
+import { IProgram } from 'src/types/common'
+import { programCodeToName } from 'src/utils'
 
 const initialState = {
-  statusCode: 1,
   message: '',
-  data: []
+  data: [],
+  programCode: ''
 }
 
 const PaymentList = () => {
@@ -38,6 +40,7 @@ const PaymentList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [response, setResponse] = useState<any>(initialState)
   const [loading, setLoading] = useState<boolean>(false)
+  const [allProgram, setAllProgram] = useState<IProgram | undefined>(undefined)
 
   const auth = useAuth()
 
@@ -51,12 +54,22 @@ const PaymentList = () => {
     if (auth?.user?.studentCode) {
       const response = await StudentService?.getFeePaymentList(payload, auth?.user?.studentCode)
       if (response?.data?.statusCode === status.successCode && response?.data?.data) {
-        console.log('payment response =============>', response)
         setResponse(response?.data?.data)
       }
     }
     setLoading(false)
   }
+
+  const getAllPrograms = async () => {
+    const response = await AcademicService?.getallPrograms()
+    if (response?.data?.statusCode === status.successCode && response?.data?.data) {
+      setAllProgram(response?.data?.data)
+    }
+  }
+
+  useEffect(() => {
+    getAllPrograms()
+  }, [])
 
   useEffect(() => {
     getFeePaymentList()
@@ -70,8 +83,11 @@ const PaymentList = () => {
     {
       flex: 0.1,
       field: 'program',
-      minWidth: 150,
-      headerName: 'Program'
+      minWidth: 200,
+      headerName: 'Program',
+      renderCell: () => {
+        return <>{programCodeToName(allProgram, response?.programCode)}</>
+      }
     },
     {
       flex: 0.1,
@@ -106,7 +122,7 @@ const PaymentList = () => {
 
     {
       flex: 0.1,
-      minWidth: 200,
+      minWidth: 300,
       field: 'referenceNumber',
       headerName: 'TRANSACTION / REFERENCE ID'
     }
