@@ -12,3 +12,10 @@ export const errorToast = (message: string) => {
     style: { borderRadius: '10px', background: '#1f2b37', color: '#fff' }
   })
 }
+
+export const successToastBottomRight = (message: string) => {
+  toast.success(message, {
+    position: 'bottom-right',
+    style: { borderRadius: '10px', background: '#1f2b37', color: '#fff' }
+  })
+}
