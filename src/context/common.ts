@@ -45,11 +45,11 @@ interface downloadSuccess {
 }
 
 export const downloadSuccess: downloadSuccess = {
-  download: 'File downloaded Sucessfully.',
-  upload: 'File uploaded Sucessfully.',
+  download: 'File downloaded successfully.',
+  upload: 'File uploaded successfully.',
   searchErrorMessage: 'Type minimum 3 characters',
-  passwordReset: 'password Reset Request was sent sucessfully please check your email to reset your password',
-  passwordUpdate: 'password update sucessfully',
+  passwordReset: 'Password reset request was sent successfully. Please check your email to reset your password.',
+  passwordUpdate: 'Password update successfully',
   academicDownload: 'Academic Transcripts downloaded successfully.'
 }
 
@@ -150,5 +150,10 @@ export interface IScheduleData {
 export enum ErrorMessage {
   emailRequired = 'Email is required',
   emailError = 'Please enter a valid email address',
-  emailRegenesysError = 'Email address is not associated with Regenesys account'
+  emailRegenesysError = 'Email address is not associated with Regenesys account',
+  newPassword = 'Please Type your password',
+  newPasswordError = 'Please enter a password that meets all of the requirements below',
+  confirmPassword = 'Please Type again your new password',
+  confirmPasswordError = `Those password didn't match. Try again`,
+  Error = 'Something went wrong'
 }
