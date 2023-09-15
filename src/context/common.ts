@@ -152,3 +152,7 @@ export enum ErrorMessage {
   emailError = 'Please enter a valid email address',
   emailRegenesysError = 'Email address is not associated with Regenesys account'
 }
+
+export enum ProfilePhoto {
+  Upload = 'Profile photo updated Successfully.'
+}

@@ -45,7 +45,10 @@ const ProfilePictureDialog = ({
   const [profileImage, setProfileImage] = useState<any>(null)
   const { acceptedFiles, getRootProps, getInputProps, fileRejections } = useDropzone({
     maxFiles: 1,
-    accept: { 'file/doc': ['.jpg', '.jpeg', '.png'] },
+    accept: {
+      'image/jpeg': [],
+      'image/png': []
+    },
     maxSize: 1024 * 1024,
     onDrop: file => onFileChange(file)
   })

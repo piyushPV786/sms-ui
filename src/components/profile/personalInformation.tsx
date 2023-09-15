@@ -1,6 +1,9 @@
-import { Box, Card, Grid, IconButton } from '@mui/material'
+import { Box, Card, Grid, IconButton, Typography } from '@mui/material'
 import { ProfileInfo } from '.'
 import { Pencil } from 'mdi-material-ui'
+import { addressTypes } from 'src/types/dataTypes'
+import UseCustomHook from '../common/CustomHook'
+import { DDMMYYYDateFormat, getName } from 'src/utils'
 
 interface IProps {
   handleEditDialogOpen: () => void
@@ -8,35 +11,46 @@ interface IProps {
 }
 
 const PersonalInformation = ({ handleEditDialogOpen, studentDetails }: IProps) => {
+  const { country, gender, language, nationality, nationalityStatus, race } = UseCustomHook()
+  const address = studentDetails?.address?.sort((a: addressTypes, b: addressTypes) =>
+    a?.addressType?.localeCompare(b?.addressType)
+  )
+
   return (
     <Box>
       {!!studentDetails && (
         <Grid container xs={12} sx={{ marginTop: 10 }}>
           <ProfileInfo label='Name' info={`${studentDetails['firstName']} ${studentDetails['lastName']}`} />
-          <ProfileInfo label='Gender' info={`${studentDetails['gender']}`} />
-          <ProfileInfo label='Date of Birth' info={`${studentDetails['dateOfBirth']}}`} />
+          <ProfileInfo label='Gender' info={`${getName(gender, studentDetails['gender'])}`} />
+          <ProfileInfo label='Date of Birth' info={`${DDMMYYYDateFormat(studentDetails['dateOfBirth'])}`} />
           <ProfileInfo label='Email' info={`${studentDetails['email']}`} />
           <ProfileInfo
             label='Mobile Number'
             info={`+${studentDetails['mobileCountryCode']} ${studentDetails['mobileNo']}`}
           />
-          <ProfileInfo label='Home Language' info={`${studentDetails['homeLanguage']}`} />
-          <ProfileInfo label='Race' info={`${studentDetails['race']}`} />
-          <ProfileInfo label='Nationality Status' info={`${studentDetails['nationality']}`} />
-          <ProfileInfo label='Nationality' info={`${studentDetails['nationality']}`} />
+          <ProfileInfo label='Home Language' info={`${getName(language, studentDetails['homeLanguage'])}`} />
+          <ProfileInfo label='Race' info={`${getName(race, studentDetails['race'])}`} />
+          <ProfileInfo
+            label='Nationality Status'
+            info={`${getName(nationalityStatus, studentDetails['nationality'])}`}
+          />
+          <ProfileInfo label='Nationality' info={`${getName(nationality, studentDetails['nationality'])}`} />
           <ProfileInfo
             label='Identification Document Type / Id No'
             info={`${studentDetails['identificationDocumentType']} / ${studentDetails['idNo']}`}
           />
         </Grid>
       )}
-      {!!studentDetails && studentDetails?.address && (
+      {!!studentDetails && address && (
         <Grid container xs={12} display={'flex'} justifyContent={'space-between'}>
-          {studentDetails?.address?.map((item: any) => (
+          {address?.map((item: any) => (
             <Grid sm={5} xs={12} item key={item?.id}>
-              {item?.addressType}
+              <Typography variant='h6' sx={{ color: '#4f958d' }}>{`${item?.addressType}  ADDRESS`}</Typography>
+
               <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative', background: '#e0ece8' }}>
-                {`${item?.street} ${item?.state} ${item?.state} ${item?.city} ${item?.country} ${item?.zipcode}`}
+                {`${item?.street} ${item?.state} ${item?.state} ${item?.city} ${getName(country, item?.country)} ${
+                  item?.zipcode
+                }`}
                 {item?.addressType === 'POSTAL' && (
                   <IconButton
                     aria-label='fingerprint'

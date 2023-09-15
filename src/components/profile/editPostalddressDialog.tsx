@@ -92,6 +92,7 @@ const EditPostalAddressDialog = ({
         getStateData(postalAddress?.country)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [studentDetails])
 
   const onSubmitAddress = async (data: any) => {
@@ -142,29 +143,6 @@ const EditPostalAddressDialog = ({
               <Grid item xs={6}>
                 <FormControl fullWidth>
                   <Controller
-                    name='city'
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { onChange } }) => (
-                      <TextField
-                        defaultValue={cityWatch}
-                        label='City'
-                        onChange={onChange}
-                        error={Boolean(errors.city)}
-                        aria-describedby='validation-schema-city'
-                      />
-                    )}
-                  />
-                  {errors.city && (
-                    <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-city'>
-                      {errors.city.message}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth>
-                  <Controller
                     name='country'
                     control={control}
                     rules={{ required: true }}
@@ -192,8 +170,6 @@ const EditPostalAddressDialog = ({
                   )}
                 </FormControl>
               </Grid>
-            </Grid>
-            <Grid container marginTop={5} spacing={6}>
               <Grid item xs={6}>
                 <FormControl fullWidth>
                   <Controller
@@ -224,6 +200,31 @@ const EditPostalAddressDialog = ({
                   )}
                 </FormControl>
               </Grid>
+            </Grid>
+            <Grid container marginTop={5} spacing={6}>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <Controller
+                    name='city'
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field: { onChange } }) => (
+                      <TextField
+                        defaultValue={cityWatch}
+                        label='City'
+                        onChange={onChange}
+                        error={Boolean(errors.city)}
+                        aria-describedby='validation-schema-city'
+                      />
+                    )}
+                  />
+                  {errors.city && (
+                    <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-city'>
+                      {errors.city.message}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
               <Grid item xs={6}>
                 <FormControl fullWidth>
                   <Controller
@@ -233,7 +234,7 @@ const EditPostalAddressDialog = ({
                     render={({ field: { onChange } }) => (
                       <TextField
                         defaultValue={zipcodeWatch}
-                        label='Pincode or ZipCode'
+                        label='PinCode or ZipCode'
                         onChange={onChange}
                         error={Boolean(errors.zipcode)}
                         aria-describedby='validation-schema-city'
