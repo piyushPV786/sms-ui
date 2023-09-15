@@ -17,26 +17,35 @@ import {
   styled,
   BoxProps,
   Button,
-  TextField
+  TextField,
+  InputAdornment,
+  IconButton
 } from '@mui/material'
-import { CheckCircle, Circle } from 'mdi-material-ui'
+import { CheckCircle, Circle, EyeOffOutline, EyeOutline } from 'mdi-material-ui'
 import { useRouter } from 'next/router'
-import { EnvPaths, PathTypes, downloadSuccess, status } from 'src/context/common'
+import { EnvPaths, ErrorMessage, PathTypes, downloadSuccess, status } from 'src/context/common'
 import { StudentService } from 'src/service'
 import { INewPassword } from 'src/service/Student'
-import { successToast } from '../../../@core/components/common/Toast'
+import { errorToast, successToastBottomRight } from 'src/components/common'
 
 const schema = yup.object().shape({
-  newPassword: yup.string().required('Please Type your password'),
+  newPassword: yup
+    .string()
+    .required(ErrorMessage.newPassword)
+    .matches(
+      /(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$/,
+      ErrorMessage.newPasswordError
+    ),
   confirmPassword: yup
     .string()
-    .required('Please Type again your new password')
-    .oneOf([yup.ref('newPassword')], `Those Password didn't match. Try again`)
+    .required(ErrorMessage.confirmPassword)
+    .oneOf([yup.ref('newPassword'), ErrorMessage.confirmPasswordError])
 })
 
 const ForgetPassword = () => {
   // ** Vars
-
+  const [showNewPassword, setShowNewPassword] = useState<boolean>(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
   const [validationProps, setValidationProps] = useState({
     min8: false,
     lowercase: false,
@@ -45,15 +54,16 @@ const ForgetPassword = () => {
     special_character: false
   })
   const {
-    setError,
     handleSubmit,
     register,
-    clearErrors,
+    watch,
+
     formState: { errors }
   } = useForm({
+    mode: 'onChange',
     resolver: yupResolver(schema)
   })
-  console.log({ errors, validationProps })
+
   const router = useRouter()
   const { token } = router.query
 
@@ -61,20 +71,6 @@ const ForgetPassword = () => {
     router.replace(PathTypes.login)
   }
 
-  const checkRequirements = () => {
-    if (Object.values(validationProps).includes(false)) {
-      setError('password', {
-        type: 'manual',
-        message: Object.values(validationProps).includes(false)
-          ? 'Please enter a password that meets all of the requirements below'
-          : ''
-      })
-    } else {
-      clearErrors('password')
-    }
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => checkRequirements, [validationProps])
   const updateNewPassword = async (payload: INewPassword) => {
     const newPayload = {
       ...payload,
@@ -82,21 +78,22 @@ const ForgetPassword = () => {
     }
     const response = await StudentService?.userNewPassword(newPayload)
     if (response?.status === status?.successCode) {
-      successToast(downloadSuccess.passwordUpdate)
+      successToastBottomRight(downloadSuccess.passwordUpdate)
       router.replace(PathTypes.login)
+    } else {
+      errorToast(ErrorMessage.Error)
     }
   }
   const onSubmit = (data: any) => {
-    checkRequirements()
     if (Object.keys(errors).length === 0 && !Object.values(validationProps).includes(false)) {
       updateNewPassword(data)
     }
   }
+
   const updateValidationPropsValue = (name: string, value: boolean) => {
     setValidationProps(prev => ({ ...prev, [name]: value }))
   }
-  const handleOnChangePassword = (event: React.ChangeEvent) => {
-    const { value } = event.target as HTMLInputElement
+  const handleOnChangePassword = (value: string) => {
     updateValidationPropsValue('min8', min8Validation(value))
     updateValidationPropsValue('lowercase', lowercaseValidation(value))
     updateValidationPropsValue('uppercase', uppercaseValidation(value))
@@ -109,6 +106,10 @@ const ForgetPassword = () => {
     ) : (
       <Circle style={{ paddingRight: 5 }} fontSize='small' />
     )
+
+  useEffect(() => {
+    handleOnChangePassword(watch('newPassword'))
+  }, [watch('newPassword')])
 
   return (
     <BackgroundBox>
@@ -151,51 +152,83 @@ const ForgetPassword = () => {
                       <Grid item xs={12}>
                         <TextField
                           {...register('newPassword')}
-                          onChange={handleOnChangePassword}
                           label='Enter New Password'
                           variant='outlined'
-                          type='password'
                           fullWidth
+                          type={showNewPassword ? 'text' : 'password'}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position='end'>
+                                <IconButton
+                                  edge='end'
+                                  onMouseDown={e => e.preventDefault()}
+                                  onClick={() => setShowNewPassword(!showNewPassword)}
+                                >
+                                  {showNewPassword ? <EyeOutline /> : <EyeOffOutline />}
+                                </IconButton>
+                              </InputAdornment>
+                            )
+                          }}
                           error={!!errors?.newPassword?.message}
                           helperText={errors?.newPassword?.message}
                         />
                       </Grid>
-                      <Grid container spacing={2} style={{ paddingTop: 20, paddingLeft: 20 }} textAlign='start' xs={12}>
-                        <Grid item xs={6}>
-                          <Typography variant='caption' display='flex' alignItems='center'>
-                            <ValidationIcon isValid={validationProps.min8} />8 characters minimum
-                          </Typography>
+                      {!!watch('newPassword') && (
+                        <Grid
+                          container
+                          spacing={2}
+                          style={{ paddingTop: 20, paddingLeft: 20 }}
+                          textAlign='start'
+                          xs={12}
+                        >
+                          <Grid item xs={6}>
+                            <Typography variant='caption' display='flex' alignItems='center'>
+                              <ValidationIcon isValid={validationProps.min8} />8 characters minimum
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography variant='caption' display='flex' alignItems='center'>
+                              <ValidationIcon isValid={validationProps.uppercase} /> 1 uppercase letter
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography variant='caption' display='flex' alignItems='center'>
+                              <ValidationIcon isValid={validationProps.lowercase} />1 lowercase letter
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography variant='caption' display='flex' alignItems='center'>
+                              <ValidationIcon isValid={validationProps.number} />1 number
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography variant='caption' display='flex' alignItems='center'>
+                              <ValidationIcon isValid={validationProps.special_character} />1 special character
+                            </Typography>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant='caption' display='flex' alignItems='center'>
-                            <ValidationIcon isValid={validationProps.uppercase} /> 1 uppercase letter
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant='caption' display='flex' alignItems='center'>
-                            <ValidationIcon isValid={validationProps.lowercase} />1 lowercase letter
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant='caption' display='flex' alignItems='center'>
-                            <ValidationIcon isValid={validationProps.number} />1 number
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Typography variant='caption' display='flex' alignItems='center'>
-                            <ValidationIcon isValid={validationProps.special_character} />1 special character
-                          </Typography>
-                        </Grid>
-                      </Grid>
+                      )}
 
                       <Grid item xs={12}>
                         <TextField
                           {...register('confirmPassword')}
                           label='Confirm New Password'
                           variant='outlined'
-                          type='password'
+                          type={showConfirmPassword ? 'text' : 'password'}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position='end'>
+                                <IconButton
+                                  edge='end'
+                                  onMouseDown={e => e.preventDefault()}
+                                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                >
+                                  {showConfirmPassword ? <EyeOutline /> : <EyeOffOutline />}
+                                </IconButton>
+                              </InputAdornment>
+                            )
+                          }}
                           fullWidth
-                          onBlur={checkRequirements}
                           error={!!errors?.confirmPassword?.message}
                           helperText={errors?.confirmPassword?.message}
                         />
