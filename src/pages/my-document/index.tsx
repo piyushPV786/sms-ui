@@ -17,9 +17,9 @@ import Chip from '@mui/material/Chip'
 // ** Custom Components Imports
 import TableHeader from 'src/components/uploaddocument/TableHeader'
 import { ICommonData, downloadSuccess, fileType } from 'src/context/common'
-import { successToast } from '../../@core/components/common/Toast'
 import { StudentService, CommonService } from 'src/service'
 import { status } from 'src/context/common'
+import { successToastBottomRight } from '../../components/common'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
@@ -109,7 +109,7 @@ const DocumentList = () => {
         file: payload.file
       })
       if (documentUploadResponse) {
-        successToast(downloadSuccess.upload)
+        successToastBottomRight(`${payload.file.name} ${downloadSuccess.upload}`)
         getUserDocumentList()
       }
     }
@@ -138,7 +138,7 @@ const DocumentList = () => {
   }
 
   const handleView = (fileName: string, fileCode: string) => {
-    successToast(downloadSuccess.download)
+    successToastBottomRight(`${fileName} ${downloadSuccess.download}`)
     setViewFileLoader(prev => ({ ...prev, [fileCode]: true }))
     getFileUrl(fileName, setViewFileLoader, fileCode)
   }
