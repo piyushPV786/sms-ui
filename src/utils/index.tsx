@@ -235,3 +235,10 @@ export const programCodeToName = (programList: IProgram | undefined, code: strin
 
   return programName
 }
+export const getName = (list: Array<commonListTypes>, code: string) => {
+  if (list?.length > 0) {
+    return list?.find(item => item.code === code)?.name ?? code
+  }
+
+  return code
+}
