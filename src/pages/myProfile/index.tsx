@@ -18,7 +18,7 @@ import EditPostalAddressDialog from '../../components/profile/editPostalddressDi
 import { useAuth } from 'src/hooks/useAuth'
 import { CommonService, StudentService } from 'src/service'
 import PersonalInformation from 'src/components/profile/personalInformation'
-import { status } from 'src/context/common'
+import { ProfilePhoto, status } from 'src/context/common'
 import EducationInformation from 'src/components/profile/educationInformation'
 import SponsorInformation from 'src/components/profile/sponsorInformation'
 import EmploymentInformation from 'src/components/profile/employmetInformation'
@@ -143,8 +143,14 @@ const PreviewCard = () => {
     const qualificationResponse = await StudentService?.ProfilePhoto(payload, studentDetails && studentDetails?.email)
     uploadDocuments(qualificationResponse?.data?.data?.awsUploadUrl, selectedImage)
 
-    const imgsrc = await CommonService.getProfileSource(qualificationResponse?.data?.data?.userDetail?.documentCode)
-    setProfileImage(imgsrc?.data?.data)
+    if (qualificationResponse?.status === status?.successCode) {
+      const imgsrc = await CommonService.getProfileSource(qualificationResponse?.data?.data?.userDetail?.documentCode)
+
+      if (imgsrc?.status === status?.successCode) {
+        successToast(ProfilePhoto.Upload)
+        setProfileImage(imgsrc?.data?.data)
+      }
+    }
   }
 
   const getCountryData = async () => {

@@ -123,4 +123,75 @@ export default class Common {
     }
     nProgress.done()
   }
+  async getGenderList() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.gender
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching Gender detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+  async getNationalityList() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.nationality
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching Nationality detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+  async getNationalityStatus() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.nationalityStatus
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching Nationality  Status detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+  async getRace() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.race
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching Race detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+
+  async getLanguage() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.language
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching language detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
 }

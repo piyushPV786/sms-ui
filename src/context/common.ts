@@ -157,3 +157,7 @@ export enum ErrorMessage {
   confirmPasswordError = `Those password didn't match. Try again`,
   Error = 'Something went wrong'
 }
+
+export enum ProfilePhoto {
+  Upload = 'Profile photo updated Successfully.'
+}
