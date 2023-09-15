@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField, Theme, Typography } from '@mui/material'
+import { Box, Button, Grid, Theme, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
 import Pdf from 'react-to-pdf'
@@ -34,7 +34,7 @@ const StudentDashboard = () => {
   }
   React.useEffect(() => {
     getStudentList()
-  }, [])
+  }, [value])
 
   const columns = [
     {
