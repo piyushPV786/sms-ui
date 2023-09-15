@@ -20,8 +20,8 @@ import { ProgressClose, TrashCanOutline } from 'mdi-material-ui'
 
 // ** Third Party Library
 import Tooltip from '@mui/material/Tooltip'
-import { successToast } from 'src/@core/components/common/Toast'
 import { deleteDocument } from 'src/context/common'
+import { successToastBottomRight } from '../common'
 
 interface IDeleteDialogProps {
   deleteStudentDocument: (arg0: string) => void
@@ -34,7 +34,7 @@ const DeleteDialog = ({ deleteStudentDocument, data }: IDeleteDialogProps) => {
 
   const onSubmit = () => {
     deleteStudentDocument(data?.row?.code)
-    successToast(deleteDocument.delete)
+    successToastBottomRight(`${data?.row?.name} ${deleteDocument.delete}`)
     setDialogShow(false)
   }
 
