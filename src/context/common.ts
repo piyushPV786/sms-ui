@@ -155,7 +155,8 @@ export enum ErrorMessage {
   newPasswordError = 'Please enter a password that meets all of the requirements below',
   confirmPassword = 'Please Type again your new password',
   confirmPasswordError = `Those password didn't match. Try again`,
-  Error = 'Something went wrong'
+  Error = 'Something went wrong',
+  stateError = 'This state not exist in the country '
 }
 
 export enum ProfilePhoto {

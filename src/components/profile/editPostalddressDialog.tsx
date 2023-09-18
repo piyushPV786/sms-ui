@@ -10,6 +10,8 @@ import * as yup from 'yup'
 import { Autocomplete, FormControl, FormHelperText } from '@mui/material'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect, useState } from 'react'
+import { ErrorMessage } from 'src/context/common'
+import { getName } from 'src/utils'
 
 // import { Alert } from '@mui/material'
 
@@ -67,7 +69,9 @@ const EditPostalAddressDialog = ({
     watch,
     setValue,
     control,
+    reset,
     handleSubmit,
+    setError,
     formState: { errors }
   } = useForm({
     mode: 'onChange',
@@ -80,7 +84,7 @@ const EditPostalAddressDialog = ({
   const cityWatch = watch('city')
   const zipcodeWatch = watch('zipcode')
 
-  useEffect(() => {
+  const setStateData = () => {
     if (studentDetails && studentDetails?.address?.length) {
       const postalAddress = studentDetails?.address?.find((item: any) => item?.addressType === 'POSTAL')
       setValue('country', postalAddress?.country)
@@ -92,12 +96,27 @@ const EditPostalAddressDialog = ({
         getStateData(postalAddress?.country)
       }
     }
+  }
+
+  useEffect(() => {
+    setStateData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [studentDetails])
 
   const onSubmitAddress = async (data: any) => {
     setLoading(true)
-    await onSubmit(data)
+    const testError = stateData.some((i: { isoCode: string }) => i.isoCode === watch('state'))
+
+    if (testError) {
+      await onSubmit(data)
+      setStateData()
+      reset()
+    } else {
+      setError('state', {
+        type: 'custom',
+        message: `${ErrorMessage.stateError} "${getName(countryData, data?.country)}"`
+      })
+    }
     setLoading(false)
   }
 
@@ -151,7 +170,10 @@ const EditPostalAddressDialog = ({
                         defaultValue={
                           countryWatch ? countryData?.find((item: any) => item?.code === countryWatch) : undefined
                         }
-                        onChange={(e, data) => onChange(data?.code)}
+                        onChange={(e, data) => {
+                          onChange(data?.code)
+                          getStateData(data?.code)
+                        }}
                         options={countryData}
                         renderOption={(props, option: any) => <li {...props}>{option?.name}</li>}
                         renderInput={(params: JSX.IntrinsicAttributes & TextFieldProps) => (
@@ -254,12 +276,20 @@ const EditPostalAddressDialog = ({
             <Button
               disabled={loading}
               variant='contained'
-              onClick={handleEditDialogClose}
+              onClick={() => {
+                handleEditDialogClose()
+                setStateData()
+              }}
               style={{ background: 'white', color: 'grey', borderColor: 'grey' }}
             >
               Cancel
             </Button>
-            <Button style={{ background: '#4f958d', color: 'white' }} variant='contained' type='submit'>
+            <Button
+              style={{ background: '#4f958d', color: 'white' }}
+              disabled={loading}
+              variant='contained'
+              type='submit'
+            >
               Save
             </Button>
           </DialogActions>
