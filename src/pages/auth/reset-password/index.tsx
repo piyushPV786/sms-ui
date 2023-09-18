@@ -39,7 +39,7 @@ const schema = yup.object().shape({
   confirmPassword: yup
     .string()
     .required(ErrorMessage.confirmPassword)
-    .oneOf([yup.ref('newPassword'), ErrorMessage.confirmPasswordError])
+    .oneOf([yup.ref('newPassword')], ErrorMessage.confirmPasswordError)
 })
 
 const ForgetPassword = () => {
