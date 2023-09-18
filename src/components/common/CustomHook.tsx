@@ -10,6 +10,8 @@ const UseCustomHook = () => {
   const [country, setCountry] = useState<commonListTypes[]>([])
   const [gender, setGender] = useState<commonListTypes[]>([])
   const [race, setRace] = useState<commonListTypes[]>([])
+  const [studentTypes, setStudentTypes] = useState<commonListTypes[]>([])
+  const [studyModes, setStudyModes] = useState<Array<commonListTypes>>([])
 
   const getCountryData = async () => {
     const response = await CommonService.getCountryData()
@@ -35,6 +37,18 @@ const UseCustomHook = () => {
       setNationality(response.data.data)
     }
   }
+  const getStudyModeData = async () => {
+    const response = await CommonService.getStudyMode()
+    if (response?.status === status.successCode && response?.data?.data?.length) {
+      setStudyModes(response.data.data)
+    }
+  }
+  const getStudentTypeData = async () => {
+    const response = await CommonService.getStudentType()
+    if (response?.status === status.successCode && response?.data?.data?.length) {
+      setStudentTypes(response.data.data)
+    }
+  }
   const getNationalityStatus = async () => {
     const response = await CommonService.getNationalityStatus()
     if (response?.status === status.successCode && response?.data?.data?.length) {
@@ -55,9 +69,11 @@ const UseCustomHook = () => {
     getNationalityStatus()
     getGenderDetails()
     getRaceDetails()
+    getStudyModeData()
+    getStudentTypeData()
   }, [])
 
-  return { language, nationality, nationalityStatus, country, gender, race }
+  return { language, nationality, nationalityStatus, country, gender, race, studentTypes, studyModes }
 }
 
 export default UseCustomHook
