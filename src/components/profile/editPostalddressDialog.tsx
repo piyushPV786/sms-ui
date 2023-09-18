@@ -181,7 +181,7 @@ const EditPostalAddressDialog = ({
                         defaultValue={
                           stateWatch ? stateData?.find((item: any) => item?.isoCode === stateWatch) : undefined
                         }
-                        onChange={(e, data) => onChange(data?.name)}
+                        onChange={(e, data) => onChange(data?.isoCode)}
                         options={stateData}
                         renderOption={(props, option: any) => <li {...props}>{option?.name}</li>}
                         renderInput={(params: JSX.IntrinsicAttributes & TextFieldProps) => (
