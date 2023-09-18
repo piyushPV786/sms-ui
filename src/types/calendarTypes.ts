@@ -11,6 +11,7 @@ export type CalendarColors = {
   Holiday: ThemeColor
   Announcements: ThemeColor
   Assessments: ThemeColor
+  Exams: ThemeColor
 }
 
 export type EventType = {
@@ -54,7 +55,7 @@ export type EventStateType = {
 }
 
 export type CalendarStoreType = {
-  events: EventType[]
+  events: EventType[] | undefined
   selectedEvent: null | EventType
   selectedCalendars: CalendarFiltersType[] | string[]
 }
