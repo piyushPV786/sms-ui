@@ -11,7 +11,7 @@ import DyncamicBreadcrumb from 'src/components/Dynamicbreadcrumb'
 import { useRouter } from 'next/router'
 import { styled } from '@mui/material/styles'
 import CustomAvatar from 'src/@core/components/mui/avatar'
-import { AvatarProps, Tab, Tabs } from '@mui/material'
+import { AvatarProps, Backdrop, CircularProgress, Tab, Tabs } from '@mui/material'
 import { useEffect, useState } from 'react'
 import EditPostalAddressDialog from '../../components/profile/editPostalddressDialog'
 
@@ -49,6 +49,7 @@ const PreviewCard = () => {
   const [countryData, setCountryData] = useState(null)
   const [stateData, setStateData] = useState(null)
   const [openProfileModal, setProfileModal] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const AvatarWithStyles = styled(CustomAvatar)<AvatarProps>(({}) => ({
     width: 150,
     height: 150
@@ -161,10 +162,12 @@ const PreviewCard = () => {
   }
 
   const getStateData = async (countryCode: string) => {
+    setLoading(true)
     const stateResponse = await CommonService?.getStateData(countryCode)
     if (stateResponse?.data?.data) {
       setStateData(stateResponse?.data?.data)
     }
+    setLoading(false)
   }
 
   function a11yProps(index: number) {
@@ -176,6 +179,9 @@ const PreviewCard = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={loading}>
+        <CircularProgress color='inherit' />
+      </Backdrop>
       <Grid container rowSpacing={10}>
         <Grid item xs={6}>
           <DyncamicBreadcrumb asPath={router.asPath} />
