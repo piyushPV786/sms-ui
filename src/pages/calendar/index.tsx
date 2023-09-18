@@ -1,15 +1,16 @@
 // ** React Imports
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import { Theme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import moment from 'moment'
 
 // ** Hooks
 import { useSettings } from 'src/@core/hooks/useSettings'
 
-import { CalendarColors } from 'src/types/calendarTypes'
+import { CalendarColors, EventType } from 'src/types/calendarTypes'
 
 // ** FullCalendar & App Components Imports
 
@@ -21,140 +22,126 @@ import CalendarWrapper from 'src/@core/styles/libs/fullcalendar'
 import 'react-datepicker/dist/react-datepicker.css'
 import Calendar from 'src/components/calender/Calendar'
 import SidebarLeft from 'src/components/calender/SidebarLeft'
+import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 
 // import AddEventSidebar from 'src/components/calender/AddEventSidebar'
 
 // ** CalendarColors
-const calendarsColor: CalendarColors = {
-  Assessments: 'error',
-  Schedules: 'primary',
-  Announcements: 'warning',
-  Holiday: 'success',
-  Others: 'info'
-}
-
-const store = {
-  events: [
-    {
-      id: 1,
-      url: '',
-      title: 'Design Review',
-      start: '2023-08-28T13:55:01.838Z',
-      end: '2023-08-29T13:55:01.838Z',
-      allDay: false,
-      extendedProps: {
-        calendar: 'Schedules'
-      }
-    },
-    {
-      id: 2,
-      url: '',
-      title: 'Meeting With Client',
-      start: '2023-08-19T18:30:00.000Z',
-      end: '2023-08-20T18:30:00.000Z',
-      allDay: true,
-      extendedProps: {
-        calendar: 'Schedules'
-      }
-    },
-    {
-      id: 3,
-      url: '',
-      title: 'Family Trip',
-      allDay: true,
-      start: '2023-08-21T18:30:00.000Z',
-      end: '2023-08-23T18:30:00.000Z',
-      extendedProps: {
-        calendar: 'Holiday'
-      }
-    },
-    {
-      id: 4,
-      url: '',
-      title: "Doctor's Appointment",
-      start: '2023-08-19T18:30:00.000Z',
-      end: '2023-08-20T18:30:00.000Z',
-      allDay: true,
-      extendedProps: {
-        calendar: 'Assessments'
-      }
-    },
-    {
-      id: 5,
-      url: '',
-      title: 'Dart Game?',
-      start: '2023-08-17T18:30:00.000Z',
-      end: '2023-08-18T18:30:00.000Z',
-      allDay: true,
-      extendedProps: {
-        calendar: 'Others'
-      }
-    },
-    {
-      id: 6,
-      url: '',
-      title: 'Meditation',
-      start: '2023-08-17T18:30:00.000Z',
-      end: '2023-08-18T18:30:00.000Z',
-      allDay: true,
-      extendedProps: {
-        calendar: 'Assessments'
-      }
-    },
-    {
-      id: 7,
-      url: '',
-      title: 'Dinner',
-      start: '2023-08-17T18:30:00.000Z',
-      end: '2023-08-18T18:30:00.000Z',
-      allDay: true,
-      extendedProps: {
-        calendar: 'Announcements'
-      }
-    },
-    {
-      id: 8,
-      url: '',
-      title: 'Product Review',
-      start: '2023-08-17T18:30:00.000Z',
-      end: '2023-08-18T18:30:00.000Z',
-      allDay: true,
-      extendedProps: {
-        calendar: 'Schedules'
-      }
-    },
-    {
-      id: 9,
-      url: '',
-      title: 'Monthly Meeting',
-      start: '2023-08-31T18:30:00.000Z',
-      end: '2023-08-31T18:30:00.000Z',
-      allDay: true,
-      extendedProps: {
-        calendar: 'Schedules'
-      }
-    },
-    {
-      id: 10,
-      url: '',
-      title: 'Monthly Checkup',
-      start: '2023-06-30T18:30:00.000Z',
-      end: '2023-06-30T18:30:00.000Z',
-      allDay: true,
-      extendedProps: {
-        calendar: 'Assessments'
-      }
-    }
-  ],
-  selectedEvent: null,
-  selectedCalendars: ['Assessments', 'Schedules', 'Announcements', 'Holiday', 'Others']
-}
 
 const AppCalendar = () => {
+  interface schedulerType {
+    digitalAssessmentDueDate: Date | string
+    examDate: Date | string
+    scheduleDuration: schedulerDurationType[]
+    individualAssignmentDueDate: Date | string
+  }
+  interface schedulerDurationType {
+    from: string
+    to: string
+    date: string
+  }
+
   // ** States
-  const [calendarApi, setCalendarApi] = useState<null | any>(null)
+
+  const [calendarApi, setCalendarApi] = useState<null | any>(['Assessments'])
   const [leftSidebarOpen, setLeftSidebarOpen] = useState<boolean>(false)
+  const [event, setEvent] = useState<EventType[] | undefined>()
+
   const [addEventSidebarOpen, setAddEventSidebarOpen] = useState<boolean>(false)
+  const { scheduler } = DashboardCustomHooks()
+
+  const parse = () => {
+    const eventArr: any = []
+    scheduler &&
+      scheduler[0]?.schedule?.map((item: schedulerType, i: string) => {
+        item &&
+          eventArr.push({
+            id: `Exam ${i}`,
+            url: '',
+            title: 'Exam',
+            start: item?.examDate,
+            end: item?.examDate,
+            allDay: false,
+            extendedProps: {
+              calendar: 'Exams'
+            }
+          })
+        item &&
+          eventArr.push({
+            id: `Digital-assingment${i}`,
+            url: '',
+            title: 'Digital assingment',
+            start: item?.digitalAssessmentDueDate,
+            end: item?.digitalAssessmentDueDate,
+            allDay: false,
+            extendedProps: {
+              calendar: 'Assessments'
+            }
+          })
+        item &&
+          eventArr.push({
+            id: `individualAssignmentDueDate${i}`,
+            url: '',
+            title: 'Individual Assignment',
+            start: item?.individualAssignmentDueDate,
+            end: item?.individualAssignmentDueDate,
+            allDay: false,
+            extendedProps: {
+              calendar: 'Assessments'
+            }
+          })
+
+        item?.scheduleDuration?.map(item => {
+          const date = item?.date
+          const FromDate = moment(date)
+            .set({
+              hour: Number(item?.from?.split(':')[0]),
+              minute: Number(item?.from?.split(':')[1]),
+              second: Number(item?.from?.split(':')[2])
+            })
+            .format()
+          const ToDate = moment(date)
+            .set({
+              hour: Number(item?.to?.split(':')[0]),
+              minute: Number(item?.to?.split(':')[1]),
+              second: Number(item?.to?.split(':')[2])
+            })
+            .format()
+
+          eventArr.push({
+            id: `Duration${i}`,
+            url: '',
+            title: `Duration`,
+            start: FromDate,
+            end: ToDate,
+            allDay: false,
+            extendedProps: {
+              calendar: 'Schedules'
+            }
+          })
+        })
+      })
+    setEvent(eventArr)
+  }
+
+  useEffect(() => {
+    parse()
+  }, [scheduler])
+
+  const calendarsColor: CalendarColors = {
+    Assessments: 'error',
+    Schedules: 'primary',
+    Announcements: 'warning',
+    Holiday: 'success',
+    Others: 'info',
+    Exams: 'info'
+  }
+
+  const store = {
+    events: event,
+    selectedEvent: null,
+    selectedCalendars: ['Assessments', 'Schedules', 'Announcements', 'Holiday', 'Others', 'Exams']
+  }
 
   // ** Hooks
   const { settings } = useSettings()
