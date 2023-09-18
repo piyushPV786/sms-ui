@@ -194,4 +194,33 @@ export default class Common {
     }
     nProgress.done()
   }
+  async getStudentType() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.studentType
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching student detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+
+  async getStudyMode() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.studyMode
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching Study Mode detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
 }

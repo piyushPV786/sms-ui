@@ -1,5 +1,7 @@
 import { Box, Grid } from '@mui/material'
 import { ProfileInfo } from '.'
+import UseCustomHook from '../common/CustomHook'
+import { getName } from 'src/utils'
 
 interface IProps {
   userProfileDetails: any
@@ -7,6 +9,7 @@ interface IProps {
 }
 
 const EducationInformation = ({ userProfileDetails, qualificationData }: IProps) => {
+  const { studyModes, studentTypes } = UseCustomHook()
   const qualificationName = (code: string) => {
     let result = code
     if (qualificationData) {
@@ -21,7 +24,10 @@ const EducationInformation = ({ userProfileDetails, qualificationData }: IProps)
       {!!userProfileDetails && userProfileDetails?.education && (
         <Grid container xs={12} sx={{ marginTop: 10 }}>
           <ProfileInfo label='Admitted Program' info={`${userProfileDetails?.education?.programName}`} />
-          <ProfileInfo label='Study Mode & Fee Plan' info={`${userProfileDetails?.education?.studyModeCode}`} />
+          <ProfileInfo
+            label='Study Mode & Fee Plan'
+            info={`${getName(studyModes, userProfileDetails?.education?.studyModeCode)}`}
+          />
           <ProfileInfo
             label='Highest Qualification'
             info={`${qualificationName(userProfileDetails?.education?.qualificationCode)}`}
@@ -29,9 +35,12 @@ const EducationInformation = ({ userProfileDetails, qualificationData }: IProps)
           <ProfileInfo label='High School Name' info={`${userProfileDetails?.education?.highSchoolName}`} />
           <ProfileInfo
             label='Are you an international degree holder?'
-            info={`${userProfileDetails?.education?.isInternationDegree}`}
+            info={`${userProfileDetails?.education?.isInternationDegree ? 'Yes' : 'No'}`}
           />
-          <ProfileInfo label='Student Typ' info={`${userProfileDetails?.education?.studentTypeCode}`} />
+          <ProfileInfo
+            label='Student Type'
+            info={`${getName(studentTypes, userProfileDetails?.education?.studentTypeCode)}`}
+          />
         </Grid>
       )}
     </Box>
