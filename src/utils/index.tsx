@@ -242,3 +242,11 @@ export const getName = (list: Array<commonListTypes>, code: string) => {
 
   return code
 }
+
+export const getState = (list: Array<commonListTypes>, isoCode: string) => {
+  if (list?.length > 0) {
+    return list?.find(item => item.isoCode === isoCode)?.name ?? isoCode
+  }
+
+  return isoCode
+}

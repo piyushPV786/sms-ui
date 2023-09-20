@@ -9,6 +9,7 @@ export type addressTypes = {
   street: string
   country: string
   state: string
+  stateName?: string
   city: string
   zipcode: string
   addressType: string
@@ -24,6 +25,7 @@ export type commonListTypes = {
   id: number | string
   name: string
   code: string
+  isoCode?: string
 }
 export type bursaryTypes = {
   id: number | string
