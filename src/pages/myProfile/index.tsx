@@ -11,20 +11,22 @@ import DyncamicBreadcrumb from 'src/components/Dynamicbreadcrumb'
 import { useRouter } from 'next/router'
 import { styled } from '@mui/material/styles'
 import CustomAvatar from 'src/@core/components/mui/avatar'
-import { AvatarProps, Backdrop, CircularProgress, Tab, Tabs } from '@mui/material'
+import { AvatarProps, Tab, Tabs } from '@mui/material'
 import { useEffect, useState } from 'react'
 import EditPostalAddressDialog from '../../components/profile/editPostalddressDialog'
 
 import { useAuth } from 'src/hooks/useAuth'
 import { CommonService, StudentService } from 'src/service'
 import PersonalInformation from 'src/components/profile/personalInformation'
-import { ProfilePhoto, status } from 'src/context/common'
+import { ICommonData, ProfilePhoto, status } from 'src/context/common'
 import EducationInformation from 'src/components/profile/educationInformation'
 import SponsorInformation from 'src/components/profile/sponsorInformation'
 import EmploymentInformation from 'src/components/profile/employmetInformation'
 import KinInformation from 'src/components/profile/kinInformation'
 import { successToast } from 'src/components/common'
 import ProfilePictureDialog from 'src/components/profile/profilePictureDialog'
+import { getState } from 'src/utils'
+import { addressTypes } from 'src/types/dataTypes'
 
 const PreviewCard = () => {
   const router = useRouter()
@@ -47,13 +49,13 @@ const PreviewCard = () => {
   const [profileImage, setProfileImage] = useState<string | undefined>()
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [countryData, setCountryData] = useState(null)
-  const [stateData, setStateData] = useState(null)
+  const [stateData, setStateData] = useState<ICommonData[]>([])
   const [openProfileModal, setProfileModal] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(false)
   const AvatarWithStyles = styled(CustomAvatar)<AvatarProps>(({}) => ({
     width: 150,
     height: 150
   }))
+  const [address, setAddress] = useState<addressTypes[]>([])
 
   const handleImageChange = (file: any) => {
     const imageFile = file[0]
@@ -161,13 +163,13 @@ const PreviewCard = () => {
     }
   }
 
-  const getStateData = async (countryCode: string) => {
-    setLoading(true)
+  const getStateData = async (countryCode: string, state?: string) => {
     const stateResponse = await CommonService?.getStateData(countryCode)
     if (stateResponse?.data?.data) {
       setStateData(stateResponse?.data?.data)
+
+      return state ? getState(stateResponse?.data?.data, state) : stateResponse?.data?.data
     }
-    setLoading(false)
   }
 
   function a11yProps(index: number) {
@@ -177,11 +179,17 @@ const PreviewCard = () => {
     }
   }
 
+  useEffect(() => {
+    const addressArray: addressTypes[] = []
+    studentDetails?.address?.map(async (item: addressTypes) => {
+      const stateName = await getStateData(item.country, item.state)
+      addressArray.push({ ...item, stateName })
+    })
+    setAddress(addressArray)
+  }, [studentDetails])
+
   return (
     <Box sx={{ width: '100%' }}>
-      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={loading}>
-        <CircularProgress color='inherit' />
-      </Backdrop>
       <Grid container rowSpacing={10}>
         <Grid item xs={6}>
           <DyncamicBreadcrumb asPath={router.asPath} />
@@ -237,7 +245,11 @@ const PreviewCard = () => {
                 </Tabs>
               </Box>
               <CustomTabPanel value={value} index={0}>
-                <PersonalInformation handleEditDialogOpen={handleEditDialogOpen} studentDetails={studentDetails} />
+                <PersonalInformation
+                  handleEditDialogOpen={handleEditDialogOpen}
+                  studentDetails={studentDetails}
+                  address={address}
+                />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
                 <EducationInformation userProfileDetails={userProfileDetails} qualificationData={qualificationData} />

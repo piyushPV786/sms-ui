@@ -8,13 +8,12 @@ import { DDMMYYYDateFormat, getName } from 'src/utils'
 interface IProps {
   handleEditDialogOpen: () => void
   studentDetails: any
+  address: addressTypes[]
 }
 
-const PersonalInformation = ({ handleEditDialogOpen, studentDetails }: IProps) => {
+const PersonalInformation = ({ handleEditDialogOpen, address, studentDetails }: IProps) => {
   const { country, gender, language, nationality, nationalityStatus, race } = UseCustomHook()
-  const address = studentDetails?.address?.sort((a: addressTypes, b: addressTypes) =>
-    a?.addressType?.localeCompare(b?.addressType)
-  )
+  const Address = address?.sort((a: addressTypes, b: addressTypes) => a?.addressType?.localeCompare(b?.addressType))
 
   return (
     <Box>
@@ -41,28 +40,30 @@ const PersonalInformation = ({ handleEditDialogOpen, studentDetails }: IProps) =
           />
         </Grid>
       )}
-      {!!studentDetails && address && (
+      {!!studentDetails && Address && (
         <Grid container xs={12} display={'flex'} justifyContent={'space-between'}>
           {address?.map((item: any) => (
-            <Grid sm={5} xs={12} item key={item?.id}>
-              <Typography variant='h6' sx={{ color: '#4f958d' }}>{`${item?.addressType}  ADDRESS`}</Typography>
+            <>
+              <Grid sm={5} xs={12} item key={item?.id}>
+                <Typography variant='h6' sx={{ color: '#4f958d' }}>{`${item?.addressType}  ADDRESS`}</Typography>
 
-              <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative', background: '#e0ece8' }}>
-                {`${item?.street} ${item?.state} ${item?.state} ${item?.city} ${getName(country, item?.country)} ${
-                  item?.zipcode
-                }`}
-                {item?.addressType === 'POSTAL' && (
-                  <IconButton
-                    aria-label='fingerprint'
-                    color='success'
-                    onClick={handleEditDialogOpen}
-                    sx={{ position: 'absolute', top: '5px', right: '5px', background: '#4f958d' }}
-                  >
-                    <Pencil style={{ color: 'white' }} />
-                  </IconButton>
-                )}
-              </Card>
-            </Grid>
+                <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative', background: '#e0ece8' }}>
+                  {`${item?.street}, ${item.stateName},  ${item?.city}, ${getName(country, item?.country)}, ${
+                    item?.zipcode
+                  }`}
+                  {item?.addressType === 'POSTAL' && (
+                    <IconButton
+                      aria-label='fingerprint'
+                      color='success'
+                      onClick={handleEditDialogOpen}
+                      sx={{ position: 'absolute', top: '5px', right: '5px', background: '#4f958d' }}
+                    >
+                      <Pencil style={{ color: 'white' }} />
+                    </IconButton>
+                  )}
+                </Card>
+              </Grid>
+            </>
           ))}
         </Grid>
       )}
