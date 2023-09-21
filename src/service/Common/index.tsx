@@ -223,4 +223,18 @@ export default class Common {
     }
     nProgress.done()
   }
+  async getIndustryDetails() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.industry
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching industry detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
 }

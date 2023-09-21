@@ -1,5 +1,7 @@
 import { Box, Card, Grid } from '@mui/material'
 import { ProfileInfo } from '.'
+import UseCustomHook from '../common/CustomHook'
+import { getName } from 'src/utils'
 
 interface IProps {
   userProfileDetails: any
@@ -8,6 +10,7 @@ interface IProps {
 
 const EmploymentInformation = ({ userProfileDetails, qualificationData }: IProps) => {
   console.log('userProfileDetailsSponsor ===================>', qualificationData)
+  const { industry, country } = UseCustomHook()
 
   return (
     <Box>
@@ -16,7 +19,10 @@ const EmploymentInformation = ({ userProfileDetails, qualificationData }: IProps
           <ProfileInfo label='Employment Status' info={`${userProfileDetails?.employment?.employmentStatusCode}`} />
           <ProfileInfo label='Employer' info={`${userProfileDetails?.employment?.employer}`} />
           <ProfileInfo label='Job Title' info={`${userProfileDetails?.employment?.jobTitle}`} />
-          <ProfileInfo label='Industry' info={`${userProfileDetails?.employment?.employmentIndustryCode}`} />
+          <ProfileInfo
+            label='Industry'
+            info={`${getName(industry, userProfileDetails?.employment?.employmentIndustryCode)}`}
+          />
           <ProfileInfo label='Manager Name' info={`${userProfileDetails?.employment?.managerName}`} />
         </Grid>
       )}
@@ -25,7 +31,8 @@ const EmploymentInformation = ({ userProfileDetails, qualificationData }: IProps
         <Grid sm={5} xs={12} item>
           OFFICE ADDRESS
           <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative' }}>
-            {`${userProfileDetails?.employment?.officeAddress}`}
+            {`${userProfileDetails?.employment?.city},${userProfileDetails?.employment?.state},
+            ${getName(country, userProfileDetails?.employment?.country)},${userProfileDetails?.employment?.zipCode}`}
           </Card>
         </Grid>
       </Grid>
