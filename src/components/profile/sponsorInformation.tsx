@@ -28,8 +28,8 @@ const SponsorInformation = ({ userProfileDetails, qualificationData }: IProps) =
         <Grid sm={5} xs={12} item>
           GUARDIAN ADDRESS
           <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative' }}>
-            {`${userProfileDetails?.sponsor?.address}`},{userProfileDetails?.sponsor?.state},
-            {userProfileDetails?.sponsor?.city},{getName(country, userProfileDetails?.sponsor?.country)},
+            {`${userProfileDetails?.sponsor?.address}`}, {userProfileDetails?.sponsor?.city},
+            {userProfileDetails?.sponsor?.state}, ,{getName(country, userProfileDetails?.sponsor?.country)},
             {userProfileDetails?.sponsor?.zipCode}
           </Card>
         </Grid>
