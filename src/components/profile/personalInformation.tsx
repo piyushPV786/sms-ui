@@ -48,7 +48,7 @@ const PersonalInformation = ({ handleEditDialogOpen, address, studentDetails }: 
                 <Typography variant='h6' sx={{ color: '#4f958d' }}>{`${item?.addressType}  ADDRESS`}</Typography>
 
                 <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative', background: '#e0ece8' }}>
-                  {`${item?.street}, ${item.stateName},  ${item?.city}, ${getName(country, item?.country)}, ${
+                  {`${item?.street},   ${item?.city}, ${item.stateName}, ${getName(country, item?.country)}, ${
                     item?.zipcode
                   }`}
                   {item?.addressType === 'POSTAL' && (

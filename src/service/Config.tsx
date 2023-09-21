@@ -59,5 +59,6 @@ export const apiEndPoints = Object.freeze({
   nationality: '/common/nationality',
   race: '/common/race',
   studentType: '/common/student-type',
-  studyMode: '/common/study-mode'
+  studyMode: '/common/study-mode',
+  industry: '/common/employment-industry'
 })
