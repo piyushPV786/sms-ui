@@ -262,4 +262,20 @@ export default class Student {
     }
     nProgress.done()
   }
+
+  async downloadTranscript(studentCode: number | string) {
+    nProgress.start()
+    const endUrlName = apiEndPoints.downloadTranscript
+    try {
+      const response = await this.apiServer.get(`${endUrlName}/${studentCode}`, {
+        responseType: 'blob'
+      })
+
+      return response
+    } catch (err: any) {
+      console.log('Error in downloading academic transcript ========>', err?.message)
+    } finally {
+      nProgress.done()
+    }
+  }
 }

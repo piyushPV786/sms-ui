@@ -42,6 +42,7 @@ interface downloadSuccess {
   passwordReset: string
   passwordUpdate: string
   academicDownload: string
+  studentCodeError: string
 }
 
 export const downloadSuccess: downloadSuccess = {
@@ -50,7 +51,8 @@ export const downloadSuccess: downloadSuccess = {
   searchErrorMessage: 'Type minimum 3 characters',
   passwordReset: 'Password reset request was sent successfully. Please check your email to reset your password.',
   passwordUpdate: 'Password update successfully',
-  academicDownload: 'Academic Transcripts downloaded successfully.'
+  academicDownload: 'Academic Transcripts downloaded successfully.',
+  studentCodeError: 'Student code does not exist in academic record'
 }
 
 interface IDynamicEmailObject {
