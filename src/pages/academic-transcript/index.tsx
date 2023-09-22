@@ -5,10 +5,10 @@ import { useState } from 'react'
 
 import { DataGrid } from '@mui/x-data-grid'
 import { AcademicTypography, CardContent, TableCard } from 'src/styles/styled'
-import { successToastBottomRight } from 'src/components/common'
+import { successToastBottomRight, errorToast } from 'src/components/common'
 import { Download } from 'mdi-material-ui'
 import { AcademicService, StudentService } from 'src/service'
-import { downloadSuccess, info } from 'src/context/common'
+import { downloadSuccess, info, status } from 'src/context/common'
 import SearchBox from 'src/@core/components/searchinput'
 import { useAuth } from 'src/hooks/useAuth'
 
@@ -17,11 +17,14 @@ const StudentDashboard = () => {
   const [value, setValue] = useState<string>('')
 
   const auth: any = useAuth()
-  console.log('REG0000266', auth.user?.studentCode)
 
   const handleOnDownloadClick = async () => {
     const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
-    downloadTranscripts(downloadedTranscript?.data, downloadSuccess.academicDownload)
+    if (downloadedTranscript?.status == status.successCode) {
+      downloadTranscripts(downloadedTranscript?.data, downloadSuccess.academicDownload)
+    } else {
+      errorToast(downloadSuccess.studentCodeError)
+    }
   }
 
   const downloadTranscripts = async (fileName: Blob, msg: string) => {
@@ -30,9 +33,6 @@ const StudentDashboard = () => {
     a.href = url
     a.download = 'Academic Transcript'
     a.click()
-    setTimeout(handleSuccess, 3000, msg)
-  }
-  const handleSuccess = (msg: string) => {
     successToastBottomRight(msg)
   }
 
