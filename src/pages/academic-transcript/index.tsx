@@ -1,33 +1,41 @@
 import { Box, Button, Grid, Theme, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
-import Pdf from 'react-to-pdf'
 import { useState } from 'react'
 
 import { DataGrid } from '@mui/x-data-grid'
 import { AcademicTypography, CardContent, TableCard } from 'src/styles/styled'
 import { successToastBottomRight } from 'src/components/common'
 import { Download } from 'mdi-material-ui'
-import { AcademicService } from 'src/service'
+import { AcademicService, StudentService } from 'src/service'
 import { downloadSuccess, info } from 'src/context/common'
 import SearchBox from 'src/@core/components/searchinput'
-
-const ref: any = React.createRef()
-const options = {
-  orientation: 'landscape',
-  unit: 'in',
-  format: [13, 20]
-}
+import { useAuth } from 'src/hooks/useAuth'
 
 const StudentDashboard = () => {
   const [data, setData] = useState([])
   const [value, setValue] = useState<string>('')
 
-  const handleOnDownloadClick = (toPdf: () => void) => {
-    //Call API
-    toPdf()
-    successToastBottomRight(downloadSuccess.academicDownload)
+  const auth: any = useAuth()
+  console.log('REG0000266', auth.user?.studentCode)
+
+  const handleOnDownloadClick = async () => {
+    const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
+    downloadTranscripts(downloadedTranscript?.data, downloadSuccess.academicDownload)
   }
+
+  const downloadTranscripts = async (fileName: Blob, msg: string) => {
+    const url = URL.createObjectURL(fileName)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'Academic Transcript'
+    a.click()
+    setTimeout(handleSuccess, 3000, msg)
+  }
+  const handleSuccess = (msg: string) => {
+    successToastBottomRight(msg)
+  }
+
   const getStudentList = async () => {
     const response = await AcademicService?.getStudentAcademicDetails()
     setData(response?.data?.data?.total)
@@ -106,7 +114,7 @@ const StudentDashboard = () => {
   }
 
   return (
-    <Grid container spacing={6} ref={ref}>
+    <Grid container spacing={6}>
       <Grid item xs={12}>
         <Typography variant='h5' gutterBottom>
           Academic Transcript
@@ -142,23 +150,19 @@ const StudentDashboard = () => {
               </Box>
 
               <Box>
-                <Pdf targetRef={ref} filename='code-example.pdf' options={options}>
-                  {({ toPdf }: any) => (
-                    <Button
-                      size='medium'
-                      startIcon={<Download />}
-                      variant='outlined'
-                      sx={{
-                        backgroundColor: (theme: Theme) => theme.palette.common.white,
-                        color: (theme: Theme) => theme.palette.primary.light,
-                        borderColor: (theme: Theme) => theme.palette.primary.light
-                      }}
-                      onClick={() => handleOnDownloadClick(toPdf)}
-                    >
-                      DOWNLOAD
-                    </Button>
-                  )}
-                </Pdf>
+                <Button
+                  size='medium'
+                  startIcon={<Download />}
+                  variant='outlined'
+                  sx={{
+                    backgroundColor: (theme: Theme) => theme.palette.common.white,
+                    color: (theme: Theme) => theme.palette.primary.light,
+                    borderColor: (theme: Theme) => theme.palette.primary.light
+                  }}
+                  onClick={() => handleOnDownloadClick()}
+                >
+                  DOWNLOAD
+                </Button>
               </Box>
             </Box>
             <DataGrid
