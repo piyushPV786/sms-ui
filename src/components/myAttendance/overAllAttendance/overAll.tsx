@@ -7,12 +7,14 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import { Box, Theme, ButtonGroup, ClickAwayListener, Grow, Paper, Popper, MenuItem, MenuList } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
 import { DotsVertical } from 'mdi-material-ui'
 import { useForm } from 'react-hook-form'
-import { CircularProgressbar } from 'react-circular-progressbar'
-import 'react-circular-progressbar/dist/styles.css'
 import { options } from 'src/context/common'
+import ReactApexcharts from 'src/@core/components/react-apexcharts'
+import { ApexOptions } from 'apexcharts'
+import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
 
 const OverAllCard = () => {
   const [open, setOpen] = React.useState(false)
@@ -31,6 +33,48 @@ const OverAllCard = () => {
 
   const handleClose = () => {
     setOpen(false)
+  }
+
+  const theme = useTheme()
+
+  const progressOptions: ApexOptions = {
+    chart: {
+      sparkline: { enabled: true }
+    },
+
+    stroke: { lineCap: 'round' },
+
+    colors: [hexToRGBA(theme.palette.primary.main, 1)],
+
+    plotOptions: {
+      radialBar: {
+        hollow: { size: '55%' },
+
+        dataLabels: {
+          name: { show: false },
+
+          value: {
+            offsetY: 5
+          }
+        }
+      }
+    },
+
+    grid: {
+      padding: {
+        bottom: -12
+      }
+    },
+
+    states: {
+      hover: {
+        filter: { type: 'none' }
+      },
+
+      active: {
+        filter: { type: 'none' }
+      }
+    }
   }
 
   const onSubmit = (param: any) => {
@@ -131,18 +175,7 @@ const OverAllCard = () => {
                           </Box>
                           <Box sx={{ border: '1px solid #9E9E9E', ml: 6, mr: 6, mt: 2 }}></Box>
                           <Box sx={{ width: '200px', mt: 5 }}>
-                            <CircularProgressbar
-                              value={65}
-                              text={`${65}%`}
-                              styles={{
-                                path: { stroke: `	rgb(127,255,0)` },
-                                text: {
-                                  fill: '#000000',
-
-                                  fontSize: '20px'
-                                }
-                              }}
-                            />
+                            <ReactApexcharts type='radialBar' height={119} series={[64]} options={progressOptions} />
                           </Box>
                         </Box>
                       </Grid>
