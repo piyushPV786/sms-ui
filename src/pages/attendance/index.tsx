@@ -1,124 +1,56 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // ** React Imports
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 // ** MUI Imports
-import Box from '@mui/material/Box'
-import Tooltip from '@mui/material/Tooltip'
-import { ThemeColor } from 'src/@core/layouts/types'
-import Grid from '@mui/material/Grid'
-import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography'
-import { DataGrid, GridRowId } from '@mui/x-data-grid'
-import { CardContent, IconButton, Link } from '@mui/material'
-import { Download } from 'mdi-material-ui'
-import Chip from '@mui/material/Chip'
+import { Link } from '@mui/material'
 
 // ** Custom Components Imports
-import TableHeader from 'src/components/uploaddocument/TableHeader'
-import { ICommonData, downloadSuccess, fileType } from 'src/context/common'
-import { StudentService, CommonService } from 'src/service'
-import { status } from 'src/context/common'
-import { successToastBottomRight } from '../../components/common'
+import TableHeader from 'src/components/myAttendance/tableHeader'
+import { documentResponse } from 'src/context/common'
 
-// ** Third Party Styles Imports
-import 'react-datepicker/dist/react-datepicker.css'
-import FileUpload from 'src/components/uploaddocument/FileUpload'
-import DeleteDialog from 'src/components/dialog/DeleteDialog'
-import { useAuth } from 'src/hooks/useAuth'
-import { getFileUrl, minTwoDigits, serialNumber } from 'src/utils'
-import { IDocumentType, IUploadDocumentParam } from 'src/context/types'
-import { CircularProgress } from '@mui/material'
-import { StyledLink } from 'src/styles/styled'
+import {
+  Grid,
+  Card,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Box,
+  styled
+} from '@mui/material'
+import AttendanceListRow from 'src/components/myAttendance/attendanceList'
+import OverAllCard from 'src/components/myAttendance/overAllAttendance/overAll'
 
-interface fileTypes {
-  [key: string]: ThemeColor
-}
-
-const fileTypeObj: fileTypes = {
-  [fileType.doc]: 'info',
-  [fileType.ppt]: 'error',
-  [fileType.pdf]: 'error',
-  [fileType.png]: 'error'
-}
+const TableHeaderTypography = styled(Typography)<any>(() => ({
+  fontWeight: 'bold',
+  fontSize: '0.75rem',
+  letterSpacing: '0.17px'
+}))
 
 const AttendanceList = () => {
   // ** State
 
   const [value, setValue] = useState<string>('')
-  const [selectedRows, setSelectedRows] = useState<GridRowId[]>([])
   const [pageSize, setPageSize] = useState<number>(10)
-  const [pageNumber, setPageNumber] = useState<number>(1)
-  const [documentResponse, setDocumentResponse] = useState<any>([])
+  const [pageNumber, setPageNumber] = useState<number>(0)
 
   const handleFilter = (val: string) => {
     setValue(val)
   }
 
-  const columns = [
-    {
-      field: 'id',
-      minWidth: 10,
-      maxWidth: 50,
-      headerName: '#'
-    },
-    {
-      flex: 0.1,
-      field: 'name',
-      minWidth: 200,
-      headerName: 'Course Code'
-    },
-    {
-      flex: 0.1,
-      field: 'courseName',
-      minWidth: 100,
-      headerName: 'Course Name'
-    },
-    {
-      flex: 0.1,
-      field: 'totalClass',
-      minWidth: 140,
-      headerName: 'Total Class (In Mins)'
-    },
-    {
-      flex: 0.1,
-      minWidth: 170,
-      field: 'percent',
-      headerName: '%'
-    },
-    {
-      flex: 0.1,
-      minWidth: 170,
-      field: 'status',
-      headerName: 'Status'
-    },
-    {
-      flex: 0.1,
-      minWidth: 100,
-      sortable: false,
-      field: 'actions',
-      headerName: 'Actions',
-      renderCell: (row: any) => {
-        return (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Tooltip title='Download'>
-              <Box>
-                <IconButton
-                  size='small'
-                  component='a'
-                  color='primary'
-                  sx={{ textDecoration: 'none', mr: 0.5, pt: 2 }}
-                  // onClick={() => handleView(name, code)}
-                >
-                  <Download />
-                </IconButton>
-              </Box>
-            </Tooltip>
-          </Box>
-        )
-      }
-    }
-  ]
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPageSize(parseInt(event.target.value, 10))
+    setPageNumber(0)
+  }
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPageNumber(newPage)
+  }
 
   return (
     <>
@@ -137,36 +69,60 @@ const AttendanceList = () => {
         </Grid>
         <Grid item md={8} xs={12}>
           <Card>
-            <TableHeader value={value} selectedRows={selectedRows} handleFilter={handleFilter} />
-            <CardContent>
-              <DataGrid
-                autoHeight
-                pagination
-                paginationMode='server'
-                disableColumnMenu
-                disableColumnFilter
-                disableColumnSelector
-                rows={documentResponse?.data}
-                rowCount={documentResponse?.count}
-                columns={columns}
-                disableSelectionOnClick
-                pageSize={Number(pageSize)}
-                rowsPerPageOptions={[10, 25, 50]}
-                sx={{
-                  '& .MuiDataGrid-columnHeaders': {
-                    borderRadius: 0,
-                    bgcolor: '#d7e2de'
-                  },
-                  '& .MuiDataGrid-columnHeaderTitle': {
-                    fontWeight: '600'
-                  }
-                }}
-                onSelectionModelChange={rows => setSelectedRows(rows)}
-                onPageSizeChange={newPageSize => setPageSize(newPageSize)}
-                onPageChange={newPage => setPageNumber(newPage + 1)}
-              />
-            </CardContent>
+            <Box sx={{ display: 'flex' }}>
+              <TableHeader value={value} handleFilter={handleFilter} />
+            </Box>
+
+            <TableContainer id='#my-table'>
+              <Table aria-label='collapsible table'>
+                <TableHead>
+                  <TableRow sx={{ backgroundColor: theme => theme.palette.customColors.light }}>
+                    <TableCell sx={{ minWidth: 60, flex: 0.15 }}>
+                      <TableHeaderTypography>#</TableHeaderTypography>
+                    </TableCell>
+                    <TableCell sx={{ minWidth: 150, flex: 0.25 }}>
+                      <TableHeaderTypography>Course Code</TableHeaderTypography>
+                    </TableCell>
+                    <TableCell sx={{ flex: 0.17, minWidth: 140 }}>
+                      <TableHeaderTypography>Course Name</TableHeaderTypography>
+                    </TableCell>
+                    <TableCell sx={{ flex: 0.25, minWidth: 200 }}>
+                      <TableHeaderTypography>Toatal Class (In MIns)</TableHeaderTypography>
+                    </TableCell>
+                    <TableCell sx={{ flex: 0.18, minWidth: 220 }}>
+                      <TableHeaderTypography>Toatal Attended (In MIns)</TableHeaderTypography>
+                    </TableCell>
+                    <TableCell sx={{ flex: 0.25, minWidth: 120 }}>
+                      <TableHeaderTypography>%</TableHeaderTypography>
+                    </TableCell>
+                    <TableCell sx={{ flex: 0.25, minWidth: 120 }}>
+                      <TableHeaderTypography>status</TableHeaderTypography>
+                    </TableCell>
+                    <TableCell sx={{ flex: 0.17, minWidth: 140 }}>
+                      <TableHeaderTypography>Actions</TableHeaderTypography>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {documentResponse?.data?.map((row: any) => (
+                    <AttendanceListRow key={row.id} row={row} />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25]}
+              component='div'
+              count={documentResponse?.count}
+              rowsPerPage={pageSize}
+              page={pageNumber}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </Card>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <OverAllCard />
         </Grid>
       </Grid>
     </>

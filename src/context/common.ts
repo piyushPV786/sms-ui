@@ -164,3 +164,49 @@ export enum ErrorMessage {
 export enum ProfilePhoto {
   Upload = 'Profile photo updated Successfully.'
 }
+
+interface IAttendanceStatusType {
+  [key: string]: any
+}
+
+export const AttendanceStatusObj: IAttendanceStatusType = {
+  Attended: 'success',
+  Skipped: 'error',
+  Upcoming: 'warning'
+}
+
+export const ClassResponse = {
+  count: 1,
+  data: [
+    {
+      id: 1,
+      Date: '15 feb 2023',
+      Day: 'Monday',
+      from: '10:30',
+      to: '12:30',
+      totalClass: '360',
+      totalAttend: '180',
+      percent: '100%',
+      Facilitator: 'Dr Kumlo',
+      Venue: 'Auckland park',
+      Status: 'Attended'
+    }
+  ]
+}
+
+export const documentResponse = {
+  count: 1,
+  data: [
+    {
+      id: 1,
+      code: 'MBA-HRM-507',
+      name: 'Business Reasearch',
+      class: 360,
+      attendance: 180,
+      percent: '100%',
+      Status: 'Upcoming'
+    }
+  ]
+}
+
+export const options = ['1st Semester', '2nd Semester']
