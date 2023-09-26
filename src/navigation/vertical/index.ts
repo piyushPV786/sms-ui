@@ -28,6 +28,11 @@ const navigation = (): VerticalNavItemsType => {
       icon: SchoolOutline,
       path: '/calendar',
       badgeColor: 'error'
+    },
+    {
+      title: 'My Attendance',
+      icon: CreditCard,
+      path: '/attendance'
     }
   ]
 }
