@@ -10,6 +10,9 @@ import Link from 'next/link'
 // ** Custom Components Imports
 import CustomAvatar from 'src/@core/components/mui/avatar'
 import { getUserInfo } from 'src/utils'
+import { InformationOutline, React } from 'mdi-material-ui'
+import WhiteButton from '../Button'
+import { useRouter } from 'next/router'
 
 // Styled CardContent component
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
@@ -29,18 +32,24 @@ const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
 }))
 
 const StudentDetails = ({ profileImage }: any) => {
+  const router = useRouter()
+
+  const handlePay = () => {
+    router.push('/payment/checkout')
+  }
+
   return (
     <Card sx={{ position: 'relative' }}>
-      <CardContent sx={{ p: theme => `${theme.spacing(7, 7.5)} !important` }}>
-        <Grid container>
+      <CardContent>
+        <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={2} md={3} sm={4}>
             <Box>
               <Avatar alt='R' src={profileImage} />
             </Box>
           </Grid>
-          <Grid item xs={10} md={9} sm={8}>
+          <Grid item xs={7} md={5} sm={5}>
             <Box ml={5}>
-              <Typography mb={4} variant='h5' fontWeight={600} sx={{ color: '#fff' }}>
+              <Typography mb={4} variant='h5' fontWeight={400} sx={{ color: '#fff' }}>
                 Hi {getUserInfo()?.fullName}
               </Typography>
               <Typography mb={6} variant='h6' sx={{ color: '#fff' }}>
@@ -67,6 +76,35 @@ const StudentDetails = ({ profileImage }: any) => {
                 </Link>
               </Box>
             </Box>
+          </Grid>
+
+          <Grid item xs={3} md={4} sm={3} pt={2} pr={2}>
+            <Card sx={{ background: theme => `${theme.spacing(6, 7.5)} !important` }}>
+              <Grid
+                width='100%'
+                sx={{
+                  display: 'flex',
+                  borderRadius: '2px',
+                  padding: 3,
+                  background: `#026b45 !important`,
+                  color: theme => theme.palette.primary.main
+                }}
+              >
+                <Grid p={2} display='flex' alignItems='center'>
+                  <InformationOutline color='warning' fontSize='large' />
+                </Grid>
+                <Grid p={2}>
+                  <Typography color={theme => theme.palette.warning.main} fontSize='large'>
+                    To Rollover
+                  </Typography>
+                  <Typography color={theme => theme.palette.common.white} fontSize={15} pb={2}>
+                    You have passed the dependent courses. Please pay the 500 and admission fee to roll over next
+                    semester.
+                  </Typography>
+                  <WhiteButton onClick={handlePay}>Pay</WhiteButton>
+                </Grid>
+              </Grid>
+            </Card>
           </Grid>
         </Grid>
       </CardContent>
