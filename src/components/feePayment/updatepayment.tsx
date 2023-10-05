@@ -7,9 +7,10 @@ import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import { Button } from '@mui/material'
 import { useRouter } from 'next/router'
-import { UpdatePayment, UpdatepaymentItem } from './updatePaymentCommanDataType'
+import { DDMMYYYDateFormat, getSymbol, programCodeToName } from 'src/utils'
+import { UpdatePayment, UpdatepaymentItem } from 'src/types/common'
 
-const Updatepayment = ({ rows, programCode }: UpdatePayment) => {
+const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePayment) => {
   const router = useRouter()
 
   const handlePay = () => {
@@ -33,7 +34,7 @@ const Updatepayment = ({ rows, programCode }: UpdatePayment) => {
                     <Grid container rowSpacing={1}>
                       <Grid item xs={12}>
                         <Typography variant='h6' sx={{ mb: 3, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
-                          {programCode}
+                          {programCodeToName(allProgram, programCode)}
                         </Typography>
                       </Grid>
 
@@ -41,12 +42,13 @@ const Updatepayment = ({ rows, programCode }: UpdatePayment) => {
                         <Grid item xs={6}>
                           <label>Due Date</label>
                           <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
-                            {item.dueDate}
+                            {DDMMYYYDateFormat(new Date(item.dueDate))}
                           </Typography>
                         </Grid>
                         <Grid item xs={6}>
                           <label>Total Amount</label>
                           <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
+                            {getSymbol(currencyList, item.currencyCode)}
                             {item.dueAmount}
                           </Typography>
                         </Grid>
