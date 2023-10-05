@@ -11,7 +11,7 @@ import { DataGrid, GridRowId } from '@mui/x-data-grid'
 import { Theme } from '@mui/material'
 
 //import { InvoiceType } from 'src/types/apps/invoiceTypes'
-import { AcademicService, StudentService } from 'src/service'
+import { AcademicService, CommonService, StudentService } from 'src/service'
 import { status } from 'src/context/common'
 
 // ** Custom Components Imports
@@ -41,6 +41,7 @@ const PaymentList = () => {
   const [response, setResponse] = useState<any>(initialState)
   const [loading, setLoading] = useState<boolean>(false)
   const [allProgram, setAllProgram] = useState<IProgram | undefined>(undefined)
+  const [currencyList, setCurrencyList] = useState<[]>([])
 
   const auth = useAuth()
 
@@ -66,9 +67,16 @@ const PaymentList = () => {
       setAllProgram(response?.data?.data)
     }
   }
+  const getAllCurrencyList = async () => {
+    const response = await CommonService.getCurrencyList()
+    if (response?.status === status?.successCode) {
+      setCurrencyList(response?.data?.data)
+    }
+  }
 
   useEffect(() => {
     getAllPrograms()
+    getAllCurrencyList()
   }, [])
 
   useEffect(() => {
@@ -78,6 +86,11 @@ const PaymentList = () => {
   const handleFilter = (val: string) => {
     setValue(val)
   }
+  const UpcomingPayment: [] =
+    response?.data &&
+    response.data.filter(
+      (item: { dueDate: string | null; dueAmount: number | null }) => item.dueDate !== null && item.dueAmount !== null
+    )
 
   const columns = [
     {
@@ -176,9 +189,16 @@ const PaymentList = () => {
             />
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <UpdatePayment />
-        </Grid>
+        {UpcomingPayment.length > 0 ? (
+          <Grid item xs={12} md={4}>
+            <UpdatePayment
+              currencyList={currencyList}
+              allProgram={allProgram}
+              rows={UpcomingPayment}
+              programCode={response.programCode}
+            />
+          </Grid>
+        ) : null}
       </Grid>
     </>
   )

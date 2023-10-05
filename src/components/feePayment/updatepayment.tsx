@@ -7,8 +7,10 @@ import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import { Button } from '@mui/material'
 import { useRouter } from 'next/router'
+import { DDMMYYYDateFormat, getSymbol, programCodeToName } from 'src/utils'
+import { UpdatePayment, UpdatepaymentItem } from 'src/types/common'
 
-const Updatepayment = () => {
+const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePayment) => {
   const router = useRouter()
 
   const handlePay = () => {
@@ -24,45 +26,49 @@ const Updatepayment = () => {
               UPCOMING PAYMENT
             </Typography>
           </Grid>
+          {rows.map((item: UpdatepaymentItem) => {
+            return (
+              <Card key={item.id} sx={{ backgroundColor: theme => theme.palette.customColors.bodyBg, mb: 2 }}>
+                <CardContent>
+                  <Grid xs={12} sx={{ display: 'flex' }}>
+                    <Grid container rowSpacing={1}>
+                      <Grid item xs={12}>
+                        <Typography variant='h6' sx={{ mb: 3, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
+                          {programCodeToName(allProgram, programCode)}
+                        </Typography>
+                      </Grid>
 
-          <Card sx={{ backgroundColor: theme => theme.palette.customColors.bodyBg }}>
-            <CardContent>
-              <Grid xs={12} sx={{ display: 'flex' }}>
-                <Grid container rowSpacing={1}>
-                  <Grid item xs={12}>
-                    <Typography variant='h6' sx={{ mb: 3, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
-                      THIRD SEMESTER
-                    </Typography>
-                  </Grid>
-
-                  <Grid container sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                    <Grid item xs={6}>
-                      <label>Due Date</label>
-                      <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
-                        20-05-2023
-                      </Typography>
+                      <Grid container sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                        <Grid item xs={6}>
+                          <label>Due Date</label>
+                          <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
+                            {DDMMYYYDateFormat(new Date(item.dueDate))}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <label>Total Amount</label>
+                          <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
+                            {getSymbol(currencyList, item.currencyCode)}
+                            {item.dueAmount}
+                          </Typography>
+                        </Grid>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                      <label>Total Amount</label>
-                      <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
-                        R 1500
-                      </Typography>
+                    <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <Button
+                        size='small'
+                        variant='contained'
+                        onClick={handlePay}
+                        sx={{ position: 'absolute', borderRadius: '25px' }}
+                      >
+                        Pay
+                      </Button>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <Button
-                    size='small'
-                    variant='contained'
-                    onClick={handlePay}
-                    sx={{ position: 'absolute', borderRadius: '25px' }}
-                  >
-                    Pay
-                  </Button>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </Card>
+            )
+          })}
         </CardContent>
       </Card>
     </>
