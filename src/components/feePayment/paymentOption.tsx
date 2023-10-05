@@ -48,7 +48,7 @@ export const DragDropContainer = styled<any>('div')(() => ({
   cursor: 'pointer'
 }))
 const PaymentOption = () => {
-  const [paymentPayload, setPaymentTypePayload] = useState<any>(null)
+  const [paymentPayload] = useState<any>(null)
   const [selectedPayment, setSelectedPaymentOption] = useState<string>('')
   const { watch, handleSubmit, unregister, setValue, clearErrors } = useForm({
     mode: 'onChange',
@@ -57,7 +57,6 @@ const PaymentOption = () => {
     },
     resolver: yupResolver(schema)
   })
-  console.log('sejal', watch('uploadedFile'))
   useEffect(() => {
     setValue('uploadedFile', null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
