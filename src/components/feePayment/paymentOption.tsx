@@ -8,7 +8,7 @@ import { Grid, Box, Paper, Typography, Button, Card } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { PaymentTypes } from './constant'
 import { GetPaymentImage } from 'src/utils'
-import UploadPaymentProof from '../uploaddocument/UploadPaymentProof'
+import UploadPaymentProof from '../uploaddocument/uploadPaymentProof'
 
 const schema = yup.object().shape({
   uploadedFile: yup.mixed().required('Please upload any File')
