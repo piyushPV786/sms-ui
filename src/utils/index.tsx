@@ -250,3 +250,11 @@ export const getState = (list: Array<commonListTypes>, isoCode: string) => {
 
   return isoCode
 }
+
+export const getSymbol = (list: Array<commonListTypes>, code: string) => {
+  if (list?.length > 0) {
+    return list?.find(item => item.code === code)?.symbol ?? code
+  }
+
+  return code
+}

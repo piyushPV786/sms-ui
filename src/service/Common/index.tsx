@@ -237,4 +237,18 @@ export default class Common {
     }
     nProgress.done()
   }
+  async getCurrencyList() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.currency
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching currency list ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
 }

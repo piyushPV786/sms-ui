@@ -61,5 +61,6 @@ export const apiEndPoints = Object.freeze({
   studentType: '/common/student-type',
   studyMode: '/common/study-mode',
   industry: '/common/employment-industry',
-  downloadTranscript: '/academics/donwload/academic-records'
+  downloadTranscript: '/academics/donwload/academic-records',
+  currency: '/common/currency'
 })

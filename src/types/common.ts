@@ -21,3 +21,17 @@ export interface program {
   SAQA_ID: string
   studyModeCodes: string
 }
+
+export interface UpdatePayment {
+  rows: []
+  programCode: string
+  allProgram: IProgram | undefined
+  currencyList: []
+}
+
+export interface UpdatepaymentItem {
+  id: number
+  dueDate: string
+  dueAmount: number
+  currencyCode: string
+}
