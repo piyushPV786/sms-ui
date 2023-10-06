@@ -7,6 +7,7 @@ interface ICommonDocumentUploadParamTypes {
   filename: string
   filetype: string
   file: File
+  studentCode: string | undefined
 }
 export default class Common {
   apiServer: AxiosInstance
@@ -43,11 +44,11 @@ export default class Common {
     nProgress.done()
   }
 
-  async getProfileSource(filename: string) {
+  async getProfileSource(filename: string, studentCode: string | undefined) {
     nProgress.start()
     const endUrlName = apiEndPoints.document
     try {
-      const response = await this.apiServer.get(`${endUrlName}?filename=${filename}`)
+      const response = await this.apiServer.get(`${endUrlName}?filename=${filename}&studentCode=${studentCode}`)
       nProgress.done()
 
       return response
@@ -75,7 +76,7 @@ export default class Common {
   async documentUpload(param: ICommonDocumentUploadParamTypes) {
     nProgress.start()
     let response = false
-    const endUrlName = `${apiEndPoints.uploadFileUrl}?filename=${param.filename}&filetype=${param.filetype}`
+    const endUrlName = `${apiEndPoints.uploadFileUrl}?filename=${param.filename}&filetype=${param.filetype}&studentCode=${param.studentCode}`
 
     try {
       const s3amazonawsUrl = await this.apiServer.get(endUrlName)
@@ -94,11 +95,11 @@ export default class Common {
     }
   }
 
-  async getFileUrl(fileName: string) {
+  async getFileUrl(fileName: string, studentCode: string | undefined) {
     nProgress.start()
     const endUrlName = apiEndPoints.getFileUrl
     try {
-      const response = await this.apiServer.get(`${endUrlName}?filename=${fileName}`)
+      const response = await this.apiServer.get(`${endUrlName}?filename=${fileName}&studentCode=${studentCode}`)
       nProgress.done()
 
       return response

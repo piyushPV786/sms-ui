@@ -99,7 +99,10 @@ const PreviewCard = () => {
       const userProfileResponse = await StudentService?.UserProfile(auth?.user?.studentCode)
       if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
         setStudentDetails(userProfileResponse?.data?.data[0])
-        const imgsrc = await CommonService.getProfileSource(userProfileResponse?.data?.data[0].documentCode)
+        const imgsrc = await CommonService.getProfileSource(
+          userProfileResponse?.data?.data[0].documentCode,
+          auth?.user?.studentCode
+        )
         setProfileImage(imgsrc?.data?.data)
       }
     }
@@ -147,7 +150,10 @@ const PreviewCard = () => {
     uploadDocuments(qualificationResponse?.data?.data?.awsUploadUrl, selectedImage)
 
     if (qualificationResponse?.status === status?.successCode) {
-      const imgsrc = await CommonService.getProfileSource(qualificationResponse?.data?.data?.userDetail?.documentCode)
+      const imgsrc = await CommonService.getProfileSource(
+        qualificationResponse?.data?.data?.userDetail?.documentCode,
+        auth?.user?.studentCode
+      )
 
       if (imgsrc?.status === status?.successCode) {
         successToast(ProfilePhoto.Upload)

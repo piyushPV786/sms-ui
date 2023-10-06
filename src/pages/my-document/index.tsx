@@ -106,7 +106,8 @@ const DocumentList = () => {
       const documentUploadResponse = await CommonService?.documentUpload({
         filename: payload.file.name,
         filetype: payload.file.type,
-        file: payload.file
+        file: payload.file,
+        studentCode: auth?.user?.studentCode
       })
       if (documentUploadResponse) {
         successToastBottomRight(`${payload.file.name} ${downloadSuccess.upload}`)
@@ -140,7 +141,7 @@ const DocumentList = () => {
   const handleView = (fileName: string, fileCode: string) => {
     successToastBottomRight(`${fileName} ${downloadSuccess.download}`)
     setViewFileLoader(prev => ({ ...prev, [fileCode]: true }))
-    getFileUrl(fileName, setViewFileLoader, fileCode)
+    getFileUrl(fileName, auth?.user?.studentCode, setViewFileLoader, fileCode)
   }
 
   const setCurrentDateTime = (createdAt: string) => {
