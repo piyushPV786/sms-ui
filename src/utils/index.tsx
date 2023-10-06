@@ -178,10 +178,11 @@ export const downloadFile = (
 }
 export const getFileUrl = async (
   fileName: string,
+  studentCode: string | undefined,
   setViewFileLoader?: Dispatch<SetStateAction<{ [key: string]: boolean } | undefined>>,
   fileCode?: string
 ) => {
-  const response = await CommonService.getFileUrl(fileName)
+  const response = await CommonService.getFileUrl(fileName, studentCode)
   if (response?.data?.statusCode === status?.successCode) {
     downloadFile(response?.data?.data, fileName, setViewFileLoader, fileCode)
   }
