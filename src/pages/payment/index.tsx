@@ -96,7 +96,7 @@ const PaymentList = () => {
     {
       flex: 0.1,
       field: 'program',
-      minWidth: 200,
+      minWidth: 300,
       headerName: 'Program',
       renderCell: () => {
         return <>{programCodeToName(allProgram, response?.programCode)}</>
