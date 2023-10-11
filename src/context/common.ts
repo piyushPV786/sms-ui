@@ -1,3 +1,5 @@
+import { ThemeColor } from "src/@core/layouts/types"
+
 type IStatusParams = {
   successCode: number
   successCodeOne: number
@@ -43,6 +45,7 @@ interface downloadSuccess {
   passwordUpdate: string
   academicDownload: string
   studentCodeError: string
+  queryCreated: string
 }
 
 export const downloadSuccess: downloadSuccess = {
@@ -52,7 +55,8 @@ export const downloadSuccess: downloadSuccess = {
   passwordReset: 'Password reset request was sent successfully. Please check your email to reset your password.',
   passwordUpdate: 'Password update successfully',
   academicDownload: 'Academic Transcripts downloaded successfully.',
-  studentCodeError: 'Student code does not exist in academic record'
+  studentCodeError: 'Student code does not exist in academic record',
+  queryCreated: 'Your request was successfully submitted.'
 }
 
 interface IDynamicEmailObject {
@@ -210,3 +214,38 @@ export const documentResponse = {
 }
 
 export const options = ['1st Semester', '2nd Semester']
+
+
+interface IraiseQueryMessageTypes {
+  subject: string
+  category: string
+  description: string
+}
+
+export const raiseQueryMessage: IraiseQueryMessageTypes = {
+  subject: 'Subject is Required',
+  category: 'Category is Required',
+  description: 'Description is Required',
+}
+
+export const FileType=['image/png','image/pdf','image/jpeg']
+
+export enum FileError {
+  fileSizeError = 'File is larger than 500 KB',
+  fileTypeError = 'File type must be png, jpeg and pdf'
+}
+
+export enum QueryDocumentCode {
+  code = 'QUERYDOC'
+}
+
+export interface IIntakeStatusType {
+  [key: string]: ThemeColor
+}
+
+export const IntakeStatus = {
+  notStarted: 'NOT_STARTED',
+  beingActioned: 'BEING_ACTIONED',
+  resolved: 'RESOLVED',
+  escalated: 'ESCALATED'
+}

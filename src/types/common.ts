@@ -35,3 +35,36 @@ export interface UpdatepaymentItem {
   dueAmount: number
   currencyCode: string
 }
+
+ export interface IIndex {
+  api: {
+    getRowIndex: (arg0: number) => number
+  }
+  row: {
+    id: number
+  }
+}
+
+export interface IDefaultValue {
+  message: string
+  data: any[]
+  statusCode: string
+}
+
+export interface IQueryRowData {
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+  id: number
+  createdBy: null | any 
+  updatedBy: null | any
+  subject: string
+  queryType: string
+  description: string
+  status: string
+  documentCode: string
+}
+ export interface CellType {
+  row: IQueryRowData
+}
+
