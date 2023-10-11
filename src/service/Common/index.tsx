@@ -258,10 +258,10 @@ export default class Common {
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
-      
-return response
+
+      return response
     } catch (err: any) {
-      console.log('Error fetching currency list ========>', err?.message)
+      console.log('Error fetching query type ========>', err?.message)
       nProgress.done()
     }
     nProgress.done()
@@ -272,10 +272,10 @@ return response
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
-      
-return response
+
+      return response
     } catch (err: any) {
-      console.log('Error fetching currency list ========>', err?.message)
+      console.log('Error fetching query status ========>', err?.message)
       nProgress.done()
     }
     nProgress.done()
