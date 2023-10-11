@@ -15,7 +15,7 @@ import { CommonService, StudentService } from 'src/service'
 import { IIntakeStatusType, IntakeStatus, status } from 'src/context/common'
 
 // ** Custom Components Imports
-import TableHeader from 'src/components/feePayment/TableHeader'
+import TableHeader from 'src/components/query/TableHeader'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'

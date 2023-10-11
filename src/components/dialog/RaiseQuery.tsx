@@ -41,8 +41,9 @@ import {
 } from 'src/context/common'
 import { calculateFileSize, getExtension } from 'src/utils'
 import { CommonService, StudentService } from 'src/service'
-import { errorToast, successToast } from 'src/@core/components/common/Toast'
+import { errorToast } from 'src/@core/components/common/Toast'
 import { IQueryDefaultValues, IQueryType } from 'src/types/common'
+import { successToastBottomRight } from '../common'
 
 const schema = yup.object().shape({
   subject: yup.string().required(raiseQueryMessage.subject),
@@ -116,13 +117,13 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
 
         const documentUploadResponse = await CommonService?.documentUpload(files)
         if (documentUploadResponse) {
-          successToast(downloadSuccess.queryCreated)
+          successToastBottomRight(downloadSuccess.queryCreated)
           getQueriesList()
         } else {
           errorToast(ErrorMessage.Error)
         }
       } else {
-        successToast(downloadSuccess.queryCreated)
+        successToastBottomRight(downloadSuccess.queryCreated)
         getQueriesList()
       }
     } else {
@@ -234,7 +235,7 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
                 render={({ field: { value, onChange, ...register } }) => (
                   <TextField
                     {...register}
-                    label='description'
+                    label='Description'
                     multiline
                     rows={3}
                     fullWidth
