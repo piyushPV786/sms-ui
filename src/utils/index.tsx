@@ -259,3 +259,19 @@ export const getSymbol = (list: Array<commonListTypes>, code: string) => {
 
   return code
 }
+
+export const getExtension = (name: string) => {
+  const fileExtension = name.split('/').pop()
+
+  return fileExtension
+}
+
+export const DDMMYYDateFormate = (date: Date) => {
+  const newDate: Date = new Date(date)
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+  const formateDate = {
+    date: `${newDate.getDate()}-${monthNames[newDate.getMonth()]}-${newDate.getFullYear()}`
+  }
+
+  return formateDate
+}

@@ -252,4 +252,32 @@ export default class Common {
     }
     nProgress.done()
   }
+  async getQueryType() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.queryType
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching query type ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+  async getQueryStatus() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.queryStatus
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching query status ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
 }

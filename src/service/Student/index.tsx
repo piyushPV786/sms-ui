@@ -39,6 +39,16 @@ export interface DataParams {
   pageNumber: number
 }
 
+export interface QueryPayload {
+  studentCode: string | undefined
+  subject: string
+  category: string
+  description: string
+  fileName: string | null
+  fileType: string | null
+  documentTypeCode: string
+}
+
 export default class Student {
   apiServer: AxiosInstance
   constructor(apiServer: AxiosInstance) {
@@ -274,6 +284,36 @@ export default class Student {
       return response
     } catch (err: any) {
       console.log('Error in downloading academic transcript ========>', err?.message)
+    } finally {
+      nProgress.done()
+    }
+  }
+  async getQueryList(params: DataParams, studentCode: string) {
+    nProgress.start()
+    let endUrlName = `${apiEndPoints.query}/${studentCode}?pageNumber=${params?.pageNumber}&pageSize=${params?.pageSize}`
+    if (params?.q) endUrlName = `${endUrlName}&search=${params?.q}`
+
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching payment list ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+
+  async createQuery(payload: QueryPayload) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.query}/${payload.studentCode}`
+    try {
+      const response = await this.apiServer.post(endUrlName, payload)
+
+      return response
+    } catch (err: any) {
+      console.log('Error in saving academic head Details ========>', err?.message)
     } finally {
       nProgress.done()
     }
