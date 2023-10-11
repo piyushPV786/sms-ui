@@ -36,7 +36,7 @@ export interface UpdatepaymentItem {
   currencyCode: string
 }
 
- export interface IIndex {
+export interface IIndex {
   api: {
     getRowIndex: (arg0: number) => number
   }
@@ -56,7 +56,7 @@ export interface IQueryRowData {
   createdAt: string
   updatedAt: string
   id: number
-  createdBy: null | any 
+  createdBy: null | any
   updatedBy: null | any
   subject: string
   queryType: string
@@ -64,17 +64,17 @@ export interface IQueryRowData {
   status: string
   documentCode: string
 }
- export interface CellType {
+export interface CellType {
   row: IQueryRowData
 }
 
-export interface IQueryType{
+export interface IQueryType {
   id: number
   code: string
   name: string
 }
 
-export interface IQueryStatus{
+export interface IQueryStatus {
   id: number
   code: string
   name: string

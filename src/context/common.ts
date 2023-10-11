@@ -1,4 +1,4 @@
-import { ThemeColor } from "src/@core/layouts/types"
+import { ThemeColor } from 'src/@core/layouts/types'
 
 type IStatusParams = {
   successCode: number
@@ -215,7 +215,6 @@ export const documentResponse = {
 
 export const options = ['1st Semester', '2nd Semester']
 
-
 interface IraiseQueryMessageTypes {
   subject: string
   category: string
@@ -225,10 +224,10 @@ interface IraiseQueryMessageTypes {
 export const raiseQueryMessage: IraiseQueryMessageTypes = {
   subject: 'Subject is Required',
   category: 'Category is Required',
-  description: 'Description is Required',
+  description: 'Description is Required'
 }
 
-export const FileType=['image/png','image/pdf','image/jpeg']
+export const FileType = ['image/png', 'image/pdf', 'image/jpeg']
 
 export enum FileError {
   fileSizeError = 'File is larger than 500 KB',

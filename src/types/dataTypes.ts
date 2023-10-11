@@ -26,7 +26,7 @@ export type commonListTypes = {
   name: string
   code: string
   isoCode?: string
-  symbol?: string | undefined;
+  symbol?: string | undefined
 }
 export type bursaryTypes = {
   id: number | string

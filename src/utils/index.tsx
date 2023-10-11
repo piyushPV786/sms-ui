@@ -262,8 +262,8 @@ export const getSymbol = (list: Array<commonListTypes>, code: string) => {
 
 export const getExtension = (name: string) => {
   const fileExtension = name.split('/').pop()
-  
-return fileExtension
+
+  return fileExtension
 }
 
 export const DDMMYYDateFormate = (date: Date) => {
@@ -272,6 +272,6 @@ export const DDMMYYDateFormate = (date: Date) => {
   const formateDate = {
     date: `${newDate.getDate()}-${monthNames[newDate.getMonth()]}-${newDate.getFullYear()}`
   }
-  
-return formateDate
+
+  return formateDate
 }
