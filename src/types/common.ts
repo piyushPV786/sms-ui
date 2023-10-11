@@ -68,3 +68,21 @@ export interface IQueryRowData {
   row: IQueryRowData
 }
 
+export interface IQueryType{
+  id: number
+  code: string
+  name: string
+}
+
+export interface IQueryStatus{
+  id: number
+  code: string
+  name: string
+}
+
+export interface IQueryDefaultValues {
+  subject: string
+  category: string
+  description: string
+  file: File | null
+}

@@ -296,8 +296,8 @@ export default class Student {
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
-      
-return response
+
+      return response
     } catch (err: any) {
       console.log('Error fetching payment list ========>', err?.message)
       nProgress.done()
@@ -310,8 +310,8 @@ return response
     const endUrlName = `${apiEndPoints.query}/${payload.studentCode}`
     try {
       const response = await this.apiServer.post(endUrlName, payload)
-      
-return response
+
+      return response
     } catch (err: any) {
       console.log('Error in saving academic head Details ========>', err?.message)
     } finally {

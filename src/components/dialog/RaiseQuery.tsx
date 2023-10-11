@@ -42,13 +42,7 @@ import {
 import { calculateFileSize, getExtension } from 'src/utils'
 import { CommonService, StudentService } from 'src/service'
 import { errorToast, successToast } from 'src/@core/components/common/Toast'
-
-interface IDefaultValues {
-  subject: string
-  category: string
-  description: string
-  file: File | null
-}
+import { IQueryDefaultValues, IQueryType } from 'src/types/common'
 
 const schema = yup.object().shape({
   subject: yup.string().required(raiseQueryMessage.subject),
@@ -60,20 +54,10 @@ const schema = yup.object().shape({
 interface IRaiseQuery {
   studentCode: string | undefined
   getQueriesList: () => void
+  category: IQueryType[]
 }
-const category = [
-  { name: 'Academic record/transcript', code: 'ACADEMIC_RECORD' },
-  {
-    name: 'Facilitation query undergrade',
-    code: 'FACILITATION_QUERY_UNDERGRADE'
-  },
-  { name: 'Exam query', code: 'EXAM_QUERY' },
-  { name: 'Live stream', code: 'LIVE_STREAM' },
-  { name: 'Miscellaneous undergrade', code: 'MISCELLATEOUS_UNDERGRADE' },
-  { name: 'Assignment query', code: 'ASSIGNMENT_QUERY' },
-  { name: 'Venue query', code: 'VENUE_QUERY' }
-]
-const RaiseQuery = ({ studentCode, getQueriesList }: IRaiseQuery) => {
+
+const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
   // ** States
   const [show, setShow] = useState<boolean>(false)
   const [disable, setDisable] = useState<boolean>(false)
@@ -88,7 +72,7 @@ const RaiseQuery = ({ studentCode, getQueriesList }: IRaiseQuery) => {
     clearErrors,
     setValue,
     formState: { errors }
-  } = useForm<IDefaultValues>({
+  } = useForm<IQueryDefaultValues>({
     mode: 'onChange',
     defaultValues: {
       subject: '',
@@ -108,7 +92,7 @@ const RaiseQuery = ({ studentCode, getQueriesList }: IRaiseQuery) => {
     onDrop: acceptedFiles => (setValue('file', acceptedFiles[0]), clearErrors('file'))
   })
 
-  const submitRaiseQuery = async (data: IDefaultValues) => {
+  const submitRaiseQuery = async (data: IQueryDefaultValues) => {
     setDisable(true)
     const API_Payload = {
       studentCode,
@@ -230,7 +214,7 @@ const RaiseQuery = ({ studentCode, getQueriesList }: IRaiseQuery) => {
                     {...register('category')}
                     style={{ width: '100%' }}
                     options={category}
-                    value={category?.find(i => i.toString() == watch('category').toString()) ?? null}
+                    value={category?.find(i => i.code.toString() == watch('category').toString()) ?? null}
                     onChange={(_, value) => {
                       value && setValue('category', value.code.toString())
                       clearErrors('category')

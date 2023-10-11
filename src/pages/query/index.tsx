@@ -11,7 +11,7 @@ import { DataGrid, GridRowId } from '@mui/x-data-grid'
 import { Theme } from '@mui/material'
 import CustomChip from 'src/@core/components/mui/chip'
 
-import { StudentService } from 'src/service'
+import { CommonService, StudentService } from 'src/service'
 import { IIntakeStatusType, IntakeStatus, status } from 'src/context/common'
 
 // ** Custom Components Imports
@@ -23,30 +23,13 @@ import { InlineTypography, StyledTypography } from 'src/styles/styled'
 import { useAuth } from 'src/hooks/useAuth'
 import RaiseQuery from 'src/components/dialog/RaiseQuery'
 import { DDMMYYDateFormate, getName, minTwoDigits, serialNumber } from 'src/utils'
-import { CellType, IDefaultValue, IIndex } from 'src/types/common'
+import { CellType, IDefaultValue, IIndex, IQueryStatus, IQueryType } from 'src/types/common'
 
 const initialState = {
   message: '',
   data: [],
   statusCode: ''
 }
-
-const category = [
-  { id: 1, name: 'Academic record/transcript', code: 'ACADEMIC_RECORD' },
-  { id: 2, name: 'Facilitation query undergrade', code: 'FACILITATION_QUERY_UNDERGRADE' },
-  { id: 3, name: 'Exam query', code: 'EXAM_QUERY' },
-  { id: 4, name: 'Live stream', code: 'LIVE_STREAM' },
-  { id: 5, name: 'Miscellaneous undergrade', code: 'MISCELLATEOUS_UNDERGRADE' },
-  { id: 6, name: 'Assignment query', code: 'ASSIGNMENT_QUERY' },
-  { id: 7, name: 'Venue query', code: 'VENUE_QUERY' }
-]
-
-const queryStatus = [
-  { id: 1, name: 'Not started', code: 'NOT_STARTED' },
-  { id: 2, name: 'Being actioned', code: 'BEING_ACTIONED' },
-  { id: 3, name: 'Resolved', code: 'RESOLVED' },
-  { id: 4, name: 'Escalated', code: 'ESCALATED' }
-]
 
 const getCourseStatus = (status: string) => {
   return status === 'NOT_STARTED'
@@ -73,6 +56,8 @@ const QueryList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [response, setResponse] = useState<IDefaultValue>(initialState)
   const [loading, setLoading] = useState<boolean>(false)
+  const [category, setCategory] = useState<IQueryType[]>([])
+  const [queryStatus, setQueryStatus] = useState<IQueryStatus[]>([])
 
   const auth = useAuth()
 
@@ -92,9 +77,28 @@ const QueryList = () => {
     setLoading(false)
   }
 
+  const getQueryTypeList = async () => {
+    const response = await CommonService.getQueryType()
+    if (response?.status === status?.successCode) {
+      setCategory(response?.data?.data)
+    }
+  }
+
+  const getQueryStatusList = async () => {
+    const response = await CommonService.getQueryStatus()
+    if (response?.status === status?.successCode) {
+      setQueryStatus(response?.data?.data)
+    }
+  }
+
   useEffect(() => {
     getQueriesList()
   }, [value, pageNumber, pageSize])
+
+  useEffect(() => {
+    getQueryTypeList()
+    getQueryStatusList()
+  }, [])
 
   const handleFilter = (val: string) => {
     setValue(val)
@@ -122,9 +126,7 @@ const QueryList = () => {
       field: 'queryType',
       headerName: 'Query Type',
       renderCell: (row: CellType) => {
-        console.log('row', row)
-        
-return <Typography fontSize='small'>{getName(category, row.row.queryType)}</Typography>
+        return <Typography fontSize='small'>{getName(category, row.row.queryType)}</Typography>
       }
     },
     {
@@ -140,8 +142,8 @@ return <Typography fontSize='small'>{getName(category, row.row.queryType)}</Typo
       headerName: 'Created On',
       renderCell: (row: CellType) => {
         const date = new Date(row.row.createdAt)
-        
-return <Typography fontSize='small'>{DDMMYYDateFormate(date)?.date}</Typography>
+
+        return <Typography fontSize='small'>{DDMMYYDateFormate(date)?.date}</Typography>
       }
     },
     {
@@ -183,7 +185,7 @@ return <Typography fontSize='small'>{DDMMYYDateFormate(date)?.date}</Typography>
               </Grid>
             </Grid>
             <Grid item xs={12} sx={{ pt: '10px' }}>
-              <RaiseQuery studentCode={auth?.user?.studentCode} getQueriesList={getQueriesList} />
+              <RaiseQuery category={category} studentCode={auth?.user?.studentCode} getQueriesList={getQueriesList} />
             </Grid>
           </Box>
         </Grid>

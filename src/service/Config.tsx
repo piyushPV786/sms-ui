@@ -63,5 +63,7 @@ export const apiEndPoints = Object.freeze({
   industry: '/common/employment-industry',
   downloadTranscript: '/academics/donwload/academic-records',
   currency: '/common/currency',
-  query: '/query'
+  query: '/query',
+  queryType: '/common/query-type',
+  queryStatus: '/common/query-status'
 })
