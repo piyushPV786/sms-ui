@@ -63,6 +63,7 @@ export interface IQueryRowData {
   description: string
   status: string
   documentCode: string
+  documentName: string
 }
 export interface CellType {
   row: IQueryRowData

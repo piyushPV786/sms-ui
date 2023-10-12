@@ -124,7 +124,7 @@ export const viewProofDetails = (
     })
     .then(response => {
       const file = new Blob([response.data], {
-        type: ext === 'pdf' ? 'application/pdf' : 'image/jpeg'
+        type: ext === 'pdf' ? 'application/pdf' : ext === 'jpeg' ? 'image/jpeg' : 'image/png'
       })
       !!setViewFileLoader && !!fileCode && setViewFileLoader(prev => ({ ...prev, [fileCode]: false }))
       const fileURL = URL.createObjectURL(file)
@@ -274,4 +274,16 @@ export const DDMMYYDateFormate = (date: Date) => {
   }
 
   return formateDate
+}
+
+export const getFileUrlToShow = async (
+  fileName: string,
+  studentCode: string | undefined,
+  setViewFileLoader?: Dispatch<SetStateAction<{ [key: string]: boolean } | undefined>>,
+  fileCode?: string
+) => {
+  const response = await CommonService.getFileUrl(fileName, studentCode)
+  if (response?.data?.statusCode === status?.successCode) {
+    viewProofDetails(response?.data?.data, setViewFileLoader, fileCode)
+  }
 }
