@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
-import { Theme } from '@mui/material'
+import { CircularProgress, Theme } from '@mui/material'
 import CustomChip from 'src/@core/components/mui/chip'
 
 import { CommonService, StudentService } from 'src/service'
@@ -22,7 +22,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { InlineTypography, StyledTypography } from 'src/styles/styled'
 import { useAuth } from 'src/hooks/useAuth'
 import RaiseQuery from 'src/components/dialog/RaiseQuery'
-import { DDMMYYDateFormate, getName, minTwoDigits, serialNumber } from 'src/utils'
+import { DDMMYYDateFormate, getFileUrlToShow, getName, minTwoDigits, serialNumber } from 'src/utils'
 import { CellType, IDefaultValue, IIndex, IQueryStatus, IQueryType } from 'src/types/common'
 
 const initialState = {
@@ -58,6 +58,7 @@ const QueryList = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [category, setCategory] = useState<IQueryType[]>([])
   const [queryStatus, setQueryStatus] = useState<IQueryStatus[]>([])
+  const [viewFileLoader, setViewFileLoader] = useState<{ [key: string]: boolean }>()
 
   const auth = useAuth()
 
@@ -104,12 +105,17 @@ const QueryList = () => {
     setValue(val)
   }
 
+  const handleView = (fileName: string, fileCode: string) => {
+    setViewFileLoader(prev => ({ ...prev, [fileCode]: true }))
+    getFileUrlToShow(fileName, auth?.user?.studentCode, setViewFileLoader, fileCode)
+  }
+
   const columns = [
     {
       flex: 0.1,
-      field: '#',
+      field: 'id',
       minWidth: 30,
-      headerName: '#',
+      headerName: 'ID',
       renderCell: (index: IIndex) => {
         return <Box>{`${minTwoDigits(serialNumber(index.api.getRowIndex(index.row.id), pageNumber, pageSize))}`}</Box>
       }
@@ -134,6 +140,31 @@ const QueryList = () => {
       minWidth: 300,
       field: 'description',
       headerName: 'Description'
+    },
+    {
+      flex: 0.1,
+      minWidth: 200,
+      field: 'documentCode',
+      headerName: 'Supported Documents',
+      renderCell: (row: CellType) => {
+        return row.row.documentCode ? (
+          <>
+            <Typography
+              color='primary'
+              fontWeight='bold'
+              onClick={() => handleView(row.row.documentName, row.row.documentCode)}
+              fontSize='small'
+            >
+              {row.row.documentName}
+            </Typography>
+            {viewFileLoader && viewFileLoader[row.row.documentCode] ? (
+              <CircularProgress color='primary' size={20} />
+            ) : null}
+          </>
+        ) : (
+          '-'
+        )
+      }
     },
     {
       flex: 0.1,
