@@ -97,7 +97,6 @@ export interface IPaymentPayload {
   paymentData: string
 }
 
-interface PaymentInstrumentInfo {}
 export interface IPaymentResponse {
   paymentId: number
   externalUniqueId: string
@@ -110,7 +109,6 @@ export interface IPaymentResponse {
   completionUrl: string
   paymentType: string
   created: string
-  paymentInstrumentInfo: PaymentInstrumentInfo
   fee: number
   walletId: number
 }

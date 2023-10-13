@@ -24,7 +24,8 @@ export const paymentLogin = async (paymentPayload: IPaymentPayload) => {
       }
     }
     nProgress.done()
-    return paymentResponse
+    
+return paymentResponse
   } catch (err: any) {
     console.log('Error while payment page ========>', err?.message)
     nProgress.done()
