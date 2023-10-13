@@ -9,6 +9,11 @@ import { styled } from '@mui/material/styles'
 import { PaymentTypes } from './constant'
 import { GetPaymentImage } from 'src/utils'
 import UploadPaymentProof from '../uploaddocument/uploadPaymentProof'
+import { paymentLogin } from 'src/service/payment'
+import { v4 as uuidv4 } from 'uuid'
+import { IPaymentResponse } from 'src/types/common'
+import UkhesheCustomHook from './ukhesheCustomHook'
+import UkheshePaymentModal from '../dialog/PaymentDialog'
 
 const schema = yup.object().shape({
   uploadedFile: yup.mixed().required('Please upload any File')
@@ -48,6 +53,7 @@ export const DragDropContainer = styled<any>('div')(() => ({
   cursor: 'pointer'
 }))
 const PaymentOption = () => {
+  const { ukhesheModal, setUkhesheModal, paymentResponse, ukhesheOnlinePay } = UkhesheCustomHook()
   const [paymentPayload] = useState<any>(null)
   const [selectedPayment, setSelectedPaymentOption] = useState<string>('')
   const { watch, handleSubmit, unregister, setValue, clearErrors } = useForm({
@@ -62,8 +68,18 @@ const PaymentOption = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handlePay = () => {
-    undefined
+  const handlePay = async () => {
+    if (selectedPayment === 'ukheshe') {
+      const payload = {
+        externalUniqueId: uuidv4(),
+        amount: '100',
+        currency: 'USD',
+        type: 'GLOBAL_PAYMENT_LINK',
+        paymentMechanism: 'CARD',
+        paymentData: '198462'
+      }
+      await ukhesheOnlinePay(payload)
+    }
   }
   const getSelectedFormId = () => {
     if (selectedPayment === 'payu') {
@@ -71,6 +87,8 @@ const PaymentOption = () => {
     }
     if (selectedPayment === 'payFast') {
       return 'payFastForm'
+    }
+    if (selectedPayment === 'ukheshe') {
     }
   }
   const submitFile = (data: File) => {
@@ -80,8 +98,15 @@ const PaymentOption = () => {
   return (
     <>
       <Box sx={{ flexGrow: 1, marginTop: '1rem' }}>
+        {paymentResponse && (
+          <UkheshePaymentModal
+            open={ukhesheModal}
+            onClose={() => setUkhesheModal(!ukhesheModal)}
+            paymentResponse={paymentResponse}
+          />
+        )}
         <Grid container>
-          <Grid item xs={5}>
+          <Grid item xs={6}>
             <Card sx={{ padding: 5 }}>
               <Typography variant='h6' mb={5} color={'primary'}>
                 Payment Options
@@ -104,12 +129,18 @@ const PaymentOption = () => {
                         onChange={() => setSelectedPaymentOption(value)}
                         checked={selectedPayment === value}
                       />
-                      <Image
-                        width={value === 'payfast' ? 120 : 120}
-                        height={value === 'payfast' ? 5 : 70}
-                        src={GetPaymentImage(value) as any}
-                        alt={GetPaymentImage(value) as string}
-                      />
+                      <Box
+                        sx={{
+                          width: '50% !important',
+                          height: '40% !important',
+                          maxWidth: '50%',
+                          minHeight: '40%',
+                          position: 'relative',
+                          top: '30px'
+                        }}
+                      >
+                        <Image src={GetPaymentImage(value) as any} alt={GetPaymentImage(value) as string} />
+                      </Box>
                     </PaymentCard>
                     <>
                       <form method='post' id={value} action={paymentPayload?.paymenturl}>
@@ -140,7 +171,7 @@ const PaymentOption = () => {
               </Grid>
             </Card>
           </Grid>
-          <Grid item xs={2} display='flex' justifyContent='center' alignItems='center'>
+          <Grid item xs={1} display='flex' justifyContent='center' alignItems='center'>
             {' '}
             <Grid>Or</Grid>
           </Grid>

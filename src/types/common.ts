@@ -87,3 +87,30 @@ export interface IQueryDefaultValues {
   description: string
   file: File | null
 }
+
+export interface IPaymentPayload {
+  externalUniqueId: string
+  amount: string
+  currency: string
+  type: string
+  paymentMechanism: string
+  paymentData: string
+}
+
+interface PaymentInstrumentInfo {}
+export interface IPaymentResponse {
+  paymentId: number
+  externalUniqueId: string
+  status: string
+  amount: number
+  currency: string
+  additionalFields: any[]
+  acceptedCardSchemes: any[]
+  acceptedPaymentMechanisms: any[]
+  completionUrl: string
+  paymentType: string
+  created: string
+  paymentInstrumentInfo: PaymentInstrumentInfo
+  fee: number
+  walletId: number
+}

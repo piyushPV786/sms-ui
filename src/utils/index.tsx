@@ -10,6 +10,7 @@ import { IProgram } from 'src/types/common'
 
 const ImagePayu = require('/public/images/payu.png') as string
 const ImagePayFast = require('/public/images/payfastImage.png') as string
+const ImageUkheshe = require('/public/images/ukheshy.png') as string
 
 interface userDetails {
   fullName: string
@@ -94,7 +95,8 @@ export const GetPaymentImage = (type: string) => {
   if (type === 'payfast') {
     return ImagePayFast
   }
-  if (type === 'Stripe') {
+  if (type === 'ukheshe') {
+    return ImageUkheshe
   }
 }
 export const calculateFileSize = (size: number) => {
