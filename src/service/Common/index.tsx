@@ -6,7 +6,7 @@ import { status } from 'src/context/common'
 interface ICommonDocumentUploadParamTypes {
   filename: string
   filetype: string
-  file: File
+  file?: File
   studentCode: string | undefined
 }
 export default class Common {
