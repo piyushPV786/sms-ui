@@ -61,9 +61,15 @@ const AuthProvider = ({ children }: Props) => {
           window.localStorage.clear()
           setUser(null)
           setLoading(false)
+          const returnUrl = router.query.returnUrl
+          const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+          router.replace(redirectURL as string)
         }
       } else {
         setLoading(false)
+        const returnUrl = router.query.returnUrl
+        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+        router.replace(redirectURL as string)
       }
     }
     initAuth()
@@ -78,8 +84,6 @@ const AuthProvider = ({ children }: Props) => {
         await window.localStorage.setItem(authConfig.studentCode, response.data.data?.studentCode)
 
         const userProfileResponse = await StudentService?.UserProfile(response.data.data?.studentCode)
-
-        console.log('userProfileResponse =================>', userProfileResponse)
 
         if (userProfileResponse?.data?.data?.length) {
           const userInfo = userProfileResponse?.data?.data[0]
