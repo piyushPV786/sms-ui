@@ -23,7 +23,13 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const BackIcon = require('../../../../public/images/icons/project-icons/back.svg') as string
 
-const Checkout = () => {
+interface propsType {
+  amount: string | null
+  feeModeCode: string | null
+  currencyCode: string | null
+}
+
+const Checkout = ({ amount, feeModeCode, currencyCode }: propsType) => {
   // ** State
   const [showPromoCode, setShowPromoCOde] = useState<boolean>(false)
   const [promoCode, setPromoCode] = useState<string>('')
@@ -124,7 +130,7 @@ const Checkout = () => {
                               variant='h6'
                               sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}
                             >
-                              Subtotal (INR)
+                              Subtotal ({currencyCode})
                             </Typography>
                           </Grid>
                           <Grid item xs={6}>
@@ -138,7 +144,7 @@ const Checkout = () => {
                                 textAlign: 'right'
                               }}
                             >
-                              R 1500
+                              {` R ${amount}`}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -201,7 +207,7 @@ const Checkout = () => {
                       Amount Payable
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong>20-05-2023</strong>
+                      <strong> {` R ${amount}`}</strong>
                     </Typography>
                   </Grid>
                 </Box>
@@ -210,7 +216,7 @@ const Checkout = () => {
           </Card>
         </Grid>
       </Grid>
-      <PaymentOption />
+      <PaymentOption amount={amount} feeModeCode={feeModeCode} currencyCode={currencyCode} />
     </>
   )
 }

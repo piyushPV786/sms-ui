@@ -13,8 +13,8 @@ import { UpdatePayment, UpdatepaymentItem } from 'src/types/common'
 const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePayment) => {
   const router = useRouter()
 
-  const handlePay = () => {
-    router.push('/payment/checkout')
+  const handlePay = (amount: string | null, feeModeCode: string | null, currencyCode: string | null) => {
+    router.push(`/payment/checkout/${amount}/${feeModeCode}/${currencyCode}`)
   }
 
   return (
@@ -58,7 +58,9 @@ const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePa
                       <Button
                         size='small'
                         variant='contained'
-                        onClick={handlePay}
+                        onClick={() => {
+                          handlePay(String(item.dueAmount), item?.feeModeCode, item.currencyCode)
+                        }}
                         sx={{ position: 'absolute', borderRadius: '25px' }}
                       >
                         Pay

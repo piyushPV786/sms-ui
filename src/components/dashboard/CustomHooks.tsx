@@ -39,7 +39,7 @@ const DashboardCustomHooks = () => {
   const getStudentDetails = async () => {
     if (auth?.user?.studentCode) {
       const userProfileResponse = await StudentService?.UserProfile(auth?.user?.studentCode)
-
+      localStorage.setItem('activeLeadDetails', JSON.stringify(userProfileResponse?.data?.data[0]))
       if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
         const imgsrc = await CommonService.getProfileSource(
           userProfileResponse?.data?.data[0].documentCode,
