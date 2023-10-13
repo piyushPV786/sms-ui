@@ -131,7 +131,7 @@ const QueryList = () => {
   const columns = [
     {
       flex: 0.1,
-      field: 'id',
+      field: '#',
       minWidth: 60,
       headerName: 'ID',
       renderCell: (index: IIndex) => {
@@ -249,7 +249,8 @@ const QueryList = () => {
               disableColumnFilter
               disableColumnSelector
               rows={response?.data}
-              columns={columns}
+              columns={columns as any}
+              getRowId={row => row?.id}
               disableSelectionOnClick
               pageSize={Number(pageSize)}
               rowsPerPageOptions={[10, 25, 50]}
