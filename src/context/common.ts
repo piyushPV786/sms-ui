@@ -248,3 +248,12 @@ export const IntakeStatus = {
   resolved: 'RESOLVED',
   escalated: 'ESCALATED'
 }
+
+export enum QueryLimit {
+  Subject= 100,
+  Description= 200
+}
+
+export enum QueryFileSize {
+  maxSize = 500 * 1024 // 500KB
+}
