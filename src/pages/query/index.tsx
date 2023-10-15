@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
-import { CircularProgress, Theme } from '@mui/material'
+import { CircularProgress, Theme, styled } from '@mui/material'
 import CustomChip from 'src/@core/components/mui/chip'
 
 import { CommonService, StudentService } from 'src/service'
@@ -47,6 +47,24 @@ const IntakeStatusObj: IIntakeStatusType = {
   [IntakeStatus.resolved]: 'success',
   [IntakeStatus.escalated]: 'error'
 }
+
+const StyledDataGrid = styled(DataGrid)(() => ({
+  maxHeight: 'none !important',
+  '& .MuiDataGrid-renderingZone': {
+    maxHeight: 'none !important'
+  },
+  '& .MuiDataGrid-cell': {
+    lineHeight: 'unset !important',
+    maxHeight: 'none !important',
+    whiteSpace: 'normal'
+  },
+  '& .MuiDataGrid-row': {
+    maxHeight: 'none !important'
+  },
+  '.css-149d7vg-MuiDataGrid-virtualScrollerRenderZone .MuiDataGrid-row': {
+    minHeight: '100px !important'
+  }
+}))
 
 const QueryList = () => {
   // ** State
@@ -113,8 +131,8 @@ const QueryList = () => {
   const columns = [
     {
       flex: 0.1,
-      field: 'id',
-      minWidth: 30,
+      field: '#',
+      minWidth: 60,
       headerName: 'ID',
       renderCell: (index: IIndex) => {
         return <Box>{`${minTwoDigits(serialNumber(index.api.getRowIndex(index.row.id), pageNumber, pageSize))}`}</Box>
@@ -123,7 +141,7 @@ const QueryList = () => {
     {
       flex: 0.1,
       field: 'subject',
-      minWidth: 200,
+      minWidth: 300,
       headerName: 'Subject'
     },
     {
@@ -137,7 +155,7 @@ const QueryList = () => {
     },
     {
       flex: 0.1,
-      minWidth: 300,
+      minWidth: 400,
       field: 'description',
       headerName: 'Description'
     },
@@ -223,7 +241,7 @@ const QueryList = () => {
         <Grid item xs={12}>
           <Card>
             <TableHeader value={value} selectedRows={selectedRows} handleFilter={handleFilter} />
-            <DataGrid
+            <StyledDataGrid
               loading={loading}
               autoHeight
               pagination
@@ -231,7 +249,8 @@ const QueryList = () => {
               disableColumnFilter
               disableColumnSelector
               rows={response?.data}
-              columns={columns}
+              columns={columns as any}
+              getRowId={row => row?.id}
               disableSelectionOnClick
               pageSize={Number(pageSize)}
               rowsPerPageOptions={[10, 25, 50]}

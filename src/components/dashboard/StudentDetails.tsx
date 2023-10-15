@@ -10,7 +10,7 @@ import Link from 'next/link'
 // ** Custom Components Imports
 import CustomAvatar from 'src/@core/components/mui/avatar'
 import { getUserInfo } from 'src/utils'
-import { InformationOutline, React } from 'mdi-material-ui'
+import { HelpBox, InformationOutline, React } from 'mdi-material-ui'
 import WhiteButton from '../Button'
 import { useRouter } from 'next/router'
 
@@ -72,6 +72,18 @@ const StudentDetails = ({ profileImage }: any) => {
                 <Link href={`/my-document`} passHref>
                   <a href='' style={{ color: '#fff' }}>
                     My Documents
+                  </a>
+                </Link>
+                <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
+
+                <Link href={`/query`} passHref>
+                  <a href='' style={{ color: '#fff' }}>
+                    <Box display='flex'>
+                      <Box display='contents'>
+                        <HelpBox />
+                      </Box>
+                      <Box pl={1}>My Queries</Box>
+                    </Box>
                   </a>
                 </Link>
               </Box>

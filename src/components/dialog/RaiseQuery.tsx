@@ -33,9 +33,10 @@ import {
   downloadSuccess,
   ErrorMessage,
   FileError,
-  FileSize,
   FileType,
   QueryDocumentCode,
+  QueryFileSize,
+  QueryLimit,
   raiseQueryMessage,
   status
 } from 'src/context/common'
@@ -89,7 +90,7 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
       'image/*': ['.jpeg', '.png', '.pdf']
     },
     multiple: false,
-    maxSize: FileSize.maxSize,
+    maxSize: QueryFileSize.maxSize,
     onDrop: acceptedFiles => (setValue('file', acceptedFiles[0]), clearErrors('file'))
   })
 
@@ -144,7 +145,7 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
 
   const fileRejectionItems = fileRejections.map(({ file }) => {
     const customErrors = []
-    if (file.size > FileSize.maxSize) {
+    if (file.size > QueryFileSize.maxSize) {
       customErrors.push(FileError.fileSizeError)
     }
     if (!FileType.includes(file.type)) {
@@ -196,7 +197,14 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
                 render={({ field: { value, onChange, ...register } }) => (
                   <TextField
                     {...register}
-                    label='Subject'
+                    label={
+                      <span>
+                        Subject<span style={{ color: 'red' }}> *</span>
+                      </span>
+                    }
+                    inputProps={{
+                      maxlength: QueryLimit.Subject
+                    }}
                     fullWidth
                     value={value}
                     onChange={onChange}
@@ -221,7 +229,18 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
                       clearErrors('category')
                     }}
                     getOptionLabel={option => option.name.toString()}
-                    renderInput={params => <TextField {...params} label='Category' variant='outlined' fullWidth />}
+                    renderInput={params => (
+                      <TextField
+                        {...params}
+                        label={
+                          <span>
+                            Category<span style={{ color: 'red' }}> *</span>
+                          </span>
+                        }
+                        variant='outlined'
+                        fullWidth
+                      />
+                    )}
                   />
                 )}
                 <FormHelperText sx={{ color: 'red' }}>{errors.category && errors.category?.message}</FormHelperText>
@@ -235,7 +254,14 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
                 render={({ field: { value, onChange, ...register } }) => (
                   <TextField
                     {...register}
-                    label='Description'
+                    label={
+                      <span>
+                        Description<span style={{ color: 'red' }}> *</span>
+                      </span>
+                    }
+                    inputProps={{
+                      maxlength: QueryLimit.Description
+                    }}
                     multiline
                     rows={3}
                     fullWidth
@@ -306,7 +332,7 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
           </DialogContent>
           <DialogActions sx={{ justifyContent: 'center' }}>
             <Button variant='outlined' color='secondary' onClick={handleDiscard}>
-              Cancel
+              Discard
             </Button>
             <Button variant='contained' color='primary' type='submit' disabled={disable}>
               Submit
