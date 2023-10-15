@@ -60,7 +60,7 @@ interface propsType {
 }
 const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
   const { ukhesheModal, setUkhesheModal, paymentResponse, ukhesheOnlinePay } = UkhesheCustomHook()
-  const [paymentPayload] = useState<any>(null)
+  const [paymentPayload, setPaymentPayload] = useState<any>(null)
   const [selectedPayment, setSelectedPaymentOption] = useState<string>('')
   const router = useRouter()
   const { watch, handleSubmit, unregister, setValue, clearErrors } = useForm({
@@ -76,7 +76,6 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
   }, [])
 
   const handlePay = async () => {
-    const studentDetails = JSON.parse(localStorage.getItem('activeLeadDetails') as any)
     if (selectedPayment === 'ukheshe') {
       const payload = {
         externalUniqueId: uuidv4(),
@@ -87,22 +86,6 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
         paymentData: '198462'
       }
       await ukhesheOnlinePay(payload)
-    } else if (selectedPayment == 'payu') {
-      const payload = {
-        amount: amount,
-        email: studentDetails.email,
-        firstname: studentDetails.firstName,
-        phone: studentDetails.mobileNo,
-        discountAmount: '',
-        discountCode: '',
-        feeModeCode: feeModeCode,
-        productinfo: 'Semester fee',
-        studentTypeCode: 'REGULAR', //
-        currencyCode: currencyCode
-      }
-      StudentService.payOnlinefee(payload, studentDetails.studentCode).then(data => {
-        console.log(data)
-      })
     }
   }
   const getSelectedFormId = () => {
@@ -163,7 +146,27 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
                     {' '}
                     <PaymentCard
                       className='mt-4'
-                      onClick={() => setSelectedPaymentOption(value)}
+                      onClick={() => {
+                        if (value == 'payu') {
+                          const studentDetails = JSON.parse(localStorage.getItem('activeLeadDetails') as any)
+                          const payload = {
+                            amount: amount,
+                            email: studentDetails.email,
+                            firstname: studentDetails.firstName,
+                            phone: studentDetails.mobileNo,
+                            discountAmount: '',
+                            discountCode: '',
+                            feeModeCode: feeModeCode,
+                            productinfo: 'Semester fee',
+                            studentTypeCode: 'REGULAR', //
+                            currencyCode: currencyCode
+                          }
+                          StudentService.payOnlinefee(payload, studentDetails.studentCode).then(data => {
+                            setPaymentPayload(data?.data?.data)
+                          })
+                        }
+                        setSelectedPaymentOption(value)
+                      }}
                       key={value}
                       image={GetPaymentImage(value)}
                     >
@@ -189,7 +192,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
                       </Box>
                     </PaymentCard>
                     <>
-                      <form method='post' id={value} action={paymentPayload?.paymenturl}>
+                      <form method='post' id={'payuForm'} action={paymentPayload?.paymenturl}>
                         {paymentPayload &&
                           Object.keys(paymentPayload).map(item => (
                             <input key={item} type='hidden' name={item} value={paymentPayload[item]} />
@@ -206,6 +209,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
               >
                 <Button
                   form={getSelectedFormId() as any}
+                  type='submit'
                   size='large'
                   variant='contained'
                   onClick={handlePay}
