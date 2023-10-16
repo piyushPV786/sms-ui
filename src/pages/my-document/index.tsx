@@ -5,18 +5,16 @@ import { useState, useEffect } from 'react'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
-import { ThemeColor } from 'src/@core/layouts/types'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
 import { CardContent, IconButton, Link } from '@mui/material'
 import { Download } from 'mdi-material-ui'
-import Chip from '@mui/material/Chip'
 
 // ** Custom Components Imports
 import TableHeader from 'src/components/uploaddocument/TableHeader'
-import { ICommonData, downloadSuccess, fileType } from 'src/context/common'
+import { ICommonData, downloadSuccess } from 'src/context/common'
 import { StudentService, CommonService } from 'src/service'
 import { status } from 'src/context/common'
 import { successToastBottomRight } from '../../components/common'
@@ -30,17 +28,6 @@ import { getFileUrl, minTwoDigits, serialNumber } from 'src/utils'
 import { IDocumentType, IUploadDocumentParam } from 'src/context/types'
 import { CircularProgress } from '@mui/material'
 import { StyledLink } from 'src/styles/styled'
-
-interface fileTypes {
-  [key: string]: ThemeColor
-}
-
-const fileTypeObj: fileTypes = {
-  [fileType.doc]: 'info',
-  [fileType.ppt]: 'error',
-  [fileType.pdf]: 'error',
-  [fileType.png]: 'error'
-}
 
 interface IIndex {
   api: {
@@ -172,20 +159,7 @@ const DocumentList = () => {
         return <StyledLink>{row?.name}</StyledLink>
       }
     },
-    {
-      flex: 0.1,
-      field: 'fileExtension',
-      minWidth: 100,
-      headerName: 'File Type',
-      renderCell: ({ row }: CellType) => (
-        <Chip
-          label={row.fileExtension}
-          color={fileTypeObj[row.fileExtension]}
-          size='small'
-          sx={{ textTransform: 'lowercase', '& .MuiChip-label': { lineHeight: '18px' } }}
-        />
-      )
-    },
+
     {
       flex: 0.1,
       field: 'documentType',
