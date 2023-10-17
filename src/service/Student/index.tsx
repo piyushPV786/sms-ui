@@ -154,7 +154,7 @@ export default class Student {
       studentTypeCode: string
       currencyCode: string | null
     },
-    studentCode: string | null
+    studentCode: string | undefined
   ) {
     nProgress.start()
 

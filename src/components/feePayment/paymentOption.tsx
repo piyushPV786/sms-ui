@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid'
 import UkhesheCustomHook from './ukhesheCustomHook'
 import UkheshePaymentModal from '../dialog/PaymentDialog'
 import { StudentService, CommonService } from 'src/service'
+import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 
 const schema = yup.object().shape({
   uploadedFile: yup.mixed().required('Please upload any File')
@@ -58,8 +59,15 @@ interface propsType {
   feeModeCode: string | null
   currencyCode: string | null
 }
+interface studentType {
+  firstName: string
+  email: string
+  mobileNo: string
+  studentCode: string
+}
 const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
   const { ukhesheModal, setUkhesheModal, paymentResponse, ukhesheOnlinePay } = UkhesheCustomHook()
+  const { studentDetails } = DashboardCustomHooks()
   const [paymentPayload, setPaymentPayload] = useState<any>(null)
   const [selectedPayment, setSelectedPaymentOption] = useState<string>('')
   const router = useRouter()
@@ -148,12 +156,12 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
                       className='mt-4'
                       onClick={() => {
                         if (value == 'payu') {
-                          const studentDetails = JSON.parse(localStorage.getItem('activeLeadDetails') as any)
+                          const studentDetail: studentType | undefined = studentDetails
                           const payload = {
                             amount: amount,
-                            email: studentDetails.email,
-                            firstname: studentDetails.firstName,
-                            phone: studentDetails.mobileNo,
+                            email: studentDetail?.email,
+                            firstname: studentDetail?.firstName,
+                            phone: studentDetail?.mobileNo,
                             discountAmount: '',
                             discountCode: '',
                             feeModeCode: feeModeCode,
@@ -161,7 +169,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
                             studentTypeCode: 'REGULAR', //
                             currencyCode: currencyCode
                           }
-                          StudentService.payOnlinefee(payload, studentDetails.studentCode).then(data => {
+                          StudentService.payOnlinefee(payload, studentDetail?.studentCode).then(data => {
                             setPaymentPayload(data?.data?.data)
                           })
                         }
