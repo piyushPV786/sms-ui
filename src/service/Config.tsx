@@ -65,5 +65,6 @@ export const apiEndPoints = Object.freeze({
   currency: '/common/currency',
   query: '/query',
   queryType: '/common/query-type',
-  queryStatus: '/common/query-status'
+  queryStatus: '/common/query-status',
+  offlinePayment: '/payments'
 })

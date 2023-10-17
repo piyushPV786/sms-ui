@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
+import { useRouter } from 'next/router'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import { Grid, Box, Paper, Typography, Button, Card } from '@mui/material'
@@ -12,6 +13,8 @@ import UploadPaymentProof from '../uploaddocument/uploadPaymentProof'
 import { v4 as uuidv4 } from 'uuid'
 import UkhesheCustomHook from './ukhesheCustomHook'
 import UkheshePaymentModal from '../dialog/PaymentDialog'
+import { StudentService, CommonService } from 'src/service'
+import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 
 const schema = yup.object().shape({
   uploadedFile: yup.mixed().required('Please upload any File')
@@ -50,10 +53,24 @@ export const DragDropContainer = styled<any>('div')(() => ({
   padding: '1rem',
   cursor: 'pointer'
 }))
-const PaymentOption = () => {
+
+interface propsType {
+  amount: string | null
+  feeModeCode: string | null
+  currencyCode: string | null
+}
+interface studentType {
+  firstName: string
+  email: string
+  mobileNo: string
+  studentCode: string
+}
+const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
   const { ukhesheModal, setUkhesheModal, paymentResponse, ukhesheOnlinePay } = UkhesheCustomHook()
-  const [paymentPayload] = useState<any>(null)
+  const { studentDetails } = DashboardCustomHooks()
+  const [paymentPayload, setPaymentPayload] = useState<any>(null)
   const [selectedPayment, setSelectedPaymentOption] = useState<string>('')
+  const router = useRouter()
   const { watch, handleSubmit, unregister, setValue, clearErrors } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -89,8 +106,30 @@ const PaymentOption = () => {
     if (selectedPayment === 'ukheshe') {
     }
   }
-  const submitFile = (data: File) => {
-    console.log('formdata', data)
+  const submitFile = (data: { uploadedFile: { name: string } }) => {
+    const payload = {
+      documentTypeCode: 'PaymentProof',
+      fileName: data?.uploadedFile?.name,
+      fileType: data?.uploadedFile?.name.split('.')[1],
+      amount: amount,
+      feeModeCode: feeModeCode,
+      discountAmount: 0,
+      discountCode: '',
+      currencyCode: currencyCode
+    }
+
+    StudentService.payOfflinefee(payload, localStorage?.getItem('studentCode')).then(data => {
+      const payload = {
+        filename: data?.data?.data?.name,
+        filetype: data?.data?.data?.name?.split('.')[1],
+        studentCode: data?.data?.data?.studentCode
+      }
+      CommonService.documentUpload(payload).then(data => {
+        if (data) {
+          router.push(`/payment/success/`)
+        }
+      })
+    })
   }
 
   return (
@@ -115,7 +154,27 @@ const PaymentOption = () => {
                     {' '}
                     <PaymentCard
                       className='mt-4'
-                      onClick={() => setSelectedPaymentOption(value)}
+                      onClick={() => {
+                        if (value == 'payu') {
+                          const studentDetail: studentType | undefined = studentDetails
+                          const payload = {
+                            amount: amount,
+                            email: studentDetail?.email,
+                            firstname: studentDetail?.firstName,
+                            phone: studentDetail?.mobileNo,
+                            discountAmount: '',
+                            discountCode: '',
+                            feeModeCode: feeModeCode,
+                            productinfo: 'Semester fee',
+                            studentTypeCode: 'REGULAR', //
+                            currencyCode: currencyCode
+                          }
+                          StudentService.payOnlinefee(payload, studentDetail?.studentCode).then(data => {
+                            setPaymentPayload(data?.data?.data)
+                          })
+                        }
+                        setSelectedPaymentOption(value)
+                      }}
                       key={value}
                       image={GetPaymentImage(value)}
                     >
@@ -141,7 +200,7 @@ const PaymentOption = () => {
                       </Box>
                     </PaymentCard>
                     <>
-                      <form method='post' id={value} action={paymentPayload?.paymenturl}>
+                      <form method='post' id={'payuForm'} action={paymentPayload?.paymenturl}>
                         {paymentPayload &&
                           Object.keys(paymentPayload).map(item => (
                             <input key={item} type='hidden' name={item} value={paymentPayload[item]} />
@@ -158,6 +217,7 @@ const PaymentOption = () => {
               >
                 <Button
                   form={getSelectedFormId() as any}
+                  type='submit'
                   size='large'
                   variant='contained'
                   onClick={handlePay}

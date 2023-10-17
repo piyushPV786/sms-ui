@@ -34,6 +34,7 @@ export interface UpdatepaymentItem {
   dueDate: string
   dueAmount: number
   currencyCode: string
+  feeModeCode: string
 }
 
 export interface IIndex {

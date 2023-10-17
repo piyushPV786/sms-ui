@@ -5,9 +5,17 @@ import { CommonService, StudentService } from 'src/service'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const DashboardCustomHooks = () => {
+  interface studentType {
+    firstName: string
+    email: string
+    mobileNo: string
+    studentCode: string
+  }
+
   const [scheduler, setScheduler] = useState<any>(null)
   const [myDayData, setMyDay] = useState<any>(null)
   const [profileImage, setProfileImage] = useState<string | undefined>()
+  const [studentDetails, setStudentDetails] = useState<studentType>()
 
   const auth = useAuth()
 
@@ -40,6 +48,8 @@ const DashboardCustomHooks = () => {
     if (auth?.user?.studentCode) {
       const userProfileResponse = await StudentService?.UserProfile(auth?.user?.studentCode)
 
+      setStudentDetails(userProfileResponse?.data?.data[0])
+
       if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
         const imgsrc = await CommonService.getProfileSource(
           userProfileResponse?.data?.data[0].documentCode,
@@ -50,7 +60,7 @@ const DashboardCustomHooks = () => {
     }
   }
 
-  return { scheduler, myDayData, profileImage }
+  return { scheduler, myDayData, profileImage, studentDetails }
 }
 
 export default DashboardCustomHooks
