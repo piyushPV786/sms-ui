@@ -113,3 +113,16 @@ export interface IPaymentResponse {
   fee: number
   walletId: number
 }
+
+export interface IDataPaymentRow{
+  programName: string
+  currencyCode: string
+  totalAmount: string
+  paymentDate: string
+  dueDate: string
+  referenceNumber: string
+
+}
+export interface IPaymentRow {
+  row : IDataPaymentRow
+}
