@@ -20,6 +20,8 @@ import CustomChip from 'src/@core/components/mui/chip'
 import ClassList from './classList/classlistData'
 import ClassTableHeader from './classList/classTableHeader'
 import { AttendanceStatusObj, ClassResponse } from 'src/context/common'
+import { UserManagementService } from 'src/service'
+import { getCourseName, serialNumber } from 'src/utils'
 
 const TableHeaderTypography = styled(Typography)<any>(() => ({
   fontWeight: 'bold',
@@ -27,7 +29,7 @@ const TableHeaderTypography = styled(Typography)<any>(() => ({
   letterSpacing: '0.17px'
 }))
 
-function AttendanceListRow({ row }: any) {
+function AttendanceListRow({ row, index, pageNumber, pageSize, courses }: any) {
   const [open, setOpen] = useState<boolean>(false)
   const [value, setValue] = useState<string>('')
 
@@ -35,8 +37,10 @@ function AttendanceListRow({ row }: any) {
     setValue(val)
   }
 
-  const handleManageCourse = () => {
+  const handleManageCourse = async (scheduleCode: number | string) => {
     setOpen(!open)
+    const response = await UserManagementService?.getClassList(scheduleCode)
+    console.log(response)
   }
 
   return (
@@ -44,10 +48,9 @@ function AttendanceListRow({ row }: any) {
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell sx={{ minWidth: 60, flex: 0.15 }}>
           <Box>
-            <Typography>{row.id}</Typography>
+            <Typography>{serialNumber(index, pageNumber + 1, pageSize)}</Typography>
           </Box>
         </TableCell>
-
         <TableCell sx={{ minWidth: 150, flex: 0.25 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -56,38 +59,38 @@ function AttendanceListRow({ row }: any) {
                 variant='body2'
                 sx={{ color: 'text.primary', fontWeight: 500, lineHeight: '22px', letterSpacing: '.1px' }}
               >
-                {row.code}
+                {row?.courseCode}
               </Typography>
             </Box>
           </Box>
         </TableCell>
 
         <TableCell sx={{ flex: 0.17, minWidth: 140 }}>
-          <Typography variant='caption'>{row.name}</Typography>
+          <Typography variant='caption'>{getCourseName(courses, row?.courseCode)}</Typography>
         </TableCell>
 
-        <TableCell sx={{ flex: 0.18, minWidth: 120 }}>{row.class}</TableCell>
+        <TableCell sx={{ flex: 0.18, minWidth: 120 }}>{row?.totalClass}</TableCell>
 
-        <TableCell sx={{ flex: 0.25, minWidth: 150 }}>{row.attendance}</TableCell>
+        <TableCell sx={{ flex: 0.25, minWidth: 150 }}>{row?.totalAttend}</TableCell>
         <TableCell sx={{ flex: 0.18, minWidth: 180 }}>
           <Typography
             variant='body2'
             sx={{ color: 'text.primary', fontWeight: 500, lineHeight: '22px', letterSpacing: '.1px' }}
           >
-            {row.percent}
+            {row?.percentage}
           </Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
           <CustomChip
             skin='light'
             size='small'
-            label={row.Status}
+            label={row?.status}
             color={AttendanceStatusObj[row.Status]}
             sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
           />
         </TableCell>
         <TableCell sx={{ flex: 0.2, minWidth: 100 }}>
-          <Button size='small' variant='outlined' onClick={() => handleManageCourse()}>
+          <Button size='small' variant='outlined' onClick={() => handleManageCourse(row?.scheduleCode)}>
             View Details
           </Button>
         </TableCell>

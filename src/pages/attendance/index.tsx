@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // ** React Imports
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** MUI Imports
 import { Link } from '@mui/material'
 
 // ** Custom Components Imports
 import TableHeader from 'src/components/myAttendance/tableHeader'
-import { documentResponse } from 'src/context/common'
 
 import {
   Grid,
@@ -25,6 +24,7 @@ import {
 } from '@mui/material'
 import AttendanceListRow from 'src/components/myAttendance/attendanceList'
 import OverAllCard from 'src/components/myAttendance/overAllAttendance/overAll'
+import { AcademicService, UserManagementService } from 'src/service'
 
 const TableHeaderTypography = styled(Typography)<any>(() => ({
   fontWeight: 'bold',
@@ -37,8 +37,10 @@ const AttendanceList = () => {
 
   const [value, setValue] = useState<string>('')
   const [pageSize, setPageSize] = useState<number>(10)
+  const [count, setCount] = useState<number>(0)
   const [pageNumber, setPageNumber] = useState<number>(0)
-
+  const [tableData, setTableData] = useState<[]>([])
+  const [courses, setCourses] = useState<[]>([])
   const handleFilter = (val: string) => {
     setValue(val)
   }
@@ -51,6 +53,24 @@ const AttendanceList = () => {
   const handleChangePage = (event: unknown, newPage: number) => {
     setPageNumber(newPage)
   }
+  const getDetails = async () => {
+    const response = await UserManagementService?.getAttendanceDetails('ANKIT')
+    if (response?.data?.length > 0) {
+      setTableData(response?.data)
+      setCount(response?.count)
+    }
+  }
+
+  const getCourses = async () => {
+    const response = await AcademicService.getAllCourses()
+    if (response?.data?.length > 0) {
+      setCourses(response?.data)
+    }
+  }
+  useEffect(() => {
+    getDetails()
+    getCourses()
+  }, [])
 
   return (
     <>
@@ -104,8 +124,15 @@ const AttendanceList = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {documentResponse?.data?.map((row: any) => (
-                    <AttendanceListRow key={row.id} row={row} />
+                  {tableData?.map((row: any, index: number) => (
+                    <AttendanceListRow
+                      key={row?.id}
+                      row={row}
+                      index={index}
+                      pageNumber={pageNumber}
+                      pageSize={pageSize}
+                      courses={courses}
+                    />
                   ))}
                 </TableBody>
               </Table>
@@ -113,7 +140,7 @@ const AttendanceList = () => {
             <TablePagination
               rowsPerPageOptions={[10, 25]}
               component='div'
-              count={documentResponse?.count}
+              count={count}
               rowsPerPage={pageSize}
               page={pageNumber}
               onPageChange={handleChangePage}
@@ -122,7 +149,7 @@ const AttendanceList = () => {
           </Card>
         </Grid>
         <Grid item xs={12} md={4}>
-          <OverAllCard />
+          <OverAllCard tableData={tableData} />
         </Grid>
       </Grid>
     </>

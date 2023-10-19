@@ -1,5 +1,12 @@
 import axios, { AxiosInstance } from 'axios'
-import { axiosConfig, academicAxiosConfig, studentBaseConfig, apiEndPoints, commonAxiosConfig } from './Config'
+import {
+  axiosConfig,
+  academicAxiosConfig,
+  studentBaseConfig,
+  apiEndPoints,
+  commonAxiosConfig,
+  userManagementAxiosConfig
+} from './Config'
 import FeePayment from './FeePayment'
 import Academic from './Academic'
 import Student from './Student'
@@ -7,16 +14,19 @@ import authConfig from 'src/configs/auth'
 import mem from 'mem'
 import { status } from 'src/context/common'
 import Common from './Common'
+import UserManagement from './UserManagement'
 
 const appAPIServer: AxiosInstance = axios.create(axiosConfig)
 const AcademicAPIServer: AxiosInstance = axios.create(academicAxiosConfig)
 const StudentBaseApiServer: AxiosInstance = axios.create(studentBaseConfig)
 const CommonBaseApiServer: AxiosInstance = axios.create(commonAxiosConfig)
+const userManagementAPIServer: AxiosInstance = axios.create(userManagementAxiosConfig)
 
 export const StudentService = new Student(StudentBaseApiServer)
 export const FeePaymentService = new FeePayment(appAPIServer)
 export const AcademicService = new Academic(AcademicAPIServer)
 export const CommonService = new Common(CommonBaseApiServer)
+export const UserManagementService = new UserManagement(userManagementAPIServer)
 
 // StudentBaseApiServer.interceptors.request.use(
 //   config => {
@@ -109,3 +119,4 @@ addInterceptorToAxiosInstances(StudentBaseApiServer)
 addInterceptorToAxiosInstances(appAPIServer)
 addInterceptorToAxiosInstances(AcademicAPIServer)
 addInterceptorToAxiosInstances(CommonBaseApiServer)
+addInterceptorToAxiosInstances(userManagementAPIServer)
