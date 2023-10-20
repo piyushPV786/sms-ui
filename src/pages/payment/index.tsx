@@ -135,7 +135,11 @@ const PaymentList = () => {
       field: 'paymentDate',
       headerName: 'PAID DATE',
       renderCell: (row: IPaymentRow) => {
-        return <Typography variant='body2'>{DDMMYYYDateFormat(new Date(row.row.paymentDate))}</Typography>
+        return (
+          <Typography variant='body2'>
+            {row.row.paymentDate ? DDMMYYYDateFormat(new Date(row.row.paymentDate)) : '-'}
+          </Typography>
+        )
       }
     },
     {
@@ -144,7 +148,11 @@ const PaymentList = () => {
       field: 'dueDate',
       headerName: 'DUE DATE',
       renderCell: (row: IPaymentRow) => {
-        return <Typography variant='body2'>{DDMMYYYDateFormat(new Date(row.row.dueDate))}</Typography>
+        return (
+          <Typography variant='body2'>
+            {row.row.dueDate ? DDMMYYYDateFormat(new Date(row.row.dueDate)) : '-'}
+          </Typography>
+        )
       }
     },
     {
