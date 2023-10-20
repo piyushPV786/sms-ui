@@ -42,7 +42,7 @@ const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePa
                         <Grid item xs={6}>
                           <label>Due Date</label>
                           <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
-                            {DDMMYYYDateFormat(new Date(item.dueDate))}
+                            {item.dueDate ? DDMMYYYDateFormat(new Date(item.dueDate)) : '-'}
                           </Typography>
                         </Grid>
                         <Grid item xs={6}>
