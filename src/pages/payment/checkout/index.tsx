@@ -16,6 +16,7 @@ import { styled } from '@mui/material/styles'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useRouter } from 'next/router'
 import PaymentOption, { DragDropContainer } from 'src/components/feePayment/paymentOption'
+import { DDMMYYYDateFormat } from 'src/utils'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(4)} !important`
@@ -27,9 +28,10 @@ interface propsType {
   amount: string | null
   feeModeCode: string | null
   currencyCode: string | null
+  dueDate: string | any
 }
 
-const Checkout = ({ amount, feeModeCode, currencyCode }: propsType) => {
+const Checkout = ({ amount, feeModeCode, currencyCode, dueDate }: propsType) => {
   // ** State
   const [showPromoCode, setShowPromoCOde] = useState<boolean>(false)
   const [promoCode, setPromoCode] = useState<string>('')
@@ -118,7 +120,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode }: propsType) => {
                       Due Date
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong>20-05-2023</strong>
+                      <strong>{DDMMYYYDateFormat(new Date(dueDate))}</strong>
                     </Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>
