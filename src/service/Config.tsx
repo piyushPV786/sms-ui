@@ -40,6 +40,7 @@ export const apiEndPoints = Object.freeze({
   studentApplication: '/user/student-application-details/',
   qualification: '/common/qualification',
   country: '/common/country',
+  identificationType: '/common/identification-Type',
   state: '/common/state',
   address: '/user/update-address/',
   studentSchedule: '/scheduler/',

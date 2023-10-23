@@ -13,6 +13,15 @@ const UseCustomHook = () => {
   const [studentTypes, setStudentTypes] = useState<commonListTypes[]>([])
   const [studyModes, setStudyModes] = useState<Array<commonListTypes>>([])
   const [industry, setIndustry] = useState<Array<commonListTypes>>([])
+  const [identificationType, setIdentificationType] = useState<commonListTypes[]>([])
+
+  const getIdentificationType = async () => {
+    const response = await CommonService.getIdentificationTypeList()
+
+    if (response?.data?.statusCode === status.successCode && response?.data?.data?.length) {
+      setIdentificationType(response?.data?.data)
+    }
+  }
 
   const getCountryData = async () => {
     const response = await CommonService.getCountryData()
@@ -79,9 +88,21 @@ const UseCustomHook = () => {
     getStudyModeData()
     getStudentTypeData()
     getIndustryDetail()
+    getIdentificationType()
   }, [])
 
-  return { language, nationality, nationalityStatus, country, gender, race, studentTypes, studyModes, industry }
+  return {
+    language,
+    nationality,
+    nationalityStatus,
+    country,
+    gender,
+    race,
+    studentTypes,
+    studyModes,
+    industry,
+    identificationType
+  }
 }
 
 export default UseCustomHook

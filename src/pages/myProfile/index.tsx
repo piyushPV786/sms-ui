@@ -50,6 +50,8 @@ const PreviewCard = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [countryData, setCountryData] = useState(null)
   const [stateData, setStateData] = useState<ICommonData[]>([])
+  const [state, setSponsorState] = useState<any>()
+  const [empState, setEmpState] = useState<any>()
   const [openProfileModal, setProfileModal] = useState<boolean>(false)
   const AvatarWithStyles = styled(CustomAvatar)<AvatarProps>(({}) => ({
     width: 150,
@@ -108,10 +110,29 @@ const PreviewCard = () => {
     }
   }
 
+  const getStateData = async (countryCode: string, state?: string) => {
+    const stateResponse = await CommonService?.getStateData(countryCode)
+    if (stateResponse?.data?.data) {
+      setStateData(stateResponse?.data?.data)
+
+      return state ? getState(stateResponse?.data?.data, state) : stateResponse?.data?.data
+    }
+  }
+
   const getUserProfileDetails = async () => {
     if (auth?.user?.studentCode) {
       const userProfileResponse = await StudentService?.getUserProfileDetails(auth?.user?.studentCode)
       if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
+        const sponsorStateName = await getStateData(
+          userProfileResponse?.data?.data.sponsor.country,
+          userProfileResponse?.data?.data.sponsor.state
+        )
+        setSponsorState(sponsorStateName)
+        const employementStateName = await getStateData(
+          userProfileResponse?.data?.data.employment.country,
+          userProfileResponse?.data?.data.employment.state
+        )
+        setEmpState(employementStateName)
         setUserProfileDetails(userProfileResponse?.data?.data)
       }
     }
@@ -166,15 +187,6 @@ const PreviewCard = () => {
     const countryResponse = await CommonService?.getCountryData()
     if (countryResponse?.data?.data) {
       setCountryData(countryResponse?.data?.data)
-    }
-  }
-
-  const getStateData = async (countryCode: string, state?: string) => {
-    const stateResponse = await CommonService?.getStateData(countryCode)
-    if (stateResponse?.data?.data) {
-      setStateData(stateResponse?.data?.data)
-
-      return state ? getState(stateResponse?.data?.data, state) : stateResponse?.data?.data
     }
   }
 
@@ -261,10 +273,18 @@ const PreviewCard = () => {
                 <EducationInformation userProfileDetails={userProfileDetails} qualificationData={qualificationData} />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={2}>
-                <SponsorInformation userProfileDetails={userProfileDetails} qualificationData={qualificationData} />
+                <SponsorInformation
+                  userProfileDetails={userProfileDetails}
+                  qualificationData={qualificationData}
+                  state={state}
+                />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={3}>
-                <EmploymentInformation userProfileDetails={userProfileDetails} qualificationData={qualificationData} />
+                <EmploymentInformation
+                  userProfileDetails={userProfileDetails}
+                  qualificationData={qualificationData}
+                  state={empState}
+                />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={4}>
                 <KinInformation userProfileDetails={userProfileDetails} qualificationData={qualificationData} />

@@ -6,9 +6,10 @@ import { getName } from 'src/utils'
 interface IProps {
   userProfileDetails: any
   qualificationData: any
+  state: string
 }
 
-const EmploymentInformation = ({ userProfileDetails, qualificationData }: IProps) => {
+const EmploymentInformation = ({ userProfileDetails, qualificationData, state }: IProps) => {
   console.log('userProfileDetailsSponsor ===================>', qualificationData)
   const { industry, country } = UseCustomHook()
 
@@ -31,7 +32,7 @@ const EmploymentInformation = ({ userProfileDetails, qualificationData }: IProps
         <Grid sm={5} xs={12} item>
           OFFICE ADDRESS
           <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative' }}>
-            {`${userProfileDetails?.employment?.city},${userProfileDetails?.employment?.state},
+            {`${userProfileDetails?.employment?.city},${state},
             ${getName(country, userProfileDetails?.employment?.country)},${userProfileDetails?.employment?.zipCode}`}
           </Card>
         </Grid>
