@@ -7,9 +7,16 @@ import { DDMMYYYDateFormat } from 'src/utils'
 const DashboardCustomHooks = () => {
   interface studentType {
     firstName: string
+    lastName: string
     email: string
     mobileNo: string
     studentCode: string
+    idNo: string
+    dateOfBirth: string | any
+    qualifications: string | undefined
+    nqfLevel: string | undefined
+    createdAt: string
+    status: string
   }
 
   const [scheduler, setScheduler] = useState<any>(null)
