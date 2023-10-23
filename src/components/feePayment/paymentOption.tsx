@@ -146,7 +146,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
           <Grid item xs={6}>
             <Card sx={{ padding: 5 }}>
               <Typography variant='h6' mb={5} color={'primary'}>
-                Payment Options
+                PAYMENT OPTIONS
               </Typography>
               <div className='d-flex justify-content-around mb-5'>
                 {PaymentTypes.map(({ value }) => (

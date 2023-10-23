@@ -23,7 +23,7 @@ const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePa
         <CardContent sx={{ backgroundColor: '#4f958e' }}>
           <Grid item xs={12}>
             <Typography variant='h6' sx={{ color: theme => theme.palette.common.white, mb: '15px' }}>
-              UPCOMING PAYMENT
+              UPCOMING PAYMENTS
             </Typography>
           </Grid>
           {rows.map((item: UpdatepaymentItem) => {
@@ -37,7 +37,20 @@ const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePa
                           {programCodeToName(allProgram, programCode)}
                         </Typography>
                       </Grid>
-
+                      <Grid container sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                        <Grid item xs={6}>
+                          <label>Program</label>
+                          <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
+                            {item?.programName}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <label>Payment Mode</label>
+                          <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
+                            {item?.feeModeCode}
+                          </Typography>
+                        </Grid>
+                      </Grid>
                       <Grid container sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                         <Grid item xs={6}>
                           <label>Due Date</label>

@@ -35,6 +35,7 @@ export interface UpdatepaymentItem {
   dueAmount: number
   currencyCode: string
   feeModeCode: string
+  programName: string
 }
 
 export interface IIndex {
@@ -114,15 +115,14 @@ export interface IPaymentResponse {
   walletId: number
 }
 
-export interface IDataPaymentRow{
+export interface IDataPaymentRow {
   programName: string
   currencyCode: string
   totalAmount: string
   paymentDate: string
   dueDate: string
   referenceNumber: string
-
 }
 export interface IPaymentRow {
-  row : IDataPaymentRow
+  row: IDataPaymentRow
 }

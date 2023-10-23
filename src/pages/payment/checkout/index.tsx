@@ -110,7 +110,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode }: propsType) => {
                       Fee Category
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong>Third Semeste</strong>
+                      <strong>{feeModeCode}</strong>
                     </Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -160,7 +160,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode }: propsType) => {
                                   href='#'
                                   className='w-100 text-dark'
                                 >
-                                  <Typography variant='body1' color={'primary'}>
+                                  <Typography variant='body1' color={'primary'} style={{ textDecoration: 'underline' }}>
                                     <span>Have a promo code?</span>
                                   </Typography>
                                 </a>
