@@ -6,9 +6,10 @@ import UseCustomHook from '../common/CustomHook'
 interface IProps {
   userProfileDetails: any
   qualificationData: any
+  state: string
 }
 
-const SponsorInformation = ({ userProfileDetails, qualificationData }: IProps) => {
+const SponsorInformation = ({ userProfileDetails, qualificationData, state }: IProps) => {
   console.log('userProfileDetailsSponsor ===================>', qualificationData)
   const { country } = UseCustomHook()
 
@@ -28,9 +29,8 @@ const SponsorInformation = ({ userProfileDetails, qualificationData }: IProps) =
         <Grid sm={5} xs={12} item>
           GUARDIAN ADDRESS
           <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative' }}>
-            {`${userProfileDetails?.sponsor?.address}`}, {userProfileDetails?.sponsor?.city},
-            {userProfileDetails?.sponsor?.state}, ,{getName(country, userProfileDetails?.sponsor?.country)},
-            {userProfileDetails?.sponsor?.zipCode}
+            {`${userProfileDetails?.sponsor?.address}`}, {userProfileDetails?.sponsor?.city},{state},{' '}
+            {getName(country, userProfileDetails?.sponsor?.country)},{userProfileDetails?.sponsor?.zipCode}
           </Card>
         </Grid>
       </Grid>

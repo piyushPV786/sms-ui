@@ -29,6 +29,22 @@ export default class Common {
     }
     nProgress.done()
   }
+
+  async getIdentificationTypeList() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.identificationType
+
+    try {
+      const response = await this.apiServer.get(endUrlName)
+
+      return response
+    } catch (err: any) {
+      console.log('Error Fetching IdentificationType List ========>', err?.message)
+    } finally {
+      nProgress.done()
+    }
+  }
+
   async getCountryData() {
     nProgress.start()
     const endUrlName = apiEndPoints.country

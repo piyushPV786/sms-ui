@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const PersonalInformation = ({ handleEditDialogOpen, address, studentDetails }: IProps) => {
-  const { country, gender, language, nationality, nationalityStatus, race } = UseCustomHook()
+  const { country, gender, language, nationality, nationalityStatus, race, identificationType } = UseCustomHook()
   const Address = address?.sort((a: addressTypes, b: addressTypes) => a?.addressType?.localeCompare(b?.addressType))
 
   return (
@@ -36,7 +36,9 @@ const PersonalInformation = ({ handleEditDialogOpen, address, studentDetails }: 
           <ProfileInfo label='Nationality' info={`${getName(nationality, studentDetails['nationality'])}`} />
           <ProfileInfo
             label='Identification Document Type / Id No'
-            info={`${studentDetails['identificationDocumentType']} / ${studentDetails['idNo']}`}
+            info={`${getName(identificationType, studentDetails['identificationDocumentType'])} / ${
+              studentDetails['idNo']
+            }`}
           />
         </Grid>
       )}
