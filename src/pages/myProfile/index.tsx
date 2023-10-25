@@ -124,13 +124,13 @@ const PreviewCard = () => {
       const userProfileResponse = await StudentService?.getUserProfileDetails(auth?.user?.studentCode)
       if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
         const sponsorStateName = await getStateData(
-          userProfileResponse?.data?.data.sponsor.country,
-          userProfileResponse?.data?.data.sponsor.state
+          userProfileResponse?.data?.data.sponsor?.country,
+          userProfileResponse?.data?.data.sponsor?.state
         )
         setSponsorState(sponsorStateName)
         const employementStateName = await getStateData(
-          userProfileResponse?.data?.data.employment.country,
-          userProfileResponse?.data?.data.employment.state
+          userProfileResponse?.data?.data.employment?.country,
+          userProfileResponse?.data?.data.employment?.state
         )
         setEmpState(employementStateName)
         setUserProfileDetails(userProfileResponse?.data?.data)
