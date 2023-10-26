@@ -2,6 +2,7 @@ const BACKEND_API = process.env.NEXT_PUBLIC_ENROLMENT_BACKEND_API
 const NEXT_PUBLIC_ACADEMIC_BACKEND_API = process.env.NEXT_PUBLIC_ACADEMIC_BACKEND_API
 const BaseStudentApi = process.env.NEXT_PUBLIC_STUDENT_BASE_API
 const CommonBaseApiUrl = process.env.NEXT_PUBLIC_COMMON_BASE_API
+const FinanceBaseApiUrl = process.env.NEXT_PUBLIC_FINANCE_BACKEND_API
 
 export const axiosConfig = {
   baseURL: BACKEND_API,
@@ -18,6 +19,13 @@ export const studentBaseConfig = {
 
 export const academicAxiosConfig = {
   baseURL: NEXT_PUBLIC_ACADEMIC_BACKEND_API,
+  headers: {
+    Authorization: `Bearer ${typeof window !== 'undefined' && window.localStorage.getItem('TOKEN')}`
+  }
+}
+
+export const financeAxiosConfig = {
+  baseURL: FinanceBaseApiUrl,
   headers: {
     Authorization: `Bearer ${typeof window !== 'undefined' && window.localStorage.getItem('TOKEN')}`
   }
@@ -67,5 +75,6 @@ export const apiEndPoints = Object.freeze({
   query: '/query',
   queryType: '/common/query-type',
   queryStatus: '/common/query-status',
-  offlinePayment: '/payments'
+  offlinePayment: '/payments',
+  ukheshePyment: '/payments/ukheshe-payment'
 })

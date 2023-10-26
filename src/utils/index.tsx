@@ -293,3 +293,10 @@ export const getFileUrlToShow = async (
     viewProofDetails(response?.data?.data, setViewFileLoader, fileCode)
   }
 }
+export const getLocalStorageData = (key: string) => {
+  const localData = window.localStorage.getItem(key)
+  if (localData) {
+    return JSON.parse(localData)
+  }
+  return null
+}
