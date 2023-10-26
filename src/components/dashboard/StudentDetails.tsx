@@ -13,6 +13,7 @@ import { getUserInfo } from 'src/utils'
 import { HelpBox, InformationOutline, React } from 'mdi-material-ui'
 import WhiteButton from '../Button'
 import { useRouter } from 'next/router'
+import ExamTicket from '../dialog/ExamTicket'
 
 // Styled CardContent component
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
@@ -33,7 +34,6 @@ const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
 
 const StudentDetails = ({ profileImage }: any) => {
   const router = useRouter()
-
   const handlePay = () => {
     router.push('/payment/checkout')
   }
@@ -86,6 +86,10 @@ const StudentDetails = ({ profileImage }: any) => {
                     </Box>
                   </a>
                 </Link>
+
+                <a href='#' style={{ color: '#fff' }}>
+                  <ExamTicket />
+                </a>
               </Box>
             </Box>
           </Grid>
