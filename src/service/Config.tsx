@@ -3,6 +3,7 @@ const NEXT_PUBLIC_ACADEMIC_BACKEND_API = process.env.NEXT_PUBLIC_ACADEMIC_BACKEN
 const BaseStudentApi = process.env.NEXT_PUBLIC_STUDENT_BASE_API
 const CommonBaseApiUrl = process.env.NEXT_PUBLIC_COMMON_BASE_API
 const USER_MANAGEMENT_API = process.env.NEXT_PUBLIC_USER_MANAGEMENT_REDIRECT_URI
+const FinanceBaseApiUrl = process.env.NEXT_PUBLIC_FINANCE_BACKEND_API
 
 export const axiosConfig = {
   baseURL: BACKEND_API,
@@ -30,6 +31,13 @@ export const userManagementAxiosConfig = {
   }
 }
 
+export const financeAxiosConfig = {
+  baseURL: FinanceBaseApiUrl,
+  headers: {
+    Authorization: `Bearer ${typeof window !== 'undefined' && window.localStorage.getItem('TOKEN')}`
+  }
+}
+
 export const commonAxiosConfig = {
   baseURL: CommonBaseApiUrl
 }
@@ -47,6 +55,7 @@ export const apiEndPoints = Object.freeze({
   studentApplication: '/user/student-application-details/',
   qualification: '/common/qualification',
   country: '/common/country',
+  identificationType: '/common/identification-Type',
   state: '/common/state',
   address: '/user/update-address/',
   studentSchedule: '/scheduler/',
@@ -76,5 +85,6 @@ export const apiEndPoints = Object.freeze({
   offlinePayment: '/payments',
   attendance: '/attendance',
   courseList: '/class-management/course-list',
-  courses: '/courses'
+  courses: '/courses',
+  ukheshePyment: '/payments/ukheshe-payment'
 })

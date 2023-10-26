@@ -1,6 +1,7 @@
 import axios from 'axios'
 import nProgress from 'nprogress'
 import { IPaymentPayload } from 'src/types/common'
+import { getLocalStorageData } from 'src/utils'
 
 export const paymentLogin = async (paymentPayload: IPaymentPayload) => {
   nProgress.start()
@@ -24,8 +25,26 @@ export const paymentLogin = async (paymentPayload: IPaymentPayload) => {
       }
     }
     nProgress.done()
-    
-return paymentResponse
+
+    return paymentResponse
+  } catch (err: any) {
+    console.log('Error while payment page ========>', err?.message)
+    nProgress.done()
+  }
+}
+
+export const getPaymentInfo = async (paymentId: number) => {
+  nProgress.start()
+  try {
+    const tokenDetails = getLocalStorageData('paymentToken')
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: tokenDetails?.data?.headerValue
+    }
+    const url = `${process.env.NEXT_PUBLIC_PAYMENT_TENENT_LOGIN_API}/${process.env.NEXT_PUBLIC_TENENT_ID}/payments/${paymentId}`
+    const paymentRes = await axios.get(url, { headers: headers })
+    nProgress.done()
+    return paymentRes
   } catch (err: any) {
     console.log('Error while payment page ========>', err?.message)
     nProgress.done()

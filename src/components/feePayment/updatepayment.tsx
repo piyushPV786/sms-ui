@@ -13,8 +13,13 @@ import { UpdatePayment, UpdatepaymentItem } from 'src/types/common'
 const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePayment) => {
   const router = useRouter()
 
-  const handlePay = (amount: string | null, feeModeCode: string | null, currencyCode: string | null) => {
-    router.push(`/payment/checkout/${amount}/${feeModeCode}/${currencyCode}`)
+  const handlePay = (
+    amount: string | null,
+    feeModeCode: string | null,
+    currencyCode: string | null,
+    dueDate: string
+  ) => {
+    router.push(`/payment/checkout/${amount}/${feeModeCode}/${currencyCode}/${dueDate}`)
   }
 
   return (
@@ -23,7 +28,7 @@ const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePa
         <CardContent sx={{ backgroundColor: '#4f958e' }}>
           <Grid item xs={12}>
             <Typography variant='h6' sx={{ color: theme => theme.palette.common.white, mb: '15px' }}>
-              UPCOMING PAYMENT
+              UPCOMING PAYMENTS
             </Typography>
           </Grid>
           {rows.map((item: UpdatepaymentItem) => {
@@ -37,18 +42,32 @@ const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePa
                           {programCodeToName(allProgram, programCode)}
                         </Typography>
                       </Grid>
-
+                      <Grid container sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                        <Grid item xs={6}>
+                          <label>Program</label>
+                          <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
+                            {item?.programName}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <label>Payment Mode</label>
+                          <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
+                            {item?.feeModeCode}
+                          </Typography>
+                        </Grid>
+                      </Grid>
                       <Grid container sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                         <Grid item xs={6}>
                           <label>Due Date</label>
                           <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
-                            {DDMMYYYDateFormat(new Date(item.dueDate))}
+                            {item.dueDate ? DDMMYYYDateFormat(new Date(item.dueDate)) : '-'}
                           </Typography>
                         </Grid>
                         <Grid item xs={6}>
                           <label>Total Amount</label>
                           <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
                             {getSymbol(currencyList, item.currencyCode)}
+                            &nbsp;
                             {item.dueAmount}
                           </Typography>
                         </Grid>
@@ -59,7 +78,7 @@ const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePa
                         size='small'
                         variant='contained'
                         onClick={() => {
-                          handlePay(String(item.dueAmount), item?.feeModeCode, item.currencyCode)
+                          handlePay(String(item.dueAmount), item?.feeModeCode, item.currencyCode, item.dueDate)
                         }}
                         sx={{ position: 'absolute', borderRadius: '25px' }}
                       >

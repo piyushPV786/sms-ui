@@ -193,7 +193,11 @@ export const getFileUrl = async (
 export const DDMMYYYDateFormat = (date: Date) => {
   const newDate = new Date(date)
 
-  return `${newDate.getMonth() + 1}-${newDate.getDate()}-${newDate.getFullYear()}`
+  const day = String(newDate.getDate()).padStart(2, '0')
+  const month = String(newDate.getMonth() + 1).padStart(2, '0')
+  const year = newDate.getFullYear()
+
+  return `${day}-${month}-${year}`
 }
 
 export const DateFormat = (date: Date) => {
@@ -295,4 +299,12 @@ export const getCourseName = (list: Array<commonListTypes>, code: string) => {
   }
 
   return code
+}
+export const getLocalStorageData = (key: string) => {
+  const localData = window.localStorage.getItem(key)
+  if (localData) {
+    return JSON.parse(localData)
+  }
+
+  return null
 }

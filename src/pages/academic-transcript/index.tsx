@@ -8,16 +8,18 @@ import { AcademicTypography, CardContent, TableCard } from 'src/styles/styled'
 import { successToastBottomRight, errorToast } from 'src/components/common'
 import { Download } from 'mdi-material-ui'
 import { AcademicService, StudentService } from 'src/service'
-import { downloadSuccess, info, status } from 'src/context/common'
+import { downloadSuccess, status } from 'src/context/common'
 import SearchBox from 'src/@core/components/searchinput'
 import { useAuth } from 'src/hooks/useAuth'
+import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
+import { DDMMYYYDateFormat } from 'src/utils'
 
 const StudentDashboard = () => {
   const [data, setData] = useState([])
   const [value, setValue] = useState<string>('')
 
   const auth: any = useAuth()
-
+  const { studentDetails } = DashboardCustomHooks()
   const handleOnDownloadClick = async () => {
     const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
     if (downloadedTranscript?.status == status.successCode) {
@@ -26,7 +28,6 @@ const StudentDashboard = () => {
       errorToast(downloadSuccess.studentCodeError)
     }
   }
-
   const downloadTranscripts = async (fileName: Blob, msg: string) => {
     const url = URL.createObjectURL(fileName)
     const a = document.createElement('a')
@@ -40,6 +41,7 @@ const StudentDashboard = () => {
     const response = await AcademicService?.getStudentAcademicDetails()
     setData(response?.data?.data?.total)
   }
+  console.log('studentDetails', studentDetails)
   React.useEffect(() => {
     getStudentList()
   }, [value])
@@ -125,14 +127,60 @@ const StudentDashboard = () => {
         <Card>
           <CardContent>
             <Grid container>
-              {info.map((item: any) => (
-                <Grid item xs={2.4} key={item.title}>
-                  <AcademicTypography variant='body2'>{item.title}</AcademicTypography>
-                  <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                    {item.description}
-                  </AcademicTypography>
-                </Grid>
-              ))}
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Student Number</AcademicTypography>
+                <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
+                  {studentDetails?.studentCode ? studentDetails?.studentCode : '-'}
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Full Name</AcademicTypography>
+                <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
+                  {studentDetails?.firstName ? `${studentDetails?.firstName} ${studentDetails?.lastName}` : '-'}
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>ID Number</AcademicTypography>
+                <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
+                  {studentDetails?.idNo ? studentDetails?.idNo : '-'}
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Date Of Birth</AcademicTypography>
+                <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
+                  {studentDetails?.dateOfBirth ? DDMMYYYDateFormat(new Date(studentDetails?.dateOfBirth)) : '-'}
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Qualification</AcademicTypography>
+                <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
+                  {studentDetails?.qualifications ? studentDetails?.qualifications : '-'}
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>NQF Level</AcademicTypography>
+                <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
+                  {studentDetails?.nqfLevel ? studentDetails?.nqfLevel : '-'}
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Date of Registration</AcademicTypography>
+                <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
+                  {studentDetails?.createdAt ? DDMMYYYDateFormat(new Date(studentDetails?.createdAt)) : '-'}
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Status</AcademicTypography>
+                <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
+                  {studentDetails?.status ? studentDetails?.status : '-'}
+                </AcademicTypography>
+              </Grid>
+              <Grid item xs={2.4}>
+                <AcademicTypography variant='body2'>Graduation Date</AcademicTypography>
+                <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
+                  -
+                </AcademicTypography>
+              </Grid>
             </Grid>
           </CardContent>
         </Card>

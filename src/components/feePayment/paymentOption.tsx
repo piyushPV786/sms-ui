@@ -66,7 +66,11 @@ interface studentType {
   studentCode: string
 }
 const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
-  const { ukhesheModal, setUkhesheModal, paymentResponse, ukhesheOnlinePay } = UkhesheCustomHook()
+  const { ukhesheModal, setUkhesheModal, paymentResponse, ukhesheOnlinePay } = UkhesheCustomHook({
+    amount,
+    feeModeCode,
+    currencyCode
+  })
   const { studentDetails } = DashboardCustomHooks()
   const [paymentPayload, setPaymentPayload] = useState<any>(null)
   const [selectedPayment, setSelectedPaymentOption] = useState<string>('')
@@ -83,12 +87,14 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  console.log('currency Code ====>', currencyCode)
+
   const handlePay = async () => {
     if (selectedPayment === 'ukheshe') {
       const payload = {
         externalUniqueId: uuidv4(),
-        amount: '100',
-        currency: 'USD',
+        amount: `${amount}`,
+        currency: 'ZAR',
         type: 'GLOBAL_PAYMENT_LINK',
         paymentMechanism: 'CARD',
         paymentData: '198462'
@@ -146,7 +152,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
           <Grid item xs={6}>
             <Card sx={{ padding: 5 }}>
               <Typography variant='h6' mb={5} color={'primary'}>
-                Payment Options
+                PAYMENT OPTIONS
               </Typography>
               <div className='d-flex justify-content-around mb-5'>
                 {PaymentTypes.map(({ value }) => (

@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
-import { Theme } from '@mui/material'
+import { Theme, Tooltip } from '@mui/material'
 
 //import { InvoiceType } from 'src/types/apps/invoiceTypes'
 import { AcademicService, CommonService, StudentService } from 'src/service'
@@ -23,8 +23,8 @@ import ChangePayment from 'src/components/feePayment/changePaymentMode'
 import 'react-datepicker/dist/react-datepicker.css'
 import { InlineTypography, StyledTypography } from 'src/styles/styled'
 import { useAuth } from 'src/hooks/useAuth'
-import { IProgram } from 'src/types/common'
-import { programCodeToName } from 'src/utils'
+import { IProgram, IPaymentRow } from 'src/types/common'
+import { DDMMYYYDateFormat, getSymbol } from 'src/utils'
 
 const initialState = {
   message: '',
@@ -95,11 +95,17 @@ const PaymentList = () => {
   const columns = [
     {
       flex: 0.1,
-      field: 'program',
+      field: 'programName',
       minWidth: 300,
       headerName: 'Program',
-      renderCell: () => {
-        return <>{programCodeToName(allProgram, response?.programCode)}</>
+      renderCell: (row: IPaymentRow) => {
+        return (
+          <Tooltip title={row.row.programName} describeChild placement='top-start'>
+            <Typography variant='body2' sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {row.row.programName ? row.row.programName : '-'}
+            </Typography>
+          </Tooltip>
+        )
       }
     },
     {
@@ -112,19 +118,42 @@ const PaymentList = () => {
       flex: 0.1,
       minWidth: 100,
       field: 'totalAmount',
-      headerName: 'Amount'
+      headerName: 'Amount',
+      renderCell: (row: IPaymentRow) => {
+        return (
+          <Typography variant='body2'>
+            {getSymbol(currencyList, row.row.currencyCode)}
+            &nbsp;
+            {row.row.totalAmount}
+          </Typography>
+        )
+      }
     },
     {
       flex: 0.1,
       minWidth: 150,
       field: 'paymentDate',
-      headerName: 'PAID DATE'
+      headerName: 'PAID DATE',
+      renderCell: (row: IPaymentRow) => {
+        return (
+          <Typography variant='body2'>
+            {row.row.paymentDate ? DDMMYYYDateFormat(new Date(row.row.paymentDate)) : '-'}
+          </Typography>
+        )
+      }
     },
     {
       flex: 0.1,
       minWidth: 150,
       field: 'dueDate',
-      headerName: 'DUE DATE'
+      headerName: 'DUE DATE',
+      renderCell: (row: IPaymentRow) => {
+        return (
+          <Typography variant='body2'>
+            {row.row.dueDate ? DDMMYYYDateFormat(new Date(row.row.dueDate)) : '-'}
+          </Typography>
+        )
+      }
     },
     {
       flex: 0.1,
@@ -137,7 +166,16 @@ const PaymentList = () => {
       flex: 0.1,
       minWidth: 300,
       field: 'referenceNumber',
-      headerName: 'TRANSACTION / REFERENCE ID'
+      headerName: 'TRANSACTION / REFERENCE ID',
+      renderCell: (row: IPaymentRow) => {
+        return (
+          <Tooltip title={row.row.referenceNumber} describeChild placement='top-start'>
+            <Typography variant='body2' sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {row.row.referenceNumber ? row.row.referenceNumber : '-'}
+            </Typography>
+          </Tooltip>
+        )
+      }
     }
   ]
 
