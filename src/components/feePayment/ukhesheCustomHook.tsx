@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react'
 import { useAuth } from 'src/hooks/useAuth'
 import { FinanceService } from 'src/service'
