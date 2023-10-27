@@ -7,7 +7,7 @@ export default class UserManagement {
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }
-  async getAttendanceDetails(studentCode: number | string) {
+  async getAttendanceDetails(studentCode: number | string | undefined) {
     nProgress.start()
     const endUrlName = `${apiEndPoints.attendance}/${studentCode}`
     try {

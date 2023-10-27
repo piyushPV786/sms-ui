@@ -1,5 +1,5 @@
 // ** Next Import
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Card from '@mui/material/Card'
@@ -12,9 +12,17 @@ import { useForm } from 'react-hook-form'
 import ReactApexcharts from 'src/@core/components/react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+import { IRow } from 'src/context/common'
 
-const OverAllCard = ({ tableData }: any) => {
+interface IOverAllProps {
+  tableData: IRow[] | any
+}
+
+const OverAllCard = ({ tableData }: IOverAllProps) => {
   const { handleSubmit, reset } = useForm()
+  const [totalClassSum, setTotalClassSum] = useState<number>()
+  const [totalAttendSum, setTotalAttendSum] = useState<number>()
+  const [ratio, setRatio] = useState<any>()
 
   const theme = useTheme()
 
@@ -62,17 +70,25 @@ const OverAllCard = ({ tableData }: any) => {
     console.log('param', param) //console remove when api call
     reset()
   }
-  const { totalClassSum, totalAttendSum } = tableData.reduce(
-    (accumulator: any, item: any) => {
-      accumulator.totalClassSum += item.totalClass
-      accumulator.totalAttendSum += item.totalAttend
 
-      return accumulator
-    },
-    { totalClassSum: 0, totalAttendSum: 0 }
-  )
+  useEffect(() => {
+    if (Array.isArray(tableData)) {
+      const { totalClassSum, totalAttendSum } = tableData.reduce(
+        (accumulator, item) => {
+          accumulator.totalClassSum += item.totalClass
+          accumulator.totalAttendSum += item.totalAttend
 
-  const ratio = totalAttendSum === 0 ? totalAttendSum : (totalAttendSum / totalClassSum) * 100
+          return accumulator
+        },
+        { totalClassSum: 0, totalAttendSum: 0 }
+      )
+
+      const ratio = totalAttendSum === 0 ? totalAttendSum : (totalAttendSum / totalClassSum) * 100
+      setTotalClassSum(totalClassSum)
+      setTotalAttendSum(totalAttendSum)
+      setRatio(ratio)
+    }
+  }, [tableData])
 
   return (
     <>

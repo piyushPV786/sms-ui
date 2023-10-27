@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Box, Typography, TableCell, TableRow } from '@mui/material'
 import CustomChip from 'src/@core/components/mui/chip'
 import { AttendanceStatusObj } from 'src/context/common'
+import { serialNumber } from 'src/utils'
 
 interface IClassListProps {
   row: any
@@ -14,7 +15,7 @@ const ClassList = ({ row, index }: IClassListProps) => {
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell sx={{ minWidth: 30, flex: 0.15, borderLeft: '4px solid green' }}>
           <Box>
-            <Typography>{`${index + 1}`}</Typography>
+            <Typography>{serialNumber(index, 1, 10)}</Typography>
           </Box>
         </TableCell>
 
@@ -25,16 +26,16 @@ const ClassList = ({ row, index }: IClassListProps) => {
               variant='body2'
               sx={{ color: 'text.primary', fontWeight: 500, lineHeight: '22px', letterSpacing: '.1px' }}
             >
-              {row.Date}
+              {row?.classDate}
             </Typography>
           </Box>
         </TableCell>
 
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.Day}</Typography>
+          <Typography variant='body2'>{row?.day}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row.from}</Typography>
+          <Typography variant='body2'>{row?.from}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
           <Typography variant='body2'>{row?.to}</Typography>
@@ -46,20 +47,20 @@ const ClassList = ({ row, index }: IClassListProps) => {
           <Typography variant='body2'>{row?.totalAttend}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.percent}</Typography>
+          <Typography variant='body2'>{row?.percentage}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.Facilitator}</Typography>
+          <Typography variant='body2'>{row?.facilitator}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.Venue}</Typography>
+          <Typography variant='body2'>{row?.venue}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 50 }}>
           <CustomChip
             skin='light'
             size='small'
-            label={row.Status}
-            color={AttendanceStatusObj[row.Status]}
+            label={row?.status}
+            color={AttendanceStatusObj[row?.status]}
             sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
           />
         </TableCell>
