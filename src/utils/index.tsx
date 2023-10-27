@@ -293,10 +293,18 @@ export const getFileUrlToShow = async (
     viewProofDetails(response?.data?.data, setViewFileLoader, fileCode)
   }
 }
+export const getCourseName = (list: Array<commonListTypes>, code: string) => {
+  if (list?.length > 0) {
+    return list?.find(item => item.code === code)?.name ?? code
+  }
+
+  return code
+}
 export const getLocalStorageData = (key: string) => {
   const localData = window.localStorage.getItem(key)
   if (localData) {
     return JSON.parse(localData)
   }
+
   return null
 }

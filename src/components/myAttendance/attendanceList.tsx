@@ -19,24 +19,41 @@ import {
 import CustomChip from 'src/@core/components/mui/chip'
 import ClassList from './classList/classlistData'
 import ClassTableHeader from './classList/classTableHeader'
-import { AttendanceStatusObj, ClassResponse } from 'src/context/common'
+import { AttendanceStatusObj, IRow } from 'src/context/common'
+import { UserManagementService } from 'src/service'
+import { getCourseName, serialNumber } from 'src/utils'
+import { commonListTypes } from 'src/types/dataTypes'
 
+interface IAttendanceProps {
+  row: IRow
+  index: number
+  pageNumber: number
+  pageSize: number
+  courses: Array<commonListTypes>
+}
+interface IClassList {
+  classList: IRow
+}
 const TableHeaderTypography = styled(Typography)<any>(() => ({
   fontWeight: 'bold',
   fontSize: '0.75rem',
   letterSpacing: '0.17px'
 }))
 
-function AttendanceListRow({ row }: any) {
+function AttendanceListRow({ row, index, pageNumber, pageSize, courses }: IAttendanceProps) {
   const [open, setOpen] = useState<boolean>(false)
   const [value, setValue] = useState<string>('')
-
+  const [classList, setClassList] = useState<IClassList[]>([])
   const handleFilter = (val: string) => {
     setValue(val)
   }
 
-  const handleManageCourse = () => {
+  const handleManageCourse = async (scheduleCode: number | string) => {
     setOpen(!open)
+    const response = await UserManagementService?.getClassList(scheduleCode)
+    console.log(response)
+    const responseData = [{ ...response?.classManagementdata, ...response?.attendanceData }]
+    setClassList(responseData)
   }
 
   return (
@@ -44,10 +61,9 @@ function AttendanceListRow({ row }: any) {
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell sx={{ minWidth: 60, flex: 0.15 }}>
           <Box>
-            <Typography>{row.id}</Typography>
+            <Typography>{serialNumber(index, pageNumber + 1, pageSize)}</Typography>
           </Box>
         </TableCell>
-
         <TableCell sx={{ minWidth: 150, flex: 0.25 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -56,38 +72,38 @@ function AttendanceListRow({ row }: any) {
                 variant='body2'
                 sx={{ color: 'text.primary', fontWeight: 500, lineHeight: '22px', letterSpacing: '.1px' }}
               >
-                {row.code}
+                {row?.courseCode}
               </Typography>
             </Box>
           </Box>
         </TableCell>
 
         <TableCell sx={{ flex: 0.17, minWidth: 140 }}>
-          <Typography variant='caption'>{row.name}</Typography>
+          <Typography variant='caption'>{getCourseName(courses, row?.courseCode)}</Typography>
         </TableCell>
 
-        <TableCell sx={{ flex: 0.18, minWidth: 120 }}>{row.class}</TableCell>
+        <TableCell sx={{ flex: 0.18, minWidth: 120 }}>{row?.totalClass}</TableCell>
 
-        <TableCell sx={{ flex: 0.25, minWidth: 150 }}>{row.attendance}</TableCell>
-        <TableCell sx={{ flex: 0.18, minWidth: 180 }}>
+        <TableCell sx={{ flex: 0.25, minWidth: 150 }}>{row?.totalAttend}</TableCell>
+        <TableCell sx={{ flex: 0.18, minWidth: 50 }}>
           <Typography
             variant='body2'
             sx={{ color: 'text.primary', fontWeight: 500, lineHeight: '22px', letterSpacing: '.1px' }}
           >
-            {row.percent}
+            {row?.percentage}
           </Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
           <CustomChip
             skin='light'
             size='small'
-            label={row.Status}
-            color={AttendanceStatusObj[row.Status]}
+            label={row?.status}
+            color={AttendanceStatusObj[row?.status]}
             sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
           />
         </TableCell>
         <TableCell sx={{ flex: 0.2, minWidth: 100 }}>
-          <Button size='small' variant='outlined' onClick={() => handleManageCourse()}>
+          <Button size='small' variant='outlined' onClick={() => handleManageCourse(row?.scheduleCode)}>
             View Details
           </Button>
         </TableCell>
@@ -148,7 +164,7 @@ function AttendanceListRow({ row }: any) {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {ClassResponse.data.map((row, i) => (
+                      {classList?.map((row: IClassList, i: number) => (
                         <ClassList row={row} key={i} index={i} />
                       ))}
                     </TableBody>

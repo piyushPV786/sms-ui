@@ -36,4 +36,18 @@ export default class Academic {
     }
     nProgress.done()
   }
+
+  async getAllCourses() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.courses
+    try {
+      const response = await this.apiServer.get(endUrlName)
+
+      return response?.data?.data
+    } catch (err: any) {
+      console.log('Error fetching Courses detail ========>', err?.message)
+    } finally {
+      nProgress.done()
+    }
+  }
 }

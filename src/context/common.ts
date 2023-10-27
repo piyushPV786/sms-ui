@@ -250,10 +250,30 @@ export const IntakeStatus = {
 }
 
 export enum QueryLimit {
-  Subject= 100,
-  Description= 200
+  Subject = 100,
+  Description = 200
 }
 
 export enum QueryFileSize {
   maxSize = 500 * 1024 // 500KB
+}
+
+export interface IRow {
+  reduce(
+    arg0: (accumulator: any, item: any) => any,
+    arg1: { totalClassSum: number; totalAttendSum: number }
+  ): { totalClassSum: any; totalAttendSum: any }
+  id: number | null
+  classDate: null | string
+  courseCode: string
+  courseName: null | string
+  scheduleCode: number | string
+  status: string
+  totalAttend: number | string
+  totalClass: number | string
+  to: null | number | string
+  from: null | number | string
+  percentage: null | number | string
+  venue: null | string
+  facilitator: null | string
 }
