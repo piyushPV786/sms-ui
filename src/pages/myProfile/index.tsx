@@ -256,7 +256,7 @@ const PreviewCard = () => {
                   variant='scrollable'
                 >
                   <Tab label='Personal Information' {...a11yProps(0)} />
-                  {!!userProfileDetails?.education?.id && <Tab label='Education & Course Details' {...a11yProps(1)} />}
+                  {!!userProfileDetails?.education?.id && <Tab label='Education & Module Details' {...a11yProps(1)} />}
                   {!!userProfileDetails?.sponsor?.id && <Tab label='Sponsor Details' {...a11yProps(2)} />}
                   {!!userProfileDetails?.employment?.id && <Tab label='Employment Details' {...a11yProps(3)} />}
                   {!!userProfileDetails?.kin?.id && <Tab label='Kin Details' {...a11yProps(4)} />}

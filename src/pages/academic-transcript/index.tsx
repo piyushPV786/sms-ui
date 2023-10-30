@@ -57,14 +57,14 @@ const StudentDashboard = () => {
       minWidth: 240,
       flex: 0.25,
       field: 'courseCode',
-      headerName: 'Course Code',
+      headerName: 'Module Code',
       renderCell: (row: any) => <Typography>{row.row.course.code}</Typography>
     },
     {
       minWidth: 260,
       flex: 0.25,
       field: 'courseName',
-      headerName: 'Course Name',
+      headerName: 'Module Name',
       renderCell: (row: any) => <Typography>{row.row.course.name}</Typography>
     },
     {

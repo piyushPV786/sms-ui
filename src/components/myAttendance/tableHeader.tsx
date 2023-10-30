@@ -26,7 +26,7 @@ const TableHeader = (props: TableHeaderProps) => {
     >
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'end' }}>
         <Typography variant='h6' sx={{ color: '#008554' }}>
-          COURSE ATTENDANCE
+          MODULE ATTENDANCE
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'end' }}>

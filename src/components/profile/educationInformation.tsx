@@ -23,7 +23,7 @@ const EducationInformation = ({ userProfileDetails, qualificationData }: IProps)
     <Box>
       {!!userProfileDetails && userProfileDetails?.education && (
         <Grid container xs={12} sx={{ marginTop: 10 }}>
-          <ProfileInfo label='Admitted Program' info={`${userProfileDetails?.education?.programName}`} />
+          <ProfileInfo label='Admitted Qualification' info={`${userProfileDetails?.education?.programName}`} />
           <ProfileInfo
             label='Study Mode & Fee Plan'
             info={`${getName(studyModes, userProfileDetails?.education?.studyModeCode)}`}
