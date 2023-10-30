@@ -44,7 +44,8 @@ export const getPaymentInfo = async (paymentId: number) => {
     const url = `${process.env.NEXT_PUBLIC_PAYMENT_TENENT_LOGIN_API}/${process.env.NEXT_PUBLIC_TENENT_ID}/payments/${paymentId}`
     const paymentRes = await axios.get(url, { headers: headers })
     nProgress.done()
-    return paymentRes
+    
+return paymentRes
   } catch (err: any) {
     console.log('Error while payment page ========>', err?.message)
     nProgress.done()
