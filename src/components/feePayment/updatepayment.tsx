@@ -44,7 +44,7 @@ const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePa
                       </Grid>
                       <Grid container sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                         <Grid item xs={6}>
-                          <label>Program</label>
+                          <label>Qualification</label>
                           <Typography variant='h6' sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}>
                             {item?.programName}
                           </Typography>

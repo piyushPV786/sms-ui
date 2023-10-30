@@ -109,16 +109,16 @@ const AttendanceList = () => {
                       <TableHeaderTypography>#</TableHeaderTypography>
                     </TableCell>
                     <TableCell sx={{ minWidth: 150, flex: 0.25 }}>
-                      <TableHeaderTypography>Course Code</TableHeaderTypography>
+                      <TableHeaderTypography>Module Code</TableHeaderTypography>
                     </TableCell>
                     <TableCell sx={{ flex: 0.17, minWidth: 140 }}>
-                      <TableHeaderTypography>Course Name</TableHeaderTypography>
+                      <TableHeaderTypography>Module Name</TableHeaderTypography>
                     </TableCell>
                     <TableCell sx={{ flex: 0.25, minWidth: 200 }}>
-                      <TableHeaderTypography>Toatal Class (In MIns)</TableHeaderTypography>
+                      <TableHeaderTypography>Total Class (In MIns)</TableHeaderTypography>
                     </TableCell>
                     <TableCell sx={{ flex: 0.18, minWidth: 220 }}>
-                      <TableHeaderTypography>Toatal Attended (In MIns)</TableHeaderTypography>
+                      <TableHeaderTypography>Total Attended (In MIns)</TableHeaderTypography>
                     </TableCell>
                     <TableCell sx={{ flex: 0.25, minWidth: 50 }}>
                       <TableHeaderTypography>%</TableHeaderTypography>

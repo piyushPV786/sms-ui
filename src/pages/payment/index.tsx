@@ -97,7 +97,7 @@ const PaymentList = () => {
       flex: 0.1,
       field: 'programName',
       minWidth: 300,
-      headerName: 'Program',
+      headerName: 'Qualification',
       renderCell: (row: IPaymentRow) => {
         return (
           <Tooltip title={row.row.programName} describeChild placement='top-start'>

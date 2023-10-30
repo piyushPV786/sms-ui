@@ -31,11 +31,11 @@ const Program = ({ programData }: IProgramProps) => {
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant='h6' mb={5} color={'primary'}>
-            My PROGRAM
+            My Qualification
           </Typography>
           {programData?.map((program: ICommonData) => (
             <Box key={program?.id}>
-              <Typography variant='body2'>Current Program</Typography>
+              <Typography variant='body2'>Current Qualification</Typography>
               <Typography
                 variant='caption'
                 sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}

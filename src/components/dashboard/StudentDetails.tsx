@@ -114,7 +114,7 @@ const StudentDetails = ({ profileImage }: any) => {
                     To Rollover
                   </Typography>
                   <Typography color={theme => theme.palette.common.white} fontSize={15} pb={2}>
-                    You have passed the dependent courses. Please pay the 500 and admission fee to roll over next
+                    You have passed the dependent modules. Please pay the 500 and admission fee to roll over next
                     semester.
                   </Typography>
                   <WhiteButton onClick={handlePay}>Pay</WhiteButton>

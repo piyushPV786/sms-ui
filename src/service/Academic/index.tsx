@@ -45,7 +45,7 @@ export default class Academic {
 
       return response?.data?.data
     } catch (err: any) {
-      console.log('Error fetching Courses detail ========>', err?.message)
+      console.log('Error fetching Modules detail ========>', err?.message)
     } finally {
       nProgress.done()
     }
