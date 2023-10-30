@@ -2,7 +2,7 @@ import { AxiosInstance } from 'axios'
 import nProgress from 'nprogress'
 import { apiEndPoints } from '../Config'
 
-export default class UserManagement {
+export default class Operation {
   apiServer: AxiosInstance
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer

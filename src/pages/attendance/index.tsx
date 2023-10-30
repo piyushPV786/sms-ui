@@ -24,7 +24,7 @@ import {
 } from '@mui/material'
 import AttendanceListRow from 'src/components/myAttendance/attendanceList'
 import OverAllCard from 'src/components/myAttendance/overAllAttendance/overAll'
-import { AcademicService, UserManagementService } from 'src/service'
+import { AcademicService, OperationService } from 'src/service'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { IRow } from 'src/context/common'
 import { commonListTypes } from 'src/types/dataTypes'
@@ -61,7 +61,7 @@ const AttendanceList = () => {
     setPageNumber(newPage)
   }
   const getDetails = async () => {
-    const response = await UserManagementService?.getAttendanceDetails(
+    const response = await OperationService?.getAttendanceDetails(
       studentDetails?.studentCode ?? studentDetails?.studentCode
     )
     if (response?.data?.length > 0) {
