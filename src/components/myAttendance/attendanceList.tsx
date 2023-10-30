@@ -20,7 +20,7 @@ import CustomChip from 'src/@core/components/mui/chip'
 import ClassList from './classList/classlistData'
 import ClassTableHeader from './classList/classTableHeader'
 import { AttendanceStatusObj, IRow } from 'src/context/common'
-import { UserManagementService } from 'src/service'
+import { OperationService } from 'src/service'
 import { getCourseName, serialNumber } from 'src/utils'
 import { commonListTypes } from 'src/types/dataTypes'
 
@@ -50,7 +50,7 @@ function AttendanceListRow({ row, index, pageNumber, pageSize, courses }: IAtten
 
   const handleManageCourse = async (scheduleCode: number | string) => {
     setOpen(!open)
-    const response = await UserManagementService?.getClassList(scheduleCode)
+    const response = await OperationService?.getClassList(scheduleCode)
     console.log(response)
     const responseData = [{ ...response?.classManagementdata, ...response?.attendanceData }]
     setClassList(responseData)
