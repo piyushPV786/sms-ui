@@ -27,6 +27,7 @@ interface Props {
 const AppBarContent = (props: Props) => {
   // ** Props
   const { hidden, settings, saveSettings, toggleNavVisibility } = props
+  const regenesysPortalUrl = process.env.NEXT_PUBLIC_REGENIUS_PORTAL_LOGIN_URL
 
   return (
     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -39,12 +40,7 @@ const AppBarContent = (props: Props) => {
         <Autocomplete hidden={hidden} settings={settings} />
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
-        <Button
-          variant='contained'
-          size='small'
-          sx={{ borderRadius: 10, bgcolor: 'white' }}
-          href='https://portal.regenesys.net/login/index.php'
-        >
+        <Button variant='contained' size='small' sx={{ borderRadius: 10, bgcolor: 'white' }} href={regenesysPortalUrl}>
           <Typography sx={{ fontSize: 15 }}>Start Learning</Typography>
         </Button>
         <ModeToggler settings={settings} saveSettings={saveSettings} />
