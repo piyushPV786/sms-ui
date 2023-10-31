@@ -5,6 +5,10 @@ import { CommonService, StudentService } from 'src/service'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const DashboardCustomHooks = () => {
+  interface Iprogram {
+    name: string | undefined
+    nqfLevel: string | undefined
+  }
   interface studentType {
     firstName: string
     lastName: string
@@ -17,6 +21,7 @@ const DashboardCustomHooks = () => {
     nqfLevel: string | undefined
     createdAt: string
     status: string
+    program: Iprogram
   }
 
   const [scheduler, setScheduler] = useState<any>(null)
