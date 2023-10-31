@@ -154,13 +154,13 @@ const StudentDashboard = () => {
               <Grid item xs={2.4}>
                 <AcademicTypography variant='body2'>Qualification</AcademicTypography>
                 <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                  {studentDetails?.qualifications ? studentDetails?.qualifications : '-'}
+                  {studentDetails?.program?.name ? studentDetails?.program?.name : '-'}
                 </AcademicTypography>
               </Grid>
               <Grid item xs={2.4}>
                 <AcademicTypography variant='body2'>NQF Level</AcademicTypography>
                 <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                  {studentDetails?.nqfLevel ? studentDetails?.nqfLevel : '-'}
+                  {studentDetails?.program?.nqfLevel ? studentDetails?.program?.nqfLevel : '-'}
                 </AcademicTypography>
               </Grid>
               <Grid item xs={2.4}>
