@@ -11,9 +11,8 @@ import Link from 'next/link'
 import CustomAvatar from 'src/@core/components/mui/avatar'
 import { getUserInfo } from 'src/utils'
 import { HelpBox, InformationOutline, React } from 'mdi-material-ui'
-import WhiteButton from '../Button'
-import { useRouter } from 'next/router'
 import ExamTicket from '../dialog/ExamTicket'
+import RollOver from '../dialog/RollOver'
 
 // Styled CardContent component
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
@@ -33,11 +32,6 @@ const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
 }))
 
 const StudentDetails = ({ profileImage }: any) => {
-  const router = useRouter()
-  const handlePay = () => {
-    router.push('/payment/checkout')
-  }
-
   return (
     <Card sx={{ position: 'relative' }}>
       <CardContent>
@@ -110,14 +104,7 @@ const StudentDetails = ({ profileImage }: any) => {
                   <InformationOutline color='warning' fontSize='large' />
                 </Grid>
                 <Grid p={2}>
-                  <Typography color={theme => theme.palette.warning.main} fontSize='large'>
-                    To Rollover
-                  </Typography>
-                  <Typography color={theme => theme.palette.common.white} fontSize={15} pb={2}>
-                    You have passed the dependent modules. Please pay the 500 and admission fee to roll over next
-                    semester.
-                  </Typography>
-                  <WhiteButton onClick={handlePay}>Pay</WhiteButton>
+                  <RollOver />
                 </Grid>
               </Grid>
             </Card>
