@@ -50,4 +50,17 @@ export default class Academic {
       nProgress.done()
     }
   }
+  async getExamTicket(studentCode: string | undefined) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.academics}${apiEndPoints.examTicket}/${studentCode}`
+    try {
+      const response = await this.apiServer.get(endUrlName)
+
+      return response?.data?.data
+    } catch (err: any) {
+      console.log('Error fetching Modules detail ========>', err?.message)
+    } finally {
+      nProgress.done()
+    }
+  }
 }
