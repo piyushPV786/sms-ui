@@ -4,6 +4,7 @@ import { useAuth } from 'src/hooks/useAuth'
 import { FinanceService } from 'src/service'
 import { getPaymentInfo, paymentLogin } from 'src/service/payment'
 import { IPaymentPayload, IPaymentResponse } from 'src/types/common'
+import { successToast, errorToast } from '../common'
 
 interface propsType {
   amount: string | null
@@ -16,8 +17,10 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode }: propsType) => 
 
   const [ukhesheModal, setUkhesheModal] = useState<boolean>(false)
   const [paymentResponse, setPaymentResponse] = useState<IPaymentResponse>()
+  const [loading, setLoading] = useState(false)
 
   const ukhesheOnlinePay = async (payload: IPaymentPayload) => {
+    setLoading(true)
     const paymentResponse = await paymentLogin(payload)
     if (paymentResponse) {
       setPaymentResponse(paymentResponse)
@@ -25,9 +28,10 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode }: propsType) => 
         window.open(paymentResponse?.completionUrl, '_ blank')
       }
 
-      setTimeout(async () => {
+      const interval = setInterval(async () => {
         const getPaymentResponse = await getPaymentInfo(paymentResponse?.paymentId)
-        if (getPaymentResponse?.data) {
+
+        if (getPaymentResponse?.data?.status == 'SUCCESSFUL') {
           const payload = {
             transactionId: getPaymentResponse?.data?.externalUniqueId,
             totalAmount: amount,
@@ -50,8 +54,15 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode }: propsType) => 
             }
           }
           const sendPaymentInfo = await FinanceService?.updateUkheshePayment(payload)
+          if (sendPaymentInfo?.status == 201) {
+            setLoading(false)
+            successToast('Payment Successfull')
+          } else {
+            errorToast('Payment Failed')
+          }
+          clearInterval(interval)
         }
-      }, 60 * 2000)
+      }, 10000)
     }
   }
 
@@ -59,7 +70,8 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode }: propsType) => 
     ukhesheModal,
     setUkhesheModal,
     paymentResponse,
-    ukhesheOnlinePay
+    ukhesheOnlinePay,
+    loading
   }
 }
 
