@@ -44,29 +44,30 @@ const Assignments = ({ courseData }: IAssignmentProps) => {
           <Typography variant='h6' mb={5} color={'primary'}>
             ASSIGNMENTS
           </Typography>
-          {courseData?.map((item: ISchedule) => (
-            <CustomBox key={item?.course?.id}>
-              <Grid container display='flex'>
-                <Grid item xs={2} sx={{ p: 1 }}>
-                  <Box sx={{ backgroundColor: '#fadede', p: 2, borderRadius: '3px 3px' }}>
-                    <FilePowerpoint color='error' />
-                  </Box>
-                </Grid>
-                <Grid item xs={10} sx={{ pl: 2 }}>
-                  <Typography variant='body2' color={'primary'} sx={{ mb: 0.5, fontWeight: 600 }}>
-                    {item?.course?.name}
-                  </Typography>
-
-                  <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <label>Due Date</label>
-                    <Typography variant='body2' sx={{ pl: 2, fontWeight: 600 }}>
-                      {DDMMYYYDateFormat(item?.individualAssignmentDueDate)}
+          {courseData?.length > 0 &&
+            courseData?.map((item: ISchedule) => (
+              <CustomBox key={item?.course?.id}>
+                <Grid container display='flex'>
+                  <Grid item xs={2} sx={{ p: 1 }}>
+                    <Box sx={{ backgroundColor: '#fadede', p: 2, borderRadius: '3px 3px' }}>
+                      <FilePowerpoint color='error' />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={10} sx={{ pl: 2 }}>
+                    <Typography variant='body2' color={'primary'} sx={{ mb: 0.5, fontWeight: 600 }}>
+                      {item?.course?.name}
                     </Typography>
-                  </Box>
+
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      <label>Due Date</label>
+                      <Typography variant='body2' sx={{ pl: 2, fontWeight: 600 }}>
+                        {DDMMYYYDateFormat(item?.individualAssignmentDueDate)}
+                      </Typography>
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </CustomBox>
-          ))}
+              </CustomBox>
+            ))}
 
           {/* <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>
             <Launch fontSize='inherit' /> More Assignments
