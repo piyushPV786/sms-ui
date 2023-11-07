@@ -6,32 +6,57 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
-  FormHelperText,
   Grid,
   TextField
 } from '@mui/material'
 import { HelpBox } from 'mdi-material-ui'
-import { useState } from 'react'
-import Styles from './RaiseQuery.module.css'
-import { useForm } from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import { Controller, FieldValues, useForm } from 'react-hook-form'
+import { useAuth } from 'src/hooks/useAuth'
+import { AcademicService } from 'src/service'
+import { downloadFile } from 'src/utils'
 
+interface ICategory {
+  programCode: string | null
+  url: string
+}
 const ExamTicket = () => {
   const {
-    register,
-    watch,
-    clearErrors,
-    setValue,
+    handleSubmit,
+    control,
     formState: { errors }
   } = useForm({
-    mode: 'onChange'
+    mode: 'all'
   })
   const [open, setOpen] = useState<boolean>(false)
-  const category = [
-    {
-      name: 'bbba-1st Sem'
+  const [category, setCategory] = useState<ICategory[]>([])
+  const auth = useAuth()
+
+  const examTicket = async () => {
+    const response = await AcademicService.getExamTicket(auth?.user?.studentCode)
+    if (response?.length > 0) {
+      setCategory(response)
     }
-  ]
+  }
+
+  useEffect(() => {
+    examTicket()
+  }, [])
+
+  const getFileName = (url: string) => {
+    const urlParts = url?.split('/')
+    if (urlParts) {
+      return urlParts[urlParts?.length - 1]?.split('?')[0]
+    }
+  }
+
+  const onSubmit = (data: FieldValues) => {
+    const item = category?.find((item: ICategory) => item?.programCode === data?.programCode)
+    if (!!item?.url) {
+      const fileName = getFileName(item?.url)
+      !!fileName && downloadFile(item?.url, fileName)
+    }
+  }
 
   return (
     <Grid>
@@ -41,42 +66,52 @@ const ExamTicket = () => {
         </Box>
         <Box pl={1}>Download Exam Ticket</Box>
       </Box>
-      <form>
-        <Dialog fullWidth maxWidth='sm' open={open}>
-          <DialogTitle>
-            <Box className={Styles.Title}>Dowload Exam Ticket</Box>
+      <Dialog fullWidth maxWidth='sm' open={open}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogTitle
+            display='flex'
+            justifyContent='center'
+            fontWeight='bold'
+            color={theme => theme.palette.primary.main}
+            bgcolor='#c5e3d9'
+          >
+            Dowload Exam Ticket
           </DialogTitle>
           <DialogContent>
-            <Grid item xs={12} mb={3} marginTop={3}>
-              <FormControl fullWidth>
-                <Autocomplete
-                  fullWidth
-                  id='selectExam'
-                  {...register('selectExam', { required: 'Exam Name is Required' })}
-                  style={{ width: '80%', alignSelf: 'center' }}
-                  options={category}
-                  value={category?.find(i => i?.name?.toString() == watch('selectExam')?.toString()) ?? null}
-                  onChange={(_, value) => {
-                    value && setValue('selectExam', value?.name?.toString())
-                    clearErrors('selectExam')
-                  }}
-                  getOptionLabel={option => option.name.toString()}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      label={
-                        <span>
-                          Select Exam<span style={{ color: 'red' }}>*</span>
-                        </span>
-                      }
-                      variant='outlined'
-                      fullWidth
-                    />
-                  )}
-                />
-
-                <FormHelperText sx={{ color: 'red' }}>{errors.category && errors.category?.message}</FormHelperText>
-              </FormControl>
+            <Grid item xs={12} px={10} py={5} marginTop={3}>
+              <Controller
+                name='programCode'
+                control={control}
+                rules={{ required: 'Exam Name is Required' }}
+                render={({ field }) => (
+                  <Autocomplete
+                    {...field}
+                    fullWidth
+                    key={field.value}
+                    options={category}
+                    onChange={(_, value) => field.onChange(value?.programCode)}
+                    getOptionLabel={option => option?.programCode?.toString() as any}
+                    isOptionEqualToValue={option => (option as any)?.code === field?.value}
+                    value={category?.find(item => item?.programCode === field?.value)}
+                    renderInput={params => (
+                      <TextField
+                        {...params}
+                        label='Select Exam'
+                        variant='outlined'
+                        fullWidth
+                        required
+                        error={!!errors?.category}
+                        helperText={errors?.category?.message}
+                        sx={{
+                          '& .MuiInputLabel-asterisk': {
+                            color: theme => theme.palette.error.main
+                          }
+                        }}
+                      />
+                    )}
+                  />
+                )}
+              />
             </Grid>
           </DialogContent>
           <DialogActions sx={{ justifyContent: 'center' }}>
@@ -87,8 +122,8 @@ const ExamTicket = () => {
               Submit
             </Button>
           </DialogActions>
-        </Dialog>
-      </form>
+        </form>
+      </Dialog>
     </Grid>
   )
 }
