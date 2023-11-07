@@ -24,7 +24,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import FileUpload from 'src/components/uploaddocument/FileUpload'
 import DeleteDialog from 'src/components/dialog/DeleteDialog'
 import { useAuth } from 'src/hooks/useAuth'
-import { getFileUrl, minTwoDigits, serialNumber } from 'src/utils'
+import { DDMMYYYDateFormat, getFileUrl, minTwoDigits, serialNumber } from 'src/utils'
 import { IDocumentType, IUploadDocumentParam } from 'src/context/types'
 import { CircularProgress } from '@mui/material'
 import { StyledLink } from 'src/styles/styled'
@@ -134,7 +134,7 @@ const DocumentList = () => {
   const setCurrentDateTime = (createdAt: string) => {
     const currentDate = new Date(createdAt)
     const formattedTime = currentDate?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    const formattedDate = currentDate?.toLocaleDateString()
+    const formattedDate = DDMMYYYDateFormat(currentDate)
     const formattedDateTime = `${formattedDate} ${formattedTime}`
 
     return formattedDateTime

@@ -50,9 +50,8 @@ const DashboardCustomHooks = () => {
     if (auth?.user?.studentCode) {
       const date = DDMMYYYDateFormat(new Date())
       const schedulerResponse = await StudentService?.studentScheduler(auth?.user?.studentCode, date)
-      setMyDay(schedulerResponse?.data?.data)
 
-      console.log('schedulerResponse =================>', schedulerResponse)
+      setMyDay(schedulerResponse?.data?.data)
     }
   }
 

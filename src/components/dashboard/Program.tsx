@@ -33,15 +33,16 @@ const Program = ({ programData }: IProgramProps) => {
           <Typography variant='h6' mb={5} color={'primary'}>
             My Qualification
           </Typography>
-          {programData?.map((program: ICommonData) => (
-            <Box key={program?.id}>
-              <Typography variant='body2'>Current Qualification</Typography>
-              <Typography
-                variant='caption'
-                sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}
-              >{`${program.name}(${program?.code})`}</Typography>
-            </Box>
-          ))}
+          {programData?.length > 0 &&
+            programData?.map((program: ICommonData) => (
+              <Box key={program?.id}>
+                <Typography variant='body2'>Current Qualification</Typography>
+                <Typography
+                  variant='caption'
+                  sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}
+                >{`${program.name}(${program?.code})`}</Typography>
+              </Box>
+            ))}
           {/* <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>
             <Launch fontSize='inherit' /> Apply New Program
           </StyledLink> */}
