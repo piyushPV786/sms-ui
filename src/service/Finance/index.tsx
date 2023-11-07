@@ -22,4 +22,19 @@ export default class Finance {
     }
     nProgress.done()
   }
+
+  async getUkheshePaymentTocken() {
+    nProgress.start()
+    const endUrlName = apiEndPoints.ukheshePyment
+    try {
+      const response = await this.apiServer.post('payments/get-ukheshe-token')
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error ResetPasswordLink ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
 }

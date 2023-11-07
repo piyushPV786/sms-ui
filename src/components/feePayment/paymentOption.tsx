@@ -4,8 +4,9 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { useRouter } from 'next/router'
 import { yupResolver } from '@hookform/resolvers/yup'
+import toast from 'react-hot-toast'
 
-import { Grid, Box, Paper, Typography, Button, Card } from '@mui/material'
+import { Grid, Box, Paper, Typography, Button, Card, Backdrop, CircularProgress } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { PaymentTypes } from './constant'
 import { GetPaymentImage } from 'src/utils'
@@ -66,7 +67,7 @@ interface studentType {
   studentCode: string
 }
 const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
-  const { ukhesheModal, setUkhesheModal, paymentResponse, ukhesheOnlinePay } = UkhesheCustomHook({
+  const { ukhesheModal, setUkhesheModal, paymentResponse, ukhesheOnlinePay, loading } = UkhesheCustomHook({
     amount,
     feeModeCode,
     currencyCode
@@ -141,6 +142,12 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
   return (
     <>
       <Box sx={{ flexGrow: 1, marginTop: '1rem' }}>
+        {loading && (
+          <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={loading}>
+            <CircularProgress color='inherit' />
+          </Backdrop>
+        )}
+
         {paymentResponse && (
           <UkheshePaymentModal
             open={ukhesheModal}
