@@ -168,24 +168,6 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
                     <PaymentCard
                       className='mt-4'
                       onClick={() => {
-                        if (value == 'payu') {
-                          const studentDetail: studentType | undefined = studentDetails
-                          const payload = {
-                            amount: amount,
-                            email: studentDetail?.email,
-                            firstname: studentDetail?.firstName,
-                            phone: studentDetail?.mobileNo,
-                            discountAmount: '',
-                            discountCode: '',
-                            feeModeCode: feeModeCode,
-                            productinfo: 'Semester fee',
-                            studentTypeCode: 'REGULAR', //
-                            currencyCode: currencyCode
-                          }
-                          StudentService.payOnlinefee(payload, studentDetail?.studentCode).then(data => {
-                            setPaymentPayload(data?.data?.data)
-                          })
-                        }
                         setSelectedPaymentOption(value)
                       }}
                       key={value}
