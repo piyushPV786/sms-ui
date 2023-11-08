@@ -191,7 +191,12 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
                           top: '30px'
                         }}
                       >
-                        <Image src={GetPaymentImage(value) as any} alt={GetPaymentImage(value) as string} />
+                        <Image
+                          src={GetPaymentImage(value) as any}
+                          alt={GetPaymentImage(value) as string}
+                          height={50}
+                          width={100}
+                        />
                       </Box>
                     </PaymentCard>
                     <>
