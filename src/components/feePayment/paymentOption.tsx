@@ -14,7 +14,6 @@ import { v4 as uuidv4 } from 'uuid'
 import UkhesheCustomHook from './ukhesheCustomHook'
 import UkheshePaymentModal from '../dialog/PaymentDialog'
 import { StudentService, CommonService } from 'src/service'
-import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 
 const schema = yup.object().shape({
   uploadedFile: yup.mixed().required('Please upload any File')
@@ -59,12 +58,7 @@ interface propsType {
   feeModeCode: string | null
   currencyCode: string | null
 }
-interface studentType {
-  firstName: string
-  email: string
-  mobileNo: string
-  studentCode: string
-}
+
 const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
   const { ukhesheModal, setUkhesheModal, paymentResponse, ukhesheOnlinePay, loading } = UkhesheCustomHook({
     amount,
