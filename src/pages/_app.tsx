@@ -88,28 +88,28 @@ export default function App(props: ExtendedAppProps) {
 
   return (
     <CacheProvider value={emotionCache}>
-      <AuthProvider>
-        <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
-          <SettingsConsumer>
-            {({ settings }) => {
-              return (
-                <ThemeComponent settings={settings}>
-                  <WindowWrapper>
+      <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
+        <SettingsConsumer>
+          {({ settings }) => {
+            return (
+              <ThemeComponent settings={settings}>
+                <WindowWrapper>
+                  <AuthProvider>
                     <Guard authGuard={authGuard} guestGuard={guestGuard}>
                       <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
                         {getLayout(<Component {...pageProps} />)}
                       </AclGuard>
                     </Guard>
-                  </WindowWrapper>
-                  <ReactHotToast>
-                    <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
-                  </ReactHotToast>
-                </ThemeComponent>
-              )
-            }}
-          </SettingsConsumer>
-        </SettingsProvider>
-      </AuthProvider>
+                  </AuthProvider>
+                </WindowWrapper>
+                <ReactHotToast>
+                  <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+                </ReactHotToast>
+              </ThemeComponent>
+            )
+          }}
+        </SettingsConsumer>
+      </SettingsProvider>
     </CacheProvider>
   )
 }
