@@ -141,7 +141,7 @@ const OverAllCard = ({ tableData }: IOverAllProps) => {
                             <ReactApexcharts
                               type='radialBar'
                               height={119}
-                              series={[Math.floor(ratio)]}
+                              series={[Math.round(ratio)]}
                               options={progressOptions}
                             />
                           </Box>
