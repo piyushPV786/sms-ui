@@ -87,8 +87,8 @@ export default function App(props: ExtendedAppProps) {
   const aclAbilities = Component.acl ?? defaultACLObj
 
   return (
-    <AuthProvider>
-      <CacheProvider value={emotionCache}>
+    <CacheProvider value={emotionCache}>
+      <AuthProvider>
         <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
           <SettingsConsumer>
             {({ settings }) => {
@@ -109,7 +109,7 @@ export default function App(props: ExtendedAppProps) {
             }}
           </SettingsConsumer>
         </SettingsProvider>
-      </CacheProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </CacheProvider>
   )
 }
