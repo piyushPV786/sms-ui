@@ -1,7 +1,7 @@
 import axios from 'axios'
 import nProgress from 'nprogress'
 import { IPaymentPayload } from 'src/types/common'
-import { getLocalStorageData } from 'src/utils'
+import { getSessionStorageData } from 'src/utils'
 import { FinanceService } from 'src/service'
 
 export const paymentLogin = async (paymentPayload: IPaymentPayload) => {
@@ -15,7 +15,7 @@ export const paymentLogin = async (paymentPayload: IPaymentPayload) => {
     const response = await FinanceService.getUkheshePaymentTocken()
 
     if (response?.status === 200 || (response?.status === 201 && response?.data)) {
-      window.localStorage.setItem('paymentToken', JSON.stringify(response))
+      window.sessionStorage.setItem('paymentToken', JSON.stringify(response))
       const headers = {
         'Content-Type': 'application/json',
         Authorization: response?.data?.data?.headerValue
@@ -37,7 +37,7 @@ export const paymentLogin = async (paymentPayload: IPaymentPayload) => {
 
 export const getPaymentInfo = async (paymentId: number) => {
   nProgress.start()
-  const tokenDetails = getLocalStorageData('paymentToken')
+  const tokenDetails = getSessionStorageData('paymentToken')
 
   try {
     const headers = {

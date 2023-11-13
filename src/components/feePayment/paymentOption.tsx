@@ -117,7 +117,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
       currencyCode: currencyCode
     }
 
-    StudentService.payOfflinefee(payload, localStorage?.getItem('studentCode')).then(data => {
+    StudentService.payOfflinefee(payload, sessionStorage?.getItem('studentCode')).then(data => {
       const payload = {
         filename: data?.data?.data?.name,
         filetype: data?.data?.data?.name?.split('.')[1],
