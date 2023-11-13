@@ -12,14 +12,16 @@ import { UpdatePayment, UpdatepaymentItem } from 'src/types/common'
 
 const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePayment) => {
   const router = useRouter()
+  console.log(rows)
 
   const handlePay = (
     amount: string | null,
     feeModeCode: string | null,
     currencyCode: string | null,
-    dueDate: string
+    dueDate: string,
+    applicationCode: string
   ) => {
-    router.push(`/payment/checkout/${amount}/${feeModeCode}/${currencyCode}/${dueDate}`)
+    router.push(`/payment/checkout/${amount}/${feeModeCode}/${currencyCode}/${dueDate}/${applicationCode}`)
   }
 
   return (
@@ -78,7 +80,13 @@ const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePa
                         size='small'
                         variant='contained'
                         onClick={() => {
-                          handlePay(String(item.dueAmount), item?.feeModeCode, item.currencyCode, item.dueDate)
+                          handlePay(
+                            String(item.dueAmount),
+                            item?.feeModeCode,
+                            item.currencyCode,
+                            item.dueDate,
+                            item?.applicationCode
+                          )
                         }}
                         sx={{ position: 'absolute', borderRadius: '25px' }}
                       >
