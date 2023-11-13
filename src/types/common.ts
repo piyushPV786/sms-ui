@@ -36,6 +36,7 @@ export interface UpdatepaymentItem {
   currencyCode: string
   feeModeCode: string
   programName: string
+  applicationCode: string
 }
 
 export interface IIndex {
