@@ -11,6 +11,7 @@ const CheckoutResponse = () => {
       feeModeCode={slug && slug[1]}
       currencyCode={slug && slug[2]}
       dueDate={slug && slug[3]}
+      applicationCode={slug && slug[4]}
     />
   )
 }
