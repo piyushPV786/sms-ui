@@ -10,7 +10,7 @@ interface propsType {
   amount: string | null
   feeModeCode: string | null
   currencyCode: string | null
-  applicationCode: stirng
+  applicationCode: string
 }
 
 const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode, applicationCode }: propsType) => {
@@ -38,7 +38,6 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode, applicationCode 
             totalAmount: Number(amount),
             totalPaidAmount: getPaymentResponse?.data?.amount,
             feeModeCode: feeModeCode,
-
             paymentStatus: getPaymentResponse?.data?.status,
             discountCode: '',
             discountAmount: 0,
