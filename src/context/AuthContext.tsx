@@ -40,9 +40,9 @@ const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     const initAuth = async (): Promise<void> => {
       setIsInitialized(true)
-      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)!
-      const refreshToken = window.localStorage.getItem(authConfig.refreshToken)!
-      const studentCode = window.localStorage.getItem(authConfig.studentCode)!
+      const storedToken = window.sessionStorage.getItem(authConfig.storageTokenKeyName)!
+      const refreshToken = window.sessionStorage.getItem(authConfig.refreshToken)!
+      const studentCode = window.sessionStorage.getItem(authConfig.studentCode)!
       if (storedToken && refreshToken && studentCode) {
         const userProfileResponse = await StudentService?.UserProfile(studentCode)
         if (userProfileResponse?.data?.data?.length) {
@@ -58,7 +58,7 @@ const AuthProvider = ({ children }: Props) => {
           })
           setLoading(false)
         } else {
-          window.localStorage.clear()
+          window.sessionStorage.clear()
           setUser(null)
           setLoading(false)
           const returnUrl = router.query.returnUrl
@@ -79,9 +79,9 @@ const AuthProvider = ({ children }: Props) => {
     try {
       const response = await StudentService?.Login(params)
       if (response?.data?.data?.tokens) {
-        await window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.data?.tokens?.access_token)
-        await window.localStorage.setItem(authConfig.refreshToken, response.data.data?.tokens?.refresh_token)
-        await window.localStorage.setItem(authConfig.studentCode, response.data.data?.studentCode)
+        await window.sessionStorage.setItem(authConfig.storageTokenKeyName, response.data.data?.tokens?.access_token)
+        await window.sessionStorage.setItem(authConfig.refreshToken, response.data.data?.tokens?.refresh_token)
+        await window.sessionStorage.setItem(authConfig.studentCode, response.data.data?.studentCode)
 
         const userProfileResponse = await StudentService?.UserProfile(response.data.data?.studentCode)
 
@@ -96,7 +96,7 @@ const AuthProvider = ({ children }: Props) => {
             email: userInfo?.email,
             studentCode: userInfo?.studentCode
           }
-          await window.localStorage.setItem('userData', JSON.stringify(data))
+          await window.sessionStorage.setItem('userData', JSON.stringify(data))
           setUser(data)
         }
 
@@ -115,8 +115,8 @@ const AuthProvider = ({ children }: Props) => {
     await StudentService?.logOut()
     setUser(null)
     setIsInitialized(false)
-    window.localStorage.removeItem('userData')
-    window.localStorage.removeItem('accessToken')
+    window.sessionStorage.removeItem('userData')
+    window.sessionStorage.removeItem('accessToken')
     router.push('/auth/login')
   }
   const handleRegister = () => {

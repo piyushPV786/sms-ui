@@ -8,33 +8,33 @@ const FinanceBaseApiUrl = process.env.NEXT_PUBLIC_FINANCE_BACKEND_API
 export const axiosConfig = {
   baseURL: BACKEND_API,
   headers: {
-    Authorization: `Bearer ${typeof window !== 'undefined' && window.localStorage.getItem('TOKEN')}`
+    Authorization: `Bearer ${typeof window !== 'undefined' && window.sessionStorage.getItem('TOKEN')}`
   }
 }
 export const studentBaseConfig = {
   baseURL: BaseStudentApi,
   headers: {
-    Authorization: `Bearer ${typeof window !== 'undefined' && window.localStorage.getItem('TOKEN')}`
+    Authorization: `Bearer ${typeof window !== 'undefined' && window.sessionStorage.getItem('TOKEN')}`
   }
 }
 
 export const academicAxiosConfig = {
   baseURL: NEXT_PUBLIC_ACADEMIC_BACKEND_API,
   headers: {
-    Authorization: `Bearer ${typeof window !== 'undefined' && window.localStorage.getItem('TOKEN')}`
+    Authorization: `Bearer ${typeof window !== 'undefined' && window.sessionStorage.getItem('TOKEN')}`
   }
 }
 export const operationAxiosConfig = {
   baseURL: OperationBaseApiUrl,
   headers: {
-    Authorization: `Bearer ${typeof window !== 'undefined' && window.localStorage.getItem('TOKEN')}`
+    Authorization: `Bearer ${typeof window !== 'undefined' && window.sessionStorage.getItem('TOKEN')}`
   }
 }
 
 export const financeAxiosConfig = {
   baseURL: FinanceBaseApiUrl,
   headers: {
-    Authorization: `Bearer ${typeof window !== 'undefined' && window.localStorage.getItem('TOKEN')}`
+    Authorization: `Bearer ${typeof window !== 'undefined' && window.sessionStorage.getItem('TOKEN')}`
   }
 }
 

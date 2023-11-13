@@ -36,10 +36,10 @@ export const FinanceService = new Finance(FinanceApiServer)
 //   config => {
 //     if (config.headers) {
 //       console?.log(
-//         'window.localStorage.getItem(authConfig.storageTokenKeyName)',
-//         window.localStorage.getItem(authConfig.storageTokenKeyName)
+//         'window.sessionStorage.getItem(authConfig.storageTokenKeyName)',
+//         window.sessionStorage.getItem(authConfig.storageTokenKeyName)
 //       )
-//       config.headers['Authorization'] = `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)}`
+//       config.headers['Authorization'] = `Bearer ${window.sessionStorage.getItem(authConfig.storageTokenKeyName)}`
 //     }
 
 //     return config
@@ -54,13 +54,13 @@ export const refreshBaseAuth = axios.create({
 
 const refreshTokenFunction = async () => {
   const response = await refreshBaseAuth.get('/auth/refresh-token', {
-    headers: { Authorization: `Bearer ${window.localStorage.getItem('refreshToken')}` }
+    headers: { Authorization: `Bearer ${window.sessionStorage.getItem('refreshToken')}` }
   })
 
   const { data } = response?.data
   if (data?.access_token && data?.refresh_token) {
-    await window.localStorage.setItem(authConfig.storageTokenKeyName, data.access_token)
-    await window.localStorage.setItem(authConfig.refreshToken, data.refresh_token)
+    await window.sessionStorage.setItem(authConfig.storageTokenKeyName, data.access_token)
+    await window.sessionStorage.setItem(authConfig.refreshToken, data.refresh_token)
   }
 
   return data
@@ -72,7 +72,7 @@ const memoizedRefreshToken = mem(refreshTokenFunction, {
 
 const requestInterceptor = (config: any) => {
   if (config.headers) {
-    config.headers['Authorization'] = `Bearer ${window.localStorage.getItem(authConfig.storageTokenKeyName)}`
+    config.headers['Authorization'] = `Bearer ${window.sessionStorage.getItem(authConfig.storageTokenKeyName)}`
   }
 
   return config
@@ -97,7 +97,7 @@ const errorInterceptor = async (err: any) => {
   ) {
     let pathName = window.location.pathname
     pathName = pathName.replace(/^\/[\w\d]+\//, '')
-    await window.localStorage.clear()
+    await window.sessionStorage.clear()
     window.location.href = `/student/login?returnUrl=/${pathName}`
   }
 
