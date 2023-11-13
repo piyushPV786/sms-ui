@@ -38,6 +38,7 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode, applicationCode 
             totalAmount: Number(amount),
             totalPaidAmount: getPaymentResponse?.data?.amount,
             feeModeCode: feeModeCode,
+            currencyCode: currencyCode,
             paymentStatus: getPaymentResponse?.data?.status,
             discountCode: '',
             discountAmount: 0,
