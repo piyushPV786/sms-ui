@@ -9,7 +9,7 @@ import {
   Grid,
   TextField
 } from '@mui/material'
-import { HelpBox } from 'mdi-material-ui'
+import { DownloadBox } from 'mdi-material-ui'
 import { useEffect, useState } from 'react'
 import { Controller, FieldValues, useForm } from 'react-hook-form'
 import { useAuth } from 'src/hooks/useAuth'
@@ -31,7 +31,6 @@ const ExamTicket = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [category, setCategory] = useState<ICategory[]>([])
   const auth = useAuth()
-
   const examTicket = async () => {
     const response = await AcademicService.getExamTicket(auth?.user?.studentCode)
     if (response?.length > 0) {
@@ -62,7 +61,7 @@ const ExamTicket = () => {
     <Grid>
       <Box display='flex' onClick={() => setOpen(true)}>
         <Box display='contents'>
-          <HelpBox />
+          <DownloadBox />
         </Box>
         <Box pl={1}>Download Exam Ticket</Box>
       </Box>
@@ -119,7 +118,7 @@ const ExamTicket = () => {
               Cancel
             </Button>
             <Button variant='contained' color='primary' type='submit'>
-              Submit
+              Download
             </Button>
           </DialogActions>
         </form>
