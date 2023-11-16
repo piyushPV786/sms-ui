@@ -29,10 +29,11 @@ interface propsType {
   feeModeCode: string | null
   currencyCode: string | null
   dueDate: string | any
+  applicationCode: string
   rollover?: boolean
 }
 
-const Checkout = ({ amount, feeModeCode, currencyCode, dueDate }: propsType) => {
+const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode }: propsType) => {
   // ** State
   const [showPromoCode, setShowPromoCOde] = useState<boolean>(false)
   const [promoCode, setPromoCode] = useState<string>('')
@@ -219,7 +220,12 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate }: propsType) => 
           </Card>
         </Grid>
       </Grid>
-      <PaymentOption amount={amount} feeModeCode={feeModeCode} currencyCode={currencyCode} />
+      <PaymentOption
+        amount={amount}
+        feeModeCode={feeModeCode}
+        currencyCode={currencyCode}
+        applicationCode={applicationCode}
+      />
     </>
   )
 }

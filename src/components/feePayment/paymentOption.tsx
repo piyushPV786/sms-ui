@@ -58,13 +58,15 @@ interface propsType {
   amount: string | null
   feeModeCode: string | null
   currencyCode: string | null
+  applicationCode: string
 }
 
-const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
+const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode }: propsType) => {
   const { ukhesheModal, setUkhesheModal, paymentResponse, ukhesheOnlinePay, loading } = UkhesheCustomHook({
     amount,
     feeModeCode,
-    currencyCode
+    currencyCode,
+    applicationCode
   })
 
   const auth = useAuth()
@@ -120,7 +122,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode }: propsType) => {
       currencyCode: currencyCode
     }
 
-    StudentService.payOfflinefee(payload, localStorage?.getItem('studentCode')).then(data => {
+    StudentService.payOfflinefee(payload, sessionStorage?.getItem('studentCode')).then(data => {
       const payload = {
         filename: data?.data?.data?.name,
         filetype: data?.data?.data?.name?.split('.')[1],

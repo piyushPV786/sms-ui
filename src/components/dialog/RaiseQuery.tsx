@@ -40,7 +40,7 @@ import {
   raiseQueryMessage,
   status
 } from 'src/context/common'
-import { calculateFileSize, getExtension } from 'src/utils'
+import { calculateFileSize } from 'src/utils'
 import { CommonService, StudentService } from 'src/service'
 import { errorToast } from 'src/@core/components/common/Toast'
 import { IQueryDefaultValues, IQueryType } from 'src/types/common'
@@ -110,7 +110,7 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
     if (response?.data?.statusCode === status.successCodeOne && response) {
       if (data.file !== null) {
         const files = {
-          filename: `${response?.data?.data.code}.${getExtension(response?.data?.data.fileExtension)}`,
+          filename: `${response?.data?.data?.documentName}`,
           filetype: data.file && data.file.type,
           file: data.file,
           studentCode: studentCode

@@ -10,9 +10,10 @@ interface propsType {
   amount: string | null
   feeModeCode: string | null
   currencyCode: string | null
+  applicationCode: string
 }
 
-const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode }: propsType) => {
+const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode, applicationCode }: propsType) => {
   const auth = useAuth()
 
   const [ukhesheModal, setUkhesheModal] = useState<boolean>(false)
@@ -34,7 +35,7 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode }: propsType) => 
         if (getPaymentResponse?.data?.status == 'SUCCESSFUL') {
           const payload = {
             transactionId: getPaymentResponse?.data?.externalUniqueId,
-            totalAmount: amount,
+            totalAmount: Number(amount),
             totalPaidAmount: getPaymentResponse?.data?.amount,
             feeModeCode: feeModeCode,
             currencyCode: currencyCode,
@@ -42,6 +43,7 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode }: propsType) => 
             discountCode: '',
             discountAmount: 0,
             studentCode: auth?.user?.studentCode,
+            applicationCode: applicationCode,
             ukheshe: {
               paymentId: getPaymentResponse?.data?.paymentId,
               gatewayTransactionId: getPaymentResponse?.data?.externalUniqueId,
@@ -62,6 +64,10 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode }: propsType) => 
             errorToast('Payment Failed')
           }
           clearInterval(interval)
+        } else if (getPaymentResponse?.data?.status == 'ERROR_PERM') {
+          clearInterval(interval)
+          setLoading(false)
+          errorToast('Payment Failed')
         }
       }, 10000)
     }

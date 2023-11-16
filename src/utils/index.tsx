@@ -27,8 +27,8 @@ export const getUserInfo = () => {
     username: '',
     email: ''
   }
-  if (window.localStorage.getItem('userData')) {
-    userData = JSON.parse(window.localStorage.getItem('userData') || '{}')
+  if (window.sessionStorage.getItem('userData')) {
+    userData = JSON.parse(window.sessionStorage.getItem('userData') || '{}')
   }
 
   return userData
@@ -277,7 +277,7 @@ export const getSymbol = (list: Array<commonListTypes>, code: string) => {
 }
 
 export const getExtension = (name: string) => {
-  const fileExtension = name.split('/').pop()
+  const fileExtension = name?.split('/')?.pop()
 
   return fileExtension
 }
@@ -310,8 +310,8 @@ export const getCourseName = (list: Array<commonListTypes>, code: string) => {
 
   return code
 }
-export const getLocalStorageData = (key: string) => {
-  const localData = window.localStorage.getItem(key)
+export const getSessionStorageData = (key: string) => {
+  const localData = window.sessionStorage.getItem(key)
   if (localData) {
     return JSON.parse(localData)
   }
