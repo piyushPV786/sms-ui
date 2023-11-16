@@ -21,6 +21,9 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import UseBgColor from 'src/@core/hooks/useBgColor'
 import { useRouter } from 'next/router'
+import { FinanceService } from 'src/service'
+import DashboardCustomHooks from '../dashboard/CustomHooks'
+import { YYYYMMDDDateFormat } from 'src/utils'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -34,7 +37,7 @@ interface IFormValue {
 }
 
 const schema = yup.object().shape({
-  module: yup.array().min(2, 'required')
+  module: yup.array().min(2, 'Two module are required')
 })
 
 const datas = [
@@ -51,6 +54,10 @@ const RollOver = () => {
   const bgColors = UseBgColor()
   const router = useRouter()
   const [dialogShow, setDialogShow] = useState<boolean>(false)
+
+  const { studentDetails } = DashboardCustomHooks()
+
+  console.log('studentDetails', studentDetails)
 
   const {
     register,
@@ -69,8 +76,15 @@ const RollOver = () => {
   })
 
   const onSubmit = async (response: IFormValue) => {
-    console.log('response', response)
-    router.push('/payment/checkout')
+    if (studentDetails) {
+      const response = await FinanceService?.getCurrencyRate(studentDetails.nationality)
+      console.log('response', response)
+    }
+    const amount = 500
+    const feeModeCode = 'Rollover'
+    const currencyCode = '$'
+    const dueDate = YYYYMMDDDateFormat(new Date())
+    router.push(`/payment/checkout/${amount}/${feeModeCode}/${currencyCode}/${dueDate}?rollover=true`)
   }
 
   const handleOpen = () => {
@@ -186,7 +200,7 @@ const RollOver = () => {
                     }}
                   />
 
-                  <FormHelperText error>{errors?.module && 'Required'}</FormHelperText>
+                  <FormHelperText error>{errors?.module && 'Two module are required'}</FormHelperText>
                 </FormControl>
               </Grid>
             </Grid>

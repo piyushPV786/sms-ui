@@ -3,7 +3,7 @@ import Checkout from '.'
 
 const CheckoutResponse = () => {
   const router = useRouter()
-  const { slug } = router.query as any
+  const { slug, rollover } = router.query as any
 
   return (
     <Checkout
@@ -11,6 +11,7 @@ const CheckoutResponse = () => {
       feeModeCode={slug && slug[1]}
       currencyCode={slug && slug[2]}
       dueDate={slug && slug[3]}
+      rollover={!!rollover}
     />
   )
 }

@@ -22,12 +22,14 @@ const DashboardCustomHooks = () => {
     createdAt: string
     status: string
     program: Iprogram
+    nationality: string
   }
 
   const [scheduler, setScheduler] = useState<any>(null)
   const [myDayData, setMyDay] = useState<any>(null)
   const [profileImage, setProfileImage] = useState<string | undefined>()
   const [studentDetails, setStudentDetails] = useState<studentType>()
+  const [rollover, setRollover] = useState([])
 
   const auth = useAuth()
 
@@ -35,6 +37,7 @@ const DashboardCustomHooks = () => {
     getStudentScheduler()
     getStudentMyDay()
     getStudentDetails()
+    getRolloverList()
   }, [])
 
   const getStudentScheduler = async () => {
@@ -71,7 +74,16 @@ const DashboardCustomHooks = () => {
     }
   }
 
-  return { scheduler, myDayData, profileImage, studentDetails }
+  const getRolloverList = async () => {
+    if (auth?.user?.studentCode) {
+      const rolloverResponse = await StudentService?.getRolloverList(auth?.user?.studentCode)
+      setRollover(rolloverResponse?.data?.data)
+
+      console.log('rolloverResponse =================>', rolloverResponse)
+    }
+  }
+
+  return { scheduler, myDayData, profileImage, studentDetails, rollover }
 }
 
 export default DashboardCustomHooks
