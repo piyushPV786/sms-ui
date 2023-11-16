@@ -22,12 +22,18 @@ const DashboardCustomHooks = () => {
     createdAt: string
     status: string
     program: Iprogram
+    nationality: string
   }
 
   const [scheduler, setScheduler] = useState<any>(null)
   const [myDayData, setMyDay] = useState<any>(null)
   const [profileImage, setProfileImage] = useState<string | undefined>()
   const [studentDetails, setStudentDetails] = useState<studentType>()
+  const [applicationCode, setApplicationCode] = useState<string>('')
+  const [rollover, setRollover] = useState<{ passedModules: any[]; rollOverModules: any[] }>({
+    passedModules: [],
+    rollOverModules: []
+  })
 
   const auth = useAuth()
 
@@ -35,6 +41,8 @@ const DashboardCustomHooks = () => {
     getStudentScheduler()
     getStudentMyDay()
     getStudentDetails()
+    getRolloverList()
+    getApplicationCode()
   }, [])
 
   const getStudentScheduler = async () => {
@@ -71,7 +79,29 @@ const DashboardCustomHooks = () => {
     }
   }
 
-  return { scheduler, myDayData, profileImage, studentDetails }
+  const getRolloverList = async () => {
+    if (auth?.user?.studentCode) {
+      const rolloverResponse = await StudentService?.getRolloverList(auth?.user?.studentCode)
+      setRollover(rolloverResponse?.data?.data)
+
+      console.log('rolloverResponse =================>', rolloverResponse)
+    }
+  }
+  const getApplicationCode = async () => {
+    if (auth?.user?.studentCode) {
+      const payload = {
+        q: '',
+        pageSize: 10,
+        pageNumber: 1
+      }
+      const response = await StudentService?.getFeePaymentList(payload, auth?.user?.studentCode)
+      if (response?.data?.statusCode === status.successCode && response?.data?.data) {
+        setApplicationCode(response?.data?.data?.data[0]?.applicationCode)
+      }
+    }
+  }
+
+  return { scheduler, myDayData, profileImage, studentDetails, rollover, applicationCode }
 }
 
 export default DashboardCustomHooks

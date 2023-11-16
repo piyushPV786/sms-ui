@@ -30,6 +30,7 @@ interface propsType {
   currencyCode: string | null
   dueDate: string | any
   applicationCode: string
+  rollover?: boolean
 }
 
 const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode }: propsType) => {

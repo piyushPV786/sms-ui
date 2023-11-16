@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react'
 import { useAuth } from 'src/hooks/useAuth'
-import { FinanceService } from 'src/service'
+import { FinanceService, StudentService } from 'src/service'
 import { getPaymentInfo, paymentLogin } from 'src/service/payment'
 import { IPaymentPayload, IPaymentResponse } from 'src/types/common'
 import { successToast, errorToast } from '../common'
@@ -59,6 +59,7 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode, applicationCode 
           if (sendPaymentInfo?.status == 201) {
             setLoading(false)
             successToast('Payment Successfull')
+            if (auth?.user?.studentCode) StudentService?.rollover(auth?.user?.studentCode)
           } else {
             errorToast('Payment Failed')
           }

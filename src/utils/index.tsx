@@ -200,6 +200,16 @@ export const DDMMYYYDateFormat = (date: Date) => {
   return `${day}-${month}-${year}`
 }
 
+export const YYYYMMDDDateFormat = (date: Date) => {
+  const newDate = new Date(date)
+
+  const day = String(newDate.getDate()).padStart(2, '0')
+  const month = String(newDate.getMonth() + 1).padStart(2, '0')
+  const year = newDate.getFullYear()
+
+  return `${year}-${month}-${day}`
+}
+
 export const DateFormat = (date: Date) => {
   const newDate: Date = new Date(date)
   const weekday: Array<number | string> = new Array(7)

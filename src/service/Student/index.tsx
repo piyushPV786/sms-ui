@@ -375,4 +375,32 @@ export default class Student {
       nProgress.done()
     }
   }
+  async getRolloverList(studentCode: string) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.rollover}/${studentCode}/programs`
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching rollover list ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+
+  async rollover(studentCode: string) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.rollover}/${studentCode}`
+    try {
+      const response = await this.apiServer.post(endUrlName)
+
+      return response
+    } catch (err: any) {
+      console.log('Error in saving rollover Details ========>', err?.message)
+    } finally {
+      nProgress.done()
+    }
+  }
 }

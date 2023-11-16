@@ -37,4 +37,14 @@ export default class Finance {
     }
     nProgress.done()
   }
+  async getCurrencyRate(countryCode: string) {
+    const endUrlName = `${apiEndPoints.feeConversionRate}/${countryCode}`
+    try {
+      const response = await this.apiServer.get(endUrlName)
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching student list ========>', err?.message)
+    }
+  }
 }
