@@ -40,24 +40,12 @@ const schema = yup.object().shape({
   module: yup.array().min(2, 'Two module are required')
 })
 
-const datas = [
-  { name: 'Computer Literacy', code: '123' },
-  { name: 'Legal English', code: '456' },
-  { name: 'Pillars of South African Law I', code: '789' },
-  { name: 'Law of Persons', code: '234' },
-  { name: 'Family Law', code: '567' },
-  { name: 'Computer Literacy (Legal Research)', code: '890' },
-  { name: 'Computer Literacy', code: '1234' }
-]
-
 const RollOver = () => {
   const bgColors = UseBgColor()
   const router = useRouter()
   const [dialogShow, setDialogShow] = useState<boolean>(false)
 
-  const { studentDetails } = DashboardCustomHooks()
-
-  console.log('studentDetails', studentDetails)
+  const { studentDetails, rollover, applicationCode } = DashboardCustomHooks()
 
   const {
     register,
@@ -77,14 +65,17 @@ const RollOver = () => {
 
   const onSubmit = async (response: IFormValue) => {
     if (studentDetails) {
-      const response = await FinanceService?.getCurrencyRate(studentDetails.nationality)
+      const response1 = await FinanceService?.getCurrencyRate(studentDetails.nationality)
       console.log('response', response)
+
+      const amount = 500
+      const feeModeCode = 'Rollover'
+      const currencyCode = response1 && response1?.data?.data?.currencyCode
+      const dueDate = YYYYMMDDDateFormat(new Date())
+      router.push(
+        `/payment/checkout/${amount}/${feeModeCode}/${currencyCode}/${dueDate}/${applicationCode}?rollover=true`
+      )
     }
-    const amount = 500
-    const feeModeCode = 'Rollover'
-    const currencyCode = '$'
-    const dueDate = YYYYMMDDDateFormat(new Date())
-    router.push(`/payment/checkout/${amount}/${feeModeCode}/${currencyCode}/${dueDate}?rollover=true`)
   }
 
   const handleOpen = () => {
@@ -125,52 +116,77 @@ const RollOver = () => {
           </DialogTitle>
           <DialogContent>
             <Grid container spacing={6} mt={1}>
-              <Grid item xs={12}>
-                <Typography fontWeight='bold'>1st YEAR - COMPLETED MODULES</Typography>
-                <Grid mt={1}>
-                  {datas.map((data: { name: string; code: string }) => {
-                    return (
-                      <Chip
-                        key={data.name}
-                        skin='light'
-                        size='small'
-                        label={data.name}
-                        color='success'
-                        sx={{
-                          textTransform: 'capitalize',
-                          '& .MuiChip-label': { lineHeight: '18px' },
-                          borderRadius: '10px',
-                          boxShadow: '2px 4px 4px 0px #9f9f9f75',
-                          margin: '4px'
-                        }}
-                      />
-                    )
-                  })}
-                </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography fontWeight='bold'>2st YEAR - ROLLOVER MODULES</Typography>
-                <Grid mt={1}>
-                  {datas.map((data: { name: string; code: string }) => {
-                    return (
-                      <Chip
-                        key={data.name}
-                        skin='light'
-                        size='small'
-                        label={data.name}
-                        color='success'
-                        sx={{
-                          textTransform: 'capitalize',
-                          '& .MuiChip-label': { lineHeight: '18px' },
-                          borderRadius: '10px',
-                          boxShadow: '2px 4px 4px 0px #9f9f9f75',
-                          margin: '4px'
-                        }}
-                      />
-                    )
-                  })}
-                </Grid>
-              </Grid>
+              {rollover.passedModules?.map(
+                (data: { name: string; code: string; academicYearOfProgram: number }, id) => {
+                  return (
+                    <Grid item key={id} xs={12}>
+                      {data?.academicYearOfProgram === 5 ? (
+                        <Typography fontWeight='bold'>5th YEAR - COMPLETED MODULES</Typography>
+                      ) : data?.academicYearOfProgram === 2 ? (
+                        <Typography fontWeight='bold'>2nd YEAR - COMPLETED MODULES</Typography>
+                      ) : data?.academicYearOfProgram === 3 ? (
+                        <Typography fontWeight='bold'>3rd YEAR - COMPLETED MODULES</Typography>
+                      ) : data?.academicYearOfProgram === 4 ? (
+                        <Typography fontWeight='bold'>4th YEAR - COMPLETED MODULES</Typography>
+                      ) : (
+                        <Typography fontWeight='bold'>1st YEAR - COMPLETED MODULES</Typography>
+                      )}
+                      <Grid mt={1}>
+                        <Chip
+                          key={data.name}
+                          skin='light'
+                          size='small'
+                          label={data.name}
+                          color='success'
+                          sx={{
+                            textTransform: 'capitalize',
+                            '& .MuiChip-label': { lineHeight: '18px' },
+                            borderRadius: '10px',
+                            boxShadow: '2px 4px 4px 0px #9f9f9f75',
+                            margin: '4px'
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                  )
+                }
+              )}
+              {rollover.rollOverModules?.map(
+                (data: { name: string; code: string; academicYearOfProgram: number }, id) => {
+                  return (
+                    <Grid item key={id} xs={12}>
+                      {data?.academicYearOfProgram === 5 ? (
+                        <Typography fontWeight='bold'>5th YEAR - ROLLOVER MODULES</Typography>
+                      ) : data?.academicYearOfProgram === 2 ? (
+                        <Typography fontWeight='bold'>2nd YEAR - ROLLOVER MODULES</Typography>
+                      ) : data?.academicYearOfProgram === 3 ? (
+                        <Typography fontWeight='bold'>3rd YEAR - ROLLOVER MODULES</Typography>
+                      ) : data?.academicYearOfProgram === 4 ? (
+                        <Typography fontWeight='bold'>4th YEAR - ROLLOVER MODULES</Typography>
+                      ) : (
+                        <Typography fontWeight='bold'>1st YEAR - ROLLOVER MODULES</Typography>
+                      )}
+
+                      <Grid mt={1}>
+                        <Chip
+                          key={data?.name}
+                          skin='light'
+                          size='small'
+                          label={data?.name}
+                          color='success'
+                          sx={{
+                            textTransform: 'capitalize',
+                            '& .MuiChip-label': { lineHeight: '18px' },
+                            borderRadius: '10px',
+                            boxShadow: '2px 4px 4px 0px #9f9f9f75',
+                            margin: '4px'
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                  )
+                }
+              )}
               <Grid item xs={12}>
                 <Typography mb={3} variant='body2'>
                   ELECTIVES: CHOICE OF TWO
@@ -183,13 +199,15 @@ const RollOver = () => {
                       value &&
                         setValue(
                           'module',
-                          value?.map(i => i.code)
+                          value?.map(i => i?.code)
                         )
                       clearErrors('module')
                     }}
-                    options={datas}
-                    value={datas?.filter((i: { name: string; code: string }) => watch('module').includes(i.code))}
-                    getOptionLabel={option => option.name}
+                    options={rollover?.rollOverModules}
+                    value={rollover?.rollOverModules?.filter((i: { name: string; code: string }) =>
+                      watch('module').includes(i?.code)
+                    )}
+                    getOptionLabel={option => option?.name}
                     filterSelectedOptions
                     renderInput={params => <TextField {...params} label='Select Elective Modules' />}
                     sx={{

@@ -13,7 +13,7 @@ import UploadPaymentProof from '../uploaddocument/uploadPaymentProof'
 import { v4 as uuidv4 } from 'uuid'
 import UkhesheCustomHook from './ukhesheCustomHook'
 import UkheshePaymentModal from '../dialog/PaymentDialog'
-import { StudentService, CommonService, FinanceService } from 'src/service'
+import { StudentService, CommonService } from 'src/service'
 import { useAuth } from 'src/hooks/useAuth'
 
 const schema = yup.object().shape({

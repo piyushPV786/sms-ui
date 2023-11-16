@@ -11,8 +11,8 @@ const CheckoutResponse = () => {
       feeModeCode={slug && slug[1]}
       currencyCode={slug && slug[2]}
       dueDate={slug && slug[3]}
-      rollover={!!rollover}
       applicationCode={slug && slug[4]}
+      rollover={!!rollover}
     />
   )
 }
