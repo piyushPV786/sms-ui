@@ -157,7 +157,7 @@ const DocumentList = () => {
       headerName: 'File Name',
       renderCell: ({ row }: CellType) => {
         return (
-          <Tooltip title={row?.name}>
+          <Tooltip placement='top' title={row?.name}>
             <StyledLink>{row?.name}</StyledLink>
           </Tooltip>
         )

@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
-import { CircularProgress, IconButton, Theme, Tooltip, styled } from '@mui/material'
+import { CircularProgress, Theme, Tooltip, styled } from '@mui/material'
 import CustomChip from 'src/@core/components/mui/chip'
 
 import { CommonService, StudentService } from 'src/service'
@@ -24,7 +24,6 @@ import { useAuth } from 'src/hooks/useAuth'
 import RaiseQuery from 'src/components/dialog/RaiseQuery'
 import { DDMMYYDateFormate, getFileUrlToShow, getName, minTwoDigits, serialNumber } from 'src/utils'
 import { CellType, IDefaultValue, IIndex, IQueryStatus, IQueryType } from 'src/types/common'
-import { EyeOutline } from 'mdi-material-ui'
 
 const initialState = {
   message: '',
@@ -173,16 +172,15 @@ const QueryList = () => {
                 <CircularProgress color='primary' size={20} />
               ) : (
                 <Tooltip placement='top' arrow disableInteractive title='View'>
-                  <IconButton
-                    size='small'
+                  <Typography
+                    fontWeight='bold'
                     color='primary'
-                    sx={{ backgroundColor: theme => `${theme.palette.primary.main}1a` }}
-                    onClick={() =>
-                      handleView(row?.documentName, row?.documentCode?.split('.')?.slice(0, -1)?.join('.'))
-                    }
+                    fontSize='small'
+                    onClick={() => handleView(row?.documentName, row?.documentCode)}
+                    sx={{ cursor: 'pointer' }}
                   >
-                    <EyeOutline />
-                  </IconButton>
+                    {row?.documentName}
+                  </Typography>
                 </Tooltip>
               )}
             </>
