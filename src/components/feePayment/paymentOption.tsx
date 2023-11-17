@@ -69,8 +69,6 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode }: p
     applicationCode
   })
 
-  const auth = useAuth()
-
   const [selectedPayment, setSelectedPaymentOption] = useState<string>('')
   const router = useRouter()
   const { watch, handleSubmit, unregister, setValue, clearErrors } = useForm({
@@ -131,7 +129,6 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode }: p
       CommonService.documentUpload(payload).then(data => {
         if (data) {
           router.push(`/payment/success/`)
-          if (auth?.user?.studentCode) StudentService?.rollover(auth?.user?.studentCode)
         }
       })
     })

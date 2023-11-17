@@ -21,9 +21,11 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import UseBgColor from 'src/@core/hooks/useBgColor'
 import { useRouter } from 'next/router'
-import { FinanceService } from 'src/service'
+import { FinanceService, StudentService } from 'src/service'
 import DashboardCustomHooks from '../dashboard/CustomHooks'
 import { YYYYMMDDDateFormat } from 'src/utils'
+import { successToast } from '../common'
+import { useAuth } from 'src/hooks/useAuth'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -45,6 +47,8 @@ const RollOver = () => {
   const router = useRouter()
   const [dialogShow, setDialogShow] = useState<boolean>(false)
 
+  const auth = useAuth()
+
   const { studentDetails, rollover, applicationCode } = DashboardCustomHooks()
 
   const {
@@ -64,9 +68,15 @@ const RollOver = () => {
   })
 
   const onSubmit = async (response: IFormValue) => {
+    console.log('response', response)
+    if (auth?.user?.studentCode) {
+      StudentService?.rollover(auth?.user?.studentCode)
+      successToast('Rollover successfully done.')
+    }
+  }
+  const handlePay = async () => {
     if (studentDetails) {
       const response1 = await FinanceService?.getCurrencyRate(studentDetails.nationality)
-      console.log('response', response)
 
       const amount = 500
       const feeModeCode = 'Rollover'
@@ -155,7 +165,7 @@ const RollOver = () => {
                   )
                 }
               )}
-              {rollover.rollOverModules?.map(
+              {rollover?.rollOverModules?.map(
                 (data: { name: string; code: string; academicYearOfProgram: number }, id) => {
                   return (
                     <Grid item key={id} xs={12}>
@@ -211,7 +221,7 @@ const RollOver = () => {
                         )
                       clearErrors('module')
                     }}
-                    options={rollover?.rollOverModules}
+                    options={rollover?.rollOverModules && rollover?.rollOverModules}
                     value={rollover?.rollOverModules?.filter((i: { name: string; code: string }) =>
                       watch('module').includes(i?.code)
                     )}
@@ -235,8 +245,17 @@ const RollOver = () => {
             <Button variant='outlined' color='secondary' onClick={handleClose}>
               Cancel
             </Button>
+            <Button
+              variant='contained'
+              sx={{ mr: 2 }}
+              onClick={() => {
+                handlePay()
+              }}
+            >
+              PAY Rollover Fee
+            </Button>
             <Button variant='contained' sx={{ mr: 2 }} type='submit'>
-              PAY & ENROLL
+              Rollover
             </Button>
           </DialogActions>
         </form>

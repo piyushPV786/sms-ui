@@ -30,12 +30,14 @@ const DashboardCustomHooks = () => {
   const [profileImage, setProfileImage] = useState<string | undefined>()
   const [studentDetails, setStudentDetails] = useState<studentType>()
   const [applicationCode, setApplicationCode] = useState<string>('')
+  const [paymentStatus, setPaymentStatus] = useState<string>('')
   const [rollover, setRollover] = useState<{ passedModules: any[]; rollOverModules: any[] }>({
     passedModules: [],
     rollOverModules: []
   })
 
   const auth = useAuth()
+  console.log('auth', auth)
 
   useEffect(() => {
     getStudentScheduler()
@@ -43,6 +45,7 @@ const DashboardCustomHooks = () => {
     getStudentDetails()
     getRolloverList()
     getApplicationCode()
+    getRolloverPaymentStatus()
   }, [])
 
   const getStudentScheduler = async () => {
@@ -83,8 +86,6 @@ const DashboardCustomHooks = () => {
     if (auth?.user?.studentCode) {
       const rolloverResponse = await StudentService?.getRolloverList(auth?.user?.studentCode)
       setRollover(rolloverResponse?.data?.data)
-
-      console.log('rolloverResponse =================>', rolloverResponse)
     }
   }
   const getApplicationCode = async () => {
@@ -100,8 +101,14 @@ const DashboardCustomHooks = () => {
       }
     }
   }
+  const getRolloverPaymentStatus = async () => {
+    if (auth?.user?.studentCode) {
+      const rolloverResponse = await StudentService?.getRolloverPaymentStatus(auth?.user?.studentCode)
+      setPaymentStatus(rolloverResponse?.data?.data)
+    }
+  }
 
-  return { scheduler, myDayData, profileImage, studentDetails, rollover, applicationCode }
+  return { scheduler, myDayData, profileImage, studentDetails, rollover, applicationCode, paymentStatus }
 }
 
 export default DashboardCustomHooks
