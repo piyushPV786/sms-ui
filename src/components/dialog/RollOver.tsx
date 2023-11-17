@@ -116,85 +116,87 @@ const RollOver = () => {
           </DialogTitle>
           <DialogContent>
             <Grid container spacing={6} mt={1}>
-              {rollover.passedModules?.map(
-                (data: { name: string; code: string; academicYearOfProgram: number }, id) => {
-                  return (
-                    <Grid item key={id} xs={12}>
-                      {data && (
-                        <>
-                          {data?.academicYearOfProgram === 5 ? (
-                            <Typography fontWeight='bold'>5th YEAR - COMPLETED MODULES</Typography>
-                          ) : data?.academicYearOfProgram === 2 ? (
-                            <Typography fontWeight='bold'>2nd YEAR - COMPLETED MODULES</Typography>
-                          ) : data?.academicYearOfProgram === 3 ? (
-                            <Typography fontWeight='bold'>3rd YEAR - COMPLETED MODULES</Typography>
-                          ) : data?.academicYearOfProgram === 4 ? (
-                            <Typography fontWeight='bold'>4th YEAR - COMPLETED MODULES</Typography>
-                          ) : (
-                            <Typography fontWeight='bold'>1st YEAR - COMPLETED MODULES</Typography>
-                          )}
-                          <Grid mt={1}>
-                            <Chip
-                              key={data.name}
-                              skin='light'
-                              size='small'
-                              label={data.name}
-                              color='success'
-                              sx={{
-                                textTransform: 'capitalize',
-                                '& .MuiChip-label': { lineHeight: '18px' },
-                                borderRadius: '10px',
-                                boxShadow: '2px 4px 4px 0px #9f9f9f75',
-                                margin: '4px'
-                              }}
-                            />
-                          </Grid>
-                        </>
-                      )}
-                    </Grid>
-                  )
-                }
-              )}
-              {rollover.rollOverModules?.map(
-                (data: { name: string; code: string; academicYearOfProgram: number }, id) => {
-                  return (
-                    <Grid item key={id} xs={12}>
-                      {data && (
-                        <>
-                          {data?.academicYearOfProgram === 5 ? (
-                            <Typography fontWeight='bold'>5th YEAR - ROLLOVER MODULES</Typography>
-                          ) : data?.academicYearOfProgram === 2 ? (
-                            <Typography fontWeight='bold'>2nd YEAR - ROLLOVER MODULES</Typography>
-                          ) : data?.academicYearOfProgram === 3 ? (
-                            <Typography fontWeight='bold'>3rd YEAR - ROLLOVER MODULES</Typography>
-                          ) : data?.academicYearOfProgram === 4 ? (
-                            <Typography fontWeight='bold'>4th YEAR - ROLLOVER MODULES</Typography>
-                          ) : (
-                            <Typography fontWeight='bold'>1st YEAR - ROLLOVER MODULES</Typography>
-                          )}
+              {rollover &&
+                rollover?.passedModules?.map(
+                  (data: { name: string; code: string; academicYearOfProgram: number }, id) => {
+                    return (
+                      <Grid item key={id} xs={12}>
+                        {data && (
+                          <>
+                            {data?.academicYearOfProgram === 5 ? (
+                              <Typography fontWeight='bold'>5th YEAR - COMPLETED MODULES</Typography>
+                            ) : data?.academicYearOfProgram === 2 ? (
+                              <Typography fontWeight='bold'>2nd YEAR - COMPLETED MODULES</Typography>
+                            ) : data?.academicYearOfProgram === 3 ? (
+                              <Typography fontWeight='bold'>3rd YEAR - COMPLETED MODULES</Typography>
+                            ) : data?.academicYearOfProgram === 4 ? (
+                              <Typography fontWeight='bold'>4th YEAR - COMPLETED MODULES</Typography>
+                            ) : (
+                              <Typography fontWeight='bold'>1st YEAR - COMPLETED MODULES</Typography>
+                            )}
+                            <Grid mt={1}>
+                              <Chip
+                                key={data.name}
+                                skin='light'
+                                size='small'
+                                label={data.name}
+                                color='success'
+                                sx={{
+                                  textTransform: 'capitalize',
+                                  '& .MuiChip-label': { lineHeight: '18px' },
+                                  borderRadius: '10px',
+                                  boxShadow: '2px 4px 4px 0px #9f9f9f75',
+                                  margin: '4px'
+                                }}
+                              />
+                            </Grid>
+                          </>
+                        )}
+                      </Grid>
+                    )
+                  }
+                )}
+              {rollover &&
+                rollover?.rollOverModules?.map(
+                  (data: { name: string; code: string; academicYearOfProgram: number }, id) => {
+                    return (
+                      <Grid item key={id} xs={12}>
+                        {data && (
+                          <>
+                            {data?.academicYearOfProgram === 5 ? (
+                              <Typography fontWeight='bold'>5th YEAR - ROLLOVER MODULES</Typography>
+                            ) : data?.academicYearOfProgram === 2 ? (
+                              <Typography fontWeight='bold'>2nd YEAR - ROLLOVER MODULES</Typography>
+                            ) : data?.academicYearOfProgram === 3 ? (
+                              <Typography fontWeight='bold'>3rd YEAR - ROLLOVER MODULES</Typography>
+                            ) : data?.academicYearOfProgram === 4 ? (
+                              <Typography fontWeight='bold'>4th YEAR - ROLLOVER MODULES</Typography>
+                            ) : (
+                              <Typography fontWeight='bold'>1st YEAR - ROLLOVER MODULES</Typography>
+                            )}
 
-                          <Grid mt={1}>
-                            <Chip
-                              key={data?.name}
-                              skin='light'
-                              size='small'
-                              label={data?.name}
-                              color='success'
-                              sx={{
-                                textTransform: 'capitalize',
-                                '& .MuiChip-label': { lineHeight: '18px' },
-                                borderRadius: '10px',
-                                boxShadow: '2px 4px 4px 0px #9f9f9f75',
-                                margin: '4px'
-                              }}
-                            />
-                          </Grid>
-                        </>
-                      )}
-                    </Grid>
-                  )
-                }
-              )}
+                            <Grid mt={1}>
+                              <Chip
+                                key={data?.name}
+                                skin='light'
+                                size='small'
+                                label={data?.name}
+                                color='success'
+                                sx={{
+                                  textTransform: 'capitalize',
+                                  '& .MuiChip-label': { lineHeight: '18px' },
+                                  borderRadius: '10px',
+                                  boxShadow: '2px 4px 4px 0px #9f9f9f75',
+                                  margin: '4px'
+                                }}
+                              />
+                            </Grid>
+                          </>
+                        )}
+                      </Grid>
+                    )
+                  }
+                )}
               <Grid item xs={12}>
                 <Typography mb={3} variant='body2'>
                   ELECTIVES: CHOICE OF TWO
