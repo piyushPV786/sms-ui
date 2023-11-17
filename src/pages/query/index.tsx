@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { DataGrid, GridRowId } from '@mui/x-data-grid'
-import { CircularProgress, Theme, styled } from '@mui/material'
+import { CircularProgress, IconButton, Theme, Tooltip, styled } from '@mui/material'
 import CustomChip from 'src/@core/components/mui/chip'
 
 import { CommonService, StudentService } from 'src/service'
@@ -24,6 +24,7 @@ import { useAuth } from 'src/hooks/useAuth'
 import RaiseQuery from 'src/components/dialog/RaiseQuery'
 import { DDMMYYDateFormate, getFileUrlToShow, getName, minTwoDigits, serialNumber } from 'src/utils'
 import { CellType, IDefaultValue, IIndex, IQueryStatus, IQueryType } from 'src/types/common'
+import { EyeOutline } from 'mdi-material-ui'
 
 const initialState = {
   message: '',
@@ -164,25 +165,32 @@ const QueryList = () => {
       minWidth: 200,
       field: 'documentCode',
       headerName: 'Supported Documents',
-      renderCell: (row: CellType) => {
-        return row.row.documentCode ? (
-          <>
-            <Typography
-              color='primary'
-              fontWeight='bold'
-              onClick={() => handleView(row.row.documentName, row.row.documentCode)}
-              fontSize='small'
-            >
-              {row.row.documentName}
-            </Typography>
-            {viewFileLoader && viewFileLoader[row.row.documentCode] ? (
-              <CircularProgress color='primary' size={20} />
-            ) : null}
-          </>
-        ) : (
-          '-'
-        )
-      }
+      renderCell: ({ row }: CellType) => (
+        <Box>
+          {row?.documentCode ? (
+            <>
+              {viewFileLoader && viewFileLoader[row?.documentCode] ? (
+                <CircularProgress color='primary' size={20} />
+              ) : (
+                <Tooltip placement='top' arrow disableInteractive title='View'>
+                  <IconButton
+                    size='small'
+                    color='primary'
+                    sx={{ backgroundColor: theme => `${theme.palette.primary.main}1a` }}
+                    onClick={() =>
+                      handleView(row?.documentName, row?.documentCode?.split('.')?.slice(0, -1)?.join('.'))
+                    }
+                  >
+                    <EyeOutline />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </>
+          ) : (
+            '-'
+          )}
+        </Box>
+      )
     },
     {
       flex: 0.1,

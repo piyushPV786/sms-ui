@@ -156,7 +156,11 @@ const DocumentList = () => {
       minWidth: 200,
       headerName: 'File Name',
       renderCell: ({ row }: CellType) => {
-        return <StyledLink>{row?.name}</StyledLink>
+        return (
+          <Tooltip title={row?.name}>
+            <StyledLink>{row?.name}</StyledLink>
+          </Tooltip>
+        )
       }
     },
 
