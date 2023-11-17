@@ -213,10 +213,13 @@ const RollOver = () => {
                         )
                       clearErrors('module')
                     }}
-                    options={rollover?.rollOverModules}
-                    value={rollover?.rollOverModules?.filter((i: { name: string; code: string }) =>
-                      watch('module').includes(i?.code)
-                    )}
+                    options={rollover && rollover?.rollOverModules}
+                    value={
+                      rollover &&
+                      rollover?.rollOverModules?.filter((i: { name: string; code: string }) =>
+                        watch('module').includes(i?.code)
+                      )
+                    }
                     getOptionLabel={option => option?.name}
                     filterSelectedOptions
                     renderInput={params => <TextField {...params} label='Select Elective Modules' />}
