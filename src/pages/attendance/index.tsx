@@ -30,7 +30,6 @@ import { IRow } from 'src/context/common'
 import { commonListTypes } from 'src/types/dataTypes'
 
 interface ITabelData {
-  map(arg0: (row: IRow, index: number) => JSX.Element): import('react').ReactNode
   tableData: IRow
 }
 
@@ -45,8 +44,8 @@ const AttendanceList = () => {
   const [value, setValue] = useState<string>('')
   const [pageSize, setPageSize] = useState<number>(10)
   const [count, setCount] = useState<number>(0)
-  const [pageNumber, setPageNumber] = useState<number>(0)
-  const [tableData, setTableData] = useState<ITabelData>()
+  const [pageNumber, setPageNumber] = useState<number>(1)
+  const [tableData, setTableData] = useState<ITabelData[]>([])
   const [courses, setCourses] = useState<Array<commonListTypes>>([])
   const handleFilter = (val: string) => {
     setValue(val)
@@ -60,13 +59,19 @@ const AttendanceList = () => {
   const handleChangePage = (event: unknown, newPage: number) => {
     setPageNumber(newPage)
   }
+  const payload = {
+    studentCode: studentDetails?.studentCode,
+    pageNumber: pageNumber,
+    pageSize: pageSize,
+    query: value
+  }
   const getDetails = async () => {
-    const response = await OperationService?.getAttendanceDetails(
-      studentDetails?.studentCode ?? studentDetails?.studentCode
-    )
+    const response = await OperationService?.getAttendanceDetails(payload)
     if (response?.data?.length > 0) {
       setTableData(response?.data)
       setCount(response?.count)
+    } else {
+      setTableData([])
     }
   }
 
@@ -80,6 +85,11 @@ const AttendanceList = () => {
     getDetails()
     getCourses()
   }, [studentDetails])
+
+  useEffect(() => {
+    getDetails()
+    getCourses()
+  }, [value])
 
   return (
     <>
@@ -132,16 +142,20 @@ const AttendanceList = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {tableData?.map((row: IRow, index: number) => (
-                    <AttendanceListRow
-                      key={row?.id}
-                      row={row}
-                      index={index}
-                      pageNumber={pageNumber}
-                      pageSize={pageSize}
-                      courses={courses}
-                    />
-                  ))}
+                  {tableData?.length > 0 ? (
+                    tableData?.map((row: any, index) => (
+                      <AttendanceListRow
+                        key={index}
+                        row={row}
+                        index={index}
+                        pageNumber={pageNumber}
+                        pageSize={pageSize}
+                        courses={courses}
+                      />
+                    ))
+                  ) : (
+                    <Typography sx={{ marginLeft: 100 }}>No Rows</Typography>
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>

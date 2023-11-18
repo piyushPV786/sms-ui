@@ -2,14 +2,20 @@ import { AxiosInstance } from 'axios'
 import nProgress from 'nprogress'
 import { apiEndPoints } from '../Config'
 
+interface IPayloadProps {
+  studentCode: number | string | undefined
+  pageNumber: number
+  pageSize: number
+  query: string
+}
 export default class Operation {
   apiServer: AxiosInstance
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }
-  async getAttendanceDetails(studentCode: number | string | undefined) {
+  async getAttendanceDetails(payload: IPayloadProps) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.attendance}/${studentCode}`
+    const endUrlName = `${apiEndPoints.attendance}/${payload?.studentCode}?pageNumber=${payload?.pageNumber}&pageSize=${payload?.pageSize}&search=${payload?.query}`
     try {
       const response = await this.apiServer.get(endUrlName)
 
