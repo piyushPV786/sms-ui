@@ -74,7 +74,7 @@ const ExamTicket = () => {
             color={theme => theme.palette.primary.main}
             bgcolor='#c5e3d9'
           >
-            Dowload Exam Ticket
+            Download Exam Ticket
           </DialogTitle>
           <DialogContent>
             <Grid item xs={12} px={10} py={5} marginTop={3}>
