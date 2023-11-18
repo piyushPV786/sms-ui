@@ -136,10 +136,10 @@ const RollOver = () => {
                             )}
                             <Grid mt={1}>
                               <Chip
-                                key={data.name}
+                                key={data?.name}
                                 skin='light'
                                 size='small'
-                                label={data.name}
+                                label={data?.name}
                                 color='success'
                                 sx={{
                                   textTransform: 'capitalize',

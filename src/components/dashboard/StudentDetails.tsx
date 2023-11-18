@@ -90,7 +90,7 @@ const StudentDetails = ({ profileImage }: any) => {
               </Box>
             </Box>
           </Grid>
-          {rollover.rollOverModules.length > 0 ? (
+          {rollover && rollover?.rollOverModules?.length > 0 ? (
             <Grid item xs={3} md={4} sm={3} pt={2} pr={2}>
               <Card sx={{ background: theme => `${theme.spacing(6, 7.5)} !important` }}>
                 <Grid
