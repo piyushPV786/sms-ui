@@ -29,10 +29,6 @@ import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { IRow } from 'src/context/common'
 import { commonListTypes } from 'src/types/dataTypes'
 
-interface ITabelData {
-  tableData: IRow
-}
-
 const TableHeaderTypography = styled(Typography)<any>(() => ({
   fontWeight: 'bold',
   fontSize: '0.75rem',
@@ -45,7 +41,7 @@ const AttendanceList = () => {
   const [pageSize, setPageSize] = useState<number>(10)
   const [count, setCount] = useState<number>(0)
   const [pageNumber, setPageNumber] = useState<number>(1)
-  const [tableData, setTableData] = useState<ITabelData[]>([])
+  const [tableData, setTableData] = useState<IRow[]>([])
   const [courses, setCourses] = useState<Array<commonListTypes>>([])
   const handleFilter = (val: string) => {
     setValue(val)
@@ -143,7 +139,7 @@ const AttendanceList = () => {
                 </TableHead>
                 <TableBody>
                   {tableData?.length > 0 ? (
-                    tableData?.map((row: any, index) => (
+                    tableData?.map((row: IRow, index) => (
                       <AttendanceListRow
                         key={index}
                         row={row}
