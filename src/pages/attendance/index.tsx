@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 // ** MUI Imports
-import { Link } from '@mui/material'
+import { CircularProgress, Link } from '@mui/material'
 
 // ** Custom Components Imports
 import TableHeader from 'src/components/myAttendance/tableHeader'
@@ -43,6 +43,7 @@ const AttendanceList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [tableData, setTableData] = useState<IRow[]>([])
   const [courses, setCourses] = useState<Array<commonListTypes>>([])
+  const [loading, setLoading] = useState<boolean>(false)
   const handleFilter = (val: string) => {
     setValue(val)
   }
@@ -62,12 +63,17 @@ const AttendanceList = () => {
     query: value
   }
   const getDetails = async () => {
-    const response = await OperationService?.getAttendanceDetails(payload)
-    if (response?.data?.length > 0) {
-      setTableData(response?.data)
-      setCount(response?.count)
-    } else {
-      setTableData([])
+    try {
+      setLoading(true)
+      const response = await OperationService?.getAttendanceDetails(payload)
+      if (response?.data?.length > 0) {
+        setTableData(response?.data)
+        setCount(response?.count)
+      } else {
+        setTableData([])
+      }
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -138,7 +144,13 @@ const AttendanceList = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {tableData?.length > 0 ? (
+                  {loading ? (
+                    <TableRow>
+                      <TableCell colSpan={5} align='center'>
+                        <CircularProgress size={20} />
+                      </TableCell>
+                    </TableRow>
+                  ) : tableData?.length > 0 ? (
                     tableData?.map((row: IRow, index) => (
                       <AttendanceListRow
                         key={index}
@@ -150,7 +162,11 @@ const AttendanceList = () => {
                       />
                     ))
                   ) : (
-                    <Typography sx={{ marginLeft: 100 }}>No Rows</Typography>
+                    <TableRow>
+                      <TableCell colSpan={5} align='center'>
+                        <Typography>No Rows</Typography>
+                      </TableCell>
+                    </TableRow>
                   )}
                 </TableBody>
               </Table>
