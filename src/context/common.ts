@@ -259,10 +259,6 @@ export enum QueryFileSize {
 }
 
 export interface IRow {
-  reduce(
-    arg0: (accumulator: any, item: any) => any,
-    arg1: { totalClassSum: number; totalAttendSum: number }
-  ): { totalClassSum: any; totalAttendSum: any }
   id: number | null
   classDate: null | string
   courseCode: string
