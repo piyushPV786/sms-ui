@@ -390,11 +390,11 @@ export default class Student {
     nProgress.done()
   }
 
-  async rollover(studentCode: string) {
+  async rollover(studentCode: string, courseCodes: string[]) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.rollover}/${studentCode}`
+    const endUrlName = `${apiEndPoints.rollover}/${studentCode}/rollover`
     try {
-      const response = await this.apiServer.post(endUrlName)
+      const response = await this.apiServer.post(endUrlName, { courseCodes })
 
       return response
     } catch (err: any) {

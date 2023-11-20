@@ -30,6 +30,7 @@ const DashboardCustomHooks = () => {
   const [profileImage, setProfileImage] = useState<string | undefined>()
   const [studentDetails, setStudentDetails] = useState<studentType>()
   const [applicationCode, setApplicationCode] = useState<string>('')
+  const [paymentStatus, setPaymentStatus] = useState<string>('')
   const [rollover, setRollover] = useState<{ passedModules: any[]; rollOverModules: any[] }>({
     passedModules: [],
     rollOverModules: []
@@ -83,8 +84,6 @@ const DashboardCustomHooks = () => {
     if (auth?.user?.studentCode) {
       const rolloverResponse = await StudentService?.getRolloverList(auth?.user?.studentCode)
       setRollover(rolloverResponse?.data?.data)
-
-      console.log('rolloverResponse =================>', rolloverResponse)
     }
   }
   const getApplicationCode = async () => {
@@ -97,11 +96,15 @@ const DashboardCustomHooks = () => {
       const response = await StudentService?.getFeePaymentList(payload, auth?.user?.studentCode)
       if (response?.data?.statusCode === status.successCode && response?.data?.data) {
         setApplicationCode(response?.data?.data?.data[0]?.applicationCode)
+        const filteredData = response?.data?.data?.data?.filter(
+          (entry: { feeModeCode: string }) => entry.feeModeCode === 'Rollover'
+        )
+        filteredData.map((entry: { paymentStatus: string }) => setPaymentStatus(entry.paymentStatus))
       }
     }
   }
 
-  return { scheduler, myDayData, profileImage, studentDetails, rollover, applicationCode }
+  return { scheduler, myDayData, profileImage, studentDetails, rollover, applicationCode, paymentStatus }
 }
 
 export default DashboardCustomHooks

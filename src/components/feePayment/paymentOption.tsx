@@ -14,7 +14,6 @@ import { v4 as uuidv4 } from 'uuid'
 import UkhesheCustomHook from './ukhesheCustomHook'
 import UkheshePaymentModal from '../dialog/PaymentDialog'
 import { StudentService, CommonService } from 'src/service'
-import { useAuth } from 'src/hooks/useAuth'
 
 const schema = yup.object().shape({
   uploadedFile: yup.mixed().required('Please upload any File')
@@ -68,8 +67,6 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode }: p
     currencyCode,
     applicationCode
   })
-
-  const auth = useAuth()
 
   const [selectedPayment, setSelectedPaymentOption] = useState<string>('')
   const router = useRouter()
@@ -131,7 +128,6 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode }: p
       CommonService.documentUpload(payload).then(data => {
         if (data) {
           router.push(`/payment/success/`)
-          if (auth?.user?.studentCode) StudentService?.rollover(auth?.user?.studentCode)
         }
       })
     })

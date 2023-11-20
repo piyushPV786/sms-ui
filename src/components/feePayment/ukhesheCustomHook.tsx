@@ -59,7 +59,6 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode, applicationCode 
           if (sendPaymentInfo?.status == 201) {
             setLoading(false)
             successToast('Payment Successfull')
-            if (auth?.user?.studentCode) StudentService?.rollover(auth?.user?.studentCode)
           } else {
             errorToast('Payment Failed')
           }

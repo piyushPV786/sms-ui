@@ -55,7 +55,7 @@ const PaymentSuccess = () => {
                   }}
                 >
                   <Image src={BackIcon} alt={BackIcon} />
-                  &nbsp;&nbsp;BACK TO FEE & PAYMENT HISTORY
+                  &nbsp;&nbsp;BACK TO DASHBOARD
                 </Button>
               </Box>
             </div>
