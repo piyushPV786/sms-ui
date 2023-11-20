@@ -26,6 +26,8 @@ import DashboardCustomHooks from '../dashboard/CustomHooks'
 import { YYYYMMDDDateFormat } from 'src/utils'
 import { successToast } from '../common'
 import { useAuth } from 'src/hooks/useAuth'
+import { ErrorMessage, status } from 'src/context/common'
+import { errorToast } from 'src/@core/components/common/Toast'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -39,7 +41,7 @@ interface IFormValue {
 }
 
 const schema = yup.object().shape({
-  module: yup.array().min(2, 'Two module are required')
+  module: yup.array().min(1, 'Module are required')
 })
 
 const RollOver = () => {
@@ -49,7 +51,7 @@ const RollOver = () => {
 
   const auth = useAuth()
 
-  const { studentDetails, rollover, applicationCode } = DashboardCustomHooks()
+  const { studentDetails, rollover, applicationCode, paymentStatus } = DashboardCustomHooks()
 
   const {
     register,
@@ -68,10 +70,13 @@ const RollOver = () => {
   })
 
   const onSubmit = async (response: IFormValue) => {
-    console.log('response', response)
+    const courseCodes = response.module
     if (auth?.user?.studentCode) {
-      StudentService?.rollover(auth?.user?.studentCode)
-      successToast('Rollover successfully done.')
+      const apiResponse = await StudentService?.rollover(auth?.user?.studentCode, courseCodes)
+      if (apiResponse?.status === status.successCodeOne) successToast('Rollover successfully done.')
+      else errorToast(ErrorMessage.Error)
+
+      setDialogShow(false)
     }
   }
   const handlePay = async () => {
@@ -105,7 +110,19 @@ const RollOver = () => {
       <Typography color={theme => theme.palette.common.white} fontSize={15} pb={2}>
         You have passed the dependent modules. Please pay the 500 and admission fee to roll over next semester.
       </Typography>
-      <WhiteButton onClick={handleOpen}>Roll Over</WhiteButton>
+      <WhiteButton
+        variant='contained'
+        disabled={paymentStatus === 'SUCCESSFUL'}
+        sx={{ mr: 2 }}
+        onClick={() => {
+          handlePay()
+        }}
+      >
+        PAY Rollover Fee
+      </WhiteButton>
+      <WhiteButton disabled={paymentStatus !== 'SUCCESSFUL'} sx={{ marginTop: '5px' }} onClick={handleOpen}>
+        Roll Over
+      </WhiteButton>
       <Dialog
         open={dialogShow}
         maxWidth='sm'
@@ -209,11 +226,11 @@ const RollOver = () => {
                 )}
               <Grid item xs={12}>
                 <Typography mb={3} variant='body2'>
-                  ELECTIVES: CHOICE OF TWO
+                  ELECTIVES
                 </Typography>
                 <FormControl fullWidth>
                   <Autocomplete
-                    {...register('module', { required: 'module are required' })}
+                    {...register('module', { required: 'Module are required' })}
                     multiple
                     onChange={(_, value) => {
                       value &&
@@ -226,11 +243,11 @@ const RollOver = () => {
                     options={rollover && rollover?.rollOverModules}
                     value={
                       rollover &&
-                      rollover?.rollOverModules?.filter((i: { name: string; code: string }) =>
-                        watch('module').includes(i?.code)
+                      rollover?.rollOverModules?.filter(
+                        (i: { name: string; code: string }) => i && watch('module').includes(i?.code)
                       )
                     }
-                    getOptionLabel={option => option?.name}
+                    getOptionLabel={option => option?.name && option?.name}
                     filterSelectedOptions
                     renderInput={params => <TextField {...params} label='Select Elective Modules' />}
                     sx={{
@@ -241,7 +258,7 @@ const RollOver = () => {
                     }}
                   />
 
-                  <FormHelperText error>{errors?.module && 'Two module are required'}</FormHelperText>
+                  <FormHelperText error>{errors?.module && 'Module are required'}</FormHelperText>
                 </FormControl>
               </Grid>
             </Grid>
@@ -250,15 +267,7 @@ const RollOver = () => {
             <Button variant='outlined' color='secondary' onClick={handleClose}>
               Cancel
             </Button>
-            <Button
-              variant='contained'
-              sx={{ mr: 2 }}
-              onClick={() => {
-                handlePay()
-              }}
-            >
-              PAY Rollover Fee
-            </Button>
+
             <Button variant='contained' sx={{ mr: 2 }} type='submit'>
               Rollover
             </Button>

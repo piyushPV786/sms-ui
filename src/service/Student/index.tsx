@@ -390,11 +390,11 @@ export default class Student {
     nProgress.done()
   }
 
-  async rollover(studentCode: string) {
+  async rollover(studentCode: string, courseCodes: string[]) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.rollover}/${studentCode}`
+    const endUrlName = `${apiEndPoints.rollover}/${studentCode}/rollover`
     try {
-      const response = await this.apiServer.post(endUrlName)
+      const response = await this.apiServer.post(endUrlName, { courseCodes })
 
       return response
     } catch (err: any) {
@@ -402,19 +402,5 @@ export default class Student {
     } finally {
       nProgress.done()
     }
-  }
-  async getRolloverPaymentStatus(academicYear: string) {
-    nProgress.start()
-    const endUrlName = `${apiEndPoints.rollover}/fee?academicYear=${academicYear}`
-    try {
-      const response = await this.apiServer.get(endUrlName)
-      nProgress.done()
-
-      return response
-    } catch (err: any) {
-      console.log('Error fetching rollover payment status ========>', err?.message)
-      nProgress.done()
-    }
-    nProgress.done()
   }
 }

@@ -37,7 +37,6 @@ const DashboardCustomHooks = () => {
   })
 
   const auth = useAuth()
-  console.log('auth', auth)
 
   useEffect(() => {
     getStudentScheduler()
@@ -45,7 +44,6 @@ const DashboardCustomHooks = () => {
     getStudentDetails()
     getRolloverList()
     getApplicationCode()
-    getRolloverPaymentStatus()
   }, [])
 
   const getStudentScheduler = async () => {
@@ -98,13 +96,11 @@ const DashboardCustomHooks = () => {
       const response = await StudentService?.getFeePaymentList(payload, auth?.user?.studentCode)
       if (response?.data?.statusCode === status.successCode && response?.data?.data) {
         setApplicationCode(response?.data?.data?.data[0]?.applicationCode)
+        const filteredData = response?.data?.data?.data?.filter(
+          (entry: { feeModeCode: string }) => entry.feeModeCode === 'Rollover'
+        )
+        filteredData.map((entry: { paymentStatus: string }) => setPaymentStatus(entry.paymentStatus))
       }
-    }
-  }
-  const getRolloverPaymentStatus = async () => {
-    if (auth?.user?.studentCode) {
-      const rolloverResponse = await StudentService?.getRolloverPaymentStatus(auth?.user?.studentCode)
-      setPaymentStatus(rolloverResponse?.data?.data)
     }
   }
 
