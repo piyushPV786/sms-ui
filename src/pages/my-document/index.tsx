@@ -159,7 +159,9 @@ const DocumentList = () => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Tooltip placement='top' title={row?.name}>
-              <StyledLink onClick={() => handleView(row?.name, row?.code)}>{row?.name}</StyledLink>
+              <StyledLink sx={{ fontSize: 12 }} onClick={() => handleView(row?.name, row?.code)}>
+                {row?.name}
+              </StyledLink>
             </Tooltip>
           </Box>
         )
@@ -169,9 +171,11 @@ const DocumentList = () => {
     {
       flex: 0.1,
       field: 'documentType',
-      minWidth: 140,
+      minWidth: 200,
       headerName: 'Document Type',
-      renderCell: ({ row }: CellType) => <Typography>{row.documentTypeCode ? row.documentTypeCode : '-'}</Typography>
+      renderCell: ({ row }: CellType) => (
+        <Typography variant='h6'>{row.documentTypeCode ? row.documentTypeCode : '-'}</Typography>
+      )
     },
     {
       flex: 0.1,
