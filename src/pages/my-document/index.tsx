@@ -157,9 +157,11 @@ const DocumentList = () => {
       headerName: 'File Name',
       renderCell: ({ row }: CellType) => {
         return (
-          <Tooltip placement='top' title={row?.name}>
-            <StyledLink>{row?.name}</StyledLink>
-          </Tooltip>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Tooltip placement='top' title={row?.name}>
+              <StyledLink onClick={() => handleView(row?.name, row?.code)}>{row?.name}</StyledLink>
+            </Tooltip>
+          </Box>
         )
       }
     },
