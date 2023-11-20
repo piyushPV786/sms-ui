@@ -101,6 +101,33 @@ const RollOver = () => {
     setDialogShow(false)
     reset()
   }
+  const PassedModulesByYear: [] = []
+  const RolloverModulesByYear: [] = []
+
+  rollover?.passedModules?.reduce((acc: any, data: { academicYearOfProgram: number }) => {
+    const year = data?.academicYearOfProgram
+    acc[year - 1] = acc[year - 1] || []
+    acc[year - 1].push(data)
+    
+return acc
+  }, PassedModulesByYear)
+
+  rollover?.rollOverModules?.reduce((acc: any, data: { academicYearOfProgram: number }) => {
+    const year = data?.academicYearOfProgram
+    acc[year - 1] = acc[year - 1] || []
+    acc[year - 1].push(data)
+    
+return acc
+  }, RolloverModulesByYear)
+
+  const Year = (year: number) => {
+    if (year === 1) return '1st YEAR'
+    if (year === 2) return '2nd YEAR'
+    if (year === 3) return '3rd YEAR'
+    if (year === 4) return '4th YEAR'
+    if (year === 5) return '5th YEAR'
+    if (year === 6) return '6th YEAR'
+  }
 
   return (
     <Grid>
@@ -111,7 +138,6 @@ const RollOver = () => {
         You have passed the dependent modules. Please pay the 500 and admission fee to roll over next semester.
       </Typography>
       <WhiteButton
-        variant='contained'
         disabled={paymentStatus === 'SUCCESSFUL'}
         sx={{ mr: 2 }}
         onClick={() => {
@@ -143,87 +169,78 @@ const RollOver = () => {
           </DialogTitle>
           <DialogContent>
             <Grid container spacing={6} mt={1}>
-              {rollover &&
-                rollover?.passedModules?.map(
-                  (data: { name: string; code: string; academicYearOfProgram: number }, id) => {
-                    return (
-                      <Grid item key={id} xs={12}>
-                        {data && (
-                          <>
-                            {data?.academicYearOfProgram === 5 ? (
-                              <Typography fontWeight='bold'>5th YEAR - COMPLETED MODULES</Typography>
-                            ) : data?.academicYearOfProgram === 2 ? (
-                              <Typography fontWeight='bold'>2nd YEAR - COMPLETED MODULES</Typography>
-                            ) : data?.academicYearOfProgram === 3 ? (
-                              <Typography fontWeight='bold'>3rd YEAR - COMPLETED MODULES</Typography>
-                            ) : data?.academicYearOfProgram === 4 ? (
-                              <Typography fontWeight='bold'>4th YEAR - COMPLETED MODULES</Typography>
-                            ) : (
-                              <Typography fontWeight='bold'>1st YEAR - COMPLETED MODULES</Typography>
-                            )}
-                            <Grid mt={1}>
-                              <Chip
-                                key={data?.name}
-                                skin='light'
-                                size='small'
-                                label={data?.name}
-                                color='success'
-                                sx={{
-                                  textTransform: 'capitalize',
-                                  '& .MuiChip-label': { lineHeight: '18px' },
-                                  borderRadius: '10px',
-                                  boxShadow: '2px 4px 4px 0px #9f9f9f75',
-                                  margin: '4px'
-                                }}
-                              />
-                            </Grid>
-                          </>
-                        )}
-                      </Grid>
-                    )
-                  }
-                )}
-              {rollover &&
-                rollover?.rollOverModules?.map(
-                  (data: { name: string; code: string; academicYearOfProgram: number }, id) => {
-                    return (
-                      <Grid item key={id} xs={12}>
-                        {data && (
-                          <>
-                            {data?.academicYearOfProgram === 5 ? (
-                              <Typography fontWeight='bold'>5th YEAR - ROLLOVER MODULES</Typography>
-                            ) : data?.academicYearOfProgram === 2 ? (
-                              <Typography fontWeight='bold'>2nd YEAR - ROLLOVER MODULES</Typography>
-                            ) : data?.academicYearOfProgram === 3 ? (
-                              <Typography fontWeight='bold'>3rd YEAR - ROLLOVER MODULES</Typography>
-                            ) : data?.academicYearOfProgram === 4 ? (
-                              <Typography fontWeight='bold'>4th YEAR - ROLLOVER MODULES</Typography>
-                            ) : (
-                              <Typography fontWeight='bold'>1st YEAR - ROLLOVER MODULES</Typography>
-                            )}
-
-                            <Grid mt={1}>
-                              <Chip
-                                key={data?.name}
-                                skin='light'
-                                size='small'
-                                label={data?.name}
-                                color='success'
-                                sx={{
-                                  textTransform: 'capitalize',
-                                  '& .MuiChip-label': { lineHeight: '18px' },
-                                  borderRadius: '10px',
-                                  boxShadow: '2px 4px 4px 0px #9f9f9f75',
-                                  margin: '4px'
-                                }}
-                              />
-                            </Grid>
-                          </>
-                        )}
-                      </Grid>
-                    )
-                  }
-                )}
+              {PassedModulesByYear.length > 0 &&
+                PassedModulesByYear?.map((data: [], id: number) => {
+                  return (
+                    <>
+                      {data?.length > 0 && (
+                        <Grid item key={id} xs={12}>
+                          {data?.map((module: { name: string }, index) => {
+                            return (
+                              <>
+                                <Typography fontWeight='bold'>{Year(index + 1)} - COMPLETED MODULES</Typography>
+                                {module && (
+                                  <Grid mt={1}>
+                                    <Chip
+                                      key={module?.name}
+                                      skin='light'
+                                      size='small'
+                                      label={module?.name}
+                                      color='success'
+                                      sx={{
+                                        textTransform: 'capitalize',
+                                        '& .MuiChip-label': { lineHeight: '18px' },
+                                        borderRadius: '10px',
+                                        boxShadow: '2px 4px 4px 0px #9f9f9f75',
+                                        margin: '4px'
+                                      }}
+                                    />
+                                  </Grid>
+                                )}
+                              </>
+                            )
+                          })}
+                        </Grid>
+                      )}
+                    </>
+                  )
+                })}
+              {RolloverModulesByYear.length > 0 &&
+                RolloverModulesByYear.map((data: [], id) => {
+                  return (
+                    <>
+                      {data?.length > 0 && (
+                        <Grid item key={id} xs={12}>
+                          {data?.map((module: { name: string }, index) => {
+                            return (
+                              <>
+                                <Typography fontWeight='bold'>{Year(index + 1)} - COMPLETED MODULES</Typography>
+                                {module && (
+                                  <Grid mt={1}>
+                                    <Chip
+                                      key={module?.name}
+                                      skin='light'
+                                      size='small'
+                                      label={module?.name}
+                                      color='success'
+                                      sx={{
+                                        textTransform: 'capitalize',
+                                        '& .MuiChip-label': { lineHeight: '18px' },
+                                        borderRadius: '10px',
+                                        boxShadow: '2px 4px 4px 0px #9f9f9f75',
+                                        margin: '4px'
+                                      }}
+                                    />
+                                  </Grid>
+                                )}
+                              </>
+                            )
+                          })}
+                        </Grid>
+                      )}
+                    </>
+                  )
+                })}
               <Grid item xs={12}>
                 <Typography mb={3} variant='body2'>
                   ELECTIVES
