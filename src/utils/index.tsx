@@ -7,7 +7,8 @@ import { Dispatch, SetStateAction } from 'react'
 import { status } from 'src/context/common'
 import { CommonService } from 'src/service'
 import { IProgram } from 'src/types/common'
-
+import { AxiosResponse } from 'axios'
+import { AuthValuesType } from 'src/context/types'
 const ImagePayu = require('/public/images/payu.png') as string
 const ImagePayFast = require('/public/images/payfastImage.png') as string
 const ImageUkheshe = require('/public/images/ukheshy.png') as string
@@ -277,13 +278,13 @@ export const getSymbol = (list: Array<commonListTypes>, code: string) => {
 }
 
 export const getUkheshePayload = (
-  getPaymentResponse,
-  amount,
-  feeModeCode,
-  currencyCode,
-  applicationCode,
-  auth,
-  qualificaion
+  getPaymentResponse: AxiosResponse<any, any> | undefined,
+  amount: string | null,
+  feeModeCode: string | null,
+  currencyCode: string | null,
+  applicationCode: string,
+  auth: AuthValuesType,
+  qualificaion: string
 ) => {
   return {
     transactionId: getPaymentResponse?.data?.externalUniqueId,
