@@ -58,14 +58,16 @@ interface propsType {
   feeModeCode: string | null
   currencyCode: string | null
   applicationCode: string
+  qualificaion: string
 }
 
-const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode }: propsType) => {
+const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qualificaion }: propsType) => {
   const { ukhesheModal, setUkhesheModal, paymentResponse, ukhesheOnlinePay, loading } = UkhesheCustomHook({
     amount,
     feeModeCode,
     currencyCode,
-    applicationCode
+    applicationCode,
+    qualificaion
   })
 
   const [selectedPayment, setSelectedPaymentOption] = useState<string>('')

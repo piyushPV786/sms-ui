@@ -169,9 +169,9 @@ const PaymentList = () => {
       headerName: 'TRANSACTION / REFERENCE ID',
       renderCell: (row: IPaymentRow) => {
         return (
-          <Tooltip title={row.row.referenceNumber} describeChild placement='top-start'>
+          <Tooltip title={row.row.transactionId} describeChild placement='top-start'>
             <Typography variant='body2' sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {row.row.referenceNumber ? row.row.referenceNumber : '-'}
+              {row?.row?.transactionId ? row?.row?.transactionId : '-'}
             </Typography>
           </Tooltip>
         )

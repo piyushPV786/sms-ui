@@ -9,6 +9,13 @@ interface ICommonDocumentUploadParamTypes {
   file?: File
   studentCode: string | undefined
 }
+
+interface statusPayloadType {
+  filename: string
+  filetype: string
+  file?: File
+  studentCode: string | undefined
+}
 export default class Common {
   apiServer: AxiosInstance
   constructor(apiServer: AxiosInstance) {
@@ -23,6 +30,22 @@ export default class Common {
       nProgress.done()
 
       return response
+    } catch (err: any) {
+      console.log('Error fetching student detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
+
+  async setStatus(payload) {
+    nProgress.start()
+    const endUrlName = apiEndPoints.status
+    try {
+      const response = await this.apiServer.post(endUrlName, payload)
+      nProgress.done()
+
+      const result = response?.data?.data ? response?.data?.data : {}
+      return result
     } catch (err: any) {
       console.log('Error fetching student detail ========>', err?.message)
       nProgress.done()

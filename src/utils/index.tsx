@@ -276,6 +276,41 @@ export const getSymbol = (list: Array<commonListTypes>, code: string) => {
   return code
 }
 
+export const getUkheshePayload = (
+  getPaymentResponse,
+  amount,
+  feeModeCode,
+  currencyCode,
+  applicationCode,
+  auth,
+  qualificaion
+) => {
+  return {
+    transactionId: getPaymentResponse?.data?.externalUniqueId,
+    totalAmount: Number(amount),
+    totalPaidAmount: getPaymentResponse?.data?.amount,
+    feeModeCode: feeModeCode,
+    currencyCode: currencyCode,
+    paymentStatus: getPaymentResponse?.data?.status,
+    discountCode: '',
+    discountAmount: 0,
+    studentCode: auth?.user?.studentCode,
+    applicationCode: applicationCode,
+    paymentType: 'ONLINE',
+    ukheshe: {
+      paymentId: getPaymentResponse?.data?.paymentId,
+      gatewayTransactionId: getPaymentResponse?.data?.externalUniqueId,
+      amount: getPaymentResponse?.data?.amount,
+      status: getPaymentResponse?.data?.status,
+      walletId: getPaymentResponse?.data?.walletId,
+      currency: getPaymentResponse?.data?.currency,
+      externalUniqueId: getPaymentResponse?.data?.externalUniqueId,
+      paymentType: getPaymentResponse?.data?.paymentType
+    },
+    programName: qualificaion
+  }
+}
+
 export const getExtension = (name: string) => {
   const fileExtension = name?.split('/')?.pop()
 

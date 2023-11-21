@@ -13,6 +13,7 @@ const CheckoutResponse = () => {
       dueDate={slug && slug[3]}
       applicationCode={slug && slug[4]}
       rollover={!!rollover}
+      qualificaion={slug && slug[5]}
     />
   )
 }

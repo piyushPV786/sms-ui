@@ -1,19 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react'
 import { useAuth } from 'src/hooks/useAuth'
-import { FinanceService, StudentService } from 'src/service'
+import { FinanceService, CommonService, StudentService } from 'src/service'
 import { getPaymentInfo, paymentLogin } from 'src/service/payment'
 import { IPaymentPayload, IPaymentResponse } from 'src/types/common'
 import { successToast, errorToast } from '../common'
+import { getUkheshePayload } from 'src/utils'
+import { feeStatus, paymentType } from 'src/context/common'
 
 interface propsType {
   amount: string | null
   feeModeCode: string | null
   currencyCode: string | null
   applicationCode: string
+  qualificaion: string
 }
 
-const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode, applicationCode }: propsType) => {
+const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode, applicationCode, qualificaion }: propsType) => {
   const auth = useAuth()
 
   const [ukhesheModal, setUkhesheModal] = useState<boolean>(false)
@@ -33,34 +36,28 @@ const UkhesheCustomHook = ({ amount, feeModeCode, currencyCode, applicationCode 
         const getPaymentResponse = await getPaymentInfo(paymentResponse?.paymentId)
 
         if (getPaymentResponse?.data?.status == 'SUCCESSFUL') {
-          const payload = {
-            transactionId: getPaymentResponse?.data?.externalUniqueId,
-            totalAmount: Number(amount),
-            totalPaidAmount: getPaymentResponse?.data?.amount,
-            feeModeCode: feeModeCode,
-            currencyCode: currencyCode,
-            paymentStatus: getPaymentResponse?.data?.status,
-            discountCode: '',
-            discountAmount: 0,
-            studentCode: auth?.user?.studentCode,
-            applicationCode: applicationCode,
-            ukheshe: {
-              paymentId: getPaymentResponse?.data?.paymentId,
-              gatewayTransactionId: getPaymentResponse?.data?.externalUniqueId,
-              amount: getPaymentResponse?.data?.amount,
-              status: getPaymentResponse?.data?.status,
-              walletId: getPaymentResponse?.data?.walletId,
-              currency: getPaymentResponse?.data?.currency,
-              externalUniqueId: getPaymentResponse?.data?.externalUniqueId,
-              paymentType: getPaymentResponse?.data?.paymentType
-            }
-          }
+          const payload = getUkheshePayload(
+            getPaymentResponse,
+            amount,
+            feeModeCode,
+            currencyCode,
+            applicationCode,
+            auth,
+            qualificaion
+          )
           const sendPaymentInfo = await FinanceService?.updateUkheshePayment(payload)
           if (sendPaymentInfo?.status == 201) {
             setLoading(false)
-            successToast('Payment Successfull')
-          } else {
-            errorToast('Payment Failed')
+            const payload = {
+              source: 'apply,enrolment',
+              status: feeStatus.PROG_FEE_ACCEPTED,
+              aapCode: applicationCode,
+              paymentMode: paymentType.ONLINE
+            }
+            const res = await CommonService.setStatus(payload)
+            if (res) {
+              successToast('Payment Successfull')
+            }
           }
           clearInterval(interval)
         } else if (getPaymentResponse?.data?.status == 'ERROR_PERM') {

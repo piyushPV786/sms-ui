@@ -122,7 +122,7 @@ export interface IDataPaymentRow {
   totalAmount: string
   paymentDate: string
   dueDate: string
-  referenceNumber: string
+  transactionId: string
 }
 export interface IPaymentRow {
   row: IDataPaymentRow
