@@ -11,10 +11,10 @@ interface ICommonDocumentUploadParamTypes {
 }
 
 interface statusPayloadType {
-  filename: string
-  filetype: string
-  file?: File
-  studentCode: string | undefined
+  source: string
+  status: string
+  aapCode: string
+  paymentMode: string
 }
 export default class Common {
   apiServer: AxiosInstance
@@ -37,7 +37,7 @@ export default class Common {
     nProgress.done()
   }
 
-  async setStatus(payload) {
+  async setStatus(payload: statusPayloadType) {
     nProgress.start()
     const endUrlName = apiEndPoints.status
     try {
