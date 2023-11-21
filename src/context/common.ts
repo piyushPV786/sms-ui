@@ -233,6 +233,9 @@ export enum FileError {
   fileSizeError = 'File is larger than 500 KB',
   fileTypeError = 'File type must be png, jpeg and pdf'
 }
+export const feeStatus = {
+  PROG_FEE_ACCEPTED: 'PROG-FEE-ACCEPTED'
+}
 
 export enum QueryDocumentCode {
   code = 'QUERYDOC'
@@ -256,6 +259,11 @@ export enum QueryLimit {
 
 export enum QueryFileSize {
   maxSize = 500 * 1024 // 500KB
+}
+
+export enum paymentType {
+  ONLINE = 'ONLINE',
+  OFFLINE = 'OFFLINE'
 }
 
 export interface IRow {

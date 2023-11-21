@@ -31,9 +31,10 @@ interface propsType {
   dueDate: string | any
   applicationCode: string
   rollover?: boolean
+  qualificaion: string
 }
 
-const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode }: propsType) => {
+const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode, qualificaion }: propsType) => {
   // ** State
   const [showPromoCode, setShowPromoCOde] = useState<boolean>(false)
   const [promoCode, setPromoCode] = useState<string>('')
@@ -225,6 +226,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode 
         feeModeCode={feeModeCode}
         currencyCode={currencyCode}
         applicationCode={applicationCode}
+        qualificaion={qualificaion}
       />
     </>
   )

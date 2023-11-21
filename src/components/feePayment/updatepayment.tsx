@@ -12,16 +12,18 @@ import { UpdatePayment, UpdatepaymentItem } from 'src/types/common'
 
 const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePayment) => {
   const router = useRouter()
-  console.log(rows)
 
   const handlePay = (
     amount: string | null,
     feeModeCode: string | null,
     currencyCode: string | null,
     dueDate: string,
-    applicationCode: string
+    applicationCode: string,
+    qualificaion: string
   ) => {
-    router.push(`/payment/checkout/${amount}/${feeModeCode}/${currencyCode}/${dueDate}/${applicationCode}`)
+    router.push(
+      `/payment/checkout/${amount}/${feeModeCode}/${currencyCode}/${dueDate}/${applicationCode}/${qualificaion}`
+    )
   }
 
   return (
@@ -85,7 +87,8 @@ const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePa
                             item?.feeModeCode,
                             item.currencyCode,
                             item.dueDate,
-                            item?.applicationCode
+                            item?.applicationCode,
+                            String(item?.programName)
                           )
                         }}
                         sx={{ position: 'absolute', borderRadius: '25px' }}
