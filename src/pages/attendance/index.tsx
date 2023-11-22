@@ -40,7 +40,7 @@ const AttendanceList = () => {
   const [value, setValue] = useState<string>('')
   const [pageSize, setPageSize] = useState<number>(10)
   const [count, setCount] = useState<number>(0)
-  const [pageNumber, setPageNumber] = useState<number>(1)
+  const [pageNumber, setPageNumber] = useState<number>(0)
   const [tableData, setTableData] = useState<IRow[]>([])
   const [courses, setCourses] = useState<Array<commonListTypes>>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -58,7 +58,7 @@ const AttendanceList = () => {
   }
   const payload = {
     studentCode: studentDetails?.studentCode,
-    pageNumber: pageNumber,
+    pageNumber: pageNumber + 1,
     pageSize: pageSize,
     query: value
   }
