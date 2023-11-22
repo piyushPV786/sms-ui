@@ -15,6 +15,8 @@ import { Controller, FieldValues, useForm } from 'react-hook-form'
 import { useAuth } from 'src/hooks/useAuth'
 import { AcademicService } from 'src/service'
 import { downloadFile } from 'src/utils'
+import { successToastBottomRight } from '../common'
+import { downloadSuccess } from 'src/context/common'
 
 interface ICategory {
   programCode: string | null
@@ -54,6 +56,7 @@ const ExamTicket = () => {
     if (!!item?.url) {
       const fileName = getFileName(item?.url)
       !!fileName && downloadFile(item?.url, fileName)
+      successToastBottomRight(`${fileName} ${downloadSuccess.download}`)
     }
   }
 

@@ -86,7 +86,7 @@ const AttendanceList = () => {
   useEffect(() => {
     getDetails()
     getCourses()
-  }, [studentDetails])
+  }, [studentDetails?.studentCode])
 
   useEffect(() => {
     getDetails()
@@ -172,12 +172,11 @@ const AttendanceList = () => {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[10, 25]}
               component='div'
               count={count}
-              rowsPerPage={pageSize}
               page={pageNumber}
               onPageChange={handleChangePage}
+              rowsPerPage={pageSize}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </Card>
