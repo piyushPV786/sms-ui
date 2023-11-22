@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // ** React Imports
-import React, { useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 
 // ** MUI Imports
@@ -36,8 +36,6 @@ interface propsType {
 
 const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode, qualificaion }: propsType) => {
   // ** State
-  const [showPromoCode, setShowPromoCOde] = useState<boolean>(false)
-  const [promoCode, setPromoCode] = useState<string>('')
 
   const router = useRouter()
 
@@ -45,9 +43,6 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
     e.preventDefault()
     const route = e.target.id
     router.push(`/${route}`)
-  }
-  const applyDiscount = async () => {
-    undefined
   }
 
   return (
@@ -151,55 +146,6 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                             >
                               {` R ${amount}`}
                             </Typography>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      <Grid className='mt-5' xs={12} sx={{}}>
-                        <Grid container sx={{ display: 'flex', justifyContent: 'space-around' }}>
-                          <Grid item xs={12}>
-                            {!showPromoCode && (
-                              <div className='text-center show-promo-code'>
-                                <a
-                                  style={{ color: '#008554', textDecoration: 'none' }}
-                                  onClick={() => setShowPromoCOde(!showPromoCode)}
-                                  href='#'
-                                  className='w-100 text-dark'
-                                >
-                                  <Typography variant='body1' color={'primary'} style={{ textDecoration: 'underline' }}>
-                                    <span>Have a promo code?</span>
-                                  </Typography>
-                                </a>
-                              </div>
-                            )}
-                            {showPromoCode && (
-                              <div className='w-100 text-center ps-4 pe-4'>
-                                <div className='input-group mb-2 mt-4'>
-                                  <input
-                                    type='text'
-                                    className='form-control'
-                                    value={promoCode}
-                                    placeholder='Enter promo code'
-                                    onChange={e => {
-                                      setPromoCode(e?.target?.value)
-                                    }}
-                                  />
-                                  <div className='input-group-append cursor-pointer'>
-                                    <span
-                                      onClick={applyDiscount}
-                                      style={{
-                                        padding: '0.49rem 0.75rem',
-                                        backgroundColor: '#008554',
-                                        border: 0
-                                      }}
-                                      className={'input-group-text'}
-                                      id='basic-addon2'
-                                    >
-                                      Apply
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
                           </Grid>
                         </Grid>
                       </Grid>
