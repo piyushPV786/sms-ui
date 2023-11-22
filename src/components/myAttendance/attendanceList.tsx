@@ -21,7 +21,7 @@ import ClassList from './classList/classlistData'
 import ClassTableHeader from './classList/classTableHeader'
 import { AttendanceStatusObj, IRow } from 'src/context/common'
 import { OperationService } from 'src/service'
-import { getCourseName, serialNumber } from 'src/utils'
+import { getCourseName, minTwoDigits, serialNumber } from 'src/utils'
 import { commonListTypes } from 'src/types/dataTypes'
 
 interface IAttendanceProps {
@@ -51,9 +51,7 @@ function AttendanceListRow({ row, index, pageNumber, pageSize, courses }: IAtten
   const handleManageCourse = async (scheduleCode: number | string) => {
     setOpen(!open)
     const response = await OperationService?.getClassList(scheduleCode)
-    console.log(response)
-    const responseData = [{ ...response?.classManagementdata, ...response?.attendanceData }]
-    setClassList(responseData)
+    setClassList([response])
   }
 
   return (
@@ -61,7 +59,7 @@ function AttendanceListRow({ row, index, pageNumber, pageSize, courses }: IAtten
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell sx={{ minWidth: 60, flex: 0.15 }}>
           <Box>
-            <Typography>{serialNumber(index, pageNumber + 1, pageSize)}</Typography>
+            <Typography>{minTwoDigits(serialNumber(index, pageNumber, pageSize))}</Typography>
           </Box>
         </TableCell>
         <TableCell sx={{ minWidth: 150, flex: 0.25 }}>
@@ -79,7 +77,12 @@ function AttendanceListRow({ row, index, pageNumber, pageSize, courses }: IAtten
         </TableCell>
 
         <TableCell sx={{ flex: 0.17, minWidth: 140 }}>
-          <Typography variant='caption'>{getCourseName(courses, row?.courseCode)}</Typography>
+          <Typography
+            sx={{ color: 'text.primary', fontWeight: 500, lineHeight: '22px', letterSpacing: '.1px' }}
+            variant='body2'
+          >
+            {getCourseName(courses, row?.courseCode)}
+          </Typography>
         </TableCell>
 
         <TableCell sx={{ flex: 0.18, minWidth: 120 }}>{row?.totalClass}</TableCell>
@@ -164,9 +167,8 @@ function AttendanceListRow({ row, index, pageNumber, pageSize, courses }: IAtten
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {classList?.map((row: IClassList, i: number) => (
-                        <ClassList row={row} key={i} index={i} />
-                      ))}
+                      {classList &&
+                        classList?.map((row: IClassList, i: number) => <ClassList row={row} key={i} index={i} />)}
                     </TableBody>
                   </Table>
                 </TableContainer>
