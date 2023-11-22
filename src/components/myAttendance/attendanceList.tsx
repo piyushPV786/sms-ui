@@ -59,7 +59,7 @@ function AttendanceListRow({ row, index, pageNumber, pageSize, courses }: IAtten
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell sx={{ minWidth: 60, flex: 0.15 }}>
           <Box>
-            <Typography>{minTwoDigits(serialNumber(index, pageNumber, pageSize))}</Typography>
+            <Typography>{minTwoDigits(serialNumber(index, pageNumber + 1, pageSize))}</Typography>
           </Box>
         </TableCell>
         <TableCell sx={{ minWidth: 150, flex: 0.25 }}>
