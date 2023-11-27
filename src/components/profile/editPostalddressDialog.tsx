@@ -125,7 +125,9 @@ const EditPostalAddressDialog = ({
       <Dialog
         PaperProps={{ style: { minHeight: '500px', minWidth: '700px' } }}
         open={editDialogOpen}
-        onClose={handleEditDialogClose}
+        onClose={(event, reason) => {
+          reason !== 'backdropClick' && handleEditDialogClose()
+        }}
       >
         <form onSubmit={handleSubmit(onSubmitAddress)}>
           <DialogTitle align='center' color='white' style={{ background: '#4f958d', maxHeight: '70px' }}>

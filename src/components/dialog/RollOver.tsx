@@ -108,16 +108,16 @@ const RollOver = () => {
     const year = data?.academicYearOfProgram
     acc[year - 1] = acc[year - 1] || []
     acc[year - 1].push(data)
-    
-return acc
+
+    return acc
   }, PassedModulesByYear)
 
   rollover?.rollOverModules?.reduce((acc: any, data: { academicYearOfProgram: number }) => {
     const year = data?.academicYearOfProgram
     acc[year - 1] = acc[year - 1] || []
     acc[year - 1].push(data)
-    
-return acc
+
+    return acc
   }, RolloverModulesByYear)
 
   const Year = (year: number) => {
@@ -154,7 +154,9 @@ return acc
         maxWidth='sm'
         fullWidth
         scroll='body'
-        onClose={() => setDialogShow(false)}
+        onClose={(event, reason) => {
+          reason !== 'backdropClick' && setDialogShow(false)
+        }}
         TransitionComponent={Transition}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
