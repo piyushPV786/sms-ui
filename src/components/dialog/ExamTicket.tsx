@@ -68,7 +68,14 @@ const ExamTicket = () => {
         </Box>
         <Box pl={1}>Download Exam Ticket</Box>
       </Box>
-      <Dialog fullWidth maxWidth='sm' open={open}>
+      <Dialog
+        fullWidth
+        maxWidth='sm'
+        open={open}
+        onClose={(event, reason) => {
+          reason !== 'backdropClick' && setOpen(!open)
+        }}
+      >
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogTitle
             display='flex'
