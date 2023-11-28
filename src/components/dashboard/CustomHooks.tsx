@@ -44,6 +44,7 @@ const DashboardCustomHooks = () => {
     getStudentDetails()
     getRolloverList()
     getApplicationCode()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getStudentScheduler = async () => {

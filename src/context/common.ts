@@ -151,7 +151,7 @@ export interface ISchedule {
 }
 export interface IScheduleData {
   id: number
-  schedule: ISchedule[]
+  courseSchedule: ISchedule[]
 }
 export enum ErrorMessage {
   emailRequired = 'Email is required',

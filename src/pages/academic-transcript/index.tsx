@@ -38,12 +38,12 @@ const StudentDashboard = () => {
   }
 
   const getStudentList = async () => {
-    const response = await AcademicService?.getStudentAcademicDetails()
-    setData(response?.data?.data?.total)
+    const response = await AcademicService?.getStudentAcademicDetails(auth.user?.studentCode)
+    setData(response?.data?.data)
   }
-  console.log('studentDetails', studentDetails)
   React.useEffect(() => {
     getStudentList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   const columns = [

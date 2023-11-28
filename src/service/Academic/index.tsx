@@ -8,9 +8,9 @@ export default class Academic {
     this.apiServer = apiServer
   }
 
-  async getStudentAcademicDetails() {
+  async getStudentAcademicDetails(studentCode: string) {
     nProgress.start()
-    const endUrlName = apiEndPoints.academics
+    const endUrlName = `${apiEndPoints.academics}${studentCode}`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()

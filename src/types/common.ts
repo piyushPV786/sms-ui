@@ -92,12 +92,12 @@ export interface IQueryDefaultValues {
 }
 
 export interface IPaymentPayload {
-  externalUniqueId: string
-  amount: string
-  currency: string
-  type: string
-  paymentMechanism: string
-  paymentData: string
+  externalUniqueId?: string
+  amount?: string
+  currency?: string
+  type?: string
+  paymentMechanism?: string
+  paymentData?: string
 }
 
 export interface IPaymentResponse {
