@@ -26,6 +26,7 @@ const DashboardCustomHooks = () => {
   }
 
   const [scheduler, setScheduler] = useState<any>(null)
+  const [classes, setClasses] = useState<any>(null)
   const [myDayData, setMyDay] = useState<any>(null)
   const [profileImage, setProfileImage] = useState<string | undefined>()
   const [studentDetails, setStudentDetails] = useState<studentType>()
@@ -44,15 +45,25 @@ const DashboardCustomHooks = () => {
     getStudentDetails()
     getRolloverList()
     getApplicationCode()
+    getMyClasses()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getStudentScheduler = async () => {
     if (auth?.user?.studentCode) {
-      const schedulerResponse = await StudentService?.studentScheduler(auth?.user?.studentCode)
+      const date = DDMMYYYDateFormat(new Date())
+      const schedulerResponse = await StudentService?.studentScheduler(auth?.user?.studentCode, date)
       setScheduler(schedulerResponse?.data?.data)
 
       console.log('schedulerResponse =================>', schedulerResponse)
+    }
+  }
+  const getMyClasses = async () => {
+    if (auth?.user?.studentCode) {
+      const classesResponse = await StudentService?.getMyClasses(auth?.user?.studentCode)
+      setClasses(classesResponse)
+
+      console.log('MyClasses Response =================>', classesResponse)
     }
   }
 
@@ -105,7 +116,7 @@ const DashboardCustomHooks = () => {
     }
   }
 
-  return { scheduler, myDayData, profileImage, studentDetails, rollover, applicationCode, paymentStatus }
+  return { scheduler, myDayData, profileImage, studentDetails, rollover, applicationCode, paymentStatus, classes }
 }
 
 export default DashboardCustomHooks

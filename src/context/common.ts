@@ -148,6 +148,7 @@ export interface ISchedule {
   id: number
   individualAssignmentDueDate: Date
   course: ICourses
+  programSchedule: any
 }
 export interface IScheduleData {
   id: number
