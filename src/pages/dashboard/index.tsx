@@ -10,11 +10,11 @@ import { ISchedule, IScheduleData } from 'src/context/common'
 
 const StudentDashboard = () => {
   const { scheduler, myDayData, profileImage } = DashboardCustomHooks()
-
   const program =
-    scheduler && scheduler?.map((data: IScheduleData) => data?.schedule?.find((i: ISchedule) => i)?.course?.program)
-  const courses = scheduler && scheduler?.map((data: IScheduleData) => data?.schedule?.find((i: ISchedule) => i))
-  const dayData = myDayData && myDayData?.map((data: IScheduleData) => data?.schedule?.find((i: ISchedule) => i))
+    scheduler &&
+    scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i)?.course?.program)
+  const courses = scheduler && scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i))
+  const dayData = myDayData && myDayData?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i))
 
   return (
     <Box>

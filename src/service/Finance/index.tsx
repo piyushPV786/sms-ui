@@ -23,11 +23,11 @@ export default class Finance {
     nProgress.done()
   }
 
-  async getUkheshePaymentTocken() {
+  async getUkheshePaymentTocken(payload: { identity: string | undefined; password: string | undefined }) {
     nProgress.start()
     const endUrlName = apiEndPoints.ukheshePyment
     try {
-      const response = await this.apiServer.post('payments/get-ukheshe-token')
+      const response = await this.apiServer.post(endUrlName, { ...payload })
       nProgress.done()
 
       return response

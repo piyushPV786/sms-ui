@@ -261,14 +261,14 @@ export default class Student {
   async studentScheduler(studentCode: string, date?: string) {
     nProgress.start()
     let endUrlName = `${apiEndPoints.studentSchedule}${studentCode}`
-    if (date) endUrlName = `${endUrlName}?startDate=${date}&endDate=${date}`
+    if (date) endUrlName = `${endUrlName}?startDate=${'27-11-2023'}&endDate=${'29-11-2023'}`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
 
       return response
     } catch (err: any) {
-      console.log('Error ResetPasswordLink ========>', err?.message)
+      console.log('Error Scheduler Data ========>', err?.message)
       nProgress.done()
     }
     nProgress.done()

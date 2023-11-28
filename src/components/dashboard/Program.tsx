@@ -40,7 +40,7 @@ const Program = ({ programData }: IProgramProps) => {
                 <Typography
                   variant='caption'
                   sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}
-                >{`${program.name}(${program?.code})`}</Typography>
+                >{`${program?.name}(${program?.code})`}</Typography>
               </Box>
             ))}
           {/* <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>

@@ -53,7 +53,7 @@ const AppCalendar = () => {
   const parse = () => {
     const eventArr: any = []
     scheduler &&
-      scheduler[0]?.schedule?.map((item: schedulerType, i: string) => {
+      scheduler[0]?.courseSchedule?.map((item: schedulerType, i: string) => {
         item &&
           eventArr.push({
             id: `Exam ${i}`,
@@ -68,7 +68,7 @@ const AppCalendar = () => {
           })
         item &&
           eventArr.push({
-            id: `Digital-assingment${i}`,
+            id: `Digital-assignment${i}`,
             url: '',
             title: 'Digital assingment',
             start: item?.digitalAssessmentDueDate,
@@ -126,6 +126,7 @@ const AppCalendar = () => {
 
   useEffect(() => {
     parse()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduler])
 
   const calendarsColor: CalendarColors = {

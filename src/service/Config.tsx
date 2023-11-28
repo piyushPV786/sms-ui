@@ -45,7 +45,7 @@ export const commonAxiosConfig = {
 export const apiEndPoints = Object.freeze({
   paymentList: '/payments/payment-details',
   admission: '/admissions/',
-  academics: '/academics/',
+  academics: '/academics/academic-record/',
   forgotPassword: 'user/forgot-password',
   updatePassword: 'user/update-password',
   logout: '/user/logout',
@@ -58,7 +58,7 @@ export const apiEndPoints = Object.freeze({
   identificationType: '/common/identification-Type',
   state: '/common/state',
   address: '/user/update-address/',
-  studentSchedule: '/scheduler/',
+  studentSchedule: '/scheduler/detail/',
   userDocument: '/user/documnents',
   uploadFileUrl: '/common/document/upload',
   getFileUrl: '/common/document',
