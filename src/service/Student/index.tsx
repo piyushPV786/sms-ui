@@ -243,6 +243,21 @@ export default class Student {
     }
     nProgress.done()
   }
+  async getMyClasses(studentCode: string) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.class}/${studentCode}`
+
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return console.log('classes', response)
+    } catch (err: any) {
+      console.log('Error fetching user document list ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
+  }
 
   async updateAddress(payload: IAddressP, studentCode: string) {
     nProgress.start()

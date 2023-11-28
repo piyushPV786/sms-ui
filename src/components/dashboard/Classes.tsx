@@ -67,7 +67,7 @@ const CustomBox = styled(Box)<BoxProps>(({ theme }) => ({
 //   marginTop: '10px'
 // }))
 
-const Classes = () => {
+const Classes = ({ classes }: any) => {
   return (
     <Card sx={{ position: 'relative', borderRadius: '0px' }}>
       <CardContent>
@@ -76,7 +76,7 @@ const Classes = () => {
             MY CLASSES
           </Typography>
           <Box>
-            {data.map((item: DataType, index: number) => {
+            {classes?.data.map((item: DataType, index: number) => {
               return (
                 <CustomBox
                   key={item.name}
