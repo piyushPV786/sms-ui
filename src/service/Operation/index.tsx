@@ -26,9 +26,9 @@ export default class Operation {
       nProgress.done()
     }
   }
-  async getClassList(studentCode: number | string) {
+  async getClassList(scheduleCode: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.courseList}/${studentCode}`
+    const endUrlName = `${apiEndPoints.class}/${scheduleCode}`
     try {
       const response = await this.apiServer.get(endUrlName)
 

@@ -91,5 +91,8 @@ export const apiEndPoints = Object.freeze({
   rollover: '/rollover',
   feeConversionRate: '/programs-fee/fee-conversion-rate',
   status: 'common/set-status',
-  class: 'class-management/class-data'
+  class: 'class-management/class-data',
+  facilitator: 'facilitator',
+  allProgram: '/programs/all',
+  program: '/programs'
 })
