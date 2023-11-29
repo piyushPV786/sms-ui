@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Box, Typography, TableCell, TableRow } from '@mui/material'
 import CustomChip from 'src/@core/components/mui/chip'
 import { AttendanceStatusObj } from 'src/context/common'
-import { DDMMYYDateFormate, serialNumber } from 'src/utils'
+import { DDMMYYDateFormate, DateFormateToDay, serialNumber } from 'src/utils'
 
 interface IClassListProps {
   row: any
@@ -32,7 +32,9 @@ const ClassList = ({ row, index }: IClassListProps) => {
         </TableCell>
 
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.attendanceData?.day}</Typography>
+          <Typography variant='body2'>
+            {row?.attendanceData ? DateFormateToDay(row?.attendanceData?.classDate) : '-'}
+          </Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
           <Typography variant='body2'>{row?.attendanceData?.from}</Typography>
