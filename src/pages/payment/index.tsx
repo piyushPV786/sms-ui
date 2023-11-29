@@ -122,8 +122,8 @@ const PaymentList = () => {
       renderCell: (row: IPaymentRow) => {
         return (
           <Typography variant='body2'>
-            {getSymbol(currencyList, row.row.currencyCode)}
-            &nbsp;
+            {/* {getSymbol(currencyList, row.row.currencyCode)}
+            &nbsp; */}
             {`R ${row.row.totalAmount}`}
           </Typography>
         )
