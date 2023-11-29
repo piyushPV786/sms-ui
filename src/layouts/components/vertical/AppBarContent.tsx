@@ -40,7 +40,13 @@ const AppBarContent = (props: Props) => {
         <Autocomplete hidden={hidden} settings={settings} />
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
-        <Button variant='contained' size='small' sx={{ borderRadius: 10, bgcolor: 'white' }} href={regenesysPortalUrl}>
+        <Button
+          variant='contained'
+          size='small'
+          sx={{ borderRadius: 10, bgcolor: 'white' }}
+          href={regenesysPortalUrl as any}
+          target='_blank'
+        >
           <Typography sx={{ fontSize: 15 }}>Start Learning</Typography>
         </Button>
         <ModeToggler settings={settings} saveSettings={saveSettings} />
