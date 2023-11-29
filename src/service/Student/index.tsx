@@ -243,21 +243,6 @@ export default class Student {
     }
     nProgress.done()
   }
-  async getMyClasses(studentCode: string) {
-    nProgress.start()
-    const endUrlName = `${apiEndPoints.class}/${studentCode}`
-
-    try {
-      const response = await this.apiServer.get(endUrlName)
-      nProgress.done()
-
-      return console.log('classes', response)
-    } catch (err: any) {
-      console.log('Error fetching user document list ========>', err?.message)
-      nProgress.done()
-    }
-    nProgress.done()
-  }
 
   async updateAddress(payload: IAddressP, studentCode: string) {
     nProgress.start()
@@ -273,10 +258,10 @@ export default class Student {
     }
     nProgress.done()
   }
-  async studentScheduler(studentCode: string, date?: string) {
+  async studentScheduler(studentCode: string, startDate?: string, endDate?: string) {
     nProgress.start()
     let endUrlName = `${apiEndPoints.studentSchedule}${studentCode}`
-    if (date) endUrlName = `${endUrlName}?startDate=${'27-11-2023'}&endDate=${'29-11-2023'}`
+    if (startDate) endUrlName = `${endUrlName}?startDate=${startDate}&endDate=${endDate}`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()

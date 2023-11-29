@@ -72,3 +72,21 @@ export interface DataParams {
   reason: string
   id: string
 }
+export interface ICommonParams {
+  statusCode: number
+  message: string
+  data: Daum[]
+}
+
+export interface Daum {
+  id: number
+  isActive: boolean
+  createdBy: any
+  createdAt: string
+  updatedBy: any
+  updatedAt: string
+  deletedBy: any
+  deletedAt: any
+  name: string
+  code: string
+}

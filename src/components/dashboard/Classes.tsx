@@ -2,6 +2,7 @@ import { Card, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
 import Box, { BoxProps } from '@mui/material/Box'
+import { getName } from 'src/utils'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(3)} !important`,
@@ -12,43 +13,15 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   backgroundColor: theme.palette.customColors.myDayBg
 }))
 interface DataType {
+  courseCode: string
+  programCode: string
+  facilitator: string
   name: string
   program: string
   date: string
   time: string
   imgSrc: string
 }
-
-const data: DataType[] = [
-  {
-    name: 'Cara Stevens',
-    program: 'Mathematics',
-    date: 'Today',
-    time: '09:00-10:00',
-    imgSrc: '/student/images/avatars/1.png'
-  },
-  {
-    name: 'Airi Satou',
-    program: 'Computer Science',
-    date: 'Today',
-    time: '09:00-10:00',
-    imgSrc: '/student/images/avatars/1.png'
-  },
-  {
-    name: 'Jens Brincker',
-    program: 'Geography',
-    date: 'Today',
-    time: '09:00-10:00',
-    imgSrc: '/student/images/avatars/1.png'
-  },
-  {
-    name: 'Mohan Lal lovewanshi',
-    program: 'Project Management',
-    date: 'Today',
-    time: '09:00-10:00',
-    imgSrc: '/student/images/avatars/1.png'
-  }
-]
 
 const CustomBox = styled(Box)<BoxProps>(({ theme }) => ({
   display: 'flex',
@@ -57,17 +30,7 @@ const CustomBox = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: theme.palette.customColors.myClassesBg
 }))
 
-// const StyledLink = styled('a')(({}) => ({
-//   display: 'flex',
-//   alignItems: 'center',
-//   textDecoration: 'none',
-//   fontSize: '14px',
-//   alignSelf: 'flex-end',
-//   color: '#008554',
-//   marginTop: '10px'
-// }))
-
-const Classes = ({ classes }: any) => {
+const Classes = ({ classes, invigilator, programList, courseList }: any) => {
   return (
     <Card sx={{ position: 'relative', borderRadius: '0px' }}>
       <CardContent>
@@ -76,15 +39,14 @@ const Classes = ({ classes }: any) => {
             MY CLASSES
           </Typography>
           <Box>
-            {classes?.data.map((item: DataType, index: number) => {
+            {classes?.classManagementData?.map((item: DataType, index: number) => {
               return (
                 <CustomBox
                   key={item.name}
                   sx={{
-                    mb: index !== data.length - 1 ? 5.75 : undefined
+                    mb: index !== classes.length - 1 ? 5.75 : undefined
                   }}
                 >
-                  <img width={34} height={34} alt={'profile image'} src={item.imgSrc} />
                   <Box
                     sx={{
                       ml: 3,
@@ -96,16 +58,15 @@ const Classes = ({ classes }: any) => {
                   >
                     <Box sx={{ mr: 2, display: 'flex', flexDirection: 'column' }}>
                       <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
-                        {item.name}
+                        {getName(invigilator, item.facilitator)}
                       </Typography>
-                      <Typography variant='caption'>{item.program}</Typography>
+                      <Typography variant='caption'>{getName(programList, item.programCode)}</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end' }}>
                       <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
                         <Typography variant='body2' sx={{ fontWeight: 600, color: 'text.primary' }}>
-                          {item.date}
+                          {getName(courseList, item.courseCode)}
                         </Typography>
-                        <Typography variant='caption'>{item.time}</Typography>
                       </Typography>
                     </Box>
                   </Box>
@@ -113,9 +74,6 @@ const Classes = ({ classes }: any) => {
               )
             })}
           </Box>
-          {/* <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>
-            <Launch fontSize='inherit' /> More Classes
-          </StyledLink> */}
         </Box>
       </CardContent>
     </Card>

@@ -24,7 +24,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { InlineTypography, StyledTypography } from 'src/styles/styled'
 import { useAuth } from 'src/hooks/useAuth'
 import { IProgram, IPaymentRow } from 'src/types/common'
-import { DDMMYYYDateFormat, getSymbol } from 'src/utils'
+import { DDMMYYYDateFormat } from 'src/utils'
 
 const initialState = {
   message: '',

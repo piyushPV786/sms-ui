@@ -48,7 +48,7 @@ function AttendanceListRow({ row, index, pageNumber, pageSize, courses }: IAtten
     setValue(val)
   }
 
-  const handleManageCourse = async (scheduleCode: number | string) => {
+  const handleManageCourse = async (scheduleCode: string) => {
     setOpen(!open)
     const response = await OperationService?.getClassList(scheduleCode)
     setClassList([response])
