@@ -124,7 +124,7 @@ const PaymentList = () => {
           <Typography variant='body2'>
             {getSymbol(currencyList, row.row.currencyCode)}
             &nbsp;
-            {row.row.totalAmount}
+            {`R ${row.row.totalAmount}`}
           </Typography>
         )
       }
@@ -200,7 +200,7 @@ const PaymentList = () => {
             </Grid>
           </Box>
         </Grid>
-        <Grid item md={8} xs={12}>
+        <Grid item md={UpcomingPayment?.length === 0 ? 12 : 8} xs={12}>
           <Card>
             <TableHeader value={value} selectedRows={selectedRows} handleFilter={handleFilter} />
             <DataGrid
