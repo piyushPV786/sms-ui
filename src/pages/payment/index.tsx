@@ -124,7 +124,7 @@ const PaymentList = () => {
           <Typography variant='body2'>
             {getSymbol(currencyList, row.row.currencyCode)}
             &nbsp;
-            {row.row.totalAmount}
+            {`R ${row.row.totalAmount}`}
           </Typography>
         )
       }
