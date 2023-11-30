@@ -26,9 +26,22 @@ export default class Operation {
       nProgress.done()
     }
   }
-  async getClassList(studentCode: number | string) {
+  async getClassList(scheduleCode: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.courseList}/${studentCode}`
+    const endUrlName = `${apiEndPoints.courselist}/${scheduleCode}`
+    try {
+      const response = await this.apiServer.get(endUrlName)
+
+      return response?.data?.data
+    } catch (err: any) {
+      console.log('Error while fetching user details =========>')
+    } finally {
+      nProgress.done()
+    }
+  }
+  async getClass(scheduleCode: string) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.class}/${scheduleCode}`
     try {
       const response = await this.apiServer.get(endUrlName)
 

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Box, Typography, TableCell, TableRow } from '@mui/material'
 import CustomChip from 'src/@core/components/mui/chip'
 import { AttendanceStatusObj } from 'src/context/common'
-import { serialNumber } from 'src/utils'
+import { DDMMYYDateFormate, DateFormateToDay, serialNumber } from 'src/utils'
 
 interface IClassListProps {
   row: any
@@ -26,41 +26,43 @@ const ClassList = ({ row, index }: IClassListProps) => {
               variant='body2'
               sx={{ color: 'text.primary', fontWeight: 500, lineHeight: '22px', letterSpacing: '.1px' }}
             >
-              {row?.classDate}
+              {row?.attendanceData && DDMMYYDateFormate(row?.attendanceData?.classDate)?.date}
             </Typography>
           </Box>
         </TableCell>
 
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.day}</Typography>
+          <Typography variant='body2'>
+            {row?.attendanceData ? DateFormateToDay(row?.attendanceData?.classDate) : '-'}
+          </Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.from}</Typography>
+          <Typography variant='body2'>{row?.attendanceData?.from}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.to}</Typography>
+          <Typography variant='body2'>{row?.attendanceData?.to}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.totalClass}</Typography>
+          <Typography variant='body2'>{row?.attendanceData?.totalClass}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.totalAttend}</Typography>
+          <Typography variant='body2'>{row?.attendanceData?.totalAttend}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.percentage}</Typography>
+          <Typography variant='body2'>{row?.attendanceData?.percentage}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.facilitator}</Typography>
+          <Typography variant='body2'>{row?.classManagementdata[0]?.facilitator}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 150 }}>
-          <Typography variant='body2'>{row?.venue}</Typography>
+          <Typography variant='body2'>{row?.classManagementdata[0]?.venue}</Typography>
         </TableCell>
         <TableCell sx={{ flex: 0.17, minWidth: 50 }}>
           <CustomChip
             skin='light'
             size='small'
-            label={row?.status}
-            color={AttendanceStatusObj[row?.status]}
+            label={row?.attendanceData?.status}
+            color={AttendanceStatusObj[row?.attendanceData?.status]}
             sx={{ textTransform: 'capitalize', '& .MuiChip-label': { lineHeight: '18px' } }}
           />
         </TableCell>

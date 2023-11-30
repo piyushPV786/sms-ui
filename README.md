@@ -15,9 +15,10 @@ NEXT_PUBLIC_FINANCE_BACKEND_API=https://dev-rms-finance-api.regenesys.net/api/
 NEXT_PUBLIC_FINANCE_BACKEND_API=https://dev-rms-finance-api.regenesys.net/api/
 NEXT_PUBLIC_OPERATION_BASE_URL=https://dev-rms-operation-api.regenesys.net/api/
 NEXT_PUBLIC_ENROLMENT_BACKEND_API=https://dev-rms-enrolment-api.regenesys.net/api/
-NEXT_PUBLIC_REGENIUS_PORTAL_LOGIN_URL=https://portal.regenesys.net/login/index.php
+NEXT_PUBLIC_REGENIUS_PORTAL_LOGIN_URL=https://regeniusuat.regenesys.net/login/index.php
 NEXT_PUBLIC_PAYMENT_TENENT_LOGIN_API=https://eclipse-java-sandbox.ukheshe.rocks/eclipse-conductor/rest/v1/tenants/
 NEXT_PUBLIC_PAYMENT_LOGIN_API=https://eclipse-java-sandbox.ukheshe.rocks/eclipse-conductor/rest/v1/authentication/login
+
 
 ```
 

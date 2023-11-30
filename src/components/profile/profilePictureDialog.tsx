@@ -80,7 +80,13 @@ const ProfilePictureDialog = ({
   }
 
   return (
-    <Dialog open={openProfileModal} PaperProps={{ style: { minWidth: '500px' } }}>
+    <Dialog
+      open={openProfileModal}
+      PaperProps={{ style: { minWidth: '500px' } }}
+      onClose={(event, reason) => {
+        reason !== 'backdropClick' && setProfileModal(!openProfileModal)
+      }}
+    >
       <DialogTitle align='center' color='primary' style={{ background: '#dbe7e3', maxHeight: '70px' }}>
         CHANGE PHOTO
       </DialogTitle>

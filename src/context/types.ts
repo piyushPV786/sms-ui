@@ -66,3 +66,16 @@ export interface IUploadDocumentParam {
   file: File & { isNewlyAdded?: boolean }
   fileType: string
 }
+
+export interface IProgramList {
+  code: string
+  id: number
+  isActive?: boolean
+  name: string
+}
+
+export interface ICourseList {
+  code: string
+  id: number
+  name: string
+}

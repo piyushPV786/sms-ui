@@ -9,6 +9,7 @@ import { CommonService } from 'src/service'
 import { IProgram } from 'src/types/common'
 import { AxiosResponse } from 'axios'
 import { AuthValuesType } from 'src/context/types'
+
 const ImagePayu = require('/public/images/payu.png') as string
 const ImagePayFast = require('/public/images/payfastImage.png') as string
 const ImageUkheshe = require('/public/images/ukheshy.png') as string
@@ -326,6 +327,14 @@ export const DDMMYYDateFormate = (date: Date) => {
   }
 
   return formateDate
+}
+
+export const DateFormateToDay = (date: Date) => {
+  const newDate: Date = new Date(date)
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const dayOfWeek = daysOfWeek[newDate.getDay()]
+
+  return dayOfWeek
 }
 
 export const getFileUrlToShow = async (

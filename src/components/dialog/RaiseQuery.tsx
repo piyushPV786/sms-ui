@@ -183,7 +183,14 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
           RAISE QUERY
         </Button>
       </Box>
-      <Dialog fullWidth maxWidth='sm' open={show} onClose={handleDiscard} onBackdropClick={handleDiscard}>
+      <Dialog
+        fullWidth
+        maxWidth='sm'
+        open={show}
+        onClose={(event, reason) => {
+          reason !== 'backdropClick' && handleDiscard()
+        }}
+      >
         <DialogTitle>
           <Box className={Styles.Title}>Raise Query</Box>
         </DialogTitle>

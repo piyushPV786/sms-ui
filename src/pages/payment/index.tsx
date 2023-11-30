@@ -24,7 +24,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { InlineTypography, StyledTypography } from 'src/styles/styled'
 import { useAuth } from 'src/hooks/useAuth'
 import { IProgram, IPaymentRow } from 'src/types/common'
-import { DDMMYYYDateFormat, getSymbol } from 'src/utils'
+import { DDMMYYYDateFormat } from 'src/utils'
 
 const initialState = {
   message: '',
@@ -122,9 +122,9 @@ const PaymentList = () => {
       renderCell: (row: IPaymentRow) => {
         return (
           <Typography variant='body2'>
-            {getSymbol(currencyList, row.row.currencyCode)}
-            &nbsp;
-            {row.row.totalAmount}
+            {/* {getSymbol(currencyList, row.row.currencyCode)}
+            &nbsp; */}
+            {`R ${row.row.totalAmount}`}
           </Typography>
         )
       }
@@ -200,7 +200,7 @@ const PaymentList = () => {
             </Grid>
           </Box>
         </Grid>
-        <Grid item md={8} xs={12}>
+        <Grid item md={UpcomingPayment?.length === 0 ? 12 : 8} xs={12}>
           <Card>
             <TableHeader value={value} selectedRows={selectedRows} handleFilter={handleFilter} />
             <DataGrid

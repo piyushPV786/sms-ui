@@ -258,17 +258,17 @@ export default class Student {
     }
     nProgress.done()
   }
-  async studentScheduler(studentCode: string, date?: string) {
+  async studentScheduler(studentCode: string, startDate?: string, endDate?: string) {
     nProgress.start()
     let endUrlName = `${apiEndPoints.studentSchedule}${studentCode}`
-    if (date) endUrlName = `${endUrlName}?startDate=${date}&endDate=${date}`
+    if (startDate) endUrlName = `${endUrlName}?startDate=${startDate}&endDate=${endDate}`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
 
       return response
     } catch (err: any) {
-      console.log('Error ResetPasswordLink ========>', err?.message)
+      console.log('Error Scheduler Data ========>', err?.message)
       nProgress.done()
     }
     nProgress.done()
@@ -402,5 +402,20 @@ export default class Student {
     } finally {
       nProgress.done()
     }
+  }
+
+  async getStudentAcademicDetails(studentCode: string) {
+    nProgress.start()
+    const endUrlName = `${apiEndPoints.academics}${studentCode}`
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      console.log('Error fetching student detail ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
   }
 }

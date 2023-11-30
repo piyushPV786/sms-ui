@@ -145,14 +145,24 @@ export interface ICourses {
   program: ICommonData
 }
 export interface ISchedule {
+  find: any
+  map(arg0: (duration: any) => any): unknown
+  scheduleDuration: unknown
   id: number
   individualAssignmentDueDate: Date
   course: ICourses
+  code: any
+  programSchedule: any
 }
 export interface IScheduleData {
   id: number
-  schedule: ISchedule[]
+  courseSchedule: ISchedule[]
 }
+
+export interface IScheduleCodeType {
+  code: string
+}
+
 export enum ErrorMessage {
   emailRequired = 'Email is required',
   emailError = 'Please enter a valid email address',
@@ -271,7 +281,7 @@ export interface IRow {
   classDate: null | string
   courseCode: string
   courseName: null | string
-  scheduleCode: number | string
+  scheduleCode: string
   status: string
   totalAttend: number | string
   totalClass: number | string

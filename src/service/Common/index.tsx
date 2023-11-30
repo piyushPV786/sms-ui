@@ -45,6 +45,7 @@ export default class Common {
       nProgress.done()
 
       const result = response?.data?.data ? response?.data?.data : {}
+
       return result
     } catch (err: any) {
       console.log('Error fetching student detail ========>', err?.message)

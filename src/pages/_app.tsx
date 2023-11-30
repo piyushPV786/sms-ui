@@ -1,7 +1,8 @@
 import '../styles/globals.css'
 
-import { ReactNode } from 'react'
+import { Fragment, ReactNode } from 'react'
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
 
 // ** Emotion Imports
 import { CacheProvider } from '@emotion/react'
@@ -87,29 +88,42 @@ export default function App(props: ExtendedAppProps) {
   const aclAbilities = Component.acl ?? defaultACLObj
 
   return (
-    <CacheProvider value={emotionCache}>
-      <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
-        <SettingsConsumer>
-          {({ settings }) => {
-            return (
-              <ThemeComponent settings={settings}>
-                <WindowWrapper>
-                  <AuthProvider>
-                    <Guard authGuard={authGuard} guestGuard={guestGuard}>
-                      <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
-                        {getLayout(<Component {...pageProps} />)}
-                      </AclGuard>
-                    </Guard>
-                  </AuthProvider>
-                </WindowWrapper>
-                <ReactHotToast>
-                  <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
-                </ReactHotToast>
-              </ThemeComponent>
-            )
-          }}
-        </SettingsConsumer>
-      </SettingsProvider>
-    </CacheProvider>
+    <Fragment>
+      <Head>
+        <title>{`${themeConfig.templateName}`}</title>
+
+        <meta name='description' content={`${themeConfig.templateName}`} />
+
+        <link rel='shortcut icon' href={`${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/images/favicon.ico`} />
+
+        <meta name='keywords' content='' />
+
+        <meta name='viewport' content='' />
+      </Head>
+      <CacheProvider value={emotionCache}>
+        <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
+          <SettingsConsumer>
+            {({ settings }) => {
+              return (
+                <ThemeComponent settings={settings}>
+                  <WindowWrapper>
+                    <AuthProvider>
+                      <Guard authGuard={authGuard} guestGuard={guestGuard}>
+                        <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
+                          {getLayout(<Component {...pageProps} />)}
+                        </AclGuard>
+                      </Guard>
+                    </AuthProvider>
+                  </WindowWrapper>
+                  <ReactHotToast>
+                    <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+                  </ReactHotToast>
+                </ThemeComponent>
+              )
+            }}
+          </SettingsConsumer>
+        </SettingsProvider>
+      </CacheProvider>
+    </Fragment>
   )
 }

@@ -12,7 +12,7 @@ export const paymentLogin = async (paymentPayload: IPaymentPayload) => {
       identity: process.env.NEXT_PUBLIC_PAYMENT_IDENTITY,
       password: process.env.NEXT_PUBLIC_PAYMENT_PASSWORD
     }
-    const response = await FinanceService.getUkheshePaymentTocken()
+    const response = await FinanceService.getUkheshePaymentTocken(payload)
 
     if (response?.status === 200 || (response?.status === 201 && response?.data)) {
       window.sessionStorage.setItem('paymentToken', JSON.stringify(response))
