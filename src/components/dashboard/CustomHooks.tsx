@@ -76,7 +76,6 @@ const DashboardCustomHooks = () => {
     getCourseList(courseCode)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  console.log('scheduler---', scheduler)
   let scheduleCode = ''
   scheduler?.map((data: IScheduleData) => {
     data?.courseSchedule?.map((i: ISchedule) => {
@@ -91,8 +90,8 @@ const DashboardCustomHooks = () => {
 
   // Get the current Week
   const currentDate: moment.Moment = moment()
-  const startDate: moment.Moment = currentDate.clone().startOf('week')
-  const endDate: moment.Moment = currentDate.clone().endOf('week')
+  const startDate: moment.Moment = currentDate.clone().startOf('day')
+  const endDate: moment.Moment = currentDate.clone().add(1, 'years')
   const startDateString: string = startDate.format('DD-MM-YYYY')
   const endDateString: string = endDate.format('DD-MM-YYYY')
 
