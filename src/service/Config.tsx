@@ -92,6 +92,7 @@ export const apiEndPoints = Object.freeze({
   feeConversionRate: '/programs-fee/fee-conversion-rate',
   status: 'common/set-status',
   class: 'class-management/class-data',
+  courselist: 'class-management/course-list',
   facilitator: 'facilitator',
   allProgram: '/programs/all',
   program: '/programs'

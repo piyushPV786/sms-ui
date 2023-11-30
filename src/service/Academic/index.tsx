@@ -14,20 +14,6 @@ export default class Academic {
     this.apiServer = apiServer
   }
 
-  async getStudentAcademicDetails(studentCode: string) {
-    nProgress.start()
-    const endUrlName = `${apiEndPoints.academics}${studentCode}`
-    try {
-      const response = await this.apiServer.get(endUrlName)
-      nProgress.done()
-
-      return response
-    } catch (err: any) {
-      console.log('Error fetching student detail ========>', err?.message)
-      nProgress.done()
-    }
-    nProgress.done()
-  }
   async getallPrograms() {
     nProgress.start()
     const endUrlName = apiEndPoints.allPrograms

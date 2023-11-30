@@ -7,7 +7,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { AcademicTypography, CardContent, TableCard } from 'src/styles/styled'
 import { successToastBottomRight, errorToast } from 'src/components/common'
 import { Download } from 'mdi-material-ui'
-import { AcademicService, StudentService } from 'src/service'
+import { StudentService } from 'src/service'
 import { downloadSuccess, status } from 'src/context/common'
 import SearchBox from 'src/@core/components/searchinput'
 import { useAuth } from 'src/hooks/useAuth'
@@ -38,7 +38,7 @@ const StudentDashboard = () => {
   }
 
   const getStudentList = async () => {
-    const response = await AcademicService?.getStudentAcademicDetails(auth.user?.studentCode)
+    const response = await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
     setData(response?.data?.data)
   }
   React.useEffect(() => {
