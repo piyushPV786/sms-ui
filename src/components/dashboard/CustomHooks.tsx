@@ -107,7 +107,7 @@ const DashboardCustomHooks = () => {
   }
   const getMyClasses = async () => {
     if (scheduleCode) {
-      const classesResponse = await OperationService?.getClassList(scheduleCode)
+      const classesResponse = await OperationService?.getClass(scheduleCode)
       setClasses(classesResponse)
 
       console.log('MyClasses Response =================>', classesResponse)
