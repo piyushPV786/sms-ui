@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import { apiEndPoints } from '../Config'
+import { CommonBaseApiUrl, apiEndPoints } from '../Config'
 import nProgress from 'nprogress'
 import { status } from 'src/context/common'
 
@@ -18,13 +18,14 @@ interface statusPayloadType {
 }
 export default class Common {
   apiServer: AxiosInstance
+  baseUrl = CommonBaseApiUrl
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }
 
   async getQualificationData() {
     nProgress.start()
-    const endUrlName = apiEndPoints.qualification
+    const endUrlName = this.baseUrl + apiEndPoints.qualification
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -39,7 +40,7 @@ export default class Common {
 
   async setStatus(payload: statusPayloadType) {
     nProgress.start()
-    const endUrlName = apiEndPoints.status
+    const endUrlName = this.baseUrl + apiEndPoints.status
     try {
       const response = await this.apiServer.post(endUrlName, payload)
       nProgress.done()
@@ -56,7 +57,7 @@ export default class Common {
 
   async getIdentificationTypeList() {
     nProgress.start()
-    const endUrlName = apiEndPoints.identificationType
+    const endUrlName = this.baseUrl + apiEndPoints.identificationType
 
     try {
       const response = await this.apiServer.get(endUrlName)
@@ -71,7 +72,7 @@ export default class Common {
 
   async getCountryData() {
     nProgress.start()
-    const endUrlName = apiEndPoints.country
+    const endUrlName = this.baseUrl + apiEndPoints.country
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -86,7 +87,7 @@ export default class Common {
 
   async getProfileSource(filename: string, studentCode: string | undefined) {
     nProgress.start()
-    const endUrlName = apiEndPoints.document
+    const endUrlName = this.baseUrl + apiEndPoints.document
     try {
       const response = await this.apiServer.get(`${endUrlName}?filename=${filename}&studentCode=${studentCode}`)
       nProgress.done()
@@ -101,7 +102,7 @@ export default class Common {
 
   async getStateData(countryCode: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.state}/${countryCode}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.state}/${countryCode}`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -116,7 +117,9 @@ export default class Common {
   async documentUpload(param: ICommonDocumentUploadParamTypes) {
     nProgress.start()
     let response = false
-    const endUrlName = `${apiEndPoints.uploadFileUrl}?filename=${param.filename}&filetype=${param.filetype}&studentCode=${param.studentCode}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.uploadFileUrl}?filename=${param.filename}&filetype=${
+      param.filetype
+    }&studentCode=${param.studentCode}`
 
     try {
       const s3amazonawsUrl = await this.apiServer.get(endUrlName)
@@ -137,7 +140,7 @@ export default class Common {
 
   async getFileUrl(fileName: string, studentCode: string | undefined) {
     nProgress.start()
-    const endUrlName = apiEndPoints.getFileUrl
+    const endUrlName = this.baseUrl + apiEndPoints.getFileUrl
     try {
       const response = await this.apiServer.get(`${endUrlName}?filename=${fileName}&studentCode=${studentCode}`)
       nProgress.done()
@@ -152,7 +155,7 @@ export default class Common {
 
   async getDocumentType(projectDocument: boolean) {
     nProgress.start()
-    const endUrlName = apiEndPoints.documentType
+    const endUrlName = this.baseUrl + apiEndPoints.documentType
     try {
       const response = await this.apiServer.get(`${endUrlName}?projectDocument=${projectDocument}`)
       nProgress.done()
@@ -166,7 +169,7 @@ export default class Common {
   }
   async getGenderList() {
     nProgress.start()
-    const endUrlName = apiEndPoints.gender
+    const endUrlName = this.baseUrl + apiEndPoints.gender
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -180,7 +183,7 @@ export default class Common {
   }
   async getNationalityList() {
     nProgress.start()
-    const endUrlName = apiEndPoints.nationality
+    const endUrlName = this.baseUrl + apiEndPoints.nationality
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -194,7 +197,7 @@ export default class Common {
   }
   async getNationalityStatus() {
     nProgress.start()
-    const endUrlName = apiEndPoints.nationalityStatus
+    const endUrlName = this.baseUrl + apiEndPoints.nationalityStatus
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -208,7 +211,7 @@ export default class Common {
   }
   async getRace() {
     nProgress.start()
-    const endUrlName = apiEndPoints.race
+    const endUrlName = this.baseUrl + apiEndPoints.race
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -223,7 +226,7 @@ export default class Common {
 
   async getLanguage() {
     nProgress.start()
-    const endUrlName = apiEndPoints.language
+    const endUrlName = this.baseUrl + apiEndPoints.language
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -237,7 +240,7 @@ export default class Common {
   }
   async getStudentType() {
     nProgress.start()
-    const endUrlName = apiEndPoints.studentType
+    const endUrlName = this.baseUrl + apiEndPoints.studentType
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -252,7 +255,7 @@ export default class Common {
 
   async getStudyMode() {
     nProgress.start()
-    const endUrlName = apiEndPoints.studyMode
+    const endUrlName = this.baseUrl + apiEndPoints.studyMode
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -266,7 +269,7 @@ export default class Common {
   }
   async getIndustryDetails() {
     nProgress.start()
-    const endUrlName = apiEndPoints.industry
+    const endUrlName = this.baseUrl + apiEndPoints.industry
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -280,7 +283,7 @@ export default class Common {
   }
   async getCurrencyList() {
     nProgress.start()
-    const endUrlName = apiEndPoints.currency
+    const endUrlName = this.baseUrl + apiEndPoints.currency
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -294,7 +297,7 @@ export default class Common {
   }
   async getQueryType() {
     nProgress.start()
-    const endUrlName = apiEndPoints.queryType
+    const endUrlName = this.baseUrl + apiEndPoints.queryType
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -308,7 +311,7 @@ export default class Common {
   }
   async getQueryStatus() {
     nProgress.start()
-    const endUrlName = apiEndPoints.queryStatus
+    const endUrlName = this.baseUrl + apiEndPoints.queryStatus
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()

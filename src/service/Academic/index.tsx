@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios'
-import { apiEndPoints } from '../Config'
+import { NEXT_PUBLIC_ACADEMIC_BACKEND_API, apiEndPoints } from '../Config'
 import nProgress from 'nprogress'
 
 interface IDataParams {
@@ -10,13 +10,14 @@ interface IDataParams {
 
 export default class Academic {
   apiServer: AxiosInstance
+  baseUrl = NEXT_PUBLIC_ACADEMIC_BACKEND_API
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }
 
   async getallPrograms() {
     nProgress.start()
-    const endUrlName = apiEndPoints.allPrograms
+    const endUrlName = this.baseUrl + apiEndPoints.allPrograms
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -31,7 +32,7 @@ export default class Academic {
 
   async getAllCourses() {
     nProgress.start()
-    const endUrlName = apiEndPoints.courses
+    const endUrlName = this.baseUrl + apiEndPoints.courses
     try {
       const response = await this.apiServer.get(endUrlName)
 
@@ -44,7 +45,7 @@ export default class Academic {
   }
   async getExamTicket(studentCode: string | undefined) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.academics}${apiEndPoints.examTicket}/${studentCode}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.academics}${apiEndPoints.examTicket}/${studentCode}`
     try {
       const response = await this.apiServer.get(endUrlName)
 
@@ -58,7 +59,7 @@ export default class Academic {
   async getAllFacilitator() {
     nProgress.start()
 
-    const endUrlName = apiEndPoints?.facilitator
+    const endUrlName = this.baseUrl + apiEndPoints?.facilitator
 
     try {
       const response = await this.apiServer.get(`/${endUrlName}`)
@@ -72,7 +73,7 @@ export default class Academic {
   }
   async getAllProgramList(params?: IDataParams) {
     nProgress.start()
-    let endUrlName = `${apiEndPoints.allProgram}`
+    let endUrlName = `${this.baseUrl + apiEndPoints.allProgram}`
     if (params?.q) endUrlName = `${endUrlName}?search=${params?.q}`
 
     try {
@@ -88,7 +89,7 @@ export default class Academic {
 
   async getProgramListByCode(code: number | string) {
     nProgress.start()
-    const endUrlName = apiEndPoints.program
+    const endUrlName = this.baseUrl + apiEndPoints.program
     try {
       const response = await this.apiServer.get(`${endUrlName}/${code}`)
 

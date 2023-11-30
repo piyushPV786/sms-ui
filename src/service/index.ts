@@ -69,11 +69,6 @@ const errorInterceptor = async (err: any) => {
     const response = await memoizedRefreshToken()
     if (response?.status === 200 && response?.access_token && response?.refresh_token) {
       config.headers['Authorization'] = `Bearer ${response?.access_token}`
-    } else {
-      let pathName = window.location.pathname
-      pathName = pathName.replace(/^\/[\w\d]+\//, '')
-      await window.localStorage.clear()
-      window.location.href = `/student/login?returnUrl=/${pathName}`
     }
 
     return appAPIServer(error.config)

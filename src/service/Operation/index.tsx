@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios'
 import nProgress from 'nprogress'
-import { apiEndPoints } from '../Config'
+import { OperationBaseApiUrl, apiEndPoints } from '../Config'
 
 interface IPayloadProps {
   studentCode: number | string | undefined
@@ -10,12 +10,15 @@ interface IPayloadProps {
 }
 export default class Operation {
   apiServer: AxiosInstance
+  baseUrl = OperationBaseApiUrl
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }
   async getAttendanceDetails(payload: IPayloadProps) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.attendance}/${payload?.studentCode}?pageNumber=${payload?.pageNumber}&pageSize=${payload?.pageSize}&search=${payload?.query}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.attendance}/${payload?.studentCode}?pageNumber=${
+      payload?.pageNumber
+    }&pageSize=${payload?.pageSize}&search=${payload?.query}`
     try {
       const response = await this.apiServer.get(endUrlName)
 
@@ -28,7 +31,7 @@ export default class Operation {
   }
   async getClassList(scheduleCode: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.courselist}/${scheduleCode}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.courselist}/${scheduleCode}`
     try {
       const response = await this.apiServer.get(endUrlName)
 
@@ -41,7 +44,7 @@ export default class Operation {
   }
   async getClass(scheduleCode: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.class}/${scheduleCode}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.class}/${scheduleCode}`
     try {
       const response = await this.apiServer.get(endUrlName)
 

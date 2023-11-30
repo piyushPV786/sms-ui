@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios'
-import { apiEndPoints } from '../Config'
+import { BaseStudentApi, apiEndPoints } from '../Config'
 import nProgress from 'nprogress'
 
 export interface IPasswordUpdateRequest {
@@ -51,13 +51,14 @@ export interface QueryPayload {
 
 export default class Student {
   apiServer: AxiosInstance
+  baseUrl = BaseStudentApi
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }
 
   async ResetPasswordLink(email: string) {
     nProgress.start()
-    const endUrlName = apiEndPoints.forgotPassword
+    const endUrlName = this.baseUrl + apiEndPoints.forgotPassword
     try {
       const response = await this.apiServer.patch(endUrlName, { email })
       nProgress.done()
@@ -71,7 +72,7 @@ export default class Student {
   }
   async updatePassword(request: IPasswordUpdateRequest) {
     nProgress.start()
-    const endUrlName = apiEndPoints.forgotPassword
+    const endUrlName = this.baseUrl + apiEndPoints.forgotPassword
     try {
       const response = await this.apiServer.patch(endUrlName, { ...request })
       nProgress.done()
@@ -86,7 +87,7 @@ export default class Student {
 
   async Login(payload: ILogin) {
     nProgress.start()
-    const endUrlName = apiEndPoints.login
+    const endUrlName = this.baseUrl + apiEndPoints.login
     try {
       const response = await this.apiServer.post(endUrlName, { ...payload })
       nProgress.done()
@@ -101,7 +102,7 @@ export default class Student {
 
   async ProfilePhoto(payload: payload, email: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.profilePhoto}${email}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.profilePhoto}${email}`
     try {
       const response = await this.apiServer.patch(endUrlName, { ...payload })
       nProgress.done()
@@ -128,7 +129,7 @@ export default class Student {
     studentCode: string | null
   ) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.offlinePayment}/${studentCode}/offline`
+    const endUrlName = `${this.baseUrl + apiEndPoints.offlinePayment}/${studentCode}/offline`
     try {
       const response = await this.apiServer.post(endUrlName, { ...payload })
       nProgress.done()
@@ -158,7 +159,7 @@ export default class Student {
   ) {
     nProgress.start()
 
-    const endUrlName = `${apiEndPoints.offlinePayment}/${studentCode}/payu-details`
+    const endUrlName = `${this.baseUrl + apiEndPoints.offlinePayment}/${studentCode}/payu-details`
     try {
       const response = await this.apiServer.post(endUrlName, { ...payload })
       nProgress.done()
@@ -173,7 +174,7 @@ export default class Student {
 
   async UserProfile(code: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.userProfile}${code}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.userProfile}${code}`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -188,7 +189,7 @@ export default class Student {
 
   async logOut() {
     nProgress.start()
-    const endUrlName = apiEndPoints.logout
+    const endUrlName = this.baseUrl + apiEndPoints.logout
     try {
       const response = await this.apiServer.post(endUrlName)
       nProgress.done()
@@ -203,7 +204,7 @@ export default class Student {
 
   async getUserProfileDetails(studentCode: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.studentApplication}${studentCode}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.studentApplication}${studentCode}`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -216,7 +217,9 @@ export default class Student {
     nProgress.done()
   }
   async getFeePaymentList(params: DataParams, studentCode: string) {
-    let endUrlName = `${apiEndPoints.paymentList}?studentCode=${studentCode}&&pageNumber=${params?.pageNumber}&&pageSize=${params?.pageSize}`
+    let endUrlName = `${this.baseUrl + apiEndPoints.paymentList}?studentCode=${studentCode}&&pageNumber=${
+      params?.pageNumber
+    }&&pageSize=${params?.pageSize}`
     if (params?.q) endUrlName = `${endUrlName}&&search=${params?.q}`
 
     try {
@@ -230,7 +233,9 @@ export default class Student {
 
   async getUserDocument(params: DataParams, studentCode: string) {
     nProgress.start()
-    let endUrlName = `${apiEndPoints.userDocument}/${studentCode}?pageNumber=${params?.pageNumber}&&pageSize=${params?.pageSize}`
+    let endUrlName = `${this.baseUrl + apiEndPoints.userDocument}/${studentCode}?pageNumber=${
+      params?.pageNumber
+    }&&pageSize=${params?.pageSize}`
     if (params?.q) endUrlName = `${endUrlName}&&searchString=${params?.q}`
     try {
       const response = await this.apiServer.get(endUrlName)
@@ -246,7 +251,7 @@ export default class Student {
 
   async updateAddress(payload: IAddressP, studentCode: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.address}${studentCode}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.address}${studentCode}`
     try {
       const response = await this.apiServer.patch(endUrlName, payload)
       nProgress.done()
@@ -260,7 +265,7 @@ export default class Student {
   }
   async studentScheduler(studentCode: string, startDate?: string, endDate?: string) {
     nProgress.start()
-    let endUrlName = `${apiEndPoints.studentSchedule}${studentCode}`
+    let endUrlName = `${this.baseUrl + apiEndPoints.studentSchedule}${studentCode}`
     if (startDate) endUrlName = `${endUrlName}?startDate=${startDate}&endDate=${endDate}`
     try {
       const response = await this.apiServer.get(endUrlName)
@@ -274,7 +279,7 @@ export default class Student {
     nProgress.done()
   }
   async addStudentDocument(params: any) {
-    const endUrlName = `${apiEndPoints.userDocument}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.userDocument}`
     try {
       const response = await this.apiServer.post<any>(endUrlName, { ...params })
 
@@ -285,7 +290,7 @@ export default class Student {
   }
   async deleteStudentDocuments(documentCode: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.userDocument}/${documentCode}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.userDocument}/${documentCode}`
 
     try {
       const response = await this.apiServer.delete(endUrlName)
@@ -299,7 +304,7 @@ export default class Student {
   }
   async userResetPassword(email: string) {
     nProgress.start()
-    const endUrlName = apiEndPoints.resetPassword
+    const endUrlName = this.baseUrl + apiEndPoints.resetPassword
     try {
       const response = await this.apiServer.patch(endUrlName, { email })
       nProgress.done()
@@ -317,7 +322,7 @@ export default class Student {
 
   async userNewPassword(request: INewPassword) {
     nProgress.start()
-    const endUrlName = apiEndPoints.newPassword
+    const endUrlName = this.baseUrl + apiEndPoints.newPassword
     try {
       const response = await this.apiServer.patch(endUrlName, { ...request })
       nProgress.done()
@@ -332,7 +337,7 @@ export default class Student {
 
   async downloadTranscript(studentCode: number | string) {
     nProgress.start()
-    const endUrlName = apiEndPoints.downloadTranscript
+    const endUrlName = this.baseUrl + apiEndPoints.downloadTranscript
     try {
       const response = await this.apiServer.get(`${endUrlName}/${studentCode}`, {
         responseType: 'blob'
@@ -347,7 +352,9 @@ export default class Student {
   }
   async getQueryList(params: DataParams, studentCode: string) {
     nProgress.start()
-    let endUrlName = `${apiEndPoints.query}/${studentCode}?pageNumber=${params?.pageNumber}&pageSize=${params?.pageSize}`
+    let endUrlName = `${this.baseUrl + apiEndPoints.query}/${studentCode}?pageNumber=${params?.pageNumber}&pageSize=${
+      params?.pageSize
+    }`
     if (params?.q) endUrlName = `${endUrlName}&search=${params?.q}`
 
     try {
@@ -364,7 +371,7 @@ export default class Student {
 
   async createQuery(payload: QueryPayload) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.query}/${payload.studentCode}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.query}/${payload.studentCode}`
     try {
       const response = await this.apiServer.post(endUrlName, payload)
 
@@ -377,7 +384,7 @@ export default class Student {
   }
   async getRolloverList(studentCode: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.rollover}/${studentCode}/programs`
+    const endUrlName = `${this.baseUrl + apiEndPoints.rollover}/${studentCode}/programs`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -392,7 +399,7 @@ export default class Student {
 
   async rollover(studentCode: string, courseCodes: string[]) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.rollover}/${studentCode}/rollover`
+    const endUrlName = `${this.baseUrl + apiEndPoints.rollover}/${studentCode}/rollover`
     try {
       const response = await this.apiServer.post(endUrlName, { courseCodes })
 
@@ -406,7 +413,7 @@ export default class Student {
 
   async getStudentAcademicDetails(studentCode: string) {
     nProgress.start()
-    const endUrlName = `${apiEndPoints.academics}${studentCode}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.academics}${studentCode}`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
