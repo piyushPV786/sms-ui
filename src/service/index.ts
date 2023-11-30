@@ -1,13 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import {
-  axiosConfig,
-  academicAxiosConfig,
-  studentBaseConfig,
-  apiEndPoints,
-  commonAxiosConfig,
-  operationAxiosConfig,
-  financeAxiosConfig
-} from './Config'
+import { apiEndPoints } from './Config'
 import FeePayment from './FeePayment'
 import Academic from './Academic'
 import Student from './Student'
@@ -18,36 +10,15 @@ import Common from './Common'
 import Finance from './Finance'
 import Operation from './Operation'
 
-const appAPIServer: AxiosInstance = axios.create(axiosConfig)
-const AcademicAPIServer: AxiosInstance = axios.create(academicAxiosConfig)
-const StudentBaseApiServer: AxiosInstance = axios.create(studentBaseConfig)
-const CommonBaseApiServer: AxiosInstance = axios.create(commonAxiosConfig)
-const operationAPIServer: AxiosInstance = axios.create(operationAxiosConfig)
-const FinanceApiServer: AxiosInstance = axios.create(financeAxiosConfig)
+const appAPIServer: AxiosInstance = axios.create()
 
-export const StudentService = new Student(StudentBaseApiServer)
+export const StudentService = new Student(appAPIServer)
 export const FeePaymentService = new FeePayment(appAPIServer)
-export const AcademicService = new Academic(AcademicAPIServer)
-export const CommonService = new Common(CommonBaseApiServer)
-export const OperationService = new Operation(operationAPIServer)
-export const FinanceService = new Finance(FinanceApiServer)
+export const AcademicService = new Academic(appAPIServer)
+export const CommonService = new Common(appAPIServer)
+export const OperationService = new Operation(appAPIServer)
+export const FinanceService = new Finance(appAPIServer)
 
-// StudentBaseApiServer.interceptors.request.use(
-//   config => {
-//     if (config.headers) {
-//       console?.log(
-//         'window.sessionStorage.getItem(authConfig.storageTokenKeyName)',
-//         window.sessionStorage.getItem(authConfig.storageTokenKeyName)
-//       )
-//       config.headers['Authorization'] = `Bearer ${window.sessionStorage.getItem(authConfig.storageTokenKeyName)}`
-//     }
-
-//     return config
-//   },
-//   error => {
-//     return Promise.reject(error)
-//   }
-// )
 export const refreshBaseAuth = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_STUDENT_BASE_API}`
 })
@@ -87,19 +58,11 @@ const errorInterceptor = async (err: any) => {
   const error = err.response
   const config = error?.config
 
-  // if error is 401
-
-  if (
-    error.status === status.unauthorizedStatus &&
-    !config?.sent &&
-    !config?.__isRetryRequest &&
-    config.url === apiEndPoints.refreshToken
-  ) {
-    let pathName = window.location.pathname
-    pathName = pathName.replace(/^\/[\w\d]+\//, '')
-    await window.sessionStorage.clear()
-    window.location.href = `/student/login?returnUrl=/${pathName}`
+  if (error.status === status.unauthorizedStatus && err?.config?.url === apiEndPoints.refreshToken) {
+    redirectToLoginPage()
   }
+
+  // if error is 401
 
   if (error.status === status.unauthorizedStatus && !config?.sent && !config?.__isRetryRequest) {
     config.sent = true
@@ -119,9 +82,11 @@ const addInterceptorToAxiosInstances = (axiosInstance: AxiosInstance) => {
   axiosInstance.interceptors.response.use(responseInterceptor, errorInterceptor)
 }
 
-addInterceptorToAxiosInstances(StudentBaseApiServer)
+const redirectToLoginPage = async () => {
+  let pathName = window.location.pathname
+  pathName = pathName.replace(/^\/[\w\d]+\//, '')
+  await window.localStorage.clear()
+  window.location.href = `/student/login?returnUrl=/${pathName}`
+}
+
 addInterceptorToAxiosInstances(appAPIServer)
-addInterceptorToAxiosInstances(AcademicAPIServer)
-addInterceptorToAxiosInstances(CommonBaseApiServer)
-addInterceptorToAxiosInstances(operationAPIServer)
-addInterceptorToAxiosInstances(FinanceApiServer)
