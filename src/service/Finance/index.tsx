@@ -1,7 +1,6 @@
 import { AxiosInstance } from 'axios'
 import { FinanceBaseApiUrl, apiEndPoints } from '../Config'
 import nProgress from 'nprogress'
-import { FinanceService } from '..'
 
 export default class Finance {
   apiServer: AxiosInstance

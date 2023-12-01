@@ -62,7 +62,7 @@ export default class Academic {
     const endUrlName = this.baseUrl + apiEndPoints?.facilitator
 
     try {
-      const response = await this.apiServer.get(`/${endUrlName}`)
+      const response = await this.apiServer.get(endUrlName)
 
       return response?.data
     } catch (err: any) {

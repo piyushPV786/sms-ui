@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import { apiEndPoints } from './Config'
+import { BaseStudentApi, apiEndPoints } from './Config'
 import FeePayment from './FeePayment'
 import Academic from './Academic'
 import Student from './Student'
@@ -19,19 +19,34 @@ export const CommonService = new Common(appAPIServer)
 export const OperationService = new Operation(appAPIServer)
 export const FinanceService = new Finance(appAPIServer)
 
-export const refreshBaseAuth = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_STUDENT_BASE_API}`
-})
+const refreshTokenUrl = `${BaseStudentApi + apiEndPoints.refreshToken}`
+
+appAPIServer.interceptors.request.use(
+  config => {
+    if (config.headers && config?.url === refreshTokenUrl) {
+      config.headers['Authorization'] = `Bearer ${window.sessionStorage.getItem(authConfig.refreshToken)}`
+    } else if (config.headers) {
+      config.headers['Authorization'] = `Bearer ${window.sessionStorage.getItem(authConfig.storageTokenKeyName)}`
+    }
+
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
 
 const refreshTokenFunction = async () => {
-  const response = await refreshBaseAuth.get('/auth/refresh-token', {
-    headers: { Authorization: `Bearer ${window.sessionStorage.getItem('refreshToken')}` }
-  })
-
+  const response = await StudentService?.getRefreshToken()
   const { data } = response?.data
+
   if (data?.access_token && data?.refresh_token) {
     await window.sessionStorage.setItem(authConfig.storageTokenKeyName, data.access_token)
     await window.sessionStorage.setItem(authConfig.refreshToken, data.refresh_token)
+  }
+
+  if (data?.status === status.unauthorizedStatus) {
+    redirectToLoginPage()
   }
 
   return data
@@ -58,7 +73,7 @@ const errorInterceptor = async (err: any) => {
   const error = err.response
   const config = error?.config
 
-  if (error.status === status.unauthorizedStatus && err?.config?.url === apiEndPoints.refreshToken) {
+  if (error.status === status.unauthorizedStatus && err?.config?.url === refreshTokenUrl) {
     redirectToLoginPage()
   }
 
@@ -85,8 +100,8 @@ const addInterceptorToAxiosInstances = (axiosInstance: AxiosInstance) => {
 const redirectToLoginPage = async () => {
   let pathName = window.location.pathname
   pathName = pathName.replace(/^\/[\w\d]+\//, '')
-  await window.localStorage.clear()
-  window.location.href = `/student/login?returnUrl=/${pathName}`
+  await window.sessionStorage.clear()
+  window.location.href = `${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/auth/login?returnUrl=/${pathName}`
 }
 
 addInterceptorToAxiosInstances(appAPIServer)

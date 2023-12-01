@@ -56,6 +56,15 @@ export default class Student {
     this.apiServer = apiServer
   }
 
+  async getRefreshToken() {
+    nProgress.start()
+    const endUrlName = this.baseUrl + apiEndPoints.refreshToken
+    const response = await this.apiServer.get(endUrlName)
+    nProgress.done()
+
+    return response
+  }
+
   async ResetPasswordLink(email: string) {
     nProgress.start()
     const endUrlName = this.baseUrl + apiEndPoints.forgotPassword
