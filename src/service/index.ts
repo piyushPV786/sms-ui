@@ -1,13 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import {
-  axiosConfig,
-  academicAxiosConfig,
-  studentBaseConfig,
-  apiEndPoints,
-  commonAxiosConfig,
-  operationAxiosConfig,
-  financeAxiosConfig
-} from './Config'
+import { BaseStudentApi, apiEndPoints } from './Config'
 import FeePayment from './FeePayment'
 import Academic from './Academic'
 import Student from './Student'
@@ -18,49 +10,43 @@ import Common from './Common'
 import Finance from './Finance'
 import Operation from './Operation'
 
-const appAPIServer: AxiosInstance = axios.create(axiosConfig)
-const AcademicAPIServer: AxiosInstance = axios.create(academicAxiosConfig)
-const StudentBaseApiServer: AxiosInstance = axios.create(studentBaseConfig)
-const CommonBaseApiServer: AxiosInstance = axios.create(commonAxiosConfig)
-const operationAPIServer: AxiosInstance = axios.create(operationAxiosConfig)
-const FinanceApiServer: AxiosInstance = axios.create(financeAxiosConfig)
+const appAPIServer: AxiosInstance = axios.create()
 
-export const StudentService = new Student(StudentBaseApiServer)
+export const StudentService = new Student(appAPIServer)
 export const FeePaymentService = new FeePayment(appAPIServer)
-export const AcademicService = new Academic(AcademicAPIServer)
-export const CommonService = new Common(CommonBaseApiServer)
-export const OperationService = new Operation(operationAPIServer)
-export const FinanceService = new Finance(FinanceApiServer)
+export const AcademicService = new Academic(appAPIServer)
+export const CommonService = new Common(appAPIServer)
+export const OperationService = new Operation(appAPIServer)
+export const FinanceService = new Finance(appAPIServer)
 
-// StudentBaseApiServer.interceptors.request.use(
-//   config => {
-//     if (config.headers) {
-//       console?.log(
-//         'window.sessionStorage.getItem(authConfig.storageTokenKeyName)',
-//         window.sessionStorage.getItem(authConfig.storageTokenKeyName)
-//       )
-//       config.headers['Authorization'] = `Bearer ${window.sessionStorage.getItem(authConfig.storageTokenKeyName)}`
-//     }
+const refreshTokenUrl = `${BaseStudentApi + apiEndPoints.refreshToken}`
 
-//     return config
-//   },
-//   error => {
-//     return Promise.reject(error)
-//   }
-// )
-export const refreshBaseAuth = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_STUDENT_BASE_API}`
-})
+appAPIServer.interceptors.request.use(
+  config => {
+    if (config.headers && config?.url === refreshTokenUrl) {
+      config.headers['Authorization'] = `Bearer ${window.sessionStorage.getItem(authConfig.refreshToken)}`
+    } else if (config.headers) {
+      config.headers['Authorization'] = `Bearer ${window.sessionStorage.getItem(authConfig.storageTokenKeyName)}`
+    }
+
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
 
 const refreshTokenFunction = async () => {
-  const response = await refreshBaseAuth.get('/auth/refresh-token', {
-    headers: { Authorization: `Bearer ${window.sessionStorage.getItem('refreshToken')}` }
-  })
-
+  const response = await StudentService?.getRefreshToken()
   const { data } = response?.data
+
   if (data?.access_token && data?.refresh_token) {
     await window.sessionStorage.setItem(authConfig.storageTokenKeyName, data.access_token)
     await window.sessionStorage.setItem(authConfig.refreshToken, data.refresh_token)
+  }
+
+  if (data?.status === status.unauthorizedStatus) {
+    redirectToLoginPage()
   }
 
   return data
@@ -87,30 +73,17 @@ const errorInterceptor = async (err: any) => {
   const error = err.response
   const config = error?.config
 
-  // if error is 401
-
-  if (
-    error.status === status.unauthorizedStatus &&
-    !config?.sent &&
-    !config?.__isRetryRequest &&
-    config.url === apiEndPoints.refreshToken
-  ) {
-    let pathName = window.location.pathname
-    pathName = pathName.replace(/^\/[\w\d]+\//, '')
-    await window.sessionStorage.clear()
-    window.location.href = `/student/login?returnUrl=/${pathName}`
+  if (error.status === status.unauthorizedStatus && err?.config?.url === refreshTokenUrl) {
+    redirectToLoginPage()
   }
+
+  // if error is 401
 
   if (error.status === status.unauthorizedStatus && !config?.sent && !config?.__isRetryRequest) {
     config.sent = true
     const response = await memoizedRefreshToken()
     if (response?.status === 200 && response?.access_token && response?.refresh_token) {
       config.headers['Authorization'] = `Bearer ${response?.access_token}`
-    } else {
-      let pathName = window.location.pathname
-      pathName = pathName.replace(/^\/[\w\d]+\//, '')
-      await window.localStorage.clear()
-      window.location.href = `/student/login?returnUrl=/${pathName}`
     }
 
     return appAPIServer(error.config)
@@ -124,9 +97,11 @@ const addInterceptorToAxiosInstances = (axiosInstance: AxiosInstance) => {
   axiosInstance.interceptors.response.use(responseInterceptor, errorInterceptor)
 }
 
-addInterceptorToAxiosInstances(StudentBaseApiServer)
+const redirectToLoginPage = async () => {
+  let pathName = window.location.pathname
+  pathName = pathName.replace(/^\/[\w\d]+\//, '')
+  await window.sessionStorage.clear()
+  window.location.href = `${process.env.NEXT_PUBLIC_STUDENT_BASE_URL}/auth/login?returnUrl=/${pathName}`
+}
+
 addInterceptorToAxiosInstances(appAPIServer)
-addInterceptorToAxiosInstances(AcademicAPIServer)
-addInterceptorToAxiosInstances(CommonBaseApiServer)
-addInterceptorToAxiosInstances(operationAPIServer)
-addInterceptorToAxiosInstances(FinanceApiServer)
