@@ -204,6 +204,7 @@ const StudentDashboard = () => {
                   size='medium'
                   startIcon={<Download />}
                   variant='outlined'
+                  disabled={!data?.length}
                   sx={{
                     backgroundColor: (theme: Theme) => theme.palette.common.white,
                     color: (theme: Theme) => theme.palette.primary.light,

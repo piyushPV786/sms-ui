@@ -21,15 +21,13 @@ import ClassList from './classList/classlistData'
 import ClassTableHeader from './classList/classTableHeader'
 import { AttendanceStatusObj, IRow } from 'src/context/common'
 import { OperationService } from 'src/service'
-import { getCourseName, minTwoDigits, serialNumber } from 'src/utils'
-import { commonListTypes } from 'src/types/dataTypes'
+import { minTwoDigits, serialNumber } from 'src/utils'
 
 interface IAttendanceProps {
   row: IRow
   index: number
   pageNumber: number
   pageSize: number
-  courses: Array<commonListTypes>
 }
 interface IClassList {
   classList: IRow
@@ -40,7 +38,7 @@ const TableHeaderTypography = styled(Typography)<any>(() => ({
   letterSpacing: '0.17px'
 }))
 
-function AttendanceListRow({ row, index, pageNumber, pageSize, courses }: IAttendanceProps) {
+function AttendanceListRow({ row, index, pageNumber, pageSize }: IAttendanceProps) {
   const [open, setOpen] = useState<boolean>(false)
   const [value, setValue] = useState<string>('')
   const [classList, setClassList] = useState<IClassList[]>([])
@@ -81,7 +79,7 @@ function AttendanceListRow({ row, index, pageNumber, pageSize, courses }: IAtten
             sx={{ color: 'text.primary', fontWeight: 500, lineHeight: '22px', letterSpacing: '.1px' }}
             variant='body2'
           >
-            {getCourseName(courses, row?.courseCode)}
+            {row?.courseName}
           </Typography>
         </TableCell>
 
