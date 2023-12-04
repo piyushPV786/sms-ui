@@ -10,9 +10,7 @@ import { ISchedule, IScheduleData } from 'src/context/common'
 
 const StudentDashboard = ({}) => {
   const { scheduler, myDayData, profileImage, classes, invigilator, programList } = DashboardCustomHooks()
-  const program =
-    scheduler &&
-    scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i)?.programSchedule?.program)
+
   const courses = scheduler && scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i))
   const courseSchedule =
     scheduler &&
@@ -29,7 +27,7 @@ const StudentDashboard = ({}) => {
           <StudentDetails profileImage={profileImage} />
           <Grid container spacing={4} mt={5}>
             <Grid item xs={4} md={4}>
-              <Program programData={program} />
+              <Program scheduler={scheduler} />
             </Grid>
             <Grid item xs={4} md={4}>
               <Classes

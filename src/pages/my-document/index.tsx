@@ -22,7 +22,8 @@ import { successToastBottomRight } from '../../components/common'
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
 import FileUpload from 'src/components/uploaddocument/FileUpload'
-import DeleteDialog from 'src/components/dialog/DeleteDialog'
+
+// import DeleteDialog from 'src/components/dialog/DeleteDialog'
 import { useAuth } from 'src/hooks/useAuth'
 import { DDMMYYYDateFormat, getFileUrl, minTwoDigits, serialNumber } from 'src/utils'
 import { IDocumentType, IUploadDocumentParam } from 'src/context/types'
@@ -109,12 +110,12 @@ const DocumentList = () => {
     setDocumentType(response)
   }
 
-  const deleteDocument = async (documentCode: string) => {
-    const deleteResponse = await StudentService.deleteStudentDocuments(documentCode)
-    if (deleteResponse?.statusCode == status?.successCode) {
-      getUserDocumentList()
-    }
-  }
+  // const deleteDocument = async (documentCode: string) => {
+  //   const deleteResponse = await StudentService.deleteStudentDocuments(documentCode)
+  //   if (deleteResponse?.statusCode == status?.successCode) {
+  //     getUserDocumentList()
+  //   }
+  // }
 
   useEffect(() => {
     fetchDocumentType()
@@ -212,7 +213,8 @@ const DocumentList = () => {
                 </Box>
               </Tooltip>
             )}
-            <DeleteDialog deleteStudentDocument={deleteDocument} data={row} />
+
+            {/* <DeleteDialog deleteStudentDocument={deleteDocument} data={row} /> */}
           </Box>
         )
       }

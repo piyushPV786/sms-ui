@@ -2,7 +2,7 @@ import { Card, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
 import { Box } from '@mui/system'
-import { ICommonData } from 'src/context/common'
+import { ICommonData, ISchedule, IScheduleData } from 'src/context/common'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(3)} !important`,
@@ -12,20 +12,11 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   }
 }))
 
-// const StyledLink = styled('a')(({}) => ({
-//   display: 'flex',
-//   alignItems: 'center',
-//   textDecoration: 'none',
-//   fontSize: '14px',
-//   alignSelf: 'flex-end',
-//   color: '#008554',
-//   marginTop: '10px'
-// }))
-interface IProgramProps {
-  programData: ICommonData[]
-}
+const Program = ({ scheduler }: any) => {
+  const programData =
+    scheduler &&
+    scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i)?.programSchedule?.program)
 
-const Program = ({ programData }: IProgramProps) => {
   return (
     <Card sx={{ position: 'relative', borderRadius: '0px' }}>
       <CardContent>
@@ -43,9 +34,6 @@ const Program = ({ programData }: IProgramProps) => {
                 >{`${program?.name}(${program?.code})`}</Typography>
               </Box>
             ))}
-          {/* <StyledLink href='https://regeniusuat.regenesys.net/login/index.php' target='_blank'>
-            <Launch fontSize='inherit' /> Apply New Program
-          </StyledLink> */}
         </Box>
       </CardContent>
     </Card>

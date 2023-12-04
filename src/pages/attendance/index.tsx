@@ -24,10 +24,9 @@ import {
 } from '@mui/material'
 import AttendanceListRow from 'src/components/myAttendance/attendanceList'
 import OverAllCard from 'src/components/myAttendance/overAllAttendance/overAll'
-import { AcademicService, OperationService } from 'src/service'
+import { OperationService } from 'src/service'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { IRow } from 'src/context/common'
-import { commonListTypes } from 'src/types/dataTypes'
 
 const TableHeaderTypography = styled(Typography)<any>(() => ({
   fontWeight: 'bold',
@@ -42,7 +41,6 @@ const AttendanceList = () => {
   const [count, setCount] = useState<number>(0)
   const [pageNumber, setPageNumber] = useState<number>(0)
   const [tableData, setTableData] = useState<IRow[]>([])
-  const [courses, setCourses] = useState<Array<commonListTypes>>([])
   const [loading, setLoading] = useState<boolean>(false)
   const handleFilter = (val: string) => {
     setValue(val)
@@ -77,20 +75,12 @@ const AttendanceList = () => {
     }
   }
 
-  const getCourses = async () => {
-    const response = await AcademicService.getAllCourses()
-    if (response?.data?.length > 0) {
-      setCourses(response?.data)
-    }
-  }
   useEffect(() => {
     getDetails()
-    getCourses()
   }, [studentDetails?.studentCode])
 
   useEffect(() => {
     getDetails()
-    getCourses()
   }, [value])
 
   return (
@@ -158,7 +148,6 @@ const AttendanceList = () => {
                         index={index}
                         pageNumber={pageNumber}
                         pageSize={pageSize}
-                        courses={courses}
                       />
                     ))
                   ) : (

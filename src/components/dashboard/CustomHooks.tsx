@@ -4,7 +4,7 @@ import { ISchedule, IScheduleData, status } from 'src/context/common'
 import { ICourseList, IProgramList } from 'src/context/types'
 import { useAuth } from 'src/hooks/useAuth'
 import { AcademicService, CommonService, OperationService, StudentService } from 'src/service'
-import { ICommonParams } from 'src/types/dataTypes'
+import { commonListTypes } from 'src/types/dataTypes'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const DashboardCustomHooks = () => {
@@ -46,8 +46,8 @@ const DashboardCustomHooks = () => {
   const [studentDetails, setStudentDetails] = useState<studentType>()
   const [applicationCode, setApplicationCode] = useState<string>('')
   const [paymentStatus, setPaymentStatus] = useState<string>('')
-  const [invigilator, setInvigilator] = useState<ICommonParams[]>([])
-  const [courseLists, setCourseLists] = useState<ICourseList[]>([])
+  const [invigilator, setInvigilator] = useState<commonListTypes[]>([])
+  const [courseList, setCourseList] = useState<ICourseList[]>([])
   const [programList, setProgramList] = useState<IProgramList[]>([])
 
   const [rollover, setRollover] = useState<{ passedModules: any[]; rollOverModules: any[] }>({
@@ -90,8 +90,8 @@ const DashboardCustomHooks = () => {
 
   // Get the current Week
   const currentDate: moment.Moment = moment()
-  const startDate: moment.Moment = currentDate.clone().startOf('day')
-  const endDate: moment.Moment = currentDate.clone().add(1, 'years')
+  const startDate: moment.Moment = currentDate.clone().startOf('year')
+  const endDate: moment.Moment = currentDate.clone().endOf('year')
   const startDateString: string = startDate.format('DD-MM-YYYY')
   const endDateString: string = endDate.format('DD-MM-YYYY')
 
@@ -127,7 +127,7 @@ const DashboardCustomHooks = () => {
 
   const getCourseList = async (code: number | string) => {
     const response = await AcademicService?.getProgramListByCode(code)
-    await setCourseLists(response?.course)
+    await setCourseList(response?.course)
   }
 
   const getStudentMyDay = async () => {
@@ -190,7 +190,7 @@ const DashboardCustomHooks = () => {
     classes,
     invigilator,
     programList,
-    courseLists
+    courseList
   }
 }
 
