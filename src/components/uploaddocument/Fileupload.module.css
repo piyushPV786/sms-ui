@@ -1,0 +1,30 @@
+.GreenFormHeading {
+  font-size: 15px;
+  font-weight: 700;
+  color: black;
+}
+.UploadDocsContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 1rem;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.GreyText {
+  color: #90999e;
+}
+.Text {
+  color: #008554;
+}
+.Document {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 9px 5px 13px;
+  border-radius: 5px;
+  margin-top: 4px;
+  width: 100%;
+}
