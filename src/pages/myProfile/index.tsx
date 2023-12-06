@@ -168,7 +168,7 @@ const PreviewCard = () => {
       status: 'uploaded'
     }
     const qualificationResponse = await StudentService?.ProfilePhoto(payload, studentDetails && studentDetails?.email)
-    uploadDocuments(qualificationResponse?.data?.data?.awsUploadUrl, selectedImage)
+    await uploadDocuments(qualificationResponse?.data?.data?.awsUploadUrl, selectedImage)
 
     if (qualificationResponse?.status === status?.successCode) {
       const imgsrc = await CommonService.getProfileSource(
