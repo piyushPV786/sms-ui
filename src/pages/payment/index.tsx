@@ -196,7 +196,7 @@ const PaymentList = () => {
               </Grid>
             </Grid>
             <Grid item xs={12} sx={{ pt: '10px' }}>
-              <ChangePayment />
+              {/* <ChangePayment /> */}
             </Grid>
           </Box>
         </Grid>
