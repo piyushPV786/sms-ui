@@ -12,7 +12,6 @@ import { Settings } from 'src/@core/context/settingsContext'
 
 // ** Components
 import Autocomplete from 'src/layouts/components/Autocomplete'
-import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
 import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
 import { Typography } from '@mui/material'
@@ -26,6 +25,7 @@ interface Props {
 
 const AppBarContent = (props: Props) => {
   // ** Props
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { hidden, settings, saveSettings, toggleNavVisibility } = props
   const regenesysPortalUrl = process.env.NEXT_PUBLIC_REGENIUS_PORTAL_LOGIN_URL
 
@@ -49,7 +49,9 @@ const AppBarContent = (props: Props) => {
         >
           <Typography sx={{ fontSize: 15 }}>Start Learning</Typography>
         </Button>
-        <ModeToggler settings={settings} saveSettings={saveSettings} />
+
+        {/* <ModeToggler settings={settings} saveSettings={saveSettings} /> */}
+
         <NotificationDropdown settings={settings} />
         <UserDropdown settings={settings} />
       </Box>
