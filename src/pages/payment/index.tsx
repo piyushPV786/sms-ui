@@ -17,7 +17,6 @@ import { status } from 'src/context/common'
 // ** Custom Components Imports
 import TableHeader from 'src/components/feePayment/TableHeader'
 import UpdatePayment from 'src/components/feePayment/updatepayment'
-import ChangePayment from 'src/components/feePayment/changePaymentMode'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
