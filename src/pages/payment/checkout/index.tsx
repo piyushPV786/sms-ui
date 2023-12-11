@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // ** React Imports
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 // ** MUI Imports
@@ -17,6 +17,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { useRouter } from 'next/router'
 import PaymentOption, { DragDropContainer } from 'src/components/feePayment/paymentOption'
 import { DDMMYYYDateFormat } from 'src/utils'
+import { StudentService } from 'src/service'
+import { status } from 'src/context/common'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(4)} !important`
@@ -25,18 +27,23 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
 const BackIcon = require('../../../../public/images/icons/project-icons/back.svg') as string
 
 interface propsType {
-  amount: string | null
-  feeModeCode: string | null
-  currencyCode: string | null
-  dueDate: string | any
   applicationCode: string
-  rollover?: boolean
+
+  id: string | number
+}
+
+interface IResponseType {
+  feeModeCode: string
+  dueDate: any
+  currencyCode: string
+  dueAmount: string
+  applicationCode: string
   qualificaion: string
 }
 
-const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode, qualificaion }: propsType) => {
+const Checkout = ({ applicationCode, id }: propsType) => {
   // ** State
-
+  const [response, setResponse] = useState<IResponseType>()
   const router = useRouter()
 
   const handleBreadcrum = (e: any) => {
@@ -44,6 +51,27 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
     const route = e.target.id
     router.push(`/${route}`)
   }
+
+  const getFeePaymentList = async () => {
+    const payload = {
+      q: '',
+      pageSize: 10,
+      pageNumber: 1
+    }
+    if (applicationCode) {
+      const response = await StudentService?.getFeePaymentList(payload, applicationCode)
+      if (response?.data?.statusCode === status.successCode && response?.data?.data) {
+        const filteredData = response?.data?.data?.data?.find((item: { id: string | number }) => {
+          return item?.id == id
+        })
+
+        setResponse(filteredData)
+      }
+    }
+  }
+  useEffect(() => {
+    getFeePaymentList()
+  }, [applicationCode])
 
   return (
     <>
@@ -110,7 +138,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                       Fee Category
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong>{feeModeCode}</strong>
+                      <strong>{response?.feeModeCode}</strong>
                     </Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -118,7 +146,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                       Due Date
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong>{DDMMYYYDateFormat(new Date(dueDate))}</strong>
+                      <strong>{DDMMYYYDateFormat(new Date(response?.dueDate))}</strong>
                     </Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -130,7 +158,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                               variant='h6'
                               sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}
                             >
-                              Subtotal ({currencyCode})
+                              Subtotal ({response?.currencyCode})
                             </Typography>
                           </Grid>
                           <Grid item xs={6}>
@@ -144,7 +172,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                                 textAlign: 'right'
                               }}
                             >
-                              {` R ${amount}`}
+                              {` R ${response?.dueAmount}`}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -158,7 +186,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                       Amount Payable
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong> {` R ${amount}`}</strong>
+                      <strong> {` R ${response?.dueAmount}`}</strong>
                     </Typography>
                   </Grid>
                 </Box>
@@ -167,13 +195,15 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
           </Card>
         </Grid>
       </Grid>
-      <PaymentOption
-        amount={amount}
-        feeModeCode={feeModeCode}
-        currencyCode={currencyCode}
-        applicationCode={applicationCode}
-        qualificaion={qualificaion}
-      />
+      {response ? (
+        <PaymentOption
+          amount={response?.dueAmount}
+          feeModeCode={response?.feeModeCode}
+          currencyCode={response?.currencyCode}
+          applicationCode={response?.applicationCode}
+          qualificaion={response?.qualificaion}
+        />
+      ) : null}
     </>
   )
 }

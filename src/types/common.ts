@@ -37,6 +37,7 @@ export interface UpdatepaymentItem {
   feeModeCode: string
   programName: string
   applicationCode: string
+  studentCode: string
 }
 
 export interface IIndex {
