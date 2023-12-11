@@ -41,7 +41,7 @@ const StudentDetails = ({ profileImage }: any) => {
         <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={2} md={3} sm={4}>
             <Box>
-              <Avatar alt='R' src={profileImage} />
+              <Avatar alt={`${getUserInfo()?.fullName}`} src={profileImage} />
             </Box>
           </Grid>
           <Grid item xs={7} md={5} sm={5}>

@@ -3,19 +3,10 @@ import Checkout from '.'
 
 const CheckoutResponse = () => {
   const router = useRouter()
-  const { slug, rollover } = router.query as any
+  const { slug } = router.query as any
+  const [appCode, paymentId] = slug
 
-  return (
-    <Checkout
-      amount={slug && slug[0]}
-      feeModeCode={slug && slug[1]}
-      currencyCode={slug && slug[2]}
-      dueDate={slug && slug[3]}
-      applicationCode={slug && slug[4]}
-      rollover={!!rollover}
-      qualificaion={slug && slug[5]}
-    />
-  )
+  return slug?.length > 0 && <Checkout applicationCode={appCode} id={paymentId} />
 }
 
 export default CheckoutResponse

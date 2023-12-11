@@ -50,6 +50,7 @@ export const apiEndPoints = Object.freeze({
   courseList: 'class-management/course-list',
   courses: 'courses',
   ukheshePyment: 'payments/ukheshe-payment',
+  ukhesheToken: 'payments/get-ukheshe-token',
   examTicket: 'exam-ticket',
   rollover: 'rollover',
   feeConversionRate: 'programs-fee/fee-conversion-rate',
