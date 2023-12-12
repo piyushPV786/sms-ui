@@ -1,6 +1,7 @@
 html,
 body {
   min-height: 100%;
+  margin: 0;
 }
 
 #__next {
@@ -122,4 +123,123 @@ a {
 
 .activity p {
   font-size: 14px;
+}
+
+.layout-navbar {
+  background: transparent !important;
+}
+.page-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+}
+.nav-link li a {
+  font-size: 0.5rem !important;
+}
+.user-roles {
+  display: inline-block;
+}
+.user-roles li {
+  width: auto;
+  display: inline-block;
+  margin-right: 0.5rem;
+  background-color: rgba(0, 133, 84, 0.1);
+  border-radius: 25px;
+  padding: 0 5px;
+  margin-bottom: 5px;
+}
+.user-roles li p {
+  font-size: 0.75rem;
+  color: #008554;
+}
+.title-section .MuiButton-sizeMedium,
+.title-section .MuiButton-sizeMedium p {
+  color: #fff;
+  float: right;
+}
+
+.dark-container .MuiGrid-item p {
+  color: #fff !important;
+}
+.MuiDataGrid-cell p,
+.MuiDataGrid-cell div,
+.MuiMenu-list li,
+td,
+th,
+.MuiTableCell-body p,
+.MuiTableCell-body,
+td p {
+  font-size: 0.825rem !important;
+  color: #1f2b37 !important;
+  font-weight: 500 !important;
+}
+
+.title-section .MuiButton-sizeMedium,
+.title-section .MuiButton-sizeMedium p,
+td.MuiTableCell-body button h6,
+td.MuiTableCell-body button p {
+  font-size: 0.825rem !important;
+  font-weight: 500 !important;
+}
+
+td.MuiTableCell-body button p {
+  color: #fff !important;
+}
+
+.side-menu li p {
+  font-size: 0.875rem;
+}
+.side-menu li {
+  padding: 0;
+}
+
+.MuiMenu-list {
+  max-height: 300px !important;
+}
+
+.digital-assessment p,
+.digital-assessment div,
+.final-digital-assessment p,
+.final-digital-assessment div,
+.digital-assignments p,
+.assignments p,
+.assignments div,
+.examination p,
+.examination div,
+.total p,
+.total div {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.digital-assessment p,
+.digital-assessment div,
+.final-digital-assessment p,
+.final-digital-assessment div {
+  color: #6a767c !important;
+}
+
+.assignments p,
+.assignments div {
+  color: #2a6b64 !important;
+}
+
+.examination p,
+.examination div {
+  color: #5b464e !important;
+}
+
+.total p,
+.total div {
+  color: #4bb74a !important;
+}
+
+@media (max-width: 1366px) {
+  .title-section .MuiButton-sizeMedium {
+    font-size: 0.75rem;
+  }
+
+  .title-section .page-title {
+    font-size: 1.125rem !important;
+  }
 }
