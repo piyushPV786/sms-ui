@@ -58,7 +58,7 @@ interface propsType {
   feeModeCode: string | null
   currencyCode: string | null
   applicationCode: string
-  qualificaion: string
+  qualificaion: string | any
 }
 
 const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qualificaion }: propsType) => {

@@ -16,9 +16,10 @@ import { styled } from '@mui/material/styles'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useRouter } from 'next/router'
 import PaymentOption, { DragDropContainer } from 'src/components/feePayment/paymentOption'
-import { DDMMYYYDateFormat } from 'src/utils'
-import { StudentService } from 'src/service'
+import { DDMMYYYDateFormat, YYYYMMDDDateFormat } from 'src/utils'
+import { FinanceService, StudentService } from 'src/service'
 import { status } from 'src/context/common'
+import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(4)} !important`
@@ -30,6 +31,7 @@ interface propsType {
   applicationCode: string
 
   id: string | number
+  rollover?: boolean
 }
 
 interface IResponseType {
@@ -41,10 +43,17 @@ interface IResponseType {
   qualificaion: string
 }
 
-const Checkout = ({ applicationCode, id }: propsType) => {
+const Checkout = ({ applicationCode, id, rollover }: propsType) => {
   // ** State
   const [response, setResponse] = useState<IResponseType>()
+  const [currencyCode, setCurrencyCode] = useState<string>('')
+
   const router = useRouter()
+  const { studentDetails } = DashboardCustomHooks()
+
+  const amount = '500'
+  const feeModeCode = 'Rollover'
+  const dueDate = YYYYMMDDDateFormat(new Date())
 
   const handleBreadcrum = (e: any) => {
     e.preventDefault()
@@ -69,9 +78,17 @@ const Checkout = ({ applicationCode, id }: propsType) => {
       }
     }
   }
+
+  const getCurrencyCode = async () => {
+    if (studentDetails && rollover) {
+      const response1 = await FinanceService?.getCurrencyRate(studentDetails.nationality)
+
+      setCurrencyCode(response1?.data?.data?.currencyCode)
+    }
+  }
   useEffect(() => {
-    getFeePaymentList()
-  }, [applicationCode])
+    rollover ? getCurrencyCode() : getFeePaymentList()
+  }, [applicationCode, studentDetails])
 
   return (
     <>
@@ -138,7 +155,7 @@ const Checkout = ({ applicationCode, id }: propsType) => {
                       Fee Category
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong>{response?.feeModeCode}</strong>
+                      <strong>{!rollover ? response?.feeModeCode : feeModeCode}</strong>
                     </Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -146,7 +163,7 @@ const Checkout = ({ applicationCode, id }: propsType) => {
                       Due Date
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong>{DDMMYYYDateFormat(new Date(response?.dueDate))}</strong>
+                      <strong>{!rollover ? DDMMYYYDateFormat(new Date(response?.dueDate)) : dueDate}</strong>
                     </Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -158,7 +175,7 @@ const Checkout = ({ applicationCode, id }: propsType) => {
                               variant='h6'
                               sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}
                             >
-                              Subtotal ({response?.currencyCode})
+                              Subtotal ({!rollover ? response?.currencyCode : currencyCode})
                             </Typography>
                           </Grid>
                           <Grid item xs={6}>
@@ -172,7 +189,7 @@ const Checkout = ({ applicationCode, id }: propsType) => {
                                 textAlign: 'right'
                               }}
                             >
-                              {` R ${response?.dueAmount}`}
+                              {` R ${!rollover ? response?.dueAmount : amount}`}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -186,7 +203,7 @@ const Checkout = ({ applicationCode, id }: propsType) => {
                       Amount Payable
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong> {` R ${response?.dueAmount}`}</strong>
+                      <strong> {` R ${!rollover ? response?.dueAmount : amount}`}</strong>
                     </Typography>
                   </Grid>
                 </Box>
@@ -195,13 +212,21 @@ const Checkout = ({ applicationCode, id }: propsType) => {
           </Card>
         </Grid>
       </Grid>
-      {response ? (
+      {response && !rollover ? (
         <PaymentOption
           amount={response?.dueAmount}
           feeModeCode={response?.feeModeCode}
           currencyCode={response?.currencyCode}
           applicationCode={response?.applicationCode}
           qualificaion={response?.qualificaion}
+        />
+      ) : studentDetails?.program ? (
+        <PaymentOption
+          amount={amount}
+          feeModeCode={feeModeCode}
+          currencyCode={currencyCode}
+          applicationCode={applicationCode}
+          qualificaion={studentDetails?.program?.name}
         />
       ) : null}
     </>
