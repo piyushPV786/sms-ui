@@ -21,9 +21,8 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import UseBgColor from 'src/@core/hooks/useBgColor'
 import { useRouter } from 'next/router'
-import { FinanceService, StudentService } from 'src/service'
+import { StudentService } from 'src/service'
 import DashboardCustomHooks from '../dashboard/CustomHooks'
-import { YYYYMMDDDateFormat } from 'src/utils'
 import { successToast } from '../common'
 import { useAuth } from 'src/hooks/useAuth'
 import { ErrorMessage, status } from 'src/context/common'
@@ -51,7 +50,7 @@ const RollOver = () => {
 
   const auth = useAuth()
 
-  const { studentDetails, rollover, applicationCode, paymentStatus } = DashboardCustomHooks()
+  const { rollover, applicationCode, paymentStatus } = DashboardCustomHooks()
 
   const {
     register,
@@ -80,17 +79,7 @@ const RollOver = () => {
     }
   }
   const handlePay = async () => {
-    if (studentDetails) {
-      const response1 = await FinanceService?.getCurrencyRate(studentDetails.nationality)
-
-      const amount = 500
-      const feeModeCode = 'Rollover'
-      const currencyCode = response1 && response1?.data?.data?.currencyCode
-      const dueDate = YYYYMMDDDateFormat(new Date())
-      router.push(
-        `/payment/checkout/${amount}/${feeModeCode}/${currencyCode}/${dueDate}/${applicationCode}?rollover=true`
-      )
-    }
+    router.push(`/payment/checkout/${applicationCode}?rollover=true`)
   }
 
   const handleOpen = () => {

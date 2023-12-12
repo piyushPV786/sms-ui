@@ -14,7 +14,7 @@ const withTM = require('next-transpile-modules')([
 
 module.exports = withTM({
   basePath: '/student',
-  trailingSlash: true,
+  trailingSlash: false,
   reactStrictMode: false,
   experimental: {
     esmExternals: false,
