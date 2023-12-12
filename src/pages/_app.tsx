@@ -26,6 +26,7 @@ import { defaultACLObj } from 'src/configs/acl'
 import { AuthProvider } from 'src/context/AuthContext'
 import ReactHotToast from 'src/@core/styles/libs/react-hot-toast'
 import { Toaster } from 'react-hot-toast'
+import ErrorBoundary from 'src/components/errorBoundry'
 
 type ExtendedAppProps = AppProps & {
   Component: NextPage
@@ -107,13 +108,15 @@ export default function App(props: ExtendedAppProps) {
               return (
                 <ThemeComponent settings={settings}>
                   <WindowWrapper>
-                    <AuthProvider>
-                      <Guard authGuard={authGuard} guestGuard={guestGuard}>
-                        <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
-                          {getLayout(<Component {...pageProps} />)}
-                        </AclGuard>
-                      </Guard>
-                    </AuthProvider>
+                    <ErrorBoundary>
+                      <AuthProvider>
+                        <Guard authGuard={authGuard} guestGuard={guestGuard}>
+                          <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
+                            {getLayout(<Component {...pageProps} />)}
+                          </AclGuard>
+                        </Guard>
+                      </AuthProvider>
+                    </ErrorBoundary>
                   </WindowWrapper>
                   <ReactHotToast>
                     <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
