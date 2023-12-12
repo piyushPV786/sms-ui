@@ -90,12 +90,10 @@ const Checkout = ({ applicationCode, id, rollover }: propsType) => {
     if (!rollover) {
       getFeePaymentList()
     }
-  }, [applicationCode])
-  useEffect(() => {
     if (rollover) {
       getCurrencyCode()
     }
-  }, [studentDetails])
+  }, [applicationCode, studentDetails])
 
   return (
     <>
