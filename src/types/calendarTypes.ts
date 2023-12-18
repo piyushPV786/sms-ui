@@ -6,9 +6,6 @@ export type CalendarFiltersType = 'Assessments' | 'Schedules' | 'Announcements' 
 export type EventDateType = Date | null | undefined
 
 export type CalendarColors = {
-  Others: ThemeColor
-  Schedules: ThemeColor
-  Holiday: ThemeColor
   Announcements: ThemeColor
   Assessments: ThemeColor
   Exams: ThemeColor
