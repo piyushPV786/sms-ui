@@ -33,7 +33,7 @@ const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
 }))
 
 const StudentDetails = ({ profileImage }: any) => {
-  const { rollover } = DashboardCustomHooks()
+  const { rollover, studentDetails } = DashboardCustomHooks()
 
   return (
     <Card sx={{ position: 'relative' }}>
@@ -47,7 +47,7 @@ const StudentDetails = ({ profileImage }: any) => {
           <Grid item xs={7} md={5} sm={5}>
             <Box ml={5}>
               <Typography mb={4} variant='h5' fontWeight={400} sx={{ color: '#fff' }}>
-                Hi {getUserInfo()?.fullName}
+                Hi {`${studentDetails?.firstName} ${studentDetails?.lastName}`}
               </Typography>
               <Typography mb={6} variant='h6' sx={{ color: '#fff' }}>
                 Welcome back to Regenesys, Lets Start Learning

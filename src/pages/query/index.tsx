@@ -60,9 +60,6 @@ const StyledDataGrid = styled(DataGrid)(() => ({
   },
   '& .MuiDataGrid-row': {
     maxHeight: 'none !important'
-  },
-  '.css-149d7vg-MuiDataGrid-virtualScrollerRenderZone .MuiDataGrid-row': {
-    minHeight: '100px !important'
   }
 }))
 
