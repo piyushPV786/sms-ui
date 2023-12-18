@@ -20,12 +20,15 @@ import { useAuth } from 'src/hooks/useAuth'
 // ** Type Imports
 import { Settings } from 'src/@core/context/settingsContext'
 import { getUserInfo } from 'src/utils'
+import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 
 interface Props {
   settings: Settings
 }
 
 const UserDropdown = (props: Props) => {
+  const { studentDetails } = DashboardCustomHooks()
+
   // ** Props
   const { settings } = props
 
@@ -94,7 +97,7 @@ const UserDropdown = (props: Props) => {
         onClick={handleDropdownOpen}
         sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}
       >
-        <Typography sx={{ fontWeight: 600 }}>{getUserInfo()?.fullName}</Typography>
+        <Typography sx={{ fontWeight: 600 }}>{`${studentDetails?.firstName} ${studentDetails?.lastName}`}</Typography>
         <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
           {getUserInfo()?.email}
         </Typography>
