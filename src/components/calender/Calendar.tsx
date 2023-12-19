@@ -48,7 +48,8 @@ const Calendar = (props: CalendarType) => {
   useEffect(() => {
     if (calendarApi === null) {
       // @ts-ignore
-      setCalendarApi(calendarRef.current.getApi())
+
+      setCalendarApi(calendarRef?.current?.getApi())
     }
   }, [calendarApi, setCalendarApi])
 

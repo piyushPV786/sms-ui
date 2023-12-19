@@ -46,9 +46,12 @@ const AppCalendar = () => {
   const [calendarApi, setCalendarApi] = useState<null | any>(['Assessments'])
   const [leftSidebarOpen, setLeftSidebarOpen] = useState<boolean>(false)
   const [event, setEvent] = useState<EventType[] | undefined>()
+  const [filterEvent, setFilterEvent] = useState<EventType[] | undefined>()
 
   const [addEventSidebarOpen, setAddEventSidebarOpen] = useState<boolean>(false)
   const { scheduler } = DashboardCustomHooks()
+  const defaultSelectedCalendars = ['Assessments', 'Announcements', 'Exams']
+  const [selectedCalendars, setSelectedCalendars] = useState<string[]>(defaultSelectedCalendars)
 
   const parse = () => {
     const eventArr: any = []
@@ -122,6 +125,7 @@ const AppCalendar = () => {
         })
       })
     setEvent(eventArr)
+    setFilterEvent(eventArr)
   }
 
   useEffect(() => {
@@ -131,17 +135,16 @@ const AppCalendar = () => {
 
   const calendarsColor: CalendarColors = {
     Assessments: 'error',
-    Schedules: 'primary',
+
     Announcements: 'warning',
-    Holiday: 'success',
-    Others: 'info',
+
     Exams: 'info'
   }
 
   const store = {
     events: event,
     selectedEvent: null,
-    selectedCalendars: ['Assessments', 'Schedules', 'Announcements', 'Holiday', 'Others', 'Exams']
+    selectedCalendars: selectedCalendars
   }
 
   // ** Hooks
@@ -176,9 +179,18 @@ const AppCalendar = () => {
   const handleAllCalendars = (data: any) => {
     console.log(data)
   }
-
   const handleCalendarsUpdate = (data: any) => {
-    console.log(data)
+    const updatedSelectedCalendars = selectedCalendars.includes(data)
+      ? selectedCalendars.filter(cal => cal !== data)
+      : [...selectedCalendars, data]
+
+    setSelectedCalendars(updatedSelectedCalendars)
+
+    const filteredEvents = filterEvent
+      ? filterEvent.filter(ev => updatedSelectedCalendars.includes(ev.extendedProps.calendar))
+      : []
+
+    setEvent(filteredEvents)
   }
 
   return (
