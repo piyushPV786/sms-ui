@@ -27,6 +27,7 @@ import { successToast } from '../common'
 import { useAuth } from 'src/hooks/useAuth'
 import { ErrorMessage, status } from 'src/context/common'
 import { errorToast } from 'src/@core/components/common/Toast'
+import Styles from './RollOver.module.css'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -128,14 +129,14 @@ const RollOver = () => {
       </Typography>
       <WhiteButton
         disabled={paymentStatus === 'SUCCESSFUL'}
-        sx={{ mr: 2 }}
+        className={Styles.payRollOver}
         onClick={() => {
           handlePay()
         }}
       >
         PAY Rollover Fee
       </WhiteButton>
-      <WhiteButton disabled={paymentStatus !== 'SUCCESSFUL'} sx={{ marginTop: '5px' }} onClick={handleOpen}>
+      <WhiteButton disabled={paymentStatus !== 'SUCCESSFUL'} className={Styles.rollOver} onClick={handleOpen}>
         Roll Over
       </WhiteButton>
       <Dialog
@@ -205,7 +206,7 @@ const RollOver = () => {
                           {data?.map((module: { name: string }, index) => {
                             return (
                               <>
-                                <Typography fontWeight='bold'>{Year(index + 1)} - COMPLETED MODULES</Typography>
+                                <Typography fontWeight='bold'>{Year(index + 1)} - ROLLOVER MODULES</Typography>
                                 {module && (
                                   <Grid mt={1}>
                                     <Chip
@@ -271,12 +272,12 @@ const RollOver = () => {
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+          <DialogActions className={Styles.dialogAction}>
             <Button variant='outlined' color='secondary' onClick={handleClose}>
               Cancel
             </Button>
 
-            <Button variant='contained' sx={{ mr: 2 }} type='submit'>
+            <Button variant='contained' className={Styles.rolloverButton} type='submit'>
               Rollover
             </Button>
           </DialogActions>

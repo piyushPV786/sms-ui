@@ -1,0 +1,14 @@
+.payRollOver {
+    margin-right: 4px !important;
+    margin-bottom: 4px !important;
+}
+.dialogAction{
+    display: flex;
+    justify-content: center;
+}
+.rollOver{
+    margin-bottom: 4px !important;
+}
+.rolloverButton{
+    margin-right: 4px !important;
+}
