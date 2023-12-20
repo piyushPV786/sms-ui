@@ -16,7 +16,7 @@ import { styled } from '@mui/material/styles'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useRouter } from 'next/router'
 import PaymentOption, { DragDropContainer } from 'src/components/feePayment/paymentOption'
-import { DDMMYYYDateFormat, YYYYMMDDDateFormat } from 'src/utils'
+import { DDMMYYYDateFormat } from 'src/utils'
 import { FinanceService, StudentService } from 'src/service'
 import { status } from 'src/context/common'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
@@ -53,7 +53,7 @@ const Checkout = ({ applicationCode, id, rollover }: propsType) => {
 
   const amount = '500'
   const feeModeCode = 'Rollover'
-  const dueDate = YYYYMMDDDateFormat(new Date())
+  const dueDate = DDMMYYYDateFormat(new Date())
 
   const handleBreadcrum = (e: any) => {
     e.preventDefault()
