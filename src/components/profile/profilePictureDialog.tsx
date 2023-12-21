@@ -99,7 +99,7 @@ const ProfilePictureDialog = ({
                 Drag and drop, or browse your files
               </Box>
               <Typography variant='body2' fontSize={12}>
-                Only PNG, JPEG file with max size of 200kb
+                Only PNG, JPEG file with max size of 800kb
               </Typography>
             </Box>
           </AcceptanceLatterContainer>
