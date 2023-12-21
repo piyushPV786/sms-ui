@@ -125,7 +125,7 @@ const RollOver = () => {
         To Rollover
       </Typography>
       <Typography color={theme => theme.palette.common.white} fontSize={15} pb={2}>
-        You have passed the dependent modules. Please pay the 500 and admission fee to roll over next semester.
+        You have passed the dependent modules. Please pay the R 500 and admission fee to roll over next semester.
       </Typography>
       <WhiteButton
         disabled={paymentStatus === 'SUCCESSFUL'}
@@ -249,7 +249,7 @@ const RollOver = () => {
                         )
                       clearErrors('module')
                     }}
-                    options={rollover && rollover?.rollOverModules}
+                    options={rollover?.rollOverModules.filter(Boolean)}
                     value={
                       rollover &&
                       rollover?.rollOverModules?.filter(
@@ -266,7 +266,6 @@ const RollOver = () => {
                       }
                     }}
                   />
-
                   <FormHelperText error>{errors?.module && 'Module are required'}</FormHelperText>
                 </FormControl>
               </Grid>
@@ -277,7 +276,12 @@ const RollOver = () => {
               Cancel
             </Button>
 
-            <Button variant='contained' className={Styles.rolloverButton} type='submit'>
+            <Button
+              variant='contained'
+              className={Styles.rolloverButton}
+              type='submit'
+              disabled={watch('module') && watch('module')[0] !== null}
+            >
               Rollover
             </Button>
           </DialogActions>
