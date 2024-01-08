@@ -109,8 +109,6 @@ const EditPostalAddressDialog = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [studentDetails])
 
-  console.log('setStateData', studentDetails)
-
   const onSubmitAddress = async (data: any) => {
     setLoading(true)
     const testError = stateData.some((i: { isoCode: string }) => i.isoCode === watch('state'))
