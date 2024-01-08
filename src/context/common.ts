@@ -172,7 +172,11 @@ export enum ErrorMessage {
   confirmPassword = 'Please Type again your new password',
   confirmPasswordError = `Those password didn't match. Try again`,
   Error = 'Something went wrong',
-  stateError = 'This state not exist in the country '
+  stateError = 'This state not exist in the country ',
+  zipCodeRequired = 'ZipCode is required',
+  zipCodeError = 'ZipCode must be number',
+  zipCodeMinError = 'ZipCode must be atleast 3 digits',
+  zipCodeMaxError = 'ZipCode must only be 10 digits'
 }
 
 export enum ProfilePhoto {

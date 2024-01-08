@@ -49,9 +49,14 @@ const schema = yup.object().shape({
     .min(3, obj => showErrors('city', obj.value.length, obj.min))
     .required(),
   zipcode: yup
-    .string()
-    .min(3, obj => showErrors('zipcode', obj.value.length, obj.min))
-    .required()
+    .number()
+    .typeError(ErrorMessage.zipCodeError)
+    .positive()
+    .min(100, ErrorMessage.zipCodeMinError)
+    .max(9999999999, ErrorMessage.zipCodeMaxError)
+    .required(ErrorMessage.zipCodeRequired)
+    .nullable()
+    .transform((value, originalValue) => (originalValue === '' ? undefined : value))
 })
 
 const EditPostalAddressDialog = ({
@@ -72,6 +77,7 @@ const EditPostalAddressDialog = ({
     reset,
     handleSubmit,
     setError,
+    clearErrors,
     formState: { errors }
   } = useForm({
     mode: 'onChange',
@@ -281,6 +287,7 @@ const EditPostalAddressDialog = ({
               onClick={() => {
                 handleEditDialogClose()
                 setStateData()
+                clearErrors()
               }}
               style={{ background: 'white', color: 'grey', borderColor: 'grey' }}
             >
