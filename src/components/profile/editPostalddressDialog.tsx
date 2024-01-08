@@ -90,12 +90,6 @@ const EditPostalAddressDialog = ({
   const cityWatch = watch('city')
   const zipcodeWatch = watch('zipcode')
 
-  console.log('countryWatch', countryWatch)
-  console.log('stateWatch', stateWatch)
-  console.log('streetWatch', streetWatch)
-  console.log('cityWatch', cityWatch)
-  console.log('zipcodeWatch', zipcodeWatch)
-
   const setStateData = () => {
     if (studentDetails && studentDetails?.address?.length) {
       const postalAddress = studentDetails?.address?.find((item: any) => item?.addressType === 'POSTAL')
