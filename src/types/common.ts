@@ -27,6 +27,7 @@ export interface UpdatePayment {
   programCode: string
   allProgram: IProgram | undefined
   currencyList: []
+  studentCode: string
 }
 
 export interface UpdatepaymentItem {
