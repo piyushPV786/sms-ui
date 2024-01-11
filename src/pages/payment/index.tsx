@@ -227,9 +227,10 @@ const PaymentList = () => {
             />
           </Card>
         </Grid>
-        {UpcomingPayment.length > 0 ? (
+        {UpcomingPayment.length > 0 && auth?.user?.studentCode ? (
           <Grid item xs={12} md={4}>
             <UpdatePayment
+              studentCode={auth?.user?.studentCode}
               currencyList={currencyList}
               allProgram={allProgram}
               rows={UpcomingPayment}
