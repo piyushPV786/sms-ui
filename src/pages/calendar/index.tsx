@@ -64,7 +64,7 @@ const AppCalendar = () => {
             title: 'Exam',
             start: item?.examDate,
             end: item?.examDate,
-            allDay: false,
+            allDay: true,
             extendedProps: {
               calendar: 'Exams'
             }
@@ -76,7 +76,8 @@ const AppCalendar = () => {
             title: 'Digital assingment',
             start: item?.digitalAssessmentDueDate,
             end: item?.digitalAssessmentDueDate,
-            allDay: false,
+            allDay: true,
+
             extendedProps: {
               calendar: 'Assessments'
             }
@@ -88,7 +89,7 @@ const AppCalendar = () => {
             title: 'Individual Assignment',
             start: item?.individualAssignmentDueDate,
             end: item?.individualAssignmentDueDate,
-            allDay: false,
+            allDay: true,
             extendedProps: {
               calendar: 'Assessments'
             }
