@@ -10,7 +10,7 @@ import {
   styled
 } from '@mui/material'
 import { Close, FileUploadOutline } from 'mdi-material-ui'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
 const AcceptanceLatterContainer = styled(Box)(() => ({
@@ -43,16 +43,18 @@ const ProfilePictureDialog = ({
   updateProfilePhoto
 }: IProps) => {
   const [profileImage, setProfileImage] = useState<any>(null)
+  const [rejectedFiles, setRejectedFiles] = useState<any[]>([])
   const { acceptedFiles, getRootProps, getInputProps, fileRejections } = useDropzone({
     maxFiles: 1,
     accept: {
       'image/*': ['.png']
     },
     maxSize: 1024 * 1024,
-    onDrop: file => onFileChange(file)
+    onDrop: file => onFileChange(file),
+    multiple: false
   })
 
-  const fileRejectionItems = fileRejections.map(({ file, errors }) => {
+  const fileRejectionItems = rejectedFiles.map(({ file, errors }) => {
     return (
       <>
         <Typography key={profileImage?.name} color='error'>
@@ -60,7 +62,7 @@ const ProfilePictureDialog = ({
             ? `${(Math.round(file.size / 100) / 10000).toFixed(1)} mb`
             : `${(Math.round(file.size / 100) / 10).toFixed(1)} kb`}
         </Typography>
-        {errors.map(e => (
+        {errors.map((e: { message: string; code: string }) => (
           <Typography color='error' key={e.code}>
             {e.message}
           </Typography>
@@ -76,6 +78,16 @@ const ProfilePictureDialog = ({
   const remove = (file: any) => {
     acceptedFiles.splice(file, 1) // remove the file from the array
     setProfileImage(null)
+  }
+  useEffect(() => {
+    const remainingRejectedFiles = fileRejections.filter(({ file }) => file)
+    setRejectedFiles(remainingRejectedFiles)
+  }, [fileRejections])
+
+  const onCancel = () => {
+    setProfileModal(!openProfileModal)
+    setProfileImage(null) // Reset the file state
+    setRejectedFiles([])
   }
 
   return (
@@ -150,15 +162,11 @@ const ProfilePictureDialog = ({
             <Button
               variant='contained'
               style={{ background: 'white', color: 'grey', borderColor: 'grey', marginRight: '10px' }}
-              onClick={() => {
-                setProfileModal(!openProfileModal)
-                setProfileImage(null)
-              }}
+              onClick={onCancel}
             >
               Cancel
             </Button>
             <Button
-              style={{ background: '#4f958d', color: 'white' }}
               variant='contained'
               type='submit'
               onClick={() => {
@@ -166,6 +174,7 @@ const ProfilePictureDialog = ({
                 setProfileImage(null)
                 setProfileModal(false)
               }}
+              disabled={acceptedFiles.length !== 1}
             >
               Save
             </Button>
