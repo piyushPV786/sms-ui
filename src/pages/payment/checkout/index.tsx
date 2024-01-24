@@ -124,7 +124,7 @@ const Checkout = ({ applicationCode, id, rollover }: propsType) => {
                 <Button
                   size='small'
                   variant='outlined'
-                  onClick={() => router.back()}
+                  onClick={() => router.push('/payment')}
                   sx={{
                     position: 'absolute',
                     backgroundColor: theme => theme.palette.common.white,
