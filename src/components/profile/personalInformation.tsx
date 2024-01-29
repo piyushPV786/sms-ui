@@ -23,10 +23,7 @@ const PersonalInformation = ({ handleEditDialogOpen, address, studentDetails }: 
           <ProfileInfo label='Gender' info={`${getName(gender, studentDetails['gender'])}`} />
           <ProfileInfo label='Date of Birth' info={`${DDMMYYYDateFormat(studentDetails['dateOfBirth'])}`} />
           <ProfileInfo label='Email' info={`${studentDetails['email']}`} />
-          <ProfileInfo
-            label='Mobile Number'
-            info={`+${studentDetails['mobileCountryCode']} ${studentDetails['mobileNo']}`}
-          />
+          <ProfileInfo label='Mobile Number' info={`${studentDetails['mobileNo']}`} />
           <ProfileInfo label='Home Language' info={`${getName(language, studentDetails['homeLanguage'])}`} />
           <ProfileInfo label='Race' info={`${getName(race, studentDetails['race'])}`} />
           <ProfileInfo
