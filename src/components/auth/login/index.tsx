@@ -35,7 +35,8 @@ const SignUp = () => {
     control,
     setError,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    setValue
   } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(schema)
@@ -65,13 +66,16 @@ const SignUp = () => {
               name='email'
               control={control}
               rules={{ required: true }}
-              render={({ field: { value, onChange, onBlur } }) => (
+              render={({ field: { value, onBlur } }) => (
                 <TextField
                   autoFocus
                   label='Email'
                   value={value}
                   onBlur={onBlur}
-                  onChange={onChange}
+                  onChange={e => {
+                    const trimmedValue = e.target.value.trim()
+                    setValue('email', trimmedValue)
+                  }}
                   error={Boolean(errors.email)}
                 />
               )}
