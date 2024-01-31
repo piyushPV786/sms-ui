@@ -115,7 +115,6 @@ const EditPostalAddressDialog = ({
 
     if (testError) {
       await onSubmit(data)
-      setStateData()
       reset()
     } else {
       setError('state', {
@@ -293,12 +292,7 @@ const EditPostalAddressDialog = ({
             >
               Cancel
             </Button>
-            <Button
-              style={{ background: '#4f958d', color: 'white' }}
-              disabled={loading}
-              variant='contained'
-              type='submit'
-            >
+            <Button disabled={loading} variant='contained' type='submit'>
               Save
             </Button>
           </DialogActions>
