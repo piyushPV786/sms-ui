@@ -176,7 +176,8 @@ export enum ErrorMessage {
   zipCodeRequired = 'ZipCode is required',
   zipCodeError = 'ZipCode must be number',
   zipCodeMinError = 'ZipCode must be atleast 3 digits',
-  zipCodeMaxError = 'ZipCode must only be 10 digits'
+  zipCodeMaxError = 'ZipCode must only be 10 digits',
+  userNameRequired = 'User Name is required'
 }
 
 export enum ProfilePhoto {
