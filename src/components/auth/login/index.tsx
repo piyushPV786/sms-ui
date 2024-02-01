@@ -15,17 +15,17 @@ import { EyeOffOutline, EyeOutline } from 'mdi-material-ui'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { PathTypes } from 'src/context/common'
+import { ErrorMessage, PathTypes } from 'src/context/common'
 import { useAuth } from 'src/hooks/useAuth'
 import * as yup from 'yup'
 
 interface FormData {
-  email: string
+  userName: string
   password: string
 }
 
 const schema = yup.object().shape({
-  email: yup.string().email().required(),
+  userName: yup.string().required(ErrorMessage.userNameRequired),
   password: yup.string().min(5).required()
 })
 
@@ -43,11 +43,11 @@ const SignUp = () => {
   })
   const auth = useAuth()
   const onSubmit = (data: FormData) => {
-    const { email, password } = data
-    auth.login({ username: email, password }, () => {
-      setError('email', {
+    const { userName, password } = data
+    auth.login({ username: userName, password }, () => {
+      setError('userName', {
         type: 'manual',
-        message: 'Email or Password is invalid'
+        message: 'User Name or Password is invalid'
       })
     })
   }
@@ -63,24 +63,24 @@ const SignUp = () => {
         <Grid item xs={12}>
           <FormControl fullWidth>
             <Controller
-              name='email'
+              name='userName'
               control={control}
               rules={{ required: true }}
               render={({ field: { value, onBlur } }) => (
                 <TextField
                   autoFocus
-                  label='Email'
+                  label='User Name'
                   value={value}
                   onBlur={onBlur}
                   onChange={e => {
                     const trimmedValue = e.target.value.trim()
-                    setValue('email', trimmedValue)
+                    setValue('userName', trimmedValue)
                   }}
-                  error={Boolean(errors.email)}
+                  error={Boolean(errors.userName)}
                 />
               )}
             />
-            {errors.email && <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>}
+            {errors.userName && <FormHelperText sx={{ color: 'error.main' }}>{errors.userName.message}</FormHelperText>}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
