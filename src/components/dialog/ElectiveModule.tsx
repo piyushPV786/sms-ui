@@ -31,8 +31,6 @@ const ElectiveModule = () => {
 
   const { rollover, electiveModule } = DashboardCustomHooks()
 
-  console.log('electiveModule', electiveModule)
-
   const electiveDataByYear: CoreDataByYear = {}
   electiveModule?.forEach((module: ICourseDetails) => {
     const yearKey = `${module?.course?.academicYearOfProgram}stYear`
@@ -45,8 +43,6 @@ const ElectiveModule = () => {
   const Year = (academicYear: number) => {
     return `${academicYear}st year`
   }
-
-  console.log('electiveDataByYear', electiveDataByYear)
 
   const handleOpen = () => {
     setDialogShow(true)

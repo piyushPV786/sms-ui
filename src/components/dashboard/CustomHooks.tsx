@@ -85,7 +85,6 @@ const DashboardCustomHooks = () => {
     item.courseCode
   })
 
-  console.log('studentDetails', studentDetails)
   useEffect(() => {
     getCourseList(courseCode)
     // eslint-disable-next-line react-hooks/exhaustive-deps
