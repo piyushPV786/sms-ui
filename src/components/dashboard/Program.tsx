@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
 import { Box } from '@mui/system'
 import { ICommonData, ISchedule, IScheduleData } from 'src/context/common'
+import ElectiveModule from '../dialog/ElectiveModule'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(3)} !important`,
@@ -34,6 +35,9 @@ const Program = ({ scheduler }: any) => {
                 >{`${program?.name}(${program?.code})`}</Typography>
               </Box>
             ))}
+          <Box>
+            <ElectiveModule />
+          </Box>
         </Box>
       </CardContent>
     </Card>

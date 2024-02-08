@@ -33,6 +33,10 @@ interface deleteDocument {
   delete: string
 }
 
+interface EnrollElective {
+  enroll: string
+}
+
 export const deleteDocument: deleteDocument = {
   delete: 'File deleted Sucessfully.'
 }
@@ -295,4 +299,30 @@ export interface IRow {
   percentage: null | number | string
   venue: null | string
   facilitator: null | string
+}
+
+export const EnrollElective: EnrollElective = {
+  enroll: 'Elective modules were successfully enrolled for the first year.'
+}
+
+export interface ICourseDetails {
+  id: number
+  programId: number
+  code: string
+  name: string
+  type: string
+  assignments: number
+  assessment: number
+  examination: number
+  isActive: boolean
+  academicYearOfProgram: string
+  dependentCourseCode: string
+  programSemester: { name: string }
+  validThroughAcademicYearofStudy: string
+  credit: number
+  course: {
+    name: string
+    type: string
+    academicYearOfProgram: string
+  }
 }
