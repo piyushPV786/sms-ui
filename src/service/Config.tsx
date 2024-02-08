@@ -59,5 +59,8 @@ export const apiEndPoints = Object.freeze({
   courselist: 'class-management/course-list',
   facilitator: 'facilitator',
   allProgram: 'programs/all',
-  program: 'programs'
+  program: 'programs',
+  courseFilter: 'courses/program',
+  enrollElective: 'academics/enroll-elective',
+  getElective: 'academics/all-academic-records'
 })

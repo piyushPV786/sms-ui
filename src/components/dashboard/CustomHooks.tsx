@@ -1,6 +1,6 @@
 import moment from 'moment'
 import { useEffect, useState } from 'react'
-import { ISchedule, IScheduleData, status } from 'src/context/common'
+import { ICourseDetails, ISchedule, IScheduleData, status } from 'src/context/common'
 import { ICourseList, IProgramList } from 'src/context/types'
 import { useAuth } from 'src/hooks/useAuth'
 import { AcademicService, CommonService, OperationService, StudentService } from 'src/service'
@@ -11,6 +11,7 @@ const DashboardCustomHooks = () => {
   interface Iprogram {
     name: string | undefined
     nqfLevel: string | undefined
+    code?: string
   }
 
   interface DataType {
@@ -39,6 +40,11 @@ const DashboardCustomHooks = () => {
     nationality: string
   }
 
+  interface IModuleListData {
+    count: number
+    data: ICourseDetails[]
+  }
+
   const [scheduler, setScheduler] = useState<any>(null)
   const [classes, setClasses] = useState<any>(null)
   const [myDayData, setMyDay] = useState<any>(null)
@@ -49,6 +55,8 @@ const DashboardCustomHooks = () => {
   const [invigilator, setInvigilator] = useState<commonListTypes[]>([])
   const [courseList, setCourseList] = useState<ICourseList[]>([])
   const [programList, setProgramList] = useState<IProgramList[]>([])
+  const [module, setModule] = useState<IModuleListData>()
+  const [electiveModule, setElectiveModule] = useState<any>([])
 
   const [rollover, setRollover] = useState<{ passedModules: any[]; rollOverModules: any[] }>({
     passedModules: [],
@@ -65,13 +73,19 @@ const DashboardCustomHooks = () => {
     getApplicationCode()
     getAllInvigilator()
     getProgramList()
+    getElectiveModuleList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    studentDetails?.program && getModuleList()
+  }, [studentDetails])
 
   const courseCode = classes?.classManagementData?.map((item: DataType) => {
     item.courseCode
   })
 
+  console.log('studentDetails', studentDetails)
   useEffect(() => {
     getCourseList(courseCode)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -179,6 +193,21 @@ const DashboardCustomHooks = () => {
     }
   }
 
+  const getModuleList = async () => {
+    const params = {
+      programCode: studentDetails?.program?.code ? studentDetails?.program?.code : ''
+    }
+    const response = await AcademicService?.getModuleList(params)
+    setModule(response?.data?.data)
+  }
+
+  const getElectiveModuleList = async () => {
+    if (auth?.user?.studentCode) {
+      const electiveResponse = await AcademicService?.getElectiveModule(auth?.user?.studentCode)
+      setElectiveModule(electiveResponse?.data?.data)
+    }
+  }
+
   return {
     scheduler,
     myDayData,
@@ -190,7 +219,9 @@ const DashboardCustomHooks = () => {
     classes,
     invigilator,
     programList,
-    courseList
+    courseList,
+    module,
+    electiveModule
   }
 }
 

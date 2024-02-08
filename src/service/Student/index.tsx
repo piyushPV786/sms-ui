@@ -49,6 +49,12 @@ export interface QueryPayload {
   documentTypeCode: string
 }
 
+export interface electiveParam {
+  username: string
+  courseCodes: string[]
+  programCode: string
+}
+
 export default class Student {
   apiServer: AxiosInstance
   baseUrl = BaseStudentApi
@@ -433,5 +439,19 @@ export default class Student {
       nProgress.done()
     }
     nProgress.done()
+  }
+
+  async enrollElective(electiveParam: electiveParam) {
+    nProgress.start()
+    const endUrlName = `${this.baseUrl + apiEndPoints.enrollElective}`
+    try {
+      const response = await this.apiServer.post(endUrlName, electiveParam)
+
+      return response
+    } catch (err: any) {
+      console.log('Error in saving Elective module Details ========>', err?.message)
+    } finally {
+      nProgress.done()
+    }
   }
 }

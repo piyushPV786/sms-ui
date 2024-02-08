@@ -12,8 +12,8 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 import { getUserInfo } from 'src/utils'
 import { HelpBox, InformationOutline, React } from 'mdi-material-ui'
 import ExamTicket from '../dialog/ExamTicket'
-import RollOver from '../dialog/RollOver'
 import DashboardCustomHooks from './CustomHooks'
+import SelectElective from '../dialog/SelectElective'
 
 // Styled CardContent component
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
@@ -108,7 +108,8 @@ const StudentDetails = ({ profileImage }: any) => {
                   </Grid>
 
                   <Grid p={2}>
-                    <RollOver />
+                    {/* <RollOver />  need to change it when new mockup comes all functionality and code is there for rollover*/}
+                    <SelectElective />
                   </Grid>
                 </Grid>
               </Card>
