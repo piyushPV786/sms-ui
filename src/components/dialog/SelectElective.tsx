@@ -52,10 +52,20 @@ const SelectElective = () => {
 
   const auth = useAuth()
 
-  const { module, studentDetails } = DashboardCustomHooks()
+  const { module, studentDetails, electiveModule } = DashboardCustomHooks()
 
   const coreData = module?.data?.filter((item: { type: string }) => item?.type === 'core')
   const electiveData = module?.data?.filter((item: { type: string }) => item?.type === 'elective')
+  const electiveEnrolledData = electiveModule?.filter(
+    (item: { course: { type: string } }) => item?.course?.type === 'elective'
+  )
+  let filteredElectiveData: any[] | undefined = undefined
+
+  if (electiveData && electiveEnrolledData) {
+    filteredElectiveData = electiveData.filter(
+      obj1 => !electiveEnrolledData?.some((obj2: { course: { code: string } }) => obj1?.code === obj2?.course?.code)
+    )
+  }
 
   const coreDataByYear: CoreDataByYear = {}
   coreData?.forEach(module => {
@@ -108,8 +118,6 @@ const SelectElective = () => {
     setDialogShow(false)
     reset()
   }
-
-  console.log('watch(module)', watch('module'))
 
   return (
     <Grid>
@@ -187,10 +195,10 @@ const SelectElective = () => {
                         )
                       clearErrors('module')
                     }}
-                    options={electiveData ? electiveData?.filter(Boolean) : []}
+                    options={filteredElectiveData ? filteredElectiveData?.filter(Boolean) : []}
                     value={
-                      electiveData &&
-                      electiveData?.filter(
+                      filteredElectiveData &&
+                      filteredElectiveData?.filter(
                         (i: { name: string; code: string }) => i && watch('module').includes(i?.code)
                       )
                     }
