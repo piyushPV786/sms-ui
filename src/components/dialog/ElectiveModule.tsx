@@ -29,10 +29,15 @@ interface CoreDataByYear {
 const ElectiveModule = () => {
   const [dialogShow, setDialogShow] = useState<boolean>(false)
 
-  const { rollover, electiveModule } = DashboardCustomHooks()
+  const { electiveModule } = DashboardCustomHooks()
+
+  const filterElectiveData = electiveModule?.filter(
+    (item: { course: { type: string } }) => item?.course?.type === 'elective'
+  )
 
   const electiveDataByYear: CoreDataByYear = {}
-  electiveModule?.forEach((module: ICourseDetails) => {
+
+  filterElectiveData?.forEach((module: ICourseDetails) => {
     const yearKey = `${module?.course?.academicYearOfProgram}stYear`
     if (!electiveDataByYear[yearKey]) {
       electiveDataByYear[yearKey] = []
@@ -50,15 +55,6 @@ const ElectiveModule = () => {
   const handleClose = () => {
     setDialogShow(false)
   }
-  const PassedModulesByYear: [] = []
-
-  rollover?.passedModules?.reduce((acc: any, data: { academicYearOfProgram: number }) => {
-    const year = data?.academicYearOfProgram
-    acc[year - 1] = acc[year - 1] || []
-    acc[year - 1].push(data)
-
-    return acc
-  }, PassedModulesByYear)
 
   return (
     <Grid>
