@@ -12,7 +12,7 @@ import { AuthValuesType } from 'src/context/types'
 
 const ImagePayu = require('/public/images/payu.png') as string
 const ImagePayFast = require('/public/images/payfastImage.png') as string
-const ImageUkheshe = require('/public/images/ukheshy.png') as string
+const ImageUkheshe = require('/public/images/newUkheshy.png') as string
 
 interface userDetails {
   fullName: string
