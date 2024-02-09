@@ -190,7 +190,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qua
                           src={GetPaymentImage(value) as any}
                           alt={GetPaymentImage(value) as string}
                           height={50}
-                          width={100}
+                          width={150}
                         />
                       </Box>
                     </PaymentCard>
