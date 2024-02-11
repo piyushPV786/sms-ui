@@ -7,44 +7,39 @@ import { AcademicService, CommonService, OperationService, StudentService } from
 import { commonListTypes } from 'src/types/dataTypes'
 import { DDMMYYYDateFormat } from 'src/utils'
 
+interface Iprogram {
+  name: string | undefined
+  nqfLevel: string | undefined
+  code?: string
+}
+
+interface DataType {
+  courseCode: string | number
+  programCode: string
+  facilitator: string
+  name: string
+  program: string
+  date: string
+  time: string
+  imgSrc: string
+}
+interface studentType {
+  firstName: string
+  lastName: string
+  email: string
+  mobileNo: string
+  studentCode: string
+  idNo: string
+  dateOfBirth: string | any
+  qualifications: string | undefined
+  nqfLevel: string | undefined
+  createdAt: string
+  status: string
+  program: Iprogram
+  nationality: string
+}
+
 const DashboardCustomHooks = () => {
-  interface Iprogram {
-    name: string | undefined
-    nqfLevel: string | undefined
-    code?: string
-  }
-
-  interface DataType {
-    courseCode: string | number
-    programCode: string
-    facilitator: string
-    name: string
-    program: string
-    date: string
-    time: string
-    imgSrc: string
-  }
-  interface studentType {
-    firstName: string
-    lastName: string
-    email: string
-    mobileNo: string
-    studentCode: string
-    idNo: string
-    dateOfBirth: string | any
-    qualifications: string | undefined
-    nqfLevel: string | undefined
-    createdAt: string
-    status: string
-    program: Iprogram
-    nationality: string
-  }
-
-  interface IModuleListData {
-    count: number
-    data: ICourseDetails[]
-  }
-
   const [scheduler, setScheduler] = useState<any>(null)
   const [classes, setClasses] = useState<any>(null)
   const [myDayData, setMyDay] = useState<any>(null)
@@ -55,7 +50,7 @@ const DashboardCustomHooks = () => {
   const [invigilator, setInvigilator] = useState<commonListTypes[]>([])
   const [courseList, setCourseList] = useState<ICourseList[]>([])
   const [programList, setProgramList] = useState<IProgramList[]>([])
-  const [module, setModule] = useState<IModuleListData>()
+  const [module, setModule] = useState<ICourseDetails[]>()
   const [electiveModule, setElectiveModule] = useState<any>([])
 
   const [rollover, setRollover] = useState<{ passedModules: any[]; rollOverModules: any[] }>({
@@ -114,16 +109,12 @@ const DashboardCustomHooks = () => {
       const endDate = endDateString
       const schedulerResponse = await StudentService?.studentScheduler(auth?.user?.studentCode, startDate, endDate)
       setScheduler(schedulerResponse?.data?.data)
-
-      console.log('schedulerResponse =================>', schedulerResponse)
     }
   }
   const getMyClasses = async () => {
     if (scheduleCode) {
       const classesResponse = await OperationService?.getClass(scheduleCode)
       setClasses(classesResponse)
-
-      console.log('MyClasses Response =================>', classesResponse)
     }
   }
 
@@ -220,7 +211,8 @@ const DashboardCustomHooks = () => {
     programList,
     courseList,
     module,
-    electiveModule
+    electiveModule,
+    getElectiveModuleList
   }
 }
 
