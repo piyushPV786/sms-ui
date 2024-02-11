@@ -1,6 +1,5 @@
 // ** MUI Imports
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 
 import IconButton from '@mui/material/IconButton'
 
@@ -14,7 +13,7 @@ import { Settings } from 'src/@core/context/settingsContext'
 import Autocomplete from 'src/layouts/components/Autocomplete'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
 import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
-import { Typography } from '@mui/material'
+import WhiteButton from 'src/components/Button'
 
 interface Props {
   hidden: boolean
@@ -27,7 +26,7 @@ const AppBarContent = (props: Props) => {
   // ** Props
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { hidden, settings, saveSettings, toggleNavVisibility } = props
-  const regenesysPortalUrl = process.env.NEXT_PUBLIC_REGENIUS_PORTAL_LOGIN_URL
+  const regenesysPortalUrl = process.env.NEXT_PUBLIC_REGENIUS_PORTAL_LOGIN_URL ?? '/'
 
   return (
     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -40,15 +39,11 @@ const AppBarContent = (props: Props) => {
         <Autocomplete hidden={hidden} settings={settings} />
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
-        <Button
-          variant='contained'
-          size='small'
-          sx={{ borderRadius: 10, bgcolor: 'white' }}
-          href={regenesysPortalUrl as any}
-          target='_blank'
-        >
-          <Typography sx={{ fontSize: 15 }}>Start Learning</Typography>
-        </Button>
+        <a target='_blank' href={regenesysPortalUrl} rel='noopener noreferrer'>
+          <WhiteButton variant='contained' size='small' sx={{ borderRadius: 10 }}>
+            Start Learning
+          </WhiteButton>
+        </a>
 
         {/* <ModeToggler settings={settings} saveSettings={saveSettings} /> */}
 

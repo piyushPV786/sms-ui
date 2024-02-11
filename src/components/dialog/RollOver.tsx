@@ -21,13 +21,13 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import UseBgColor from 'src/@core/hooks/useBgColor'
 import { useRouter } from 'next/router'
-import { FinanceService, StudentService } from 'src/service'
+import { StudentService } from 'src/service'
 import DashboardCustomHooks from '../dashboard/CustomHooks'
-import { YYYYMMDDDateFormat } from 'src/utils'
 import { successToast } from '../common'
 import { useAuth } from 'src/hooks/useAuth'
 import { ErrorMessage, status } from 'src/context/common'
 import { errorToast } from 'src/@core/components/common/Toast'
+import Styles from './RollOver.module.css'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -51,7 +51,7 @@ const RollOver = () => {
 
   const auth = useAuth()
 
-  const { studentDetails, rollover, applicationCode, paymentStatus } = DashboardCustomHooks()
+  const { rollover, applicationCode, paymentStatus } = DashboardCustomHooks()
 
   const {
     register,
@@ -80,17 +80,7 @@ const RollOver = () => {
     }
   }
   const handlePay = async () => {
-    if (studentDetails) {
-      const response1 = await FinanceService?.getCurrencyRate(studentDetails.nationality)
-
-      const amount = 500
-      const feeModeCode = 'Rollover'
-      const currencyCode = response1 && response1?.data?.data?.currencyCode
-      const dueDate = YYYYMMDDDateFormat(new Date())
-      router.push(
-        `/payment/checkout/${amount}/${feeModeCode}/${currencyCode}/${dueDate}/${applicationCode}?rollover=true`
-      )
-    }
+    router.push(`/payment/checkout/${applicationCode}?rollover=true`)
   }
 
   const handleOpen = () => {
@@ -135,18 +125,18 @@ const RollOver = () => {
         To Rollover
       </Typography>
       <Typography color={theme => theme.palette.common.white} fontSize={15} pb={2}>
-        You have passed the dependent modules. Please pay the 500 and admission fee to roll over next semester.
+        You have passed the dependent modules. Please pay the R 500 and admission fee to roll over next semester.
       </Typography>
       <WhiteButton
         disabled={paymentStatus === 'SUCCESSFUL'}
-        sx={{ mr: 2 }}
+        className={Styles.payRollOver}
         onClick={() => {
           handlePay()
         }}
       >
         PAY Rollover Fee
       </WhiteButton>
-      <WhiteButton disabled={paymentStatus !== 'SUCCESSFUL'} sx={{ marginTop: '5px' }} onClick={handleOpen}>
+      <WhiteButton disabled={paymentStatus !== 'SUCCESSFUL'} className={Styles.rollOver} onClick={handleOpen}>
         Roll Over
       </WhiteButton>
       <Dialog
@@ -216,7 +206,7 @@ const RollOver = () => {
                           {data?.map((module: { name: string }, index) => {
                             return (
                               <>
-                                <Typography fontWeight='bold'>{Year(index + 1)} - COMPLETED MODULES</Typography>
+                                <Typography fontWeight='bold'>{Year(index + 1)} - ROLLOVER MODULES</Typography>
                                 {module && (
                                   <Grid mt={1}>
                                     <Chip
@@ -259,7 +249,7 @@ const RollOver = () => {
                         )
                       clearErrors('module')
                     }}
-                    options={rollover && rollover?.rollOverModules}
+                    options={rollover?.rollOverModules.filter(Boolean)}
                     value={
                       rollover &&
                       rollover?.rollOverModules?.filter(
@@ -276,18 +266,22 @@ const RollOver = () => {
                       }
                     }}
                   />
-
                   <FormHelperText error>{errors?.module && 'Module are required'}</FormHelperText>
                 </FormControl>
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+          <DialogActions className={Styles.dialogAction}>
             <Button variant='outlined' color='secondary' onClick={handleClose}>
               Cancel
             </Button>
 
-            <Button variant='contained' sx={{ mr: 2 }} type='submit'>
+            <Button
+              variant='contained'
+              className={Styles.rolloverButton}
+              type='submit'
+              disabled={watch('module') && watch('module')[0] !== null}
+            >
               Rollover
             </Button>
           </DialogActions>

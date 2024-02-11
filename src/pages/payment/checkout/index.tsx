@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // ** React Imports
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 // ** MUI Imports
@@ -17,6 +17,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { useRouter } from 'next/router'
 import PaymentOption, { DragDropContainer } from 'src/components/feePayment/paymentOption'
 import { DDMMYYYDateFormat } from 'src/utils'
+import { FinanceService, StudentService } from 'src/service'
+import { status } from 'src/context/common'
+import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(4)} !important`
@@ -25,25 +28,67 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
 const BackIcon = require('../../../../public/images/icons/project-icons/back.svg') as string
 
 interface propsType {
-  amount: string | null
-  feeModeCode: string | null
-  currencyCode: string | null
-  dueDate: string | any
   applicationCode: string
+
+  id: string | number
   rollover?: boolean
+}
+
+interface IResponseType {
+  feeModeCode: string
+  dueDate: any
+  currencyCode: string
+  dueAmount: string
+  applicationCode: string
   qualificaion: string
 }
 
-const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode, qualificaion }: propsType) => {
+const Checkout = ({ applicationCode, id, rollover }: propsType) => {
   // ** State
+  const [response, setResponse] = useState<IResponseType>()
+  const [currencyCode, setCurrencyCode] = useState<string>('')
 
   const router = useRouter()
+  const { studentDetails } = DashboardCustomHooks()
+
+  const amount = '500'
+  const feeModeCode = 'Rollover'
+  const dueDate = DDMMYYYDateFormat(new Date())
 
   const handleBreadcrum = (e: any) => {
     e.preventDefault()
     const route = e.target.id
     router.push(`/${route}`)
   }
+
+  const getFeePaymentList = async () => {
+    const payload = {
+      q: '',
+      pageSize: 10,
+      pageNumber: 1
+    }
+    if (applicationCode) {
+      const response = await StudentService?.getFeePaymentList(payload, applicationCode)
+      if (response?.data?.statusCode === status.successCode && response?.data?.data) {
+        const filteredData = response?.data?.data?.data?.find((item: { id: string | number }) => {
+          return item?.id == id
+        })
+
+        setResponse(filteredData)
+      }
+    }
+  }
+
+  const getCurrencyCode = async () => {
+    if (studentDetails && rollover) {
+      const response1 = await FinanceService?.getCurrencyRate(studentDetails.nationality)
+
+      setCurrencyCode(response1?.data?.data?.currencyCode)
+    }
+  }
+  useEffect(() => {
+    rollover ? getCurrencyCode() : getFeePaymentList()
+  }, [applicationCode, studentDetails])
 
   return (
     <>
@@ -79,7 +124,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                 <Button
                   size='small'
                   variant='outlined'
-                  onClick={() => router.back()}
+                  onClick={() => router.push('/payment')}
                   sx={{
                     position: 'absolute',
                     backgroundColor: theme => theme.palette.common.white,
@@ -110,7 +155,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                       Fee Category
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong>{feeModeCode}</strong>
+                      <strong>{!rollover ? response?.feeModeCode : feeModeCode}</strong>
                     </Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -118,7 +163,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                       Due Date
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong>{DDMMYYYDateFormat(new Date(dueDate))}</strong>
+                      <strong>{!rollover ? DDMMYYYDateFormat(new Date(response?.dueDate)) : dueDate}</strong>
                     </Typography>
                   </Grid>
                   <Grid item md={6} xs={12}>
@@ -130,7 +175,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                               variant='h6'
                               sx={{ mb: 1, lineHeight: '2rem', fontWeight: 'bold', fontSize: 16 }}
                             >
-                              Subtotal ({currencyCode})
+                              Subtotal ({!rollover ? response?.currencyCode : currencyCode})
                             </Typography>
                           </Grid>
                           <Grid item xs={6}>
@@ -144,7 +189,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                                 textAlign: 'right'
                               }}
                             >
-                              {` R ${amount}`}
+                              {` R ${!rollover ? response?.dueAmount : amount}`}
                             </Typography>
                           </Grid>
                         </Grid>
@@ -158,7 +203,7 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
                       Amount Payable
                     </Typography>
                     <Typography variant='body1' mb={5} color={'dark'}>
-                      <strong> {` R ${amount}`}</strong>
+                      <strong> {` R ${!rollover ? response?.dueAmount : amount}`}</strong>
                     </Typography>
                   </Grid>
                 </Box>
@@ -167,13 +212,23 @@ const Checkout = ({ amount, feeModeCode, currencyCode, dueDate, applicationCode,
           </Card>
         </Grid>
       </Grid>
-      <PaymentOption
-        amount={amount}
-        feeModeCode={feeModeCode}
-        currencyCode={currencyCode}
-        applicationCode={applicationCode}
-        qualificaion={qualificaion}
-      />
+      {response && !rollover ? (
+        <PaymentOption
+          amount={response?.dueAmount}
+          feeModeCode={response?.feeModeCode}
+          currencyCode={response?.currencyCode}
+          applicationCode={response?.applicationCode}
+          qualificaion={response?.qualificaion}
+        />
+      ) : studentDetails?.program ? (
+        <PaymentOption
+          amount={amount}
+          feeModeCode={feeModeCode}
+          currencyCode={currencyCode}
+          applicationCode={applicationCode}
+          qualificaion={studentDetails?.program?.name}
+        />
+      ) : null}
     </>
   )
 }

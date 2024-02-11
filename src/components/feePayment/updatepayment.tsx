@@ -10,20 +10,11 @@ import { useRouter } from 'next/router'
 import { DDMMYYYDateFormat, getSymbol, programCodeToName } from 'src/utils'
 import { UpdatePayment, UpdatepaymentItem } from 'src/types/common'
 
-const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePayment) => {
+const Updatepayment = ({ allProgram, rows, programCode, currencyList, studentCode }: UpdatePayment) => {
   const router = useRouter()
 
-  const handlePay = (
-    amount: string | null,
-    feeModeCode: string | null,
-    currencyCode: string | null,
-    dueDate: string,
-    applicationCode: string,
-    qualificaion: string
-  ) => {
-    router.push(
-      `/payment/checkout/${amount}/${feeModeCode}/${currencyCode}/${dueDate}/${applicationCode}/${qualificaion}`
-    )
+  const handlePay = (id: string | number, applicationCode: string | null) => {
+    router.push(`/payment/checkout/${applicationCode}/${id}`)
   }
 
   return (
@@ -81,16 +72,7 @@ const Updatepayment = ({ allProgram, rows, programCode, currencyList }: UpdatePa
                       <Button
                         size='small'
                         variant='contained'
-                        onClick={() => {
-                          handlePay(
-                            String(item.dueAmount),
-                            item?.feeModeCode,
-                            item.currencyCode,
-                            item.dueDate,
-                            item?.applicationCode,
-                            String(item?.programName)
-                          )
-                        }}
+                        onClick={() => handlePay(item.id, studentCode)}
                         sx={{ position: 'absolute', borderRadius: '25px' }}
                       >
                         Pay

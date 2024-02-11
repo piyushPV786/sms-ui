@@ -8,11 +8,8 @@ export const paymentLogin = async (paymentPayload: IPaymentPayload) => {
   nProgress.start()
   try {
     let paymentResponse = null
-    const payload = {
-      identity: process.env.NEXT_PUBLIC_PAYMENT_IDENTITY,
-      password: process.env.NEXT_PUBLIC_PAYMENT_PASSWORD
-    }
-    const response = await FinanceService.getUkheshePaymentTocken(payload)
+
+    const response = await FinanceService.getUkheshePaymentTocken()
 
     if (response?.status === 200 || (response?.status === 201 && response?.data)) {
       window.sessionStorage.setItem('paymentToken', JSON.stringify(response))

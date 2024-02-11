@@ -11,8 +11,10 @@ import Badge from '@mui/material/Badge'
 import Avatar from '@mui/material/Avatar'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
+import Link from 'next/link'
 
 import LogoutVariant from 'mdi-material-ui/LogoutVariant'
+import AccountCircleOutlined from 'mdi-material-ui/AccountCircleOutline'
 
 // ** Context
 import { useAuth } from 'src/hooks/useAuth'
@@ -20,12 +22,15 @@ import { useAuth } from 'src/hooks/useAuth'
 // ** Type Imports
 import { Settings } from 'src/@core/context/settingsContext'
 import { getUserInfo } from 'src/utils'
+import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 
 interface Props {
   settings: Settings
 }
 
 const UserDropdown = (props: Props) => {
+  const { studentDetails } = DashboardCustomHooks()
+
   // ** Props
   const { settings } = props
 
@@ -94,7 +99,7 @@ const UserDropdown = (props: Props) => {
         onClick={handleDropdownOpen}
         sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column', cursor: 'pointer' }}
       >
-        <Typography sx={{ fontWeight: 600 }}>{getUserInfo()?.fullName}</Typography>
+        <Typography sx={{ fontWeight: 600 }}>{`${studentDetails?.firstName} ${studentDetails?.lastName}`}</Typography>
         <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
           {getUserInfo()?.email}
         </Typography>
@@ -111,6 +116,12 @@ const UserDropdown = (props: Props) => {
         <Box sx={{ pt: 2, pb: 3, px: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}></Box>
         </Box>
+        <Link href={`/myProfile`} passHref>
+          <MenuItem sx={{ py: 2 }}>
+            <AccountCircleOutlined sx={{ mr: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
+            My Profile
+          </MenuItem>
+        </Link>
         <MenuItem sx={{ py: 2 }} onClick={handleLogout}>
           <LogoutVariant sx={{ mr: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout

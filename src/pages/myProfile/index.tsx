@@ -238,7 +238,7 @@ const PreviewCard = () => {
                 </Button>
               </Grid>
               <Grid className='d-flex' sx={{ justifyContent: 'center', marginTop: 12 }}>
-                Allowed PNG or JPEG. Max size of 800K
+                Allowed PNG or JPEG. Max size of 800Kb
               </Grid>
             </Card>
           </Grid>

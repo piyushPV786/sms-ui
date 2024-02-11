@@ -12,8 +12,8 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 import { getUserInfo } from 'src/utils'
 import { HelpBox, InformationOutline, React } from 'mdi-material-ui'
 import ExamTicket from '../dialog/ExamTicket'
-import RollOver from '../dialog/RollOver'
 import DashboardCustomHooks from './CustomHooks'
+import SelectElective from '../dialog/SelectElective'
 
 // Styled CardContent component
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
@@ -33,7 +33,7 @@ const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
 }))
 
 const StudentDetails = ({ profileImage }: any) => {
-  const { rollover } = DashboardCustomHooks()
+  const { rollover, studentDetails } = DashboardCustomHooks()
 
   return (
     <Card sx={{ position: 'relative' }}>
@@ -41,13 +41,13 @@ const StudentDetails = ({ profileImage }: any) => {
         <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={2} md={3} sm={4}>
             <Box>
-              <Avatar alt='R' src={profileImage} />
+              <Avatar alt={`${getUserInfo()?.fullName}`} src={profileImage} />
             </Box>
           </Grid>
           <Grid item xs={7} md={5} sm={5}>
             <Box ml={5}>
               <Typography mb={4} variant='h5' fontWeight={400} sx={{ color: '#fff' }}>
-                Hi {getUserInfo()?.fullName}
+                Hi {`${studentDetails?.firstName} ${studentDetails?.lastName}`}
               </Typography>
               <Typography mb={6} variant='h6' sx={{ color: '#fff' }}>
                 Welcome back to Regenesys, Lets Start Learning
@@ -108,7 +108,8 @@ const StudentDetails = ({ profileImage }: any) => {
                   </Grid>
 
                   <Grid p={2}>
-                    <RollOver />
+                    {/* <RollOver />  need to change it when new mockup comes all functionality and code is there for rollover*/}
+                    <SelectElective />
                   </Grid>
                 </Grid>
               </Card>

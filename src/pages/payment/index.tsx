@@ -88,7 +88,8 @@ const PaymentList = () => {
   const UpcomingPayment: [] =
     response?.data &&
     response.data.filter(
-      (item: { dueDate: string | null; dueAmount: number | null }) => item.dueDate !== null && item.dueAmount !== null
+      (item: { dueDate: string | null; dueAmount: number | null }) =>
+        item.dueDate !== null && item.dueAmount !== null && item.dueAmount !== 0
     )
 
   const columns = [
@@ -226,9 +227,10 @@ const PaymentList = () => {
             />
           </Card>
         </Grid>
-        {UpcomingPayment.length > 0 ? (
+        {UpcomingPayment.length > 0 && auth?.user?.studentCode ? (
           <Grid item xs={12} md={4}>
             <UpdatePayment
+              studentCode={auth?.user?.studentCode}
               currencyList={currencyList}
               allProgram={allProgram}
               rows={UpcomingPayment}

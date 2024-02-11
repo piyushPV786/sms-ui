@@ -58,7 +58,7 @@ interface propsType {
   feeModeCode: string | null
   currencyCode: string | null
   applicationCode: string
-  qualificaion: string
+  qualificaion: string | any
 }
 
 const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qualificaion }: propsType) => {
@@ -190,7 +190,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qua
                           src={GetPaymentImage(value) as any}
                           alt={GetPaymentImage(value) as string}
                           height={50}
-                          width={100}
+                          width={150}
                         />
                       </Box>
                     </PaymentCard>

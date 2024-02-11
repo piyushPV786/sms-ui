@@ -27,6 +27,7 @@ export interface UpdatePayment {
   programCode: string
   allProgram: IProgram | undefined
   currencyList: []
+  studentCode: string
 }
 
 export interface UpdatepaymentItem {
@@ -37,6 +38,7 @@ export interface UpdatepaymentItem {
   feeModeCode: string
   programName: string
   applicationCode: string
+  studentCode: string
 }
 
 export interface IIndex {

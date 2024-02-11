@@ -25,7 +25,7 @@ import FileUpload from 'src/components/uploaddocument/FileUpload'
 
 // import DeleteDialog from 'src/components/dialog/DeleteDialog'
 import { useAuth } from 'src/hooks/useAuth'
-import { DDMMYYYDateFormat, getFileUrl, minTwoDigits, serialNumber } from 'src/utils'
+import { DDMMYYYDateFormat, getFileUrl, getFileUrlToShow, minTwoDigits, serialNumber } from 'src/utils'
 import { IDocumentType, IUploadDocumentParam } from 'src/context/types'
 import { CircularProgress } from '@mui/material'
 import { StyledLink } from 'src/styles/styled'
@@ -132,6 +132,10 @@ const DocumentList = () => {
     getFileUrl(fileName, auth?.user?.studentCode, setViewFileLoader, fileCode)
   }
 
+  const handleShow = (fileName: string, fileCode: string) => {
+    getFileUrlToShow(fileName, auth?.user?.studentCode, setViewFileLoader, fileCode)
+  }
+
   const setCurrentDateTime = (createdAt: string) => {
     const currentDate = new Date(createdAt)
     const formattedTime = currentDate?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -160,7 +164,7 @@ const DocumentList = () => {
         return (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Tooltip placement='top' title={row?.name}>
-              <StyledLink sx={{ fontSize: 12 }} onClick={() => handleView(row?.name, row?.code)}>
+              <StyledLink sx={{ fontSize: 12 }} onClick={() => handleShow(row?.name, row?.code)}>
                 {row?.name}
               </StyledLink>
             </Tooltip>
@@ -240,7 +244,7 @@ const DocumentList = () => {
           <Card>
             <TableHeader value={value} selectedRows={selectedRows} handleFilter={handleFilter} />
             <CardContent>
-              {documentResponse?.data?.length > 0 && (
+              {documentResponse?.data && (
                 <DataGrid
                   loading={loading}
                   autoHeight
@@ -262,6 +266,9 @@ const DocumentList = () => {
                     },
                     '& .MuiDataGrid-columnHeaderTitle': {
                       fontWeight: '600'
+                    },
+                    '& .MuiDataGrid-overlay': {
+                      height: 'auto'
                     }
                   }}
                   onSelectionModelChange={rows => setSelectedRows(rows)}

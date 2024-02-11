@@ -1,0 +1,11 @@
+
+.dialogAction{
+    display: flex;
+    justify-content: center;
+}
+.elective{
+    margin-bottom: 4px !important;
+}
+.electiveButton{
+    margin-right: 4px !important;
+}

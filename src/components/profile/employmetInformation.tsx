@@ -33,7 +33,9 @@ const EmploymentInformation = ({ userProfileDetails, qualificationData, state }:
           OFFICE ADDRESS
           <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative' }}>
             {`${userProfileDetails?.employment?.city},${state},
-            ${getName(country, userProfileDetails?.employment?.country)},${userProfileDetails?.employment?.zipCode}`}
+            ${getName(country, userProfileDetails?.employment?.country)},${
+              userProfileDetails?.employment?.zipCode ?? '-'
+            }`}
           </Card>
         </Grid>
       </Grid>

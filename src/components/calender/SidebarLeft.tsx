@@ -15,7 +15,6 @@ const SidebarLeft = (props: SidebarLeftType) => {
     calendarsColor,
     leftSidebarOpen,
     leftSidebarWidth,
-    handleAllCalendars,
     handleCalendarsUpdate,
     handleLeftSidebarToggle
   } = props
@@ -85,18 +84,24 @@ const SidebarLeft = (props: SidebarLeftType) => {
         <Typography variant='body2' sx={{ mt: 7, mb: 2.5, textTransform: 'uppercase' }}>
           Calendars
         </Typography>
-        <FormControlLabel
-          label='View All'
-          sx={{ mr: 0, mb: 0.5 }}
-          control={
-            <Checkbox
-              color='secondary'
-              checked={store.selectedCalendars.length === colorsArr.length}
-              onChange={e => handleAllCalendars(e.target.checked)}
-            />
-          }
-        />
-        {renderFilters}
+
+        {colorsArr?.length &&
+          colorsArr.map(([key, value]: string[]) => {
+            return (
+              <FormControlLabel
+                key={key}
+                label={key}
+                sx={{ mb: 0.5 }}
+                control={
+                  <Checkbox
+                    checked={store.selectedCalendars.includes(key as CalendarFiltersType)}
+                    onChange={() => handleCalendarsUpdate(key as CalendarFiltersType)}
+                    sx={{ color: `${value}.main`, '&.Mui-checked': { color: `${value}.main` } }}
+                  />
+                }
+              />
+            )
+          })}
       </Drawer>
     )
   } else {
