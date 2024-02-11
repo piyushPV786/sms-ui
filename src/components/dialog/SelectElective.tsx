@@ -185,7 +185,7 @@ const SelectElective = () => {
               <Grid item xs={12}>
                 <Typography mb={3} variant='body2'>
                   {coreDataByYear &&
-                    Object?.entries(coreDataByYear)?.map(([year, modules]) => (
+                    Object?.entries(coreDataByYear)?.map(([year]) => (
                       <Grid item xs={12} key={year}>
                         <Typography fontWeight='bold'>{Year(parseInt(year))} - ELECTIVES</Typography>
 
