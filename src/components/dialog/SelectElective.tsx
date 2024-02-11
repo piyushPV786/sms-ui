@@ -52,13 +52,14 @@ const SelectElective = () => {
 
   const auth = useAuth()
 
-  const { module, studentDetails, electiveModule } = DashboardCustomHooks()
+  const { module, studentDetails, electiveModule, getElectiveModuleList } = DashboardCustomHooks()
 
-  const coreData = module?.data?.filter((item: { type: string }) => item?.type === 'core')
-  const electiveData = module?.data?.filter((item: { type: string }) => item?.type === 'elective')
+  const coreData = module?.filter((item: { type: string }) => item?.type === 'core')
+  const electiveData = module?.filter((item: { type: string }) => item?.type === 'elective')
   const electiveEnrolledData = electiveModule?.filter(
     (item: { course: { type: string } }) => item?.course?.type === 'elective'
   )
+
   let filteredElectiveData: any[] | undefined = undefined
 
   if (electiveData && electiveEnrolledData) {
@@ -103,8 +104,10 @@ const SelectElective = () => {
         programCode: studentDetails?.program?.code ? studentDetails?.program?.code : ''
       }
       const apiResponse = await StudentService?.enrollElective(electiveParam)
-      if (apiResponse?.status === status.successCodeOne) successToast(EnrollElective.enroll)
-      else errorToast(ErrorMessage.Error)
+      if (apiResponse?.status === status.successCodeOne) {
+        getElectiveModuleList()
+        successToast(EnrollElective.enroll)
+      } else errorToast(ErrorMessage.Error)
 
       setDialogShow(false)
     }
@@ -181,7 +184,33 @@ const SelectElective = () => {
 
               <Grid item xs={12}>
                 <Typography mb={3} variant='body2'>
-                  ELECTIVES
+                  {coreDataByYear &&
+                    Object?.entries(coreDataByYear)?.map(([year, modules]) => (
+                      <Grid item xs={12} key={year}>
+                        <Typography fontWeight='bold'>{Year(parseInt(year))} - ELECTIVES</Typography>
+
+                        <Grid mt={1}>
+                          {electiveEnrolledData?.map((module: any) => {
+                            return (
+                              <Chip
+                                key={module?.course?.name}
+                                skin='light'
+                                size='small'
+                                label={module?.course?.name}
+                                color='warning'
+                                sx={{
+                                  textTransform: 'capitalize',
+                                  '& .MuiChip-label': { lineHeight: '18px' },
+                                  borderRadius: '10px',
+                                  boxShadow: '2px 4px 4px 0px #9f9f9f75',
+                                  margin: '4px'
+                                }}
+                              />
+                            )
+                          })}
+                        </Grid>
+                      </Grid>
+                    ))}
                 </Typography>
                 <FormControl fullWidth>
                   <Autocomplete

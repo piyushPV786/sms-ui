@@ -107,7 +107,7 @@ export default class Academic {
   async getModuleList(params: IModuleListProps) {
     nProgress.start()
 
-    const endUrlName = `${this.baseUrl + apiEndPoints.courseFilter}/{programCode}?programCode=${params?.programCode}`
+    const endUrlName = `${this.baseUrl + apiEndPoints.courseFilter}/${params?.programCode}`
 
     try {
       const response = await this.apiServer.get<any>(endUrlName)
