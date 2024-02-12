@@ -29,7 +29,7 @@ interface CoreDataByYear {
 const ElectiveModule = () => {
   const [dialogShow, setDialogShow] = useState<boolean>(false)
 
-  const { electiveModule } = DashboardCustomHooks()
+  const { electiveModule, getElectiveModuleList } = DashboardCustomHooks()
 
   const filterElectiveData = electiveModule?.filter(
     (item: { course: { type: string } }) => item?.course?.type === 'elective'
@@ -50,6 +50,7 @@ const ElectiveModule = () => {
   }
 
   const handleOpen = () => {
+    getElectiveModuleList()
     setDialogShow(true)
   }
   const handleClose = () => {
@@ -58,7 +59,7 @@ const ElectiveModule = () => {
 
   return (
     <Grid>
-      <Box onClick={handleOpen}>
+      <Box onClick={handleOpen} sx={{ cursor: 'pointer' }}>
         <Typography variant='caption' color='primary' sx={{ textDecoration: 'underline' }}>
           Enrolled Modules
         </Typography>
