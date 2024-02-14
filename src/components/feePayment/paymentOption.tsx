@@ -168,31 +168,31 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qua
                       key={value}
                       image={GetPaymentImage(value)}
                     >
-                      <input
-                        onClick={() => undefined}
-                        className='form-check-input '
-                        type='radio'
-                        value={value}
-                        onChange={() => setSelectedPaymentOption(value)}
-                        checked={selectedPayment === value}
-                      />
-                      <Box
-                        sx={{
-                          width: '50% !important',
-                          height: '40% !important',
-                          maxWidth: '50%',
-                          minHeight: '40%',
-                          position: 'relative',
-                          top: '30px'
-                        }}
-                      >
-                        <Image
-                          src={GetPaymentImage(value) as any}
-                          alt={GetPaymentImage(value) as string}
-                          height={50}
-                          width={150}
-                        />
-                      </Box>
+                      <Grid container>
+                        <Grid item xs={12} display='flex'>
+                          <Grid item xs={6} display='flex' justifyContent='flex-end'>
+                            <input
+                              onClick={() => undefined}
+                              className='form-check-input '
+                              type='radio'
+                              value={value}
+                              onChange={() => setSelectedPaymentOption(value)}
+                              checked={selectedPayment === value}
+                            />
+                          </Grid>
+                          <Grid item xs={6} display='flex' justifyContent='flex-start'>
+                            <Typography>Online</Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid item xs={12} display='flex' justifyContent='center'>
+                          <Image
+                            src={GetPaymentImage(value) as any}
+                            alt={GetPaymentImage(value) as string}
+                            height={50}
+                            width={150}
+                          />
+                        </Grid>
+                      </Grid>
                     </PaymentCard>
                   </>
                 ))}
