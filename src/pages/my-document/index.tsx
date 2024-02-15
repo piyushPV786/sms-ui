@@ -244,7 +244,7 @@ const DocumentList = () => {
           <Card>
             <TableHeader value={value} selectedRows={selectedRows} handleFilter={handleFilter} />
             <CardContent>
-              {documentResponse?.data?.length > 0 && (
+              {documentResponse?.data && (
                 <DataGrid
                   loading={loading}
                   autoHeight
@@ -266,6 +266,9 @@ const DocumentList = () => {
                     },
                     '& .MuiDataGrid-columnHeaderTitle': {
                       fontWeight: '600'
+                    },
+                    '& .MuiDataGrid-overlay': {
+                      height: 'auto'
                     }
                   }}
                   onSelectionModelChange={rows => setSelectedRows(rows)}

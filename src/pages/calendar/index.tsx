@@ -36,8 +36,8 @@ const AppCalendar = () => {
     individualAssignmentDueDate: Date | string
   }
   interface schedulerDurationType {
-    from: string
-    to: string
+    fromTime: string
+    toTime: string
     date: string
   }
 
@@ -64,7 +64,7 @@ const AppCalendar = () => {
             title: 'Exam',
             start: item?.examDate,
             end: item?.examDate,
-            allDay: false,
+            allDay: true,
             extendedProps: {
               calendar: 'Exams'
             }
@@ -76,7 +76,8 @@ const AppCalendar = () => {
             title: 'Digital assingment',
             start: item?.digitalAssessmentDueDate,
             end: item?.digitalAssessmentDueDate,
-            allDay: false,
+            allDay: true,
+
             extendedProps: {
               calendar: 'Assessments'
             }
@@ -88,7 +89,7 @@ const AppCalendar = () => {
             title: 'Individual Assignment',
             start: item?.individualAssignmentDueDate,
             end: item?.individualAssignmentDueDate,
-            allDay: false,
+            allDay: true,
             extendedProps: {
               calendar: 'Assessments'
             }
@@ -98,16 +99,16 @@ const AppCalendar = () => {
           const date = item?.date
           const FromDate = moment(date)
             .set({
-              hour: Number(item?.from?.split(':')[0]),
-              minute: Number(item?.from?.split(':')[1]),
-              second: Number(item?.from?.split(':')[2])
+              hour: Number(item?.fromTime?.split(':')[0]),
+              minute: Number(item?.fromTime?.split(':')[1]),
+              second: Number(item?.fromTime?.split(':')[2])
             })
             .format()
           const ToDate = moment(date)
             .set({
-              hour: Number(item?.to?.split(':')[0]),
-              minute: Number(item?.to?.split(':')[1]),
-              second: Number(item?.to?.split(':')[2])
+              hour: Number(item?.toTime?.split(':')[0]),
+              minute: Number(item?.toTime?.split(':')[1]),
+              second: Number(item?.toTime?.split(':')[2])
             })
             .format()
 

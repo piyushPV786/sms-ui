@@ -8,6 +8,10 @@ interface IDataParams {
   pageSize: number | undefined
 }
 
+export interface IModuleListProps {
+  programCode: string
+}
+
 export default class Academic {
   apiServer: AxiosInstance
   baseUrl = NEXT_PUBLIC_ACADEMIC_BACKEND_API
@@ -99,5 +103,35 @@ export default class Academic {
     } finally {
       nProgress.done()
     }
+  }
+  async getModuleList(params: IModuleListProps) {
+    nProgress.start()
+
+    const endUrlName = `${this.baseUrl + apiEndPoints.courseFilter}/${params?.programCode}`
+
+    try {
+      const response = await this.apiServer.get<any>(endUrlName)
+      nProgress.done()
+
+      return response
+    } catch (err: any) {
+      nProgress.done()
+      console.log('Error fetching Module list ========>', err?.message)
+    }
+  }
+  async getElectiveModule(code: string) {
+    nProgress.start()
+    const endUrlName = `${this.baseUrl + apiEndPoints.getElective}/${code}`
+    try {
+      const response = await this.apiServer.get(endUrlName)
+      nProgress.done()
+      console.log('response', response)
+
+      return response
+    } catch (err: any) {
+      console.log('Error getting elective module ========>', err?.message)
+      nProgress.done()
+    }
+    nProgress.done()
   }
 }
