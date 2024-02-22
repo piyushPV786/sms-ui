@@ -1,12 +1,32 @@
 // ** React Imports
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 import { Typography, Box, Container, CssBaseline, Grid, Card, CardContent, styled, BoxProps } from '@mui/material'
 import SignUp from 'src/components/auth/login'
-import { EnvPaths } from 'src/context/common'
+import { EnvPaths, GoogleAnalyticsScript } from 'src/context/common'
+import { checkProd } from 'src/utils'
 
 const LoginPage = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(GoogleAnalyticsScript.script2)
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+
+        const scriptContent = await response.text()
+        const scriptElement = document.createElement('script')
+        scriptElement.innerHTML = scriptContent
+        document.body.appendChild(scriptElement)
+      } catch (error) {
+        console.error('There was a problem fetching the data:', error)
+      }
+    }
+    checkProd() && fetchData()
+  }, [])
+
   return (
     <BackgroundBox className='text-center'>
       <Container>

@@ -326,3 +326,9 @@ export interface ICourseDetails {
     academicYearOfProgram: string
   }
 }
+
+export enum GoogleAnalyticsScript {
+  script1 = 'https://regenesys-rms.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/tod1zk/b/5/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=236dc7e1',
+  script2 = 'https://regenesys-rms.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/tod1zk/b/5/b0105d975e9e59f24a3230a22972a71a/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=236dc7e1',
+  prodURL = 'https://rms.regenesys.net/'
+}
