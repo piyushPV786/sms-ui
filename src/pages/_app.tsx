@@ -27,6 +27,8 @@ import { AuthProvider } from 'src/context/AuthContext'
 import ReactHotToast from 'src/@core/styles/libs/react-hot-toast'
 import { Toaster } from 'react-hot-toast'
 import ErrorBoundary from 'src/components/errorBoundry'
+import { GoogleAnalyticsScript } from 'src/context/common'
+import { checkProd } from 'src/utils'
 
 type ExtendedAppProps = AppProps & {
   Component: NextPage
@@ -100,6 +102,7 @@ export default function App(props: ExtendedAppProps) {
         <meta name='keywords' content='' />
 
         <meta name='viewport' content='' />
+        {checkProd() && <script type='text/javascript' async src={GoogleAnalyticsScript.script1}></script>}
       </Head>
       <CacheProvider value={emotionCache}>
         <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>

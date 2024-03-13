@@ -4,7 +4,7 @@ import { commonListTypes, documentTypes } from 'src/types/dataTypes'
 import axios from 'axios'
 import nProgress from 'nprogress'
 import { Dispatch, SetStateAction } from 'react'
-import { status } from 'src/context/common'
+import { GoogleAnalyticsScript, status } from 'src/context/common'
 import { CommonService } from 'src/service'
 import { IProgram } from 'src/types/common'
 import { AxiosResponse } from 'axios'
@@ -362,4 +362,9 @@ export const getSessionStorageData = (key: string) => {
   }
 
   return null
+}
+
+export const checkProd = () => {
+  if (process.env.NEXT_PUBLIC_USER_REDIRECT_URL === GoogleAnalyticsScript.prodURL) return true
+  else return false
 }
