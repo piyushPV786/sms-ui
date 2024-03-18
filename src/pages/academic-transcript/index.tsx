@@ -41,8 +41,12 @@ const StudentDashboard = () => {
     const response = await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
     setData(response?.data?.data)
   }
+
+  const { electiveModule, getElectiveModuleList } = DashboardCustomHooks()
+
   React.useEffect(() => {
     getStudentList()
+    getElectiveModuleList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
@@ -73,7 +77,8 @@ const StudentDashboard = () => {
       field: 'assessment',
       headerClassName: 'digital-assessment',
       cellClassName: 'digital-assessment',
-      renderHeader: () => <AcademicTypography>Digital Assessment</AcademicTypography>
+      renderHeader: () => <AcademicTypography>Digital Assessment</AcademicTypography>,
+      renderCell: (row: any) => <Typography>{row?.row?.isAssessmentPublish ? row?.row?.assessment : '-'}</Typography>
     },
     {
       minWidth: 150,
@@ -81,7 +86,8 @@ const StudentDashboard = () => {
       field: 'assignments',
       headerClassName: 'assignments',
       cellClassName: 'assignments',
-      renderHeader: () => <AcademicTypography>Assignments</AcademicTypography>
+      renderHeader: () => <AcademicTypography>Assignments</AcademicTypography>,
+      renderCell: (row: any) => <Typography>{row?.row?.isAssignmentPublish ? row?.row?.assignments : '-'}</Typography>
     },
     {
       minWidth: 160,
@@ -89,7 +95,8 @@ const StudentDashboard = () => {
       field: 'examination',
       headerClassName: 'examination',
       cellClassName: 'examination',
-      renderHeader: () => <AcademicTypography>Examination</AcademicTypography>
+      renderHeader: () => <AcademicTypography>Examination</AcademicTypography>,
+      renderCell: (row: any) => <Typography>{row?.row?.isExaminationPublish ? row?.row?.examination : '-'}</Typography>
     },
     {
       minWidth: 160,
@@ -221,7 +228,7 @@ const StudentDashboard = () => {
               disableColumnMenu
               disableColumnFilter
               disableColumnSelector
-              rows={data}
+              rows={electiveModule}
               columns={columns}
               disableSelectionOnClick
             />
