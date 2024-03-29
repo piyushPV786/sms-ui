@@ -35,6 +35,8 @@ const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
 
 const StudentDetails = ({ profileImage }: any) => {
   const { rollover, studentDetails } = DashboardCustomHooks()
+  const selfRollover: boolean = true
+  const electiveRollover: boolean = true
 
   return (
     <Card sx={{ position: 'relative' }}>
@@ -91,31 +93,32 @@ const StudentDetails = ({ profileImage }: any) => {
               </Box>
             </Box>
           </Grid>
+          {electiveRollover && (
+            <Grid item xs={3} md={4} sm={3} pt={2} pr={2}>
+              <Card sx={{ background: theme => `${theme.spacing(6, 7.5)} !important` }}>
+                <Grid
+                  width='100%'
+                  sx={{
+                    display: 'flex',
+                    borderRadius: '2px',
+                    padding: 3,
+                    background: `#026b45 !important`,
+                    color: theme => theme.palette.primary.main
+                  }}
+                >
+                  <Grid p={2} display='flex' alignItems='center'>
+                    <InformationOutline color='warning' fontSize='large' />
+                  </Grid>
 
-          <Grid item xs={3} md={4} sm={3} pt={2} pr={2}>
-            <Card sx={{ background: theme => `${theme.spacing(6, 7.5)} !important` }}>
-              <Grid
-                width='100%'
-                sx={{
-                  display: 'flex',
-                  borderRadius: '2px',
-                  padding: 3,
-                  background: `#026b45 !important`,
-                  color: theme => theme.palette.primary.main
-                }}
-              >
-                <Grid p={2} display='flex' alignItems='center'>
-                  <InformationOutline color='warning' fontSize='large' />
+                  <Grid p={2}>
+                    <SelectElective />
+                  </Grid>
                 </Grid>
+              </Card>
+            </Grid>
+          )}
 
-                <Grid p={2}>
-                  <SelectElective />
-                </Grid>
-              </Grid>
-            </Card>
-          </Grid>
-
-          {rollover && rollover?.rollOverModules?.length > 0 ? (
+          {selfRollover && rollover && rollover?.rollOverModules?.length > 0 ? (
             <Grid item pt={2} pr={2}>
               <Card sx={{ background: theme => `${theme.spacing(6, 7.5)} !important` }}>
                 <Grid
