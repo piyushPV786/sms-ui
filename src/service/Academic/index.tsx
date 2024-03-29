@@ -49,7 +49,8 @@ export default class Academic {
   }
   async getExamTicket(studentCode: string | undefined) {
     nProgress.start()
-    const endUrlName = `${this.baseUrl + apiEndPoints.academics}${apiEndPoints.examTicket}/${studentCode}`
+    const endUrlName = `${this.baseUrl}${apiEndPoints.examTicket}/${studentCode}`
+
     try {
       const response = await this.apiServer.get(endUrlName)
 
