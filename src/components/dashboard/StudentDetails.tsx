@@ -35,8 +35,8 @@ const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
 
 const StudentDetails = ({ profileImage }: any) => {
   const { rollover, studentDetails } = DashboardCustomHooks()
-  const selfRollover: boolean = true
-  const electiveRollover: boolean = true
+  const selfRollover = true
+  const electiveRollover = true
 
   return (
     <Card sx={{ position: 'relative' }}>
