@@ -14,6 +14,7 @@ import { HelpBox, InformationOutline, React } from 'mdi-material-ui'
 import ExamTicket from '../dialog/ExamTicket'
 import DashboardCustomHooks from './CustomHooks'
 import SelectElective from '../dialog/SelectElective'
+import RollOver from '../dialog/RollOver'
 
 // Styled CardContent component
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
@@ -34,6 +35,8 @@ const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
 
 const StudentDetails = ({ profileImage }: any) => {
   const { rollover, studentDetails } = DashboardCustomHooks()
+  const selfRollover: boolean = true
+  const electiveRollover: boolean = true
 
   return (
     <Card sx={{ position: 'relative' }}>
@@ -90,7 +93,7 @@ const StudentDetails = ({ profileImage }: any) => {
               </Box>
             </Box>
           </Grid>
-          {rollover && rollover?.rollOverModules?.length > 0 ? (
+          {electiveRollover && (
             <Grid item xs={3} md={4} sm={3} pt={2} pr={2}>
               <Card sx={{ background: theme => `${theme.spacing(6, 7.5)} !important` }}>
                 <Grid
@@ -108,8 +111,32 @@ const StudentDetails = ({ profileImage }: any) => {
                   </Grid>
 
                   <Grid p={2}>
-                    {/* <RollOver />  need to change it when new mockup comes all functionality and code is there for rollover*/}
                     <SelectElective />
+                  </Grid>
+                </Grid>
+              </Card>
+            </Grid>
+          )}
+
+          {selfRollover && rollover && rollover?.rollOverModules?.length > 0 ? (
+            <Grid item pt={2} pr={2}>
+              <Card sx={{ background: theme => `${theme.spacing(6, 7.5)} !important` }}>
+                <Grid
+                  width='100%'
+                  sx={{
+                    display: 'flex',
+                    borderRadius: '2px',
+                    padding: 3,
+                    background: `#026b45 !important`,
+                    color: theme => theme.palette.primary.main
+                  }}
+                >
+                  <Grid p={2} display='flex' alignItems='center'>
+                    <InformationOutline color='warning' fontSize='large' />
+                  </Grid>
+
+                  <Grid p={2}>
+                    <RollOver />
                   </Grid>
                 </Grid>
               </Card>
