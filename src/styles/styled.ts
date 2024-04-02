@@ -1,5 +1,6 @@
 import { Card, styled, Typography, Theme, DialogContent } from '@mui/material'
 import MuiCardContent from '@mui/material/CardContent'
+import { getStatusColor } from 'src/utils'
 
 export const AcademicTypography = styled(Typography)(({ theme }: { theme: Theme }) => ({
   color: theme.palette.common.white
@@ -57,3 +58,45 @@ export const StyledLink = styled('a')(({}) => ({
   textDecoration: 'underline',
   cursor: 'pointer'
 }))
+
+export const StyledStatusBedge = styled('div')<any>`
+  background: ${({ status }) => `${getStatusColor(status)}`};
+  color: white;
+  padding: 2px 5px;
+  border: 1px solid;
+  position: relative;
+  margin-right: 0 !important;
+  border-top: 0;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 5px;
+  padding: 5px 20px;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+`
+export const StudentIdCard = styled('div')<{ bgColor?: string }>`
+  background: ${({ bgColor }) => bgColor || '#235290'};
+  color: white;
+  max-width: 250px;
+  border-radius: 3px;
+  padding: 2px 8px;
+  margin: 15px 5px 0 0;
+  font-size: 13px;
+  span {
+    font-weight: bold;
+  }
+`
+
+export const GreenFormHeading = styled('p')`
+  font-size: 16px;
+  font-weight: 500;
+  color: #008554;
+  margin: 0 0 2px;
+  margin-right: 20px;
+
+  @media (max-width: 510px) {
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+`

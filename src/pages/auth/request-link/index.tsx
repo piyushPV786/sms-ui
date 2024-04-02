@@ -115,7 +115,7 @@ const RequestLink = () => {
                         <TextField
                           {...register('email')}
                           value={email}
-                          error={errors.email || errorMsg}
+                          error={!!errors?.email || !!errorMsg}
                           onChange={e => {
                             setEmailValue(e.target.value)
                           }}
@@ -124,7 +124,7 @@ const RequestLink = () => {
                           fullWidth
                         />
                         {errors.email && (
-                          <FormHelperText sx={{ color: 'error.main' }}>{errors.email.message}</FormHelperText>
+                          <FormHelperText sx={{ color: 'error.main' }}>{`${errors.email.message}`}</FormHelperText>
                         )}
                         {errorMsg && (
                           <FormHelperText sx={{ color: 'error.main' }}>

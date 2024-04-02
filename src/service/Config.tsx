@@ -1,9 +1,11 @@
-export const BACKEND_API = process.env.NEXT_PUBLIC_ENROLMENT_BACKEND_API
+export const ENROLMENT_BACKEND_API = process.env.NEXT_PUBLIC_ENROLMENT_BACKEND_API
 export const NEXT_PUBLIC_ACADEMIC_BACKEND_API = process.env.NEXT_PUBLIC_ACADEMIC_BACKEND_API
 export const BaseStudentApi = process.env.NEXT_PUBLIC_STUDENT_BASE_API
 export const CommonBaseApiUrl = process.env.NEXT_PUBLIC_COMMON_BASE_API
 export const OperationBaseApiUrl = process.env.NEXT_PUBLIC_OPERATION_BASE_URL
 export const FinanceBaseApiUrl = process.env.NEXT_PUBLIC_FINANCE_BACKEND_API
+export const APPLY_BACKEND_API = process.env.NEXT_PUBLIC_APPLY_BACKEND_API
+export const DOCUMENT_BACKEND_API = process.env.NEXT_PUBLIC_DOCUMENT_BACKEND_API
 
 export const apiEndPoints = Object.freeze({
   paymentList: 'payments/payment-details',
@@ -62,5 +64,20 @@ export const apiEndPoints = Object.freeze({
   program: 'programs',
   courseFilter: 'courses/all-courses',
   enrollElective: 'academics/enroll-elective',
-  getElective: 'academics/all-academic-records'
+  getElective: 'academics/all-academic-records',
+  applicationDetails: 'lead/:leadCode/application/:applicationCode',
+  multipleApplication: 'application/multiple-applicaton',
+  getStudentDetail: 'application/student-details/:studentCode',
+  getLeadDetails: 'lead/:leadCode/application',
+  studentProgram: 'programs-fee/byProgramCode/:programCode',
+  programDetail: 'programs/:programCode',
+  programRmat: 'rmat/byProgramCode/:programCode',
+  enrolmentApplicationDetails: 'admissions/:applicationCode',
+  application: 'application',
+  commonDocuments: 'common/document-type',
+  bursary: 'bursary',
+  documentCode: 'common/next-code/DOC',
+  declarationForm: 'download/declarationForm',
+  payu: '/payment/payu',
+  rmat: 'application/rmat/details/:studentCode'
 })

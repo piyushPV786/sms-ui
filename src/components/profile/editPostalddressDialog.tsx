@@ -159,7 +159,7 @@ const EditPostalAddressDialog = ({
                   />
                   {errors.street && (
                     <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-name'>
-                      {errors.street.message}
+                      {`${errors.street.message}`}
                     </FormHelperText>
                   )}
                 </FormControl>
@@ -194,7 +194,7 @@ const EditPostalAddressDialog = ({
                   />
                   {errors.country && (
                     <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-last-name'>
-                      {errors.country.message}
+                      {`${errors.country.message}`}
                     </FormHelperText>
                   )}
                 </FormControl>
@@ -224,7 +224,7 @@ const EditPostalAddressDialog = ({
                   />
                   {errors.state && (
                     <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-last-name'>
-                      {errors.state.message}
+                      {`${errors.state.message}`}
                     </FormHelperText>
                   )}
                 </FormControl>
@@ -249,7 +249,7 @@ const EditPostalAddressDialog = ({
                   />
                   {errors.city && (
                     <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-city'>
-                      {errors.city.message}
+                      {`${errors.city.message}`}
                     </FormHelperText>
                   )}
                 </FormControl>
@@ -272,7 +272,7 @@ const EditPostalAddressDialog = ({
                   />
                   {errors.zipcode && (
                     <FormHelperText sx={{ color: 'error.main' }} id='validation-schema-city'>
-                      {errors.zipcode.message}
+                      {`${errors.zipcode.message}`}
                     </FormHelperText>
                   )}
                 </FormControl>

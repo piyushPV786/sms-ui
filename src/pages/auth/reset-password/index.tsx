@@ -170,7 +170,7 @@ const ForgetPassword = () => {
                             )
                           }}
                           error={!!errors?.newPassword?.message}
-                          helperText={errors?.newPassword?.message}
+                          helperText={`${errors?.newPassword?.message}`}
                         />
                       </Grid>
                       {!!watch('newPassword') && (
@@ -230,7 +230,7 @@ const ForgetPassword = () => {
                           }}
                           fullWidth
                           error={!!errors?.confirmPassword?.message}
-                          helperText={errors?.confirmPassword?.message}
+                          helperText={`${errors?.confirmPassword?.message}`}
                         />
                       </Grid>
                       <Grid item justifyContent='center' xs={12} sx={{ display: 'flex' }}>

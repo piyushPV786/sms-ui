@@ -29,6 +29,10 @@ import { Toaster } from 'react-hot-toast'
 import ErrorBoundary from 'src/components/errorBoundry'
 import { GoogleAnalyticsScript } from 'src/context/common'
 import { checkProd } from 'src/utils'
+<<<<<<< Updated upstream
+=======
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+>>>>>>> Stashed changes
 
 type ExtendedAppProps = AppProps & {
   Component: NextPage
@@ -89,6 +93,7 @@ export default function App(props: ExtendedAppProps) {
   const guestGuard = Component.guestGuard ?? false
 
   const aclAbilities = Component.acl ?? defaultACLObj
+  const queryClient = new QueryClient()
 
   return (
     <Fragment>
@@ -115,7 +120,9 @@ export default function App(props: ExtendedAppProps) {
                       <AuthProvider>
                         <Guard authGuard={authGuard} guestGuard={guestGuard}>
                           <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
-                            {getLayout(<Component {...pageProps} />)}
+                            <QueryClientProvider client={queryClient}>
+                              {getLayout(<Component {...pageProps} />)}
+                            </QueryClientProvider>
                           </AclGuard>
                         </Guard>
                       </AuthProvider>
