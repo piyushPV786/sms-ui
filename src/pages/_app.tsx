@@ -29,10 +29,7 @@ import { Toaster } from 'react-hot-toast'
 import ErrorBoundary from 'src/components/errorBoundry'
 import { GoogleAnalyticsScript } from 'src/context/common'
 import { checkProd } from 'src/utils'
-<<<<<<< Updated upstream
-=======
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
->>>>>>> Stashed changes
 
 type ExtendedAppProps = AppProps & {
   Component: NextPage
