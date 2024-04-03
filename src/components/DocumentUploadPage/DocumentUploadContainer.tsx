@@ -54,7 +54,7 @@ export const DocumentUploadContainer = ({ element, masterData, setDocumentProgre
         <Reject element={element} />
         {CertifiedDocument.includes(element?.code) && <Info />}
         {!disableStatus.includes(watch(element?.code)?.status) && (
-          <FileRegister element={element} uploadDocument={uploadDocument} />
+          <FileRegister element={element} uploadDocument={uploadDocument} uploadProgress={uploadProgress}/>
         )}
         <ErrorHandling
           element={element}

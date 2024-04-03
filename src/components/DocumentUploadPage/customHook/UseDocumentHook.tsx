@@ -14,6 +14,7 @@ import {
 import { ApplyService, CommonService, FinanceService } from 'src/service'
 import { viewProofDetails } from 'src/utils'
 import { documentPayload, studentBursaryPayload } from './helper'
+import { useBackdrop } from '../context/BackdropContext'
 
 export const UseDocumentHook = (applicationCode: any, leadCode: any) => {
   const [masterData, setMasterData] = useState<any>({
@@ -93,17 +94,20 @@ return result
 export const UseDocumentAction = () => {
   const [progress, setProgress] = useState({})
   const router = useRouter()
+  const { open, toggleBackdrop } = useBackdrop();
 
   const setDocumentProgress = (element: any, percent: any, documentCode: any) => {
     setProgress({ ...progress, [element?.code]: { percent, documentCode } })
   }
 
   const uploadFiles = async (payload: any, masterData: any) => {
+    toggleBackdrop(true)
     const response = await ApplyService.uploadDocuments(payload, masterData?.userDetails?.applicationCode)
     if (response) {
       dashboardRedirectStatus.includes(masterData?.userDetails?.status)
         ? router.push(`/dashboard`)
         : router.push(`/new-prog-payment/${masterData?.userDetails?.applicationCode}`)
+        toggleBackdrop(false)
     } else {
       successToast(`Your document is not uploaded`)
     }
