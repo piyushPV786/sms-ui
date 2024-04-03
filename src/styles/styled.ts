@@ -100,3 +100,17 @@ export const GreenFormHeading = styled('p')`
     }
   }
 `
+export const MainContainer = styled('div')`
+  background: #dde1e3;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  padding-bottom: 1rem;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch !important;
+`
+export const PaymentContainer = styled('div')`
+  width: 100%;
+  padding: 1.5rem;
+`
+export const Green = '#008554'

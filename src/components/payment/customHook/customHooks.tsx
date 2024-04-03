@@ -293,6 +293,7 @@ export const useUkhesheHook = (masterData: any, fees: any) => {
   const [intervalId, setIntervalId] = useState(0)
   const [newTab, setNewTab] = useState<Window | null>()
   const [openPopup, setOpenPopup] = useState(false)
+  const router = useRouter()
   const paymentStatusCheck = async () => {
     const res = await ApplyService?.GetApplicationData(
       masterData?.applicationData?.applicationCode,
@@ -341,7 +342,7 @@ export const useUkhesheHook = (masterData: any, fees: any) => {
           if (sendPaymentInfo?.data?.statusCode === responseStatus?.successCodeOne) {
             setLoadingPayment(false)
 
-            // router?.push('/payment/onlinesuccess')
+            router?.push('/payments/onlinesuccess')
           }
           clearInterval(intervalId)
         } else if (getPaymentResponse?.data?.status == 'ERROR_PERM') {
@@ -351,7 +352,7 @@ export const useUkhesheHook = (masterData: any, fees: any) => {
             clearInterval(intervalId)
             setLoadingPayment(false)
 
-            // router?.push(`/payment/failure?appCode=${masterData?.applicationData?.applicationCode}`)
+            router?.push(`/payments/failure?appCode=${masterData?.applicationData?.applicationCode}`)
           }
         }
       }, 10000)
@@ -365,7 +366,7 @@ export const useUkhesheHook = (masterData: any, fees: any) => {
     setLoadingPayment(false)
     setOpenPopup(false)
 
-    // router?.push(`/payment/failure?appCode=${masterData?.applicationData?.applicationCode}`)
+    router?.push(`/payments/failure?appCode=${masterData?.applicationData?.applicationCode}`)
   }
 
   return {
