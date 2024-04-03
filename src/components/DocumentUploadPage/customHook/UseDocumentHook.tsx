@@ -94,7 +94,7 @@ return result
 export const UseDocumentAction = () => {
   const [progress, setProgress] = useState({})
   const router = useRouter()
-  const { open, toggleBackdrop } = useBackdrop();
+  const { toggleBackdrop } = useBackdrop();
 
   const setDocumentProgress = (element: any, percent: any, documentCode: any) => {
     setProgress({ ...progress, [element?.code]: { percent, documentCode } })
