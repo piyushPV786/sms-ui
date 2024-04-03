@@ -79,5 +79,6 @@ export const apiEndPoints = Object.freeze({
   documentCode: 'common/next-code/DOC',
   declarationForm: 'download/declarationForm',
   payu: '/payment/payu',
-  rmat: 'application/rmat/details/:studentCode'
+  rmat: 'application/rmat/details/:studentCode',
+  studyModeByCode: 'programs-fee/byProgramCode'
 })

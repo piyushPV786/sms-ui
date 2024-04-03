@@ -41,6 +41,7 @@ const FormContent = () => {
     queryFn: () => getProgramList(qualification),
     enabled: !!qualification
   })
+  const StudyModeArray = StudyMode?.length && StudyMode[0]
 
   useEffect(() => {
     if (qualification) {
@@ -65,7 +66,7 @@ const FormContent = () => {
             {!!errors?.qualification && `${errors?.qualification?.message}`}
           </FormHelperText>
         </Grid>
-        {qualification && StudyMode?.studyModeCodes?.length && (
+        {qualification && StudyModeArray?.studyModes?.length && (
           <Grid item xs={6} sm={12} md={12}>
             <FormControl size='small'>
               <FormLabel>Study Mode</FormLabel>
@@ -76,14 +77,15 @@ const FormContent = () => {
                 value={watch('studyMode')}
                 onChange={e => {
                   setValue('studyMode', e.target.value)
-                  setValue('qualificationName', StudyMode?.name)
+                  setValue('qualificationName', StudyModeArray?.programName)
                   clearErrors('studyMode')
                 }}
                 name='radio-buttons-group'
               >
-                {StudyMode?.studyModeCodes?.map(
+                {StudyModeArray?.studyModes?.map(
                   (
                     item: {
+                      studyModeCode: string
                       code: unknown
                       name:
                         | string
@@ -97,7 +99,12 @@ const FormContent = () => {
                     },
                     index: Key | null | undefined
                   ) => (
-                    <FormControlLabel key={index} value={item.code} control={<Radio />} label={item.name} />
+                    <FormControlLabel
+                      key={index}
+                      value={item.studyModeCode}
+                      control={<Radio />}
+                      label={item.studyModeCode}
+                    />
                   )
                 )}
               </RadioGroup>

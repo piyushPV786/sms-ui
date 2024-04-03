@@ -1,5 +1,5 @@
 import { ISumbitPayload } from 'src/context/common'
-import { AcademicService, ApplyService } from 'src/service'
+import { AcademicService, ApplyService, FinanceService } from 'src/service'
 
 export const getAllPrograms = async () => {
   const response = await AcademicService?.getallPrograms()
@@ -8,7 +8,7 @@ export const getAllPrograms = async () => {
 }
 
 export const getProgramList = async (code: number | string) => {
-  const response = await AcademicService?.getProgramListByCode(code)
+  const response = await FinanceService?.getProgramListByCode(code)
 
   return response
 }

@@ -106,4 +106,19 @@ export default class Finance {
       console.log('Error fetching student list ========>', err?.message)
     }
   }
+
+  async getProgramListByCode(code: number | string) {
+    nProgress.start()
+    const endUrlName = `${this.baseUrl + apiEndPoints.studyModeByCode}`
+
+    try {
+      const response = await this.apiServer.get(`${endUrlName}/${code}`)
+
+      return response?.data?.data
+    } catch (err: any) {
+      console.log('Error fetching Qualification list by Id details ========>', err?.message)
+    } finally {
+      nProgress.done()
+    }
+  }
 }

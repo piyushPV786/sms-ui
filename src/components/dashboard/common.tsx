@@ -22,15 +22,7 @@ export const ActionButtons = ({ applicationDetail }: any) => {
   } = UseCardActionHook(applicationDetail)
 
   return (
-    <Grid
-      container
-      sx={{
-        justifyContent: 'flex-end'
-      }}
-      className='d-flex flex-row'
-      sm={9}
-      spacing={1}
-    >
+    <Grid container spacing={2}>
       <LoginCredentialDialog
         openCredentialDialog={openCredentialDialog}
         setOpenCredentialDialog={setOpenCredentialDialog}
@@ -39,10 +31,10 @@ export const ActionButtons = ({ applicationDetail }: any) => {
       <RmatCredentialDialog rmatOpen={rmatOpen} setRmatOpen={setRmatOpen} />
 
       {isRmatBTN && (
-        <Grid item>
+        <Grid item xs={12} display='flex' justifyContent='center'>
           <Button
             variant='contained'
-            size='small'
+            size='medium'
             onClick={() => {
               getRmatDetails()
             }}
@@ -53,10 +45,10 @@ export const ActionButtons = ({ applicationDetail }: any) => {
       )}
 
       {isPayBTN && (
-        <Grid item>
+        <Grid item xs={12} display='flex' justifyContent='center'>
           <Button
             variant='contained'
-            size='small'
+            size='medium'
             onClick={() => {
               router.push(`/new-prog-payment/${applicationDetail?.applicationCode}`)
             }}
@@ -66,10 +58,10 @@ export const ActionButtons = ({ applicationDetail }: any) => {
         </Grid>
       )}
       {isUploadBTN && (
-        <Grid item>
+        <Grid item xs={12} display='flex' justifyContent='center'>
           <Button
             variant='contained'
-            size='small'
+            size='medium'
             onClick={() => {
               router.push(`/upload-documents/${applicationDetail?.applicationCode}`)
             }}
@@ -79,10 +71,10 @@ export const ActionButtons = ({ applicationDetail }: any) => {
         </Grid>
       )}
       {isBursaryBTN && (
-        <Grid item>
+        <Grid item xs={12} display='flex' justifyContent='center'>
           <Button
             variant='contained'
-            size='small'
+            size='medium'
             onClick={() => {
               router.push(`/upload-documents/${applicationDetail?.applicationCode}`)
             }}
@@ -92,10 +84,10 @@ export const ActionButtons = ({ applicationDetail }: any) => {
         </Grid>
       )}
       {isAdamiteBTN && (
-        <Grid item>
+        <Grid item xs={12} display='flex' justifyContent='center'>
           <Button
             variant='contained'
-            size='small'
+            size='medium'
             onClick={() => {
               setOpenCredentialDialog(true)
             }}

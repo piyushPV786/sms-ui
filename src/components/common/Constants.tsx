@@ -8,6 +8,17 @@ export const NAVY_BLUE = '#203764'
 export const STEEL_TEAL = '#4F958E'
 export const GREEN = '#548235'
 
+export const routePaths: any = {
+  Application_Form: '/student-registration-form/application-form',
+  Payment_Success: '/payment/document-success',
+  Document_Success: '/payment/document-upload-success',
+  Document_Save_Success: '/payment/document-save-success',
+  APPLICATION_ENROLLED_SUCCESS: '/payment/application-enrolled-success',
+  Dashboard: '/dashboard',
+  StudentDashboard: '/dashboard',
+  RMATView: '/rmat'
+}
+
 export const responseStatus: any = {
   successCode: 200,
   successCodeOne: 201,

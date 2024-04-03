@@ -59,7 +59,13 @@ const ApplicationCard = (props: any) => {
   const application = applicationDetails?.find((item: any) => item?.status !== applicationStatus.graducated)
 
   if (!application) {
-    return <></>
+    return (
+      <>
+        <Grid xs={12} display='flex' justifyContent='center'>
+          <Typography> No Applications</Typography>
+        </Grid>
+      </>
+    )
   }
 
   return (
@@ -102,7 +108,7 @@ const ApplicationCard = (props: any) => {
         </Grid>
         <Divider color='#4f958e' sx={{ height: 2, width: '100%' }} />
         <Grid item xs={12}>
-          <Grid item xs={12} sx={{ p: 2 }} display='flex' justifyContent='center'>
+          <Grid item xs={12} sx={{ p: 2 }}>
             <ActionButtons applicationDetail={application} />
           </Grid>
         </Grid>
