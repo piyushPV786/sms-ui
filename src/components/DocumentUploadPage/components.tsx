@@ -1,12 +1,14 @@
 import { customStatus, disableStatus, docRejectStatus, docType, status, statusColor } from '../common/Constants'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import {
   Alert,
   AlertTitle,
+  Backdrop,
   Box,
   Button,
   Card,
+  CircularProgress,
   Grid,
   IconButton,
   List,
@@ -23,6 +25,7 @@ import { LinearProgressWithLabel } from '../common'
 import { UseDownloadDeclarationLatter, UsePreviewFile } from './customHook/UseDocumentHook'
 import { Close, EyeOutline } from 'mdi-material-ui'
 import { documentCriteria } from 'src/context/common'
+import { useBackdrop } from './context/BackdropContext'
 
 export const StyledMessage = () => {
   return (
@@ -180,14 +183,21 @@ export const Info = () => {
   )
 }
 
-export const FileRegister = ({ element, uploadDocument }: any) => {
+export const FileRegister = ({ element, uploadDocument,uploadProgress}: any) => {
   const { register } = useFormContext()
+  const { open, toggleBackdrop } = useBackdrop()
+  useEffect(() => {
+    if (uploadProgress === 100) {
+      toggleBackdrop(false)
+    } 
+  }, [uploadProgress])
   const productImageField = register(`${element.code}`, {
     validate: value => {
       return fileValidation(value, element)
     }
   })
   const fileOnChange = (event: any) => {
+    toggleBackdrop(true)
     if (fileValidation(event?.target?.files, element) !== true) {
       return
     }
@@ -199,6 +209,9 @@ export const FileRegister = ({ element, uploadDocument }: any) => {
   return (
     <Grid item sm={12} xs={12}>
       <FileUploadContainer className='upload-box'>
+      <Backdrop sx={{ backgroundColor: "#00001808", color: '#fff', zIndex: theme => theme.zIndex.drawer + 999  }} open={open}>
+        <CircularProgress color='primary' />
+      </Backdrop>
         <Box display={'flex'} alignItems={'center'}>
           <StyleLabel htmlFor={`${element?.code}`}>
             {/* <span className='labelTitle'>Browse</span> */}

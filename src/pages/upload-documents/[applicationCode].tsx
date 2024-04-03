@@ -4,6 +4,7 @@ import DocumentUploadPage from 'src/components/DocumentUploadPage'
 import { useQuery } from '@tanstack/react-query'
 import { ApplyService } from 'src/service'
 import { useAuth } from 'src/hooks/useAuth'
+import { BackdropProvider } from 'src/components/DocumentUploadPage/context/BackdropContext'
 
 const UploadDocuments = () => {
   const router: any = useRouter()
@@ -18,11 +19,13 @@ const UploadDocuments = () => {
   })
   if (studentDetail?.lead?.leadCode) {
     return (
-      <DocumentUploadPage
-        applicationCode={applicationCode}
-        studentCode={studentCode}
-        leadCode={studentDetail?.lead?.leadCode}
-      />
+      <BackdropProvider>
+        <DocumentUploadPage
+          applicationCode={applicationCode}
+          studentCode={studentCode}
+          leadCode={studentDetail?.lead?.leadCode}
+        />
+      </BackdropProvider>
     )
 
     return <></>
