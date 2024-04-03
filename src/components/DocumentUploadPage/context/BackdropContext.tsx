@@ -12,7 +12,8 @@ export const useBackdrop = () => {
   if (context === undefined) {
     throw new Error('useBackdrop must be used within a BackdropProvider');
   }
-  return context;
+  
+return context;
 };
 
 type BackdropProviderProps = {
