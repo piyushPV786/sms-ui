@@ -209,7 +209,7 @@ export const FileRegister = ({ element, uploadDocument,uploadProgress}: any) => 
   return (
     <Grid item sm={12} xs={12}>
       <FileUploadContainer className='upload-box'>
-      <Backdrop sx={{  backgroundColor: 'transparent', color: '#fff', }} open={open}>
+      <Backdrop sx={{ backgroundColor: "#00001808", color: '#fff', zIndex: theme => theme.zIndex.drawer + 999  }} open={open}>
         <CircularProgress color='primary' />
       </Backdrop>
         <Box display={'flex'} alignItems={'center'}>
