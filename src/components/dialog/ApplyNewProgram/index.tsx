@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import FormContent from './Form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { ApplyForProgram, ErrorMessage } from 'src/context/common'
+import { ApplyForProgram, ErrorMessage, ICommonData } from 'src/context/common'
 import { useRouter } from 'next/router'
 import { useMutation } from '@tanstack/react-query'
 import { AddMultiApplication } from './APIHook'
@@ -15,7 +15,10 @@ const schema = yup.object().shape({
   qualification: yup.string().required(ApplyForProgram?.qualification),
   studyMode: yup.string().required(ApplyForProgram?.studyMode)
 })
-const ApplyNewProgram = () => {
+export interface IApplyNewProg {
+  programData: ICommonData[]
+}
+const ApplyNewProgram = ({ programData }: IApplyNewProg) => {
   const [dialogShow, setDialogShow] = useState<boolean>(false)
   const methods = useForm({ mode: 'onChange', resolver: yupResolver(schema) })
   const router = useRouter()
@@ -85,7 +88,7 @@ const ApplyNewProgram = () => {
           <form onSubmit={methods.handleSubmit(OnSubmit)}>
             <DialogContent>
               <Grid sx={{ p: 4 }}>
-                <FormContent />
+                <FormContent programData={programData} />
               </Grid>
             </DialogContent>
             <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
