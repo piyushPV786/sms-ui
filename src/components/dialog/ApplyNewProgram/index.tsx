@@ -17,8 +17,9 @@ const schema = yup.object().shape({
 })
 export interface IApplyNewProg {
   programData: ICommonData[]
+  application?: any
 }
-const ApplyNewProgram = ({ programData }: IApplyNewProg) => {
+const ApplyNewProgram = ({ programData, application }: IApplyNewProg) => {
   const [dialogShow, setDialogShow] = useState<boolean>(false)
   const methods = useForm({ mode: 'onChange', resolver: yupResolver(schema) })
   const router = useRouter()
@@ -55,7 +56,7 @@ const ApplyNewProgram = ({ programData }: IApplyNewProg) => {
         programMode: null,
         agentCode: null,
         highSchoolName: null,
-        studentTypeCode: 'BURSARY',
+        studentTypeCode: application?.education?.studentTypeCode,
         referredById: null,
         isInternationDegree: 0,
         bursaryName: null,

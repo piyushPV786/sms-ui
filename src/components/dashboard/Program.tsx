@@ -25,6 +25,7 @@ const Program = ({ scheduler }: any) => {
   const leadCode = window.sessionStorage.getItem('leadCode')
 
   const applicationDetails: any[] | undefined = queryClient.getQueryData(['applicationData', leadCode])
+  const application = applicationDetails?.find((item: any) => item?.status === applicationStatus.graducated)
 
   const isGraduate =
     applicationDetails?.length && applicationDetails?.every(i => i.status === applicationStatus.graducated)
@@ -48,7 +49,8 @@ const Program = ({ scheduler }: any) => {
             ))}
           <Box>
             <ElectiveModule />
-            {isGraduate ? <ApplyNewProgram programData={programData} /> : null}
+
+            {isGraduate ? <ApplyNewProgram programData={programData} application={application} /> : null}
           </Box>
         </Box>
       </CardContent>
