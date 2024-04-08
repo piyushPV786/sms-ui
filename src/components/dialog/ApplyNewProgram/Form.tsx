@@ -15,8 +15,9 @@ import { useFormContext } from 'react-hook-form'
 import ControlledAutocomplete from 'src/components/ControlledAutocomplete'
 import { getAllPrograms, getProgramList } from './APIHook'
 import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect } from 'react'
+import { IApplyNewProg } from '.'
 
-const FormContent = () => {
+const FormContent = ({ programData }: IApplyNewProg) => {
   const {
     control,
     register,
@@ -31,6 +32,8 @@ const FormContent = () => {
     refetchOnWindowFocus: false
   })
   const qualification = watch('qualification')
+
+  const FilteredProg = program?.filter((i: { code: string }) => !programData?.map(ie => ie?.code)?.includes(i?.code))
 
   const {
     data: StudyMode,
@@ -59,7 +62,7 @@ const FormContent = () => {
           <ControlledAutocomplete
             control={control}
             name='qualification'
-            options={program}
+            options={FilteredProg}
             renderInput={params => <TextField {...params} label='Interested Qualification' />}
           />
           <FormHelperText sx={{ color: 'red' }}>

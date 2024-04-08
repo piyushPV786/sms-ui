@@ -48,7 +48,7 @@ const Program = ({ scheduler }: any) => {
             ))}
           <Box>
             <ElectiveModule />
-            {isGraduate ? <ApplyNewProgram /> : null}
+            {isGraduate ? <ApplyNewProgram programData={programData} /> : null}
           </Box>
         </Box>
       </CardContent>
