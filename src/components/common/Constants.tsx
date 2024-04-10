@@ -33,7 +33,7 @@ export const accountDetails = {
   AccountType: 'Cheque Account'
 }
 export const applicationStatus = {
-  graducated: 'GRADUATED'
+  graduated: 'GRADUATED'
 }
 export const APPLICATION_STATUS = {
   SAVED_AS_DRAFT: 'APP-DRAFT',
