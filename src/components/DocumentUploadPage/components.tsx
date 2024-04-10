@@ -142,7 +142,6 @@ export const DeclarationComponent = ({ element, masterData }: any) => {
         </Box>
         <Button
           size='small'
-          disabled={!fileWatch?.length}
           variant='contained'
           onClick={() => {
             downloadDeclarationLatter(masterData)
@@ -183,13 +182,13 @@ export const Info = () => {
   )
 }
 
-export const FileRegister = ({ element, uploadDocument,uploadProgress}: any) => {
+export const FileRegister = ({ element, uploadDocument, uploadProgress }: any) => {
   const { register } = useFormContext()
   const { open, toggleBackdrop } = useBackdrop()
   useEffect(() => {
     if (uploadProgress === 100) {
       toggleBackdrop(false)
-    } 
+    }
   }, [uploadProgress])
   const productImageField = register(`${element.code}`, {
     validate: value => {
@@ -209,9 +208,12 @@ export const FileRegister = ({ element, uploadDocument,uploadProgress}: any) => 
   return (
     <Grid item sm={12} xs={12}>
       <FileUploadContainer className='upload-box'>
-      <Backdrop sx={{ backgroundColor: "#00001808", color: '#fff', zIndex: theme => theme.zIndex.drawer + 999  }} open={open}>
-        <CircularProgress color='primary' />
-      </Backdrop>
+        <Backdrop
+          sx={{ backgroundColor: '#00001808', color: '#fff', zIndex: theme => theme.zIndex.drawer + 999 }}
+          open={open}
+        >
+          <CircularProgress color='primary' />
+        </Backdrop>
         <Box display={'flex'} alignItems={'center'}>
           <StyleLabel htmlFor={`${element?.code}`}>
             {/* <span className='labelTitle'>Browse</span> */}
