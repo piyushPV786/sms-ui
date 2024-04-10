@@ -2,7 +2,7 @@ import { Card, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
 import { Box } from '@mui/system'
-import { ICommonData, ISchedule, IScheduleData } from 'src/context/common'
+import { ISchedule, IScheduleData } from 'src/context/common'
 import ElectiveModule from '../dialog/ElectiveModule'
 import ApplyNewProgram from 'src/components/dialog/ApplyNewProgram'
 import { useQueryClient } from '@tanstack/react-query'
@@ -30,6 +30,11 @@ const Program = ({ scheduler }: any) => {
   const isGraduate =
     applicationDetails?.length && applicationDetails?.every(i => i.status === applicationStatus.graducated)
 
+  const progDetails: any = {
+    completed: applicationDetails?.filter(app => app.status === applicationStatus?.graducated),
+    current: applicationDetails?.filter(app => app.status !== applicationStatus?.graducated)
+  }
+
   return (
     <Card sx={{ position: 'relative', borderRadius: '0px' }}>
       <CardContent>
@@ -37,16 +42,33 @@ const Program = ({ scheduler }: any) => {
           <Typography variant='h6' mb={5} color={'primary'}>
             My Qualification
           </Typography>
-          {programData?.length > 0 &&
-            programData?.map((program: ICommonData) => (
-              <Box key={program?.id}>
-                <Typography variant='body2'>Current Qualification</Typography>
-                <Typography
-                  variant='caption'
-                  sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}
-                >{`${program?.name}(${program?.code})`}</Typography>
-              </Box>
-            ))}
+
+          {progDetails?.completed?.length > 0 && (
+            <Box>
+              <Typography variant='body2'>Completed Qualification</Typography>
+              {progDetails?.completed?.map((program: any) => (
+                <Box key={program?.id} sx={{ display: 'block !important' }}>
+                  <Typography
+                    variant='caption'
+                    sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}
+                  >{`${program?.education?.programName}(${program?.education?.programCode})`}</Typography>
+                </Box>
+              ))}
+            </Box>
+          )}
+          {progDetails?.current?.length > 0 && (
+            <Box>
+              <Typography variant='body2'>Current Qualification</Typography>
+              {progDetails?.current?.map((program: any) => (
+                <Box key={program?.id} sx={{ display: 'block !important' }}>
+                  <Typography
+                    variant='caption'
+                    sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}
+                  >{`${program?.education?.programName}(${program?.education?.programCode})`}</Typography>
+                </Box>
+              ))}
+            </Box>
+          )}
           <Box>
             <ElectiveModule />
 
