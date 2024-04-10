@@ -104,19 +104,40 @@ const StudentDashboard = () => {
       field: 'total',
       headerClassName: 'total',
       cellClassName: 'total',
-      renderHeader: () => <AcademicTypography>Total(100%)</AcademicTypography>
+      renderHeader: () => <AcademicTypography>Total(100%)</AcademicTypography>,
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isAssignmentPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+            ? row?.row?.total
+            : '-'}
+        </Typography>
+      )
     },
     {
       minWidth: 160,
       flex: 0.1,
       field: 'symbol',
-      headerName: 'Symbol'
+      headerName: 'Symbol',
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isAssignmentPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+            ? row?.row?.symbol
+            : '-'}
+        </Typography>
+      )
     },
     {
       minWidth: 160,
       flex: 0.1,
       field: 'status',
-      headerName: 'Status'
+      headerName: 'Status',
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isAssignmentPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+            ? row?.row?.status
+            : '-'}
+        </Typography>
+      )
     }
   ]
 
