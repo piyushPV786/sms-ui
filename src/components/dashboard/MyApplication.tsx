@@ -56,7 +56,7 @@ export default MyDays
 
 const ApplicationCard = (props: any) => {
   const { applicationDetails, programList } = props
-  const application = applicationDetails?.find((item: any) => item?.status !== applicationStatus.graducated)
+  const application = applicationDetails?.find((item: any) => item?.status !== applicationStatus.graduated)
 
   if (!application) {
     return (
