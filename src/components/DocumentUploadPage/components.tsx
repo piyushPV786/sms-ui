@@ -126,8 +126,10 @@ export const BursaryFeilds = ({ element }: any) => {
 
 export const DeclarationComponent = ({ element, masterData }: any) => {
   const { downloadDeclarationLatter } = UseDownloadDeclarationLatter()
-  const { watch } = useFormContext()
-  const fileWatch = watch(element?.code)?.file ? watch(element?.code)?.file : watch(element?.code)
+
+  // const { watch } = useFormContext()
+  // const fileWatch = watch(element?.code)?.file ? watch(element?.code)?.file : watch(element?.code)
+
   if (element?.code !== docType.DECLARATIONFORM) {
     return <></>
   }
