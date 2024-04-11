@@ -2,8 +2,12 @@ import { Card, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import MuiCardContent, { CardContentProps } from '@mui/material/CardContent'
 import { Box } from '@mui/system'
-import { ICommonData, ISchedule, IScheduleData } from 'src/context/common'
+import { ISchedule, IScheduleData } from 'src/context/common'
 import ElectiveModule from '../dialog/ElectiveModule'
+import ApplyNewProgram from 'src/components/dialog/ApplyNewProgram'
+import { useQueryClient } from '@tanstack/react-query'
+import { applicationStatus } from '../common/Constants'
+import { useEffect, useState } from 'react'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(3)} !important`,
@@ -14,9 +18,27 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
 }))
 
 const Program = ({ scheduler }: any) => {
+  const [progDetail, setProgDetail] = useState<any>({ completed: [], current: [] })
   const programData =
     scheduler &&
     scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i)?.programSchedule?.program)
+
+  const queryClient = useQueryClient()
+  const leadCode = window.sessionStorage.getItem('leadCode')
+
+  const applicationDetails: any[] | undefined = queryClient.getQueryData(['applicationData', leadCode])
+  const application = applicationDetails?.find((item: any) => item?.status === applicationStatus.graduated)
+
+  const isGraduate =
+    applicationDetails?.length && applicationDetails?.every(i => i.status === applicationStatus.graduated)
+
+  useEffect(() => {
+    setProgDetail((prev: any) => ({
+      ...prev,
+      ['completed']: applicationDetails?.filter(app => app.status === applicationStatus?.graduated),
+      ['current']: applicationDetails?.filter(app => app.status !== applicationStatus?.graduated)
+    }))
+  }, [applicationDetails, applicationStatus])
 
   return (
     <Card sx={{ position: 'relative', borderRadius: '0px' }}>
@@ -25,18 +47,37 @@ const Program = ({ scheduler }: any) => {
           <Typography variant='h6' mb={5} color={'primary'}>
             My Qualification
           </Typography>
-          {programData?.length > 0 &&
-            programData?.map((program: ICommonData) => (
-              <Box key={program?.id}>
-                <Typography variant='body2'>Current Qualification</Typography>
-                <Typography
-                  variant='caption'
-                  sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}
-                >{`${program?.name}(${program?.code})`}</Typography>
-              </Box>
-            ))}
+
+          {progDetail?.completed?.length > 0 && (
+            <Box>
+              <Typography variant='body2'>Completed Qualification</Typography>
+              {progDetail?.completed?.map((program: any) => (
+                <Box key={program?.id} sx={{ display: 'block !important' }}>
+                  <Typography
+                    variant='caption'
+                    sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}
+                  >{`${program?.education?.programName}(${program?.education?.programCode})`}</Typography>
+                </Box>
+              ))}
+            </Box>
+          )}
+          {progDetail?.current?.length > 0 && (
+            <Box>
+              <Typography variant='body2'>Current Qualification</Typography>
+              {progDetail?.current?.map((program: any) => (
+                <Box key={program?.id} sx={{ display: 'block !important' }}>
+                  <Typography
+                    variant='caption'
+                    sx={{ mb: 5, fontWeight: 600, color: 'text.primary' }}
+                  >{`${program?.education?.programName}(${program?.education?.programCode})`}</Typography>
+                </Box>
+              ))}
+            </Box>
+          )}
           <Box>
             <ElectiveModule />
+
+            {isGraduate ? <ApplyNewProgram programData={programData} application={application} /> : null}
           </Box>
         </Box>
       </CardContent>

@@ -19,11 +19,6 @@ import { ErrorMessage, PathTypes } from 'src/context/common'
 import { useAuth } from 'src/hooks/useAuth'
 import * as yup from 'yup'
 
-interface FormData {
-  userName: string
-  password: string
-}
-
 const schema = yup.object().shape({
   userName: yup.string().required(ErrorMessage.userNameRequired),
   password: yup.string().min(5).required()
@@ -42,7 +37,7 @@ const SignUp = () => {
     resolver: yupResolver(schema)
   })
   const auth = useAuth()
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: any) => {
     const { userName, password } = data
     auth.login({ username: userName, password }, () => {
       setError('userName', {
@@ -76,11 +71,13 @@ const SignUp = () => {
                     const trimmedValue = e.target.value.trim()
                     setValue('userName', trimmedValue)
                   }}
-                  error={Boolean(errors.userName)}
+                  error={Boolean(errors?.userName)}
                 />
               )}
             />
-            {errors.userName && <FormHelperText sx={{ color: 'error.main' }}>{errors.userName.message}</FormHelperText>}
+            {errors?.userName && (
+              <FormHelperText sx={{ color: 'error.main' }}>{`${errors?.userName?.message}`}</FormHelperText>
+            )}
           </FormControl>
         </Grid>
         <Grid item xs={12}>
@@ -115,9 +112,9 @@ const SignUp = () => {
                 />
               )}
             />
-            {errors.password && (
+            {errors?.password && (
               <FormHelperText sx={{ color: 'error.main' }} id=''>
-                {errors.password.message}
+                {`${errors?.password?.message}`}
               </FormHelperText>
             )}
           </FormControl>

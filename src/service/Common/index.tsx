@@ -260,7 +260,7 @@ export default class Common {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
 
-      return response
+      return response?.data?.data ? response?.data?.data : null
     } catch (err: any) {
       console.log('Error fetching Study Mode detail ========>', err?.message)
       nProgress.done()
@@ -322,5 +322,41 @@ export default class Common {
       nProgress.done()
     }
     nProgress.done()
+  }
+
+  async getFileLink(fileName: any, studentCode: any) {
+    const url = `${this.baseUrl}common/document?filename=${fileName}&studentCode=${studentCode}`
+    const response = await this.apiServer.get(url)
+
+    return response?.data?.data ? response?.data?.data : null
+  }
+
+  async getFileSignUrl(fileName: any, filetype: any, studentCode: any) {
+    const url = `${this.baseUrl}common/document/upload?filename=${fileName}&filetype=${filetype}&&studentCode=${studentCode}`
+    const response = await this.apiServer.get(url)
+    
+return response?.data?.data ? response?.data?.data : null
+  }
+
+  async DocumentType() {
+    const url = `${this.baseUrl}${apiEndPoints?.commonDocuments}?projectDocument=false`
+    const response = await this.apiServer.get(url)
+
+    return response?.data?.data ? response?.data?.data : null
+  }
+
+  async DocumentCode() {
+    const url = `${this.baseUrl}${apiEndPoints?.documentCode}`
+    const response = await this.apiServer.get(url)
+    
+return response?.data?.data ? response?.data?.data : null
+  }
+
+  async uploadDocumentToAws(url: any, files: any, setUploadPercent: any) {
+    const response = await axios.put(url, files, {
+      onUploadProgress: setUploadPercent
+    })
+    
+return response ? response : null
   }
 }

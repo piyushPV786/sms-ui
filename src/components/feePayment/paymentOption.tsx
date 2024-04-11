@@ -84,8 +84,6 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qua
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log('currency Code ====>', currencyCode)
-
   const handlePay = async () => {
     if (selectedPayment === 'ukheshe') {
       const payload = {
@@ -109,7 +107,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qua
     if (selectedPayment === 'ukheshe') {
     }
   }
-  const submitFile = (data: { uploadedFile: { name: string } }) => {
+  const submitFile = (data: any) => {
     const payload = {
       documentTypeCode: 'PaymentProof',
       fileName: data?.uploadedFile?.name,
@@ -140,7 +138,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qua
       <Box sx={{ flexGrow: 1, marginTop: '1rem' }}>
         {loading && (
           <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={loading}>
-            <CircularProgress color='inherit' />
+            <CircularProgress color='primary' />
           </Backdrop>
         )}
 

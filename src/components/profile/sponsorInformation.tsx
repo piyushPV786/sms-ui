@@ -9,8 +9,7 @@ interface IProps {
   state: string
 }
 
-const SponsorInformation = ({ userProfileDetails, qualificationData, state }: IProps) => {
-  console.log('userProfileDetailsSponsor ===================>', qualificationData)
+const SponsorInformation = ({ userProfileDetails, state }: IProps) => {
   const { country } = UseCustomHook()
 
   return (

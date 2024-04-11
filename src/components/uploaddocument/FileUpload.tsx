@@ -97,7 +97,7 @@ const FileUploadCard = ({ uploadFile, documentType }: IFileUploadProps) => {
                                 </Box>
                               )}
                             </Box>
-                            {!!errors?.file && <FormHelperText error>{errors?.file?.message}</FormHelperText>}
+                            {!!errors?.file && <FormHelperText error>{`${errors?.file?.message}`}</FormHelperText>}
 
                             {fileRejections.length > 0
                               ? fileRejections.map(({ errors }) =>
@@ -147,7 +147,7 @@ const FileUploadCard = ({ uploadFile, documentType }: IFileUploadProps) => {
                           )}
                         />
                         <FormHelperText sx={{ color: 'red' }}>
-                          {errors.fileType && errors.fileType?.message}
+                          {errors?.fileType && `${errors.fileType?.message}`}
                         </FormHelperText>
                       </FormControl>
                     </CardContent>

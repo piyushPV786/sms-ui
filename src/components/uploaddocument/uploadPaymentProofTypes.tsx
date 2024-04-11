@@ -1,9 +1,9 @@
-import { UseFormClearErrors, UseFormReturn, UseFormSetValue, UseFormUnregister } from 'react-hook-form'
+import { UseFormClearErrors, UseFormSetValue, UseFormUnregister } from 'react-hook-form'
 
 export interface UploadPaymentProofTypes {
   setValue: UseFormSetValue<any>
   clearErrors: UseFormClearErrors<any>
-  watch: UseFormReturn['watch']
+  watch: any
   unregister: UseFormUnregister<any>
   name: string
 }
