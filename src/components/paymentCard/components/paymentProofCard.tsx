@@ -59,6 +59,7 @@ const PaymentProofCard = (props: any) => {
       </Grid>
       <Grid item xs={12} display='flex' justifyContent='center'>
         <Button
+          variant='contained'
           style={{ width: '120px' }}
           onClick={handleSubmit(submitFile)}
           disabled={!watch('file' as any) || disabled}
