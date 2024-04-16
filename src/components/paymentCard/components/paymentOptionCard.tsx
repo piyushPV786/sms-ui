@@ -104,6 +104,7 @@ const PaymentOptionCard = (props: any) => {
       {onlinePaymentWatch !== 'offline' && (
         <Grid container display='flex' justifyContent='center' sx={{ p: 2 }}>
           <Button
+            variant='contained'
             style={{ width: '120px' }}
             form={onlinePaymentWatch}
             type='submit'
