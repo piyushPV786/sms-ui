@@ -10,6 +10,8 @@ import { useMutation } from '@tanstack/react-query'
 import { AddMultiApplication } from './APIHook'
 import { errorToast } from 'src/@core/components/common/Toast'
 import { useAuth } from 'src/hooks/useAuth'
+import { UserService } from 'src/service'
+import { AgentEmail } from 'src/components/common/Constants'
 
 const schema = yup.object().shape({
   qualification: yup.string().required(ApplyForProgram?.qualification),
@@ -21,11 +23,13 @@ export interface IApplyNewProg {
 }
 const ApplyNewProgram = ({ programData, application }: IApplyNewProg) => {
   const [dialogShow, setDialogShow] = useState<boolean>(false)
+  const [agentCode, setAgentCode] = useState<string>('')
   const methods = useForm({ mode: 'onChange', resolver: yupResolver(schema) })
   const router = useRouter()
   const auth = useAuth()
   const handleOpen = () => {
     methods?.reset()
+    getUserDetails()
     setDialogShow(true)
   }
   const handleClose = () => {
@@ -41,6 +45,10 @@ const ApplyNewProgram = ({ programData, application }: IApplyNewProg) => {
       errorToast(ErrorMessage?.Error)
     }
   })
+  const getUserDetails = async () => {
+    const response = await UserService.getUserByEmail(AgentEmail?.Email)
+    setAgentCode(response?.code)
+  }
 
   const OnSubmit = (data: any) => {
     const submitPayload = {
@@ -54,7 +62,7 @@ const ApplyNewProgram = ({ programData, application }: IApplyNewProg) => {
         applicationFees: null,
         programFees: null,
         programMode: null,
-        agentCode: null,
+        agentCode: agentCode,
         highSchoolName: null,
         studentTypeCode: application?.education?.studentTypeCode,
         referredById: null,

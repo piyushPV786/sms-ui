@@ -6,6 +6,7 @@ export const OperationBaseApiUrl = process.env.NEXT_PUBLIC_OPERATION_BASE_URL
 export const FinanceBaseApiUrl = process.env.NEXT_PUBLIC_FINANCE_BACKEND_API
 export const APPLY_BACKEND_API = process.env.NEXT_PUBLIC_APPLY_BACKEND_API
 export const DOCUMENT_BACKEND_API = process.env.NEXT_PUBLIC_DOCUMENT_BACKEND_API
+export const USER_BACKEND_API = process.env.NEXT_PUBLIC_USER_MANAGEMENT_REDIRECT_URI
 
 export const apiEndPoints = Object.freeze({
   paymentList: 'payments/payment-details',
@@ -80,5 +81,6 @@ export const apiEndPoints = Object.freeze({
   declarationForm: 'download/declarationForm',
   payu: '/payment/payu',
   rmat: 'application/rmat/details/:studentCode',
-  studyModeByCode: 'programs-fee/byProgramCode'
+  studyModeByCode: 'programs-fee/byProgramCode',
+  user: 'user'
 })
