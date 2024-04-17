@@ -25,6 +25,9 @@ export const responseStatus: any = {
   unauthorizedStatus: 401
 }
 
+export enum AgentEmail {
+  Email = 'mayankm@regenesys.net'
+}
 export const accountDetails = {
   AccountName: 'Regenesys Business School',
   AccountNumber: '1172349479',
