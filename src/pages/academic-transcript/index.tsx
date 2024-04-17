@@ -1,45 +1,40 @@
-import { Box, Button, Grid, Theme, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
 import { useState } from 'react'
-
 import { DataGrid } from '@mui/x-data-grid'
 import { AcademicTypography, CardContent, TableCard } from 'src/styles/styled'
-import { successToastBottomRight, errorToast } from 'src/components/common'
-import { Download } from 'mdi-material-ui'
 import { StudentService } from 'src/service'
-import { downloadSuccess, status } from 'src/context/common'
 import SearchBox from 'src/@core/components/searchinput'
 import { useAuth } from 'src/hooks/useAuth'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const StudentDashboard = () => {
-  const [data, setData] = useState([])
   const [value, setValue] = useState<string>('')
 
   const auth: any = useAuth()
   const { studentDetails } = DashboardCustomHooks()
-  const handleOnDownloadClick = async () => {
-    const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
-    if (downloadedTranscript?.status == status.successCode) {
-      downloadTranscripts(downloadedTranscript?.data, downloadSuccess.academicDownload)
-    } else {
-      errorToast(downloadSuccess.studentCodeError)
-    }
-  }
-  const downloadTranscripts = async (fileName: Blob, msg: string) => {
-    const url = URL.createObjectURL(fileName)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'Academic Transcript'
-    a.click()
-    successToastBottomRight(msg)
-  }
+  
+  // const handleOnDownloadClick = async () => {
+  //   const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
+  //   if (downloadedTranscript?.status == status.successCode) {
+  //     downloadTranscripts(downloadedTranscript?.data, downloadSuccess.academicDownload)
+  //   } else {
+  //     errorToast(downloadSuccess.studentCodeError)
+  //   }
+  // }
+  // const downloadTranscripts = async (fileName: Blob, msg: string) => {
+  //   const url = URL.createObjectURL(fileName)
+  //   const a = document.createElement('a')
+  //   a.href = url
+  //   a.download = 'Academic Transcript'
+  //   a.click()
+  //   successToastBottomRight(msg)
+  // }
 
   const getStudentList = async () => {
-    const response = await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
-    setData(response?.data?.data)
+    await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
   }
 
   const { electiveModule, getElectiveModuleList } = DashboardCustomHooks()
@@ -49,6 +44,8 @@ const StudentDashboard = () => {
     getElectiveModuleList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
+
+
 
   const columns = [
     {
@@ -78,7 +75,7 @@ const StudentDashboard = () => {
       headerClassName: 'digital-assessment',
       cellClassName: 'digital-assessment',
       renderHeader: () => <AcademicTypography>Digital Assessment</AcademicTypography>,
-      renderCell: (row: any) => <Typography>{row?.row?.isAssessmentPublish ? row?.row?.assessment : '-'}</Typography>
+      renderCell: (row: any) => <Typography>{row?.row?.isAssessmentPublish ? row?.row?.assessment < row?.row?.moderateDigitalAssessment? row?.row?.moderateDigitalAssessment : row?.row?.assessment: '-'}</Typography>
     },
     {
       minWidth: 150,
@@ -87,7 +84,7 @@ const StudentDashboard = () => {
       headerClassName: 'assignments',
       cellClassName: 'assignments',
       renderHeader: () => <AcademicTypography>Assignments</AcademicTypography>,
-      renderCell: (row: any) => <Typography>{row?.row?.isAssignmentPublish ? row?.row?.assignments : '-'}</Typography>
+      renderCell: (row: any) => <Typography>{row?.row?.isAssignmentPublish ? row?.row?.assignments< row?.row?.moderateAssignments? row?.row?.moderateAssignments : row?.row?.assignments: '-'}</Typography>
     },
     {
       minWidth: 160,
@@ -96,7 +93,7 @@ const StudentDashboard = () => {
       headerClassName: 'examination',
       cellClassName: 'examination',
       renderHeader: () => <AcademicTypography>Examination</AcademicTypography>,
-      renderCell: (row: any) => <Typography>{row?.row?.isExaminationPublish ? row?.row?.examination : '-'}</Typography>
+      renderCell: (row: any) => <Typography>{row?.row?.isExaminationPublish ? row?.row?.examination < row?.row?.moderateExamination? row?.row?.moderateExamination : row?.row?.examination : '-'}</Typography>
     },
     {
       minWidth: 160,
@@ -220,14 +217,15 @@ const StudentDashboard = () => {
                 pb: 3,
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'flex-end'
+                justifyContent: 'flex-end',
               }}
             >
+              
+
               <Box sx={{ mr: 5 }}>
                 <SearchBox handleFilter={handleFilter} />
               </Box>
-
-              <Box>
+{/*           <Box>
                 <Button
                   size='medium'
                   startIcon={<Download />}
@@ -242,22 +240,51 @@ const StudentDashboard = () => {
                 >
                   DOWNLOAD
                 </Button>
-              </Box>
+              </Box> */}
             </Box>
-            <DataGrid
-              autoHeight
-              disableColumnMenu
-              disableColumnFilter
-              disableColumnSelector
-              rows={electiveModule}
-              columns={columns}
-              disableSelectionOnClick
-            />
+
+            <Box
+                sx={{
+                  position: 'relative',
+                  width: '100%',
+                  minHeight: '100%',
+                  overflow: 'hidden',
+                }}
+              >
+                {/* Watermark */}
+                <Typography
+                  variant="h1"
+                  sx={{
+                    position: 'absolute',
+                    zIndex: 'inherit',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%) rotate(-25deg)', 
+                    opacity: 0.2, 
+                    pointerEvents: 'none',
+                  }}
+                >
+                <div style={{ fontSize: electiveModule?.length ===0 ? '0' : '1.5em' }}>UNOFFICIAL</div>
+                </Typography>
+                <DataGrid
+                  autoHeight
+                  disableColumnMenu
+                  disableColumnFilter
+                  disableColumnSelector
+                  rows={electiveModule}
+                  columns={columns}
+                  disableSelectionOnClick
+                  sx={{
+                    position: 'relative', 
+                    zIndex: 0,
+                    '& .MuiTablePagination-root': { display: 'none' }
+                  }}
+                />
+            </Box>
           </TableCard>
         </Grid>
       </Grid>
     </Grid>
   )
 }
-
 export default StudentDashboard
