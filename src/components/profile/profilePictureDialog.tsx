@@ -49,7 +49,7 @@ const ProfilePictureDialog = ({
     accept: {
       'image/*': ['.png']
     },
-    maxSize: 1024 * 1024,
+    maxSize: 800 * 1024,
     onDrop: file => onFileChange(file),
     multiple: false
   })
@@ -64,7 +64,7 @@ const ProfilePictureDialog = ({
         </Typography>
         {errors.map((e: { message: string; code: string }) => (
           <Typography color='error' key={e.code}>
-            {e.message}
+            {e.message && 'File is larger than 800kb'}
           </Typography>
         ))}
       </>
