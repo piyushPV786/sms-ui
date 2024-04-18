@@ -8,7 +8,7 @@ import {
 import { ApplyService } from 'src/service'
 
 const UseCardActionHook = (applicationDetail: any) => {
-  const { status, education, document } = applicationDetail
+  const { status, education, document, eligibility } = applicationDetail
 
   const [openCredentialDialog, setOpenCredentialDialog] = useState(false)
 
@@ -55,6 +55,8 @@ const UseCardActionHook = (applicationDetail: any) => {
       ? 'Upload Bursary Letter'
       : 'Upload Documents'
 
+  const isAccessProgramBTN = eligibility?.accessProgram
+
   const isBursaryBTN = BURSARY_BUTTON_STATUS.includes(status) && education?.studentTypeCode === CommonEnums?.BURSARY
   const isAdamiteBTN = status === CommonEnums.PROG_ADMITTED
   const documentDataTypes = [CommonEnums.ACCEPTANCE_LETTER, CommonEnums.WELCOME_LETTER, CommonEnums.QUOTE]
@@ -68,6 +70,7 @@ const UseCardActionHook = (applicationDetail: any) => {
     isEditBTN,
     isRmatBTN,
     isUploadBTNTitle,
+    isAccessProgramBTN,
     isPayBTN,
     payBtnTitle,
     isUploadBTN,

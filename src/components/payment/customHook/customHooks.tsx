@@ -108,6 +108,19 @@ export const usePaymentDetailsHook = (masterData: any) => {
         masterData?.currencyData?.currencySymbol ? masterData?.currencyData?.currencySymbol : ''
       } ${getConvertedAmount(masterData?.currencyData, String(feesStructure?.fee))}`
     }
+  } else if (
+    !applicationFeesStatus.includes(masterData?.applicationData?.status) &&
+    masterData?.applicationData?.eligibility[0]?.accessProgram &&
+    masterData?.applicationData?.education?.programCode == 'DBM-Prog'
+  ) {
+    fees = {
+      ...feesStructure,
+      label: 'Access Program',
+      helpText: '',
+      amount: `${
+        masterData?.currencyData?.currencySymbol ? masterData?.currencyData?.currencySymbol : ''
+      } ${getConvertedAmount(masterData?.currencyData, String(masterData?.feeData?.otherFee?.totalFee))}`
+    }
   } else {
     fees = {
       fee: '0.0',
