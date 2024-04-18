@@ -11,13 +11,11 @@ import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const StudentDashboard = () => {
-  const [data, setData] = useState([])
   const [value, setValue] = useState<string>('')
 
   const auth: any = useAuth()
   const { studentDetails } = DashboardCustomHooks()
-  console.log('data',data)
-
+  
   // const handleOnDownloadClick = async () => {
   //   const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
   //   if (downloadedTranscript?.status == status.successCode) {
@@ -36,8 +34,7 @@ const StudentDashboard = () => {
   // }
 
   const getStudentList = async () => {
-    const response = await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
-    setData(response?.data?.data)
+    await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
   }
 
   const { electiveModule, getElectiveModuleList } = DashboardCustomHooks()
@@ -265,10 +262,9 @@ const StudentDashboard = () => {
                     transform: 'translate(-50%, -50%) rotate(-25deg)', 
                     opacity: 0.2, 
                     pointerEvents: 'none',
-                    
                   }}
                 >
-                <div style={{ fontSize: electiveModule?.length ===0 ? '0' : '1.5em' }}>Unofficial</div>
+                <div style={{ fontSize: electiveModule?.length ===0 ? '0' : '1.5em' }}>UNOFFICIAL</div>
                 </Typography>
                 <DataGrid
                   autoHeight
