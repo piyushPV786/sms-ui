@@ -69,8 +69,7 @@ const OrderSummeryCard = (props: any) => {
                   {!applicationFeesStatus.includes(masterData?.applicationData?.status) && (
                     <Grid item md={12} xs={12}>
                       {!applicationFeesStatus.includes(masterData?.applicationData?.status) &&
-                        !masterData?.applicationData?.eligibility[0]?.accessProgram &&
-                        masterData?.applicationData?.education?.programCode == 'DBM-Prog' && (
+                        !masterData?.applicationData?.eligibility[0]?.accessProgram && (
                           <Grid>
                             <Typography variant='h6' color={'secondary'}>
                               Fee Mode
