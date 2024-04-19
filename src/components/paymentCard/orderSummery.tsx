@@ -68,57 +68,61 @@ const OrderSummeryCard = (props: any) => {
                 <Grid item md={12} xs={12}>
                   {!applicationFeesStatus.includes(masterData?.applicationData?.status) && (
                     <Grid item md={12} xs={12}>
-                      <Grid>
-                        <Typography variant='h6' color={'secondary'}>
-                          Fee Mode
-                        </Typography>
-                        <Grid item display='flex'>
-                          {studyModes?.fees
-                            ?.sort((a: { feeMode: string }, b: { feeMode: string }) => {
-                              const aStartsWithA = a.feeMode.startsWith('A')
-                              const bStartsWithA = b.feeMode.startsWith('A')
+                      {!applicationFeesStatus.includes(masterData?.applicationData?.status) &&
+                        !masterData?.applicationData?.eligibility[0]?.accessProgram &&
+                        masterData?.applicationData?.education?.programCode == 'DBM-Prog' && (
+                          <Grid>
+                            <Typography variant='h6' color={'secondary'}>
+                              Fee Mode
+                            </Typography>
+                            <Grid item display='flex'>
+                              {studyModes?.fees
+                                ?.sort((a: { feeMode: string }, b: { feeMode: string }) => {
+                                  const aStartsWithA = a.feeMode.startsWith('A')
+                                  const bStartsWithA = b.feeMode.startsWith('A')
 
-                              if (aStartsWithA && !bStartsWithA) return -1
-                              if (!aStartsWithA && bStartsWithA) return 1
+                                  if (aStartsWithA && !bStartsWithA) return -1
+                                  if (!aStartsWithA && bStartsWithA) return 1
 
-                              return 0
-                            })
-                            .reverse()
-                            .map((item: any, index: number) => {
-                              if (item?.feeMode !== feeMode.APPLICATION && item?.feeMode !== feeMode.TOTAL) {
-                                return (
-                                  // eslint-disable-next-line react/jsx-key
-                                  <Grid item xs={2.5}>
-                                    <div className='form-check form-check-inline'>
-                                      <input
-                                        {...register('feeModeCode', {
-                                          required: {
-                                            value: true,
-                                            message: 'Please select Fee mode'
-                                          }
-                                        })}
-                                        key={index}
-                                        className='form-check-input me-2'
-                                        type='radio'
-                                        value={item?.feeMode}
-                                        disabled={
-                                          item?.feeMode == feeMode?.MONTHLY &&
-                                          masterData?.applicationData?.status == CommonEnums?.MONTHLY_PAYMENT_REJECT
-                                        }
-                                      />
-                                      <label className='form-check-label'>
-                                        <strong>
-                                          {item?.feeMode}
-                                          <Typography sx={{ pl: 4 }}>R{item?.fee}</Typography>
-                                        </strong>
-                                      </label>
-                                    </div>
-                                  </Grid>
-                                )
-                              }
-                            })}
-                        </Grid>
-                      </Grid>
+                                  return 0
+                                })
+                                .reverse()
+                                .map((item: any, index: number) => {
+                                  if (item?.feeMode !== feeMode.APPLICATION && item?.feeMode !== feeMode.TOTAL) {
+                                    return (
+                                      // eslint-disable-next-line react/jsx-key
+                                      <Grid item xs={2.5}>
+                                        <div className='form-check form-check-inline'>
+                                          <input
+                                            {...register('feeModeCode', {
+                                              required: {
+                                                value: true,
+                                                message: 'Please select Fee mode'
+                                              }
+                                            })}
+                                            key={index}
+                                            className='form-check-input me-2'
+                                            type='radio'
+                                            value={item?.feeMode}
+                                            disabled={
+                                              item?.feeMode == feeMode?.MONTHLY &&
+                                              masterData?.applicationData?.status == CommonEnums?.MONTHLY_PAYMENT_REJECT
+                                            }
+                                          />
+                                          <label className='form-check-label'>
+                                            <strong>
+                                              {item?.feeMode}
+                                              <Typography sx={{ pl: 4 }}>R{item?.fee}</Typography>
+                                            </strong>
+                                          </label>
+                                        </div>
+                                      </Grid>
+                                    )
+                                  }
+                                })}
+                            </Grid>
+                          </Grid>
+                        )}
                     </Grid>
                   )}
                 </Grid>

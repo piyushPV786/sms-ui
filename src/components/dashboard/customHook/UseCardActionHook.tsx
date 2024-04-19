@@ -42,20 +42,19 @@ const UseCardActionHook = (applicationDetail: any) => {
     status === CommonEnums.APP_ENROLLED_ACCEPTED ||
     status === APPLICATION_STATUS.APPLICATION_FEE_PENDING ||
     status === APPLICATION_STATUS?.MONTHLY_PAYMENT_REJECT
-
+  const isAccessProgramBTN = eligibility?.accessProgram
   const payBtnTitle =
     status === CommonEnums.APP_ENROLLED_ACCEPTED || status === APPLICATION_STATUS?.MONTHLY_PAYMENT_REJECT
-      ? 'Pay Qualification Fee'
+      ? isAccessProgramBTN
+        ? 'Pay DBM Access Program Fee'
+        : 'Pay Qualification Fee'
       : 'Pay Application Fee'
-
   const isUploadBTN = UPLOAD_DOCUMENT_BUTTON_STATUS.includes(status)
 
   const isUploadBTNTitle =
     status === CommonEnums.BURSARY_LETTER_PEND && education?.studentTypeCode === CommonEnums?.BURSARY
       ? 'Upload Bursary Letter'
       : 'Upload Documents'
-
-  const isAccessProgramBTN = eligibility?.accessProgram
 
   const isBursaryBTN = BURSARY_BUTTON_STATUS.includes(status) && education?.studentTypeCode === CommonEnums?.BURSARY
   const isAdamiteBTN = status === CommonEnums.PROG_ADMITTED

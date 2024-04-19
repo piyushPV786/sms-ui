@@ -96,19 +96,6 @@ export const ActionButtons = ({ applicationDetail }: any) => {
           </Button>
         </Grid>
       )}
-      {isAdamiteBTN && (
-        <Grid item xs={12} display='flex' justifyContent='center'>
-          <Button
-            variant='contained'
-            size='medium'
-            onClick={() => {
-              router.push(`/new-prog-payment/${applicationDetail?.applicationCode}`)
-            }}
-          >
-            Pay DBM Access Program Fee
-          </Button>
-        </Grid>
-      )}
     </Grid>
   )
 }
