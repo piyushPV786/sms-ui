@@ -25,6 +25,8 @@ export const responseStatus: any = {
   unauthorizedStatus: 401
 }
 
+export const DBMCode: any = 'DBM-Prog'
+
 export enum AgentEmail {
   Email = 'mayankm@regenesys.net'
 }
