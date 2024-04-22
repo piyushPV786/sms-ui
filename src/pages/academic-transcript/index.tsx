@@ -1,17 +1,19 @@
 import { Box, Grid, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
-import { useState } from 'react'
+
+// import { useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { AcademicTypography, CardContent, TableCard } from 'src/styles/styled'
 import { StudentService } from 'src/service'
-import SearchBox from 'src/@core/components/searchinput'
+
+//import SearchBox from 'src/@core/components/searchinput'
 import { useAuth } from 'src/hooks/useAuth'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const StudentDashboard = () => {
-  const [value, setValue] = useState<string>('')
+  // const [value, setValue] = useState<string>('')
 
   const auth: any = useAuth()
   const { studentDetails } = DashboardCustomHooks()
@@ -43,8 +45,7 @@ const StudentDashboard = () => {
     getStudentList()
     getElectiveModuleList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
-
+  }, [''])
 
 
   const columns = [
@@ -138,9 +139,9 @@ const StudentDashboard = () => {
     }
   ]
 
-  const handleFilter = (val: string) => {
-    setValue(val)
-  }
+  // const handleFilter = (val: string) => {
+  //   setValue(val)
+  // }
 
   return (
     <Grid container spacing={6}>
@@ -220,11 +221,10 @@ const StudentDashboard = () => {
                 justifyContent: 'flex-end',
               }}
             >
-              
-
-              <Box sx={{ mr: 5 }}>
+              {/* <Box sx={{ mr: 5 }}>
                 <SearchBox handleFilter={handleFilter} />
-              </Box>
+              </Box> */}
+
 {/*           <Box>
                 <Button
                   size='medium'
@@ -264,7 +264,7 @@ const StudentDashboard = () => {
                     pointerEvents: 'none',
                   }}
                 >
-                <div style={{ fontSize: electiveModule?.length ===0 ? '0' : '1.5em' }}>UNOFFICIAL</div>
+                <div style={{ fontSize: electiveModule?.length ===0 ? '0' : '1em' }}>UNOFFICIAL</div>
                 </Typography>
                 <DataGrid
                   autoHeight
