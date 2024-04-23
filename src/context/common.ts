@@ -216,7 +216,7 @@ export interface ISumbitPayload {
     applicationFees: null
     programFees: null
     programMode: null
-    agentCode: null
+    agentCode: string
     highSchoolName: null
     studentTypeCode: string
     referredById: null
