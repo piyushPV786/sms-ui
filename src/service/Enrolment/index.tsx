@@ -17,7 +17,22 @@ export default class Enrolment {
     nProgress.done()
     const result = response?.data?.data ? response?.data?.data : {}
     nProgress.done()
-    
-return result
+
+    return result
+  }
+  async GetStudentData(ProgCode: string, studentCode: string) {
+    nProgress.start()
+    const route = apiEndPoints?.studentData.replace(':ProgCode', ProgCode).replace(':studentCode', studentCode)
+    const endUrlName = `${this.baseUrl + route}`
+
+    try {
+      const response = await this.apiServer.get(endUrlName)
+
+      return response?.data?.data ? response?.data?.data : null
+    } catch (err: any) {
+      console.log('Error fetching student details ========>', err?.message)
+    } finally {
+      nProgress.done()
+    }
   }
 }

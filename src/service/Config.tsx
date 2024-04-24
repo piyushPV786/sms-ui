@@ -82,5 +82,6 @@ export const apiEndPoints = Object.freeze({
   payu: '/payment/payu',
   rmat: 'application/rmat/details/:studentCode',
   studyModeByCode: 'programs-fee/byProgramCode',
-  user: 'user'
+  user: 'user',
+  studentData: 'application/:ProgCode/:studentCode'
 })
