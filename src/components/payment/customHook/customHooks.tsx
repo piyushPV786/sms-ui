@@ -8,7 +8,8 @@ import {
   allowedPaymentStatus,
   applicationFeesStatus,
   feeMode,
-  responseStatus
+  responseStatus,
+  DBMCode
 } from 'src/components/common/Constants'
 import {
   AcademicService,
@@ -107,6 +108,20 @@ export const usePaymentDetailsHook = (masterData: any) => {
       amount: `${
         masterData?.currencyData?.currencySymbol ? masterData?.currencyData?.currencySymbol : ''
       } ${getConvertedAmount(masterData?.currencyData, String(feesStructure?.fee))}`
+    }
+  } else if (
+    !applicationFeesStatus.includes(masterData?.applicationData?.status) &&
+    masterData?.applicationData?.eligibility[0]?.accessProgram &&
+    masterData?.applicationData?.education?.programCode == DBMCode
+  ) {
+    fees = {
+      fee: masterData?.feeData?.otherFee?.totalFee,
+      label: 'Access Program',
+      helpText: '',
+      feeMode: 'MONTHLY',
+      amount: `${
+        masterData?.currencyData?.currencySymbol ? masterData?.currencyData?.currencySymbol : ''
+      } ${getConvertedAmount(masterData?.currencyData, String(masterData?.feeData?.otherFee?.totalFee))}`
     }
   } else {
     fees = {

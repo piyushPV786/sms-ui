@@ -2,15 +2,19 @@ import { Box, Grid, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
 
+// import { useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { AcademicTypography, CardContent, TableCard } from 'src/styles/styled'
+import { EnrolmentService, StudentService } from 'src/service'
 
+//import SearchBox from 'src/@core/components/searchinput'
+import { useAuth } from 'src/hooks/useAuth'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const StudentDashboard = () => {
-  // const [data, setData] = useState([])
-
+  const [graduatedDate, setDraduatedDate] = React.useState<string>('')
+  const auth: any = useAuth()
   const { studentDetails } = DashboardCustomHooks()
 
   // const handleOnDownloadClick = async () => {
@@ -30,18 +34,27 @@ const StudentDashboard = () => {
   //   successToastBottomRight(msg)
   // }
 
-  // const getStudentList = async () => {
-  //   const response = await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
-  //   setData(response?.data?.data)
-  // }
+  const getStudentList = async () => {
+    await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
+  }
 
   const { electiveModule, getElectiveModuleList } = DashboardCustomHooks()
 
   React.useEffect(() => {
-    // getStudentList()
+    getStudentList()
     getElectiveModuleList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const getStudentDetails = async () => {
+    const progCode = studentDetails?.program?.code ? studentDetails?.program?.code : ''
+    const studentCode = studentDetails?.studentCode ? studentDetails?.studentCode : ''
+    const response = await EnrolmentService.GetStudentData(progCode, studentCode)
+    setDraduatedDate(response?.graduatedDate)
+  }
+  React.useEffect(() => {
+    studentDetails && getStudentDetails()
+  }, [studentDetails])
 
   const columns = [
     {
@@ -71,7 +84,15 @@ const StudentDashboard = () => {
       headerClassName: 'digital-assessment',
       cellClassName: 'digital-assessment',
       renderHeader: () => <AcademicTypography>Digital Assessment</AcademicTypography>,
-      renderCell: (row: any) => <Typography>{row?.row?.isAssessmentPublish ? row?.row?.assessment : '-'}</Typography>
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isAssessmentPublish
+            ? row?.row?.assessment < row?.row?.moderateDigitalAssessment
+              ? row?.row?.moderateDigitalAssessment
+              : row?.row?.assessment
+            : '-'}
+        </Typography>
+      )
     },
     {
       minWidth: 150,
@@ -80,7 +101,15 @@ const StudentDashboard = () => {
       headerClassName: 'assignments',
       cellClassName: 'assignments',
       renderHeader: () => <AcademicTypography>Assignments</AcademicTypography>,
-      renderCell: (row: any) => <Typography>{row?.row?.isAssignmentPublish ? row?.row?.assignments : '-'}</Typography>
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isAssignmentPublish
+            ? row?.row?.assignments < row?.row?.moderateAssignments
+              ? row?.row?.moderateAssignments
+              : row?.row?.assignments
+            : '-'}
+        </Typography>
+      )
     },
     {
       minWidth: 160,
@@ -89,7 +118,15 @@ const StudentDashboard = () => {
       headerClassName: 'examination',
       cellClassName: 'examination',
       renderHeader: () => <AcademicTypography>Examination</AcademicTypography>,
-      renderCell: (row: any) => <Typography>{row?.row?.isExaminationPublish ? row?.row?.examination : '-'}</Typography>
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isExaminationPublish
+            ? row?.row?.examination < row?.row?.moderateExamination
+              ? row?.row?.moderateExamination
+              : row?.row?.examination
+            : '-'}
+        </Typography>
+      )
     },
     {
       minWidth: 160,
@@ -199,7 +236,7 @@ const StudentDashboard = () => {
               <Grid item xs={2.4}>
                 <AcademicTypography variant='body2'>Graduation Date</AcademicTypography>
                 <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                  -
+                  {DDMMYYYDateFormat(new Date(graduatedDate))}
                 </AcademicTypography>
               </Grid>
             </Grid>
@@ -220,7 +257,7 @@ const StudentDashboard = () => {
                 <SearchBox handleFilter={handleFilter} />
               </Box> */}
 
-              {/* <Box>
+{/*           <Box>
                 <Button
                   size='medium'
                   startIcon={<Download />}
@@ -274,5 +311,4 @@ const StudentDashboard = () => {
     </Grid>
   )
 }
-
 export default StudentDashboard
