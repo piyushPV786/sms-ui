@@ -1,49 +1,44 @@
-import { Box, Button, Grid, Theme, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
-import { useState } from 'react'
 
 import { DataGrid } from '@mui/x-data-grid'
 import { AcademicTypography, CardContent, TableCard } from 'src/styles/styled'
-import { successToastBottomRight, errorToast } from 'src/components/common'
-import { Download } from 'mdi-material-ui'
-import { StudentService } from 'src/service'
-import { downloadSuccess, status } from 'src/context/common'
-import { useAuth } from 'src/hooks/useAuth'
+
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const StudentDashboard = () => {
-  const [data, setData] = useState([])
+  // const [data, setData] = useState([])
 
-  const auth: any = useAuth()
   const { studentDetails } = DashboardCustomHooks()
-  const handleOnDownloadClick = async () => {
-    const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
-    if (downloadedTranscript?.status == status.successCode) {
-      downloadTranscripts(downloadedTranscript?.data, downloadSuccess.academicDownload)
-    } else {
-      errorToast(downloadSuccess.studentCodeError)
-    }
-  }
-  const downloadTranscripts = async (fileName: Blob, msg: string) => {
-    const url = URL.createObjectURL(fileName)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'Academic Transcript'
-    a.click()
-    successToastBottomRight(msg)
-  }
 
-  const getStudentList = async () => {
-    const response = await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
-    setData(response?.data?.data)
-  }
+  // const handleOnDownloadClick = async () => {
+  //   const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
+  //   if (downloadedTranscript?.status == status.successCode) {
+  //     downloadTranscripts(downloadedTranscript?.data, downloadSuccess.academicDownload)
+  //   } else {
+  //     errorToast(downloadSuccess.studentCodeError)
+  //   }
+  // }
+  // const downloadTranscripts = async (fileName: Blob, msg: string) => {
+  //   const url = URL.createObjectURL(fileName)
+  //   const a = document.createElement('a')
+  //   a.href = url
+  //   a.download = 'Academic Transcript'
+  //   a.click()
+  //   successToastBottomRight(msg)
+  // }
+
+  // const getStudentList = async () => {
+  //   const response = await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
+  //   setData(response?.data?.data)
+  // }
 
   const { electiveModule, getElectiveModuleList } = DashboardCustomHooks()
 
   React.useEffect(() => {
-    getStudentList()
+    // getStudentList()
     getElectiveModuleList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
