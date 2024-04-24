@@ -9,14 +9,12 @@ import { successToastBottomRight, errorToast } from 'src/components/common'
 import { Download } from 'mdi-material-ui'
 import { StudentService } from 'src/service'
 import { downloadSuccess, status } from 'src/context/common'
-import SearchBox from 'src/@core/components/searchinput'
 import { useAuth } from 'src/hooks/useAuth'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const StudentDashboard = () => {
   const [data, setData] = useState([])
-  const [value, setValue] = useState<string>('')
 
   const auth: any = useAuth()
   const { studentDetails } = DashboardCustomHooks()
@@ -48,7 +46,7 @@ const StudentDashboard = () => {
     getStudentList()
     getElectiveModuleList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  }, [])
 
   const columns = [
     {
@@ -141,9 +139,9 @@ const StudentDashboard = () => {
     }
   ]
 
-  const handleFilter = (val: string) => {
-    setValue(val)
-  }
+  // const handleFilter = (val: string) => {
+  //   setValue(val)
+  // }
 
   return (
     <Grid container spacing={6}>
@@ -223,11 +221,11 @@ const StudentDashboard = () => {
                 justifyContent: 'flex-end'
               }}
             >
-              <Box sx={{ mr: 5 }}>
+              {/* <Box sx={{ mr: 5 }}>
                 <SearchBox handleFilter={handleFilter} />
-              </Box>
+              </Box> */}
 
-              <Box>
+              {/* <Box>
                 <Button
                   size='medium'
                   startIcon={<Download />}
@@ -242,17 +240,39 @@ const StudentDashboard = () => {
                 >
                   DOWNLOAD
                 </Button>
-              </Box>
+              </Box> */}
             </Box>
-            <DataGrid
-              autoHeight
-              disableColumnMenu
-              disableColumnFilter
-              disableColumnSelector
-              rows={electiveModule}
-              columns={columns}
-              disableSelectionOnClick
-            />
+            <Box id="datagrid-container" sx={{ position: 'relative', minHeight: 300 }}>
+              {/* Watermark */}
+              <Typography
+                  variant="h1"
+                  sx={{
+                    position: 'absolute',
+                    zIndex: 'inherit',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%) rotate(-25deg)', 
+                    opacity: 0.2, 
+                    pointerEvents: 'none',
+                  }}
+                >
+                <div style={{ fontSize: electiveModule?.length ===0 ? '0' : '1em' }}>UNOFFICIAL</div>
+                </Typography>
+                <DataGrid
+                  autoHeight
+                  disableColumnMenu
+                  disableColumnFilter
+                  disableColumnSelector
+                  rows={electiveModule}
+                  columns={columns}
+                  disableSelectionOnClick
+                  sx={{
+                    position: 'relative', 
+                    zIndex: 0,
+                    '& .MuiTablePagination-root': { display: 'none' }
+                  }}
+                />
+            </Box>
           </TableCard>
         </Grid>
       </Grid>
