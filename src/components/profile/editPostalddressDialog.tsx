@@ -241,7 +241,11 @@ const EditPostalAddressDialog = ({
                       <TextField
                         defaultValue={cityWatch}
                         label='City'
-                        onChange={onChange}
+                        onChange={e => {
+                          const alphabeticValue = e.target.value.replace(/[^A-Za-z\s]/g, '')
+                          e.target.value = alphabeticValue
+                          onChange(e.target.value)
+                        }}
                         error={Boolean(errors.city)}
                         aria-describedby='validation-schema-city'
                       />
