@@ -49,7 +49,8 @@ export default class Academic {
   }
   async getExamTicket(studentCode: string | undefined) {
     nProgress.start()
-    const endUrlName = `${this.baseUrl + apiEndPoints.academics}${apiEndPoints.examTicket}/${studentCode}`
+    const endUrlName = `${this.baseUrl}${apiEndPoints.examTicket}/${studentCode}`
+
     try {
       const response = await this.apiServer.get(endUrlName)
 
@@ -133,5 +134,19 @@ export default class Academic {
       nProgress.done()
     }
     nProgress.done()
+  }
+  async getProgramDetails(programCode: string) {
+    const url = `${this.baseUrl}${apiEndPoints.programDetail}`.replace(':programCode', programCode)
+    const response = await this.apiServer.get(url)
+    const result = response?.data?.data ? response?.data?.data : {}
+    
+return result
+  }
+  async getProgramRmatDetails(programCode: string) {
+    const url = `${this.baseUrl}${apiEndPoints.programRmat}`.replace(':programCode', programCode)
+    const response = await this.apiServer.get(url)
+    const result = response?.data?.data ? response?.data?.data : {}
+    
+return result
   }
 }

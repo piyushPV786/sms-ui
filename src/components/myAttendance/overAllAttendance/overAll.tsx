@@ -66,8 +66,7 @@ const OverAllCard = ({ tableData }: IOverAllProps) => {
     }
   }
 
-  const onSubmit = (param: any) => {
-    console.log('param', param) //console remove when api call
+  const onSubmit = () => {
     reset()
   }
 

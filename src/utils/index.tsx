@@ -4,11 +4,21 @@ import { commonListTypes, documentTypes } from 'src/types/dataTypes'
 import axios from 'axios'
 import nProgress from 'nprogress'
 import { Dispatch, SetStateAction } from 'react'
-import { status } from 'src/context/common'
+import { GoogleAnalyticsScript, status } from 'src/context/common'
 import { CommonService } from 'src/service'
 import { IProgram } from 'src/types/common'
 import { AxiosResponse } from 'axios'
 import { AuthValuesType } from 'src/context/types'
+import {
+  APPLICATION_STATUS,
+  BLUE,
+  DARK_GRAY,
+  GREEN,
+  NAVY_BLUE,
+  ORANGE,
+  acceptedFileTypes,
+  customStatus
+} from 'src/components/common/Constants'
 
 const ImagePayu = require('/public/images/payu.png') as string
 const ImagePayFast = require('/public/images/payfastImage.png') as string
@@ -90,6 +100,42 @@ export const getSelectedDocument = (selectedDocument: Array<string | number>, do
   return result
 }
 
+export const getStatusColor = (status: any) => {
+  const applicationStatus = status
+
+  switch (applicationStatus) {
+    case APPLICATION_STATUS.SAVED_AS_DRAFT:
+      return DARK_GRAY
+      break
+    case APPLICATION_STATUS.BURSARY_DOCUMENTS_ACCEPTED:
+    case APPLICATION_STATUS.RESUBMIT_BURSARY_DOCUMENTS:
+    case APPLICATION_STATUS.BURSARY_CONFIRMATION_PENDING:
+    case APPLICATION_STATUS.UPLOAD_APPLICATION_DOCUMENTS:
+    case APPLICATION_STATUS.RESUBMIT_APPLICATION_DOCUMENTS:
+    case APPLICATION_STATUS.RMAT_PENDING:
+    case APPLICATION_STATUS.PROGRAM_FEES_PENDING:
+    case APPLICATION_STATUS.UPLOAD_BURSARY_DOCUMENTS:
+    case APPLICATION_STATUS.RESUBMIT_BURSARY_DOCUMENTS:
+      return ORANGE
+      break
+    case APPLICATION_STATUS.ENROLLED_TO_APPLICATION:
+    case APPLICATION_STATUS.APPLICATION_FEE_ACCEPTED:
+    case APPLICATION_STATUS.ENROLMENT_ACCEPTED:
+    case APPLICATION_STATUS.APPLICATION_DOCUMENTS_ACCEPTED:
+      return BLUE
+      break
+    case APPLICATION_STATUS.APPLICATION_DOCUMENTS_UPLOADED:
+    case APPLICATION_STATUS.BURSARY_DOCUMENTS_UPLOADED:
+      return GREEN
+      break
+    case APPLICATION_STATUS.REQUEST_FOR_BURSARY:
+      return NAVY_BLUE
+      break
+    default:
+      return DARK_GRAY
+      break
+  }
+}
 export const GetPaymentImage = (type: string) => {
   if (type === 'payu') {
     return ImagePayu
@@ -362,4 +408,57 @@ export const getSessionStorageData = (key: string) => {
   }
 
   return null
+}
+
+export const checkProd = () => {
+  if (process.env.NEXT_PUBLIC_USER_REDIRECT_URL === GoogleAnalyticsScript.prodURL) return true
+  else return false
+}
+
+export const downloadDocument = (url: any, fileName: string) => {
+  const alink = document.createElement('a')
+  alink.href = url
+  alink.download = fileName
+  alink.click()
+}
+
+//common functions//
+export const fileValidation = (value: any, element: any) => {
+  if ((!value || value?.length === 0 || value[0]?.name?.length === 0) && element?.required === true) {
+    return 'This file is Required please upload file'
+  }
+  if (value && element?.code) {
+    if (value[0] && !acceptedFileTypes.includes(value[0]?.type)) {
+      return 'This file type is not accepted please upload from accepted file types'
+    } else if (value[0]?.size > 20 * 1024 * 1024 && element?.code === customStatus?.EDFORALLCONTRACT) {
+      console.log('in codition')
+
+      return 'File size should be at most 20MB'
+    } else if (value[0]?.size > 3 * 1024 * 1024 && element?.code !== customStatus?.EDFORALLCONTRACT) {
+      return 'File size should be at most 3MB'
+    }
+  }
+
+  return true
+}
+
+export const setDocumentValue = (documents: any, setValue: any) => {
+  documents?.forEach((element: any) => {
+    const extension = element?.name?.split('.').pop()
+    const file: File = new File([''], `${element?.code}.${extension}`, {
+      type: element?.fileExtension,
+      lastModified: element?.updatedAt
+    })
+
+    // console.log('element', element)
+    const value = {
+      file: [file],
+      status: element?.status,
+      comment: element?.comment
+    }
+
+    console.log('value ==========>', value)
+
+    setValue(element?.documentTypeCode, value)
+  })
 }

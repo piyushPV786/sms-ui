@@ -81,10 +81,8 @@ const ForgetPassword = () => {
   useEffect(() => checkRequirements, [validationProps])
 
   const resetPassword = async (payload: IPasswordUpdateRequest) => {
-    const response = await StudentService?.updatePassword(payload)
+    await StudentService?.updatePassword(payload)
     setOpen(true)
-
-    console.log({ response })
   }
   const onSubmit = (data: any) => {
     checkRequirements()
@@ -156,7 +154,7 @@ const ForgetPassword = () => {
                           type='password'
                           fullWidth
                           error={!!errors?.tempPassword?.message}
-                          helperText={errors?.tempPassword?.message}
+                          helperText={`${errors?.tempPassword?.message}`}
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -168,7 +166,7 @@ const ForgetPassword = () => {
                           type='password'
                           fullWidth
                           error={!!errors?.newPassword?.message}
-                          helperText={errors?.newPassword?.message}
+                          helperText={`${errors?.newPassword?.message}`}
                         />
                       </Grid>
                       <Grid container spacing={2} style={{ paddingTop: 20, paddingLeft: 20 }} textAlign='start' xs={12}>
@@ -207,7 +205,7 @@ const ForgetPassword = () => {
                           type='password'
                           fullWidth
                           error={!!errors?.confirmPassword?.message}
-                          helperText={errors?.confirmPassword?.message}
+                          helperText={`${errors?.confirmPassword?.message}`}
                         />
                       </Grid>
                       <Grid item justifyContent='center' xs={12} sx={{ display: 'flex' }}>

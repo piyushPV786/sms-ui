@@ -27,6 +27,9 @@ import { AuthProvider } from 'src/context/AuthContext'
 import ReactHotToast from 'src/@core/styles/libs/react-hot-toast'
 import { Toaster } from 'react-hot-toast'
 import ErrorBoundary from 'src/components/errorBoundry'
+import { GoogleAnalyticsScript } from 'src/context/common'
+import { checkProd } from 'src/utils'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 type ExtendedAppProps = AppProps & {
   Component: NextPage
@@ -87,6 +90,7 @@ export default function App(props: ExtendedAppProps) {
   const guestGuard = Component.guestGuard ?? false
 
   const aclAbilities = Component.acl ?? defaultACLObj
+  const queryClient = new QueryClient()
 
   return (
     <Fragment>
@@ -100,6 +104,7 @@ export default function App(props: ExtendedAppProps) {
         <meta name='keywords' content='' />
 
         <meta name='viewport' content='' />
+        {checkProd() && <script type='text/javascript' async src={GoogleAnalyticsScript.script1}></script>}
       </Head>
       <CacheProvider value={emotionCache}>
         <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
@@ -112,7 +117,9 @@ export default function App(props: ExtendedAppProps) {
                       <AuthProvider>
                         <Guard authGuard={authGuard} guestGuard={guestGuard}>
                           <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard}>
-                            {getLayout(<Component {...pageProps} />)}
+                            <QueryClientProvider client={queryClient}>
+                              {getLayout(<Component {...pageProps} />)}
+                            </QueryClientProvider>
                           </AclGuard>
                         </Guard>
                       </AuthProvider>

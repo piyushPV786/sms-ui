@@ -84,8 +84,6 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qua
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log('currency Code ====>', currencyCode)
-
   const handlePay = async () => {
     if (selectedPayment === 'ukheshe') {
       const payload = {
@@ -109,7 +107,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qua
     if (selectedPayment === 'ukheshe') {
     }
   }
-  const submitFile = (data: { uploadedFile: { name: string } }) => {
+  const submitFile = (data: any) => {
     const payload = {
       documentTypeCode: 'PaymentProof',
       fileName: data?.uploadedFile?.name,
@@ -140,7 +138,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qua
       <Box sx={{ flexGrow: 1, marginTop: '1rem' }}>
         {loading && (
           <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={loading}>
-            <CircularProgress color='inherit' />
+            <CircularProgress color='primary' />
           </Backdrop>
         )}
 
@@ -168,31 +166,31 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qua
                       key={value}
                       image={GetPaymentImage(value)}
                     >
-                      <input
-                        onClick={() => undefined}
-                        className='form-check-input '
-                        type='radio'
-                        value={value}
-                        onChange={() => setSelectedPaymentOption(value)}
-                        checked={selectedPayment === value}
-                      />
-                      <Box
-                        sx={{
-                          width: '50% !important',
-                          height: '40% !important',
-                          maxWidth: '50%',
-                          minHeight: '40%',
-                          position: 'relative',
-                          top: '30px'
-                        }}
-                      >
-                        <Image
-                          src={GetPaymentImage(value) as any}
-                          alt={GetPaymentImage(value) as string}
-                          height={50}
-                          width={150}
-                        />
-                      </Box>
+                      <Grid container>
+                        <Grid item xs={12} display='flex'>
+                          <Grid item xs={6} display='flex' justifyContent='flex-end'>
+                            <input
+                              onClick={() => undefined}
+                              className='form-check-input '
+                              type='radio'
+                              value={value}
+                              onChange={() => setSelectedPaymentOption(value)}
+                              checked={selectedPayment === value}
+                            />
+                          </Grid>
+                          <Grid item xs={6} display='flex' justifyContent='flex-start'>
+                            <Typography>Online</Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid item xs={12} display='flex' justifyContent='center'>
+                          <Image
+                            src={GetPaymentImage(value) as any}
+                            alt={GetPaymentImage(value) as string}
+                            height={50}
+                            width={150}
+                          />
+                        </Grid>
+                      </Grid>
                     </PaymentCard>
                   </>
                 ))}

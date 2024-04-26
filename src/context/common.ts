@@ -166,7 +166,24 @@ export interface IScheduleData {
 export interface IScheduleCodeType {
   code: string
 }
-
+export const PaymentTypes = [
+  {
+    registerName: 'paymentType',
+    name: 'Ukheshe',
+    value: 'ukheshe',
+    label: 'Online'
+  },
+  {
+    registerName: 'paymentType',
+    name: 'Offline',
+    value: 'offline',
+    label: 'Upload Payment Proof'
+  }
+]
+export enum ApplyForProgram {
+  qualification = 'Qualification is required',
+  studyMode = 'StudyMode is required'
+}
 export enum ErrorMessage {
   emailRequired = 'Email is required',
   emailError = 'Please enter a valid email address',
@@ -182,6 +199,31 @@ export enum ErrorMessage {
   zipCodeMinError = 'ZipCode must be atleast 3 digits',
   zipCodeMaxError = 'ZipCode must only be 10 digits',
   userNameRequired = 'User Name is required'
+}
+export interface IOnSubmit {
+  qualification: string
+  qualificationName: string
+  studyMode: string
+}
+export interface ISumbitPayload {
+  studentCode: string
+  education: {
+    programCode: string
+    programName: string
+    studyModeCode: string
+    qualificationCode: null
+    socialMediaCode: null
+    applicationFees: null
+    programFees: null
+    programMode: null
+    agentCode: string
+    highSchoolName: null
+    studentTypeCode: string
+    referredById: null
+    isInternationDegree: number
+    bursaryName: null
+    bursaryId: null
+  }
 }
 
 export enum ProfilePhoto {
@@ -326,3 +368,21 @@ export interface ICourseDetails {
     academicYearOfProgram: string
   }
 }
+
+export enum GoogleAnalyticsScript {
+  script1 = 'https://regenesys-rms.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/tod1zk/b/5/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=236dc7e1',
+  script2 = 'https://regenesys-rms.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/tod1zk/b/5/b0105d975e9e59f24a3230a22972a71a/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-US&collectorId=236dc7e1',
+  prodURL = 'https://rms.regenesys.net/'
+}
+
+export const documentCriteria = [
+  {
+    text: `File accepted: JPEG/JPG/PNG, PDF (Max size: 2MB)`,
+    isInnerText: true
+  },
+  {
+    text: `ID should be at least valid for 6 months`,
+    isInnerText: true
+  },
+  { text: 'Upload a color scan of the original document.' }
+]

@@ -3,19 +3,22 @@ import { Box } from '@mui/system'
 import Assignments from 'src/components/dashboard/Assignments'
 import Classes from 'src/components/dashboard/Classes'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
-import MyDays from 'src/components/dashboard/MyDays'
+import MyApplication from 'src/components/dashboard/MyApplication'
 import Program from 'src/components/dashboard/Program'
 import StudentDetails from 'src/components/dashboard/StudentDetails'
 import { ISchedule, IScheduleData } from 'src/context/common'
+import { useAuth } from 'src/hooks/useAuth'
 
 const StudentDashboard = ({}) => {
-  const { scheduler, myDayData, profileImage, classes, invigilator, programList } = DashboardCustomHooks()
+  const { scheduler, profileImage, classes, invigilator, programList } = DashboardCustomHooks()
 
   const courses = scheduler && scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i))
   const courseSchedule =
     scheduler &&
     scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i.scheduleDuration))
-  const dayData = myDayData && myDayData?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i))
+
+  // const dayData = myDayData && myDayData?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i))
+  const studentData = useAuth()?.user
 
   return (
     <Box>
@@ -43,7 +46,9 @@ const StudentDashboard = ({}) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
-          <MyDays dayData={dayData} />
+          {studentData?.studentCode && (
+            <MyApplication studentCode={studentData?.studentCode} programList={programList} />
+          )}
         </Grid>
       </Grid>
     </Box>

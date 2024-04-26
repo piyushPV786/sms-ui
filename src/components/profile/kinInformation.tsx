@@ -6,9 +6,7 @@ interface IProps {
   qualificationData: any
 }
 
-const KinInformation = ({ userProfileDetails, qualificationData }: IProps) => {
-  console.log('userProfileDetailsSponsor ===================>', qualificationData)
-
+const KinInformation = ({ userProfileDetails }: IProps) => {
   return (
     <Box>
       {!!userProfileDetails && userProfileDetails?.kin && (

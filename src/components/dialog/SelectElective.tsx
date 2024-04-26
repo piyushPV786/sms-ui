@@ -69,8 +69,20 @@ const SelectElective = () => {
   }
 
   const coreDataByYear: CoreDataByYear = {}
+  function getYearSuffix(year: number) {
+    if (year % 10 === 1 && year !== 11) {
+      return 'st'
+    } else if (year % 10 === 2 && year !== 12) {
+      return 'nd'
+    } else if (year % 10 === 3 && year !== 13) {
+      return 'rd'
+    } else {
+      return 'th'
+    }
+  }
+
   coreData?.forEach(module => {
-    const yearKey = `${module?.academicYearOfProgram}stYear` // Creating keys like '1stYear', '2ndYear', etc.
+    const yearKey = `${module?.academicYearOfProgram}${getYearSuffix(Number(module?.academicYearOfProgram))}Year` // Creating keys like '1stYear', '2ndYear', etc.
     if (!coreDataByYear[yearKey]) {
       coreDataByYear[yearKey] = []
     }
@@ -78,7 +90,7 @@ const SelectElective = () => {
   })
 
   const Year = (academicYear: number) => {
-    return `${academicYear}st year`
+    return `${academicYear}${getYearSuffix(academicYear)}year`
   }
 
   const {
@@ -185,7 +197,7 @@ const SelectElective = () => {
               <Grid item xs={12}>
                 <Typography mb={3} variant='body2'>
                   {coreDataByYear &&
-                    Object?.entries(coreDataByYear)?.map(([year, modules]) => (
+                    Object?.entries(coreDataByYear)?.map(([year]) => (
                       <Grid item xs={12} key={year}>
                         <Typography fontWeight='bold'>{Year(parseInt(year))} - ELECTIVES</Typography>
 

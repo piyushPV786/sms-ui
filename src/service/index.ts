@@ -9,6 +9,10 @@ import { status } from 'src/context/common'
 import Common from './Common'
 import Finance from './Finance'
 import Operation from './Operation'
+import Apply from './Apply'
+import Enrolment from './Enrolment'
+import Document from './Document'
+import User from './user'
 
 const appAPIServer: AxiosInstance = axios.create()
 
@@ -18,6 +22,10 @@ export const AcademicService = new Academic(appAPIServer)
 export const CommonService = new Common(appAPIServer)
 export const OperationService = new Operation(appAPIServer)
 export const FinanceService = new Finance(appAPIServer)
+export const ApplyService = new Apply(appAPIServer)
+export const EnrolmentService = new Enrolment(appAPIServer)
+export const DocumentServices = new Document(appAPIServer)
+export const UserService = new User(appAPIServer)
 
 const refreshTokenUrl = `${BaseStudentApi + apiEndPoints.refreshToken}`
 

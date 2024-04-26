@@ -110,7 +110,7 @@ const ExamTicket = () => {
                         fullWidth
                         required
                         error={!!errors?.category}
-                        helperText={errors?.category?.message}
+                        helperText={`${errors?.category?.message}`}
                         sx={{
                           '& .MuiInputLabel-asterisk': {
                             color: theme => theme.palette.error.main

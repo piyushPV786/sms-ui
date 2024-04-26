@@ -1,50 +1,60 @@
-import { Box, Button, Grid, Theme, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
-import { useState } from 'react'
 
+// import { useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 import { AcademicTypography, CardContent, TableCard } from 'src/styles/styled'
-import { successToastBottomRight, errorToast } from 'src/components/common'
-import { Download } from 'mdi-material-ui'
-import { StudentService } from 'src/service'
-import { downloadSuccess, status } from 'src/context/common'
-import SearchBox from 'src/@core/components/searchinput'
+import { EnrolmentService, StudentService } from 'src/service'
+
+//import SearchBox from 'src/@core/components/searchinput'
 import { useAuth } from 'src/hooks/useAuth'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const StudentDashboard = () => {
-  const [data, setData] = useState([])
-  const [value, setValue] = useState<string>('')
-
+  const [graduatedDate, setDraduatedDate] = React.useState<string>('')
   const auth: any = useAuth()
   const { studentDetails } = DashboardCustomHooks()
-  const handleOnDownloadClick = async () => {
-    const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
-    if (downloadedTranscript?.status == status.successCode) {
-      downloadTranscripts(downloadedTranscript?.data, downloadSuccess.academicDownload)
-    } else {
-      errorToast(downloadSuccess.studentCodeError)
-    }
-  }
-  const downloadTranscripts = async (fileName: Blob, msg: string) => {
-    const url = URL.createObjectURL(fileName)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'Academic Transcript'
-    a.click()
-    successToastBottomRight(msg)
-  }
+
+  // const handleOnDownloadClick = async () => {
+  //   const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
+  //   if (downloadedTranscript?.status == status.successCode) {
+  //     downloadTranscripts(downloadedTranscript?.data, downloadSuccess.academicDownload)
+  //   } else {
+  //     errorToast(downloadSuccess.studentCodeError)
+  //   }
+  // }
+  // const downloadTranscripts = async (fileName: Blob, msg: string) => {
+  //   const url = URL.createObjectURL(fileName)
+  //   const a = document.createElement('a')
+  //   a.href = url
+  //   a.download = 'Academic Transcript'
+  //   a.click()
+  //   successToastBottomRight(msg)
+  // }
 
   const getStudentList = async () => {
-    const response = await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
-    setData(response?.data?.data)
+    await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
   }
+
+  const { electiveModule, getElectiveModuleList } = DashboardCustomHooks()
+
   React.useEffect(() => {
     getStudentList()
+    getElectiveModuleList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  }, [])
+
+  const getStudentDetails = async () => {
+    const progCode = studentDetails?.program?.code ? studentDetails?.program?.code : ''
+    const studentCode = studentDetails?.studentCode ? studentDetails?.studentCode : ''
+    const response = await EnrolmentService.GetStudentData(progCode, studentCode)
+    setDraduatedDate(response?.graduatedDate)
+  }
+  React.useEffect(() => {
+    studentDetails && getStudentDetails()
+  }, [studentDetails])
 
   const columns = [
     {
@@ -73,7 +83,16 @@ const StudentDashboard = () => {
       field: 'assessment',
       headerClassName: 'digital-assessment',
       cellClassName: 'digital-assessment',
-      renderHeader: () => <AcademicTypography>Digital Assessment</AcademicTypography>
+      renderHeader: () => <AcademicTypography>Digital Assessment</AcademicTypography>,
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isAssessmentPublish
+            ? row?.row?.assessment < row?.row?.moderateDigitalAssessment
+              ? row?.row?.moderateDigitalAssessment
+              : row?.row?.assessment
+            : '-'}
+        </Typography>
+      )
     },
     {
       minWidth: 150,
@@ -81,7 +100,16 @@ const StudentDashboard = () => {
       field: 'assignments',
       headerClassName: 'assignments',
       cellClassName: 'assignments',
-      renderHeader: () => <AcademicTypography>Assignments</AcademicTypography>
+      renderHeader: () => <AcademicTypography>Assignments</AcademicTypography>,
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isAssignmentPublish
+            ? row?.row?.assignments < row?.row?.moderateAssignments
+              ? row?.row?.moderateAssignments
+              : row?.row?.assignments
+            : '-'}
+        </Typography>
+      )
     },
     {
       minWidth: 160,
@@ -89,7 +117,16 @@ const StudentDashboard = () => {
       field: 'examination',
       headerClassName: 'examination',
       cellClassName: 'examination',
-      renderHeader: () => <AcademicTypography>Examination</AcademicTypography>
+      renderHeader: () => <AcademicTypography>Examination</AcademicTypography>,
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isExaminationPublish
+            ? row?.row?.examination < row?.row?.moderateExamination
+              ? row?.row?.moderateExamination
+              : row?.row?.examination
+            : '-'}
+        </Typography>
+      )
     },
     {
       minWidth: 160,
@@ -97,25 +134,46 @@ const StudentDashboard = () => {
       field: 'total',
       headerClassName: 'total',
       cellClassName: 'total',
-      renderHeader: () => <AcademicTypography>Total(100%)</AcademicTypography>
+      renderHeader: () => <AcademicTypography>Total(100%)</AcademicTypography>,
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isAssignmentPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+            ? row?.row?.total
+            : '-'}
+        </Typography>
+      )
     },
     {
       minWidth: 160,
       flex: 0.1,
       field: 'symbol',
-      headerName: 'Symbol'
+      headerName: 'Symbol',
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isAssignmentPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+            ? row?.row?.symbol
+            : '-'}
+        </Typography>
+      )
     },
     {
       minWidth: 160,
       flex: 0.1,
       field: 'status',
-      headerName: 'Status'
+      headerName: 'Status',
+      renderCell: (row: any) => (
+        <Typography>
+          {row?.row?.isAssignmentPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+            ? row?.row?.status
+            : '-'}
+        </Typography>
+      )
     }
   ]
 
-  const handleFilter = (val: string) => {
-    setValue(val)
-  }
+  // const handleFilter = (val: string) => {
+  //   setValue(val)
+  // }
 
   return (
     <Grid container spacing={6}>
@@ -178,7 +236,7 @@ const StudentDashboard = () => {
               <Grid item xs={2.4}>
                 <AcademicTypography variant='body2'>Graduation Date</AcademicTypography>
                 <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                  -
+                  {DDMMYYYDateFormat(new Date(graduatedDate))}
                 </AcademicTypography>
               </Grid>
             </Grid>
@@ -195,11 +253,11 @@ const StudentDashboard = () => {
                 justifyContent: 'flex-end'
               }}
             >
-              <Box sx={{ mr: 5 }}>
+              {/* <Box sx={{ mr: 5 }}>
                 <SearchBox handleFilter={handleFilter} />
-              </Box>
+              </Box> */}
 
-              <Box>
+{/*           <Box>
                 <Button
                   size='medium'
                   startIcon={<Download />}
@@ -214,22 +272,43 @@ const StudentDashboard = () => {
                 >
                   DOWNLOAD
                 </Button>
-              </Box>
+              </Box> */}
             </Box>
-            <DataGrid
-              autoHeight
-              disableColumnMenu
-              disableColumnFilter
-              disableColumnSelector
-              rows={data}
-              columns={columns}
-              disableSelectionOnClick
-            />
+            <Box id="datagrid-container" sx={{ position: 'relative', minHeight: 300 }}>
+              {/* Watermark */}
+              <Typography
+                  variant="h1"
+                  sx={{
+                    position: 'absolute',
+                    zIndex: 'inherit',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%) rotate(-25deg)', 
+                    opacity: 0.2, 
+                    pointerEvents: 'none',
+                  }}
+                >
+                <div style={{ fontSize: electiveModule?.length ===0 ? '0' : '1em' }}>UNOFFICIAL</div>
+                </Typography>
+                <DataGrid
+                  autoHeight
+                  disableColumnMenu
+                  disableColumnFilter
+                  disableColumnSelector
+                  rows={electiveModule}
+                  columns={columns}
+                  disableSelectionOnClick
+                  sx={{
+                    position: 'relative', 
+                    zIndex: 0,
+                    '& .MuiTablePagination-root': { display: 'none' }
+                  }}
+                />
+            </Box>
           </TableCard>
         </Grid>
       </Grid>
     </Grid>
   )
 }
-
 export default StudentDashboard

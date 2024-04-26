@@ -28,7 +28,6 @@ export default function DynamicBreadcrumb({ asPath, enrolmentCode }: any) {
       }
     }
   })
-  console.log(crumbList)
 
   crumbList.map((values: IBreadcrumbList, index: number, array: Array<IBreadcrumbList>) => {
     let href = ''
