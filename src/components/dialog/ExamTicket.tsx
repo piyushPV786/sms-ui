@@ -14,10 +14,10 @@ import { useEffect, useState } from 'react'
 import { Controller, FieldValues, useForm } from 'react-hook-form'
 import { useAuth } from 'src/hooks/useAuth'
 import { AcademicService } from 'src/service'
-import { downloadFile,getCourseName} from 'src/utils'
+import { downloadFile } from 'src/utils'
 import { successToastBottomRight } from '../common'
 import { downloadSuccess } from 'src/context/common'
-import { getName} from 'src/utils'
+import { getName } from 'src/utils'
 import DashboardCustomHooks from '../dashboard/CustomHooks'
 
 interface ICategory {
@@ -47,7 +47,7 @@ const ExamTicket = () => {
     examTicket()
   }, [])
 
-  const {module} = DashboardCustomHooks();
+  const { module } = DashboardCustomHooks()
 
   const getFileName = (url: string) => {
     const urlParts = url?.split('/')
@@ -104,7 +104,11 @@ const ExamTicket = () => {
                     key={field.value}
                     options={category}
                     onChange={(_, value) => field.onChange(value?.courseCode)}
-                    getOptionLabel={option => module ? getName(module, option?.courseCode?.toString() as any) : option?.courseCode?.toString() as any}
+                    getOptionLabel={option =>
+                      module
+                        ? getName(module, option?.courseCode?.toString() as any)
+                        : (option?.courseCode?.toString() as any)
+                    }
                     isOptionEqualToValue={option => (option as any)?.code === field?.value}
                     value={category?.find(item => item?.courseCode === field?.value)}
                     renderInput={params => (
@@ -115,7 +119,7 @@ const ExamTicket = () => {
                         fullWidth
                         required
                         error={!!errors?.category}
-                        helperText={!!errors?.category&&`${errors?.category?.message}`}
+                        helperText={!!errors?.category && `${errors?.category?.message}`}
                         sx={{
                           '& .MuiInputLabel-asterisk': {
                             color: theme => theme.palette.error.main
