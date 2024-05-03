@@ -68,7 +68,7 @@ const OrderSummeryCard = (props: any) => {
                 <Grid item md={12} xs={12}>
                   {!applicationFeesStatus.includes(masterData?.applicationData?.status) && (
                     <Grid item md={12} xs={12}>
-                      {!applicationFeesStatus.includes(masterData?.applicationData?.status) &&
+                      {!applicationFeesStatus.includes(masterData?.applicationData?.status) && masterData?.applicationData?.eligibility &&
                         !masterData?.applicationData?.eligibility[0]?.accessProgram && (
                           <Grid>
                             <Typography variant='h6' color={'secondary'}>
