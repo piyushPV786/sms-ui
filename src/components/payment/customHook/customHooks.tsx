@@ -110,7 +110,7 @@ export const usePaymentDetailsHook = (masterData: any) => {
       } ${getConvertedAmount(masterData?.currencyData, String(feesStructure?.fee))}`
     }
   } else if (
-    !applicationFeesStatus.includes(masterData?.applicationData?.status) &&
+    !applicationFeesStatus.includes(masterData?.applicationData?.status) && masterData?.applicationData?.eligibility&&
     masterData?.applicationData?.eligibility[0]?.accessProgram &&
     masterData?.applicationData?.education?.programCode == DBMCode
   ) {

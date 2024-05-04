@@ -298,7 +298,7 @@ export enum DocumentStatus {
   Pending = 'PENDING'
 }
 
-export const allowedPaymentStatus = ['APP-FEE-PEND', 'ENRL-ACCEPTED', 'PROG-FEE-PEND']
+export const allowedPaymentStatus = ['APP-FEE-PEND', 'ENRL-ACCEPTED', 'PROG-FEE-PEND', 'RESUB-APP-FEE-PROOF']
 
 export const RoutePaths = {
   StudentDashboard: '/dashboard',

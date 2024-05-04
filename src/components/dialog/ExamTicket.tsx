@@ -17,10 +17,13 @@ import { AcademicService } from 'src/service'
 import { downloadFile } from 'src/utils'
 import { successToastBottomRight } from '../common'
 import { downloadSuccess } from 'src/context/common'
+import { getName } from 'src/utils'
+import DashboardCustomHooks from '../dashboard/CustomHooks'
 
 interface ICategory {
   programCode: string | null
   url: string
+  courseCode: string | null
 }
 const ExamTicket = () => {
   const {
@@ -43,6 +46,8 @@ const ExamTicket = () => {
   useEffect(() => {
     examTicket()
   }, [])
+
+  const { module } = DashboardCustomHooks()
 
   const getFileName = (url: string) => {
     const urlParts = url?.split('/')
@@ -89,7 +94,7 @@ const ExamTicket = () => {
           <DialogContent>
             <Grid item xs={12} px={10} py={5} marginTop={3}>
               <Controller
-                name='programCode'
+                name='courseCode'
                 control={control}
                 rules={{ required: 'Exam Name is Required' }}
                 render={({ field }) => (
@@ -98,10 +103,14 @@ const ExamTicket = () => {
                     fullWidth
                     key={field.value}
                     options={category}
-                    onChange={(_, value) => field.onChange(value?.programCode)}
-                    getOptionLabel={option => option?.programCode?.toString() as any}
+                    onChange={(_, value) => field.onChange(value?.courseCode)}
+                    getOptionLabel={option =>
+                      module
+                        ? getName(module, option?.courseCode?.toString() as any)
+                        : (option?.courseCode?.toString() as any)
+                    }
                     isOptionEqualToValue={option => (option as any)?.code === field?.value}
-                    value={category?.find(item => item?.programCode === field?.value)}
+                    value={category?.find(item => item?.courseCode === field?.value)}
                     renderInput={params => (
                       <TextField
                         {...params}
@@ -110,7 +119,7 @@ const ExamTicket = () => {
                         fullWidth
                         required
                         error={!!errors?.category}
-                        helperText={`${errors?.category?.message}`}
+                        helperText={!!errors?.category && `${errors?.category?.message}`}
                         sx={{
                           '& .MuiInputLabel-asterisk': {
                             color: theme => theme.palette.error.main
