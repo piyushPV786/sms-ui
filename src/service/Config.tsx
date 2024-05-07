@@ -83,5 +83,6 @@ export const apiEndPoints = Object.freeze({
   rmat: 'application/rmat/details/:studentCode',
   studyModeByCode: 'programs-fee/byProgramCode',
   user: 'user',
-  studentData: 'application/:ProgCode/:studentCode'
+  studentData: 'application/:ProgCode/:studentCode',
+  documentRemove: 'document/documentCode'
 })

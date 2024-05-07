@@ -14,6 +14,7 @@ import {
 import styled from '@emotion/styled'
 import { CertifiedDocument, disableStatus, status, statusColor } from '../common/Constants'
 import { UseUploadDocumentHook } from './customHook/UseUploadDocumentHook'
+import { DocumentServices } from 'src/service'
 
 export const DocumentUploadContainer = ({ element, masterData, setDocumentProgress }: any) => {
   const { watch } = useFormContext()
@@ -24,14 +25,14 @@ export const DocumentUploadContainer = ({ element, masterData, setDocumentProgre
     }
   }, [uploadProgress])
 
-  //   const removeDocumnet = async (documentCode: string) => {
-  //     await DocumentServices?.documentRemove(documentCode)
-  //   }
+  const removeDocumnet = async (documentCode: string) => {
+    await DocumentServices?.documentRemove(documentCode)
+  }
 
   const onRemoveFile = () => {
     setUploadProgress(0)
 
-    // removeDocumnet(documentCode)
+    removeDocumnet(documentCode)
   }
 
   return (
@@ -54,7 +55,7 @@ export const DocumentUploadContainer = ({ element, masterData, setDocumentProgre
         <Reject element={element} />
         {CertifiedDocument.includes(element?.code) && <Info />}
         {!disableStatus.includes(watch(element?.code)?.status) && (
-          <FileRegister element={element} uploadDocument={uploadDocument} uploadProgress={uploadProgress}/>
+          <FileRegister element={element} uploadDocument={uploadDocument} uploadProgress={uploadProgress} />
         )}
         <ErrorHandling
           element={element}
