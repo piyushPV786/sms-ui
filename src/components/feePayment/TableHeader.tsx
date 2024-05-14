@@ -3,7 +3,8 @@ import { GridRowId } from '@mui/x-data-grid'
 
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import CommonDueAmount from '../commonDueAmount'
+
+// import CommonDueAmount from '../commonDueAmount'
 import { Grid } from '@mui/material'
 
 interface TableHeaderProps {
@@ -15,8 +16,6 @@ interface TableHeaderProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 const TableHeader = (props: TableHeaderProps) => {
-  console.log('props?.fintechData-->', props?.fintechData)
-
   // ** Props
 
   return (
@@ -47,9 +46,7 @@ const TableHeader = (props: TableHeaderProps) => {
         </Box>
         <Grid item borderRight={theme => `1px solid ${theme.palette.grey[500]}`} />
 
-        <Box>
-          <CommonDueAmount fintechData={props?.fintechData} />
-        </Box>
+        <Box>{/* <CommonDueAmount fintechData={props?.fintechData} /> */}</Box>
       </Box>
     </Box>
   )
