@@ -60,6 +60,8 @@ const PaymentList = () => {
     setLoading(false)
   }
 
+  console.log('response-->', response)
+
   const getAllPrograms = async () => {
     const response = await AcademicService?.getallPrograms()
     if (response?.data?.statusCode === status.successCode && response?.data?.data) {
@@ -86,12 +88,12 @@ const PaymentList = () => {
     setValue(val)
   }
   const UpcomingPayment: [] =
-    response?.data &&
-    response.data.filter(
+    response?.data?.data &&
+    response.data?.data?.filter(
       (item: { dueDate: string | null; dueAmount: number | null }) =>
         item.dueDate !== null && item.dueAmount !== null && item.dueAmount !== 0
     )
-
+  console.log('UpcomingPayment', UpcomingPayment)
   const columns = [
     {
       flex: 0.1,
@@ -202,7 +204,12 @@ const PaymentList = () => {
         </Grid>
         <Grid item md={UpcomingPayment?.length === 0 ? 12 : 8} xs={12}>
           <Card>
-            <TableHeader value={value} selectedRows={selectedRows} handleFilter={handleFilter} />
+            <TableHeader
+              value={value}
+              selectedRows={selectedRows}
+              handleFilter={handleFilter}
+              fintechData={response?.fintechPaymentData?.response}
+            />
             <DataGrid
               loading={loading}
               autoHeight
@@ -210,7 +217,7 @@ const PaymentList = () => {
               disableColumnMenu
               disableColumnFilter
               disableColumnSelector
-              rows={response?.data}
+              rows={response?.data?.data || []}
               columns={columns}
               disableSelectionOnClick
               pageSize={Number(pageSize)}
@@ -227,7 +234,7 @@ const PaymentList = () => {
             />
           </Card>
         </Grid>
-        {UpcomingPayment.length > 0 && auth?.user?.studentCode ? (
+        {UpcomingPayment?.length > 0 && auth?.user?.studentCode ? (
           <Grid item xs={12} md={4}>
             <UpdatePayment
               studentCode={auth?.user?.studentCode}
