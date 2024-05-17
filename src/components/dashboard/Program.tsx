@@ -24,9 +24,9 @@ const Program = ({ scheduler }: any) => {
     scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i)?.programSchedule?.program)
 
   const queryClient = useQueryClient()
-  const leadCode = window.sessionStorage.getItem('leadCode')
+  const leadId = window.sessionStorage.getItem('leadId')
 
-  const applicationDetails: any[] | undefined = queryClient.getQueryData(['applicationData', leadCode])
+  const applicationDetails: any[] | undefined = queryClient.getQueryData(['applicationData', leadId])
   const application = applicationDetails?.find((item: any) => item?.status === applicationStatus.graduated)
 
   const isGraduate =

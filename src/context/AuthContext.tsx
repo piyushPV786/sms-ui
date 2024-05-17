@@ -85,8 +85,8 @@ const AuthProvider = ({ children }: Props) => {
 
         const userProfileResponse = await StudentService?.UserProfile(response.data.data?.studentCode)
 
-        if (userProfileResponse?.data?.data?.length) {
-          const userInfo = userProfileResponse?.data?.data[0]
+        if (userProfileResponse?.data?.data) {
+          const userInfo = userProfileResponse?.data?.data
           const data = {
             id: userInfo?.id,
             role: 'admin',

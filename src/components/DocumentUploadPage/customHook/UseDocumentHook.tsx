@@ -16,7 +16,7 @@ import { viewProofDetails } from 'src/utils'
 import { documentPayload, studentBursaryPayload } from './helper'
 import { useBackdrop } from '../context/BackdropContext'
 
-export const UseDocumentHook = (applicationCode: any, leadCode: any) => {
+export const UseDocumentHook = (applicationCode: any, leadId: string) => {
   const [masterData, setMasterData] = useState<any>({
     documentTypes: [],
     userDetails: {},
@@ -60,15 +60,15 @@ export const UseDocumentHook = (applicationCode: any, leadCode: any) => {
         }
       }
     })
-    
-return result
+
+    return result
   }
 
   useEffect(() => {
     const getMasterData = async (applicationCode: string) => {
       const result = await Promise.all([
         ApplyService.getDocumentsByApplicationCode(applicationCode),
-        ApplyService?.GetApplicationData(applicationCode, leadCode),
+        ApplyService?.GetApplicationData(applicationCode, leadId),
         CommonService.DocumentType()
       ])
 
@@ -94,7 +94,7 @@ return result
 export const UseDocumentAction = () => {
   const [progress, setProgress] = useState({})
   const router = useRouter()
-  const { toggleBackdrop } = useBackdrop();
+  const { toggleBackdrop } = useBackdrop()
 
   const setDocumentProgress = (element: any, percent: any, documentCode: any) => {
     setProgress({ ...progress, [element?.code]: { percent, documentCode } })
@@ -107,7 +107,7 @@ export const UseDocumentAction = () => {
       dashboardRedirectStatus.includes(masterData?.userDetails?.status)
         ? router.push(`/dashboard`)
         : router.push(`/new-prog-payment/${masterData?.userDetails?.applicationCode}`)
-        toggleBackdrop(false)
+      toggleBackdrop(false)
     } else {
       successToast(`Your document is not uploaded`)
     }
