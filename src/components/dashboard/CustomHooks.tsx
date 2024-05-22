@@ -173,12 +173,14 @@ const DashboardCustomHooks = () => {
         pageNumber: 1
       }
       const response = await StudentService?.getFeePaymentList(payload, auth?.user?.studentCode)
+
       if (response?.data?.statusCode === status.successCode && response?.data?.data) {
         setApplicationCode(response?.data?.data?.data[0]?.applicationCode)
-        const filteredData = response?.data?.data?.data?.data?.filter(
+        const filteredData = response?.data?.data?.data?.filter(
           (entry: { feeModeCode: string }) => entry.feeModeCode === 'Rollover'
         )
-        filteredData.map((entry: { paymentStatus: string }) => setPaymentStatus(entry.paymentStatus))
+
+        filteredData?.map((entry: { paymentStatus: string }) => setPaymentStatus(entry.paymentStatus))
       }
     }
   }
