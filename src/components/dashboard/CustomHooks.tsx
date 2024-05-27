@@ -37,6 +37,7 @@ interface studentType {
   status: string
   program: Iprogram
   nationality: string
+  identificationNumber: string
 }
 
 const DashboardCustomHooks = () => {

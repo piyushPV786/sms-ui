@@ -200,7 +200,7 @@ const StudentDashboard = () => {
               <Grid item xs={2.4}>
                 <AcademicTypography variant='body2'>ID Number</AcademicTypography>
                 <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                  {studentDetails?.idNo ? studentDetails?.idNo : '-'}
+                  {studentDetails?.identificationNumber ? studentDetails?.identificationNumber : '-'}
                 </AcademicTypography>
               </Grid>
               <Grid item xs={2.4}>
@@ -236,7 +236,7 @@ const StudentDashboard = () => {
               <Grid item xs={2.4}>
                 <AcademicTypography variant='body2'>Graduation Date</AcademicTypography>
                 <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                  {DDMMYYYDateFormat(new Date(graduatedDate))}
+                  {graduatedDate ? DDMMYYYDateFormat(new Date(graduatedDate)) : '-'}
                 </AcademicTypography>
               </Grid>
             </Grid>
@@ -257,7 +257,7 @@ const StudentDashboard = () => {
                 <SearchBox handleFilter={handleFilter} />
               </Box> */}
 
-{/*           <Box>
+              {/*           <Box>
                 <Button
                   size='medium'
                   startIcon={<Download />}
@@ -274,36 +274,36 @@ const StudentDashboard = () => {
                 </Button>
               </Box> */}
             </Box>
-            <Box id="datagrid-container" sx={{ position: 'relative', minHeight: 300 }}>
+            <Box id='datagrid-container' sx={{ position: 'relative', minHeight: 300 }}>
               {/* Watermark */}
               <Typography
-                  variant="h1"
-                  sx={{
-                    position: 'absolute',
-                    zIndex: 'inherit',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%) rotate(-25deg)', 
-                    opacity: 0.2, 
-                    pointerEvents: 'none',
-                  }}
-                >
-                <div style={{ fontSize: electiveModule?.length ===0 ? '0' : '1em' }}>UNOFFICIAL</div>
-                </Typography>
-                <DataGrid
-                  autoHeight
-                  disableColumnMenu
-                  disableColumnFilter
-                  disableColumnSelector
-                  rows={electiveModule}
-                  columns={columns}
-                  disableSelectionOnClick
-                  sx={{
-                    position: 'relative', 
-                    zIndex: 0,
-                    '& .MuiTablePagination-root': { display: 'none' }
-                  }}
-                />
+                variant='h1'
+                sx={{
+                  position: 'absolute',
+                  zIndex: 'inherit',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%) rotate(-25deg)',
+                  opacity: 0.2,
+                  pointerEvents: 'none'
+                }}
+              >
+                <div style={{ fontSize: electiveModule?.length === 0 ? '0' : '1em' }}>UNOFFICIAL</div>
+              </Typography>
+              <DataGrid
+                autoHeight
+                disableColumnMenu
+                disableColumnFilter
+                disableColumnSelector
+                rows={electiveModule}
+                columns={columns}
+                disableSelectionOnClick
+                sx={{
+                  position: 'relative',
+                  zIndex: 0,
+                  '& .MuiTablePagination-root': { display: 'none' }
+                }}
+              />
             </Box>
           </TableCard>
         </Grid>
