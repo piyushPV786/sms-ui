@@ -5,7 +5,6 @@ import { ICourseList, IProgramList } from 'src/context/types'
 import { useAuth } from 'src/hooks/useAuth'
 import { AcademicService, CommonService, OperationService, StudentService } from 'src/service'
 import { commonListTypes } from 'src/types/dataTypes'
-import { DDMMYYYDateFormat } from 'src/utils'
 
 interface Iprogram {
   name: string | undefined
@@ -39,12 +38,12 @@ interface studentType {
   nationality: string
   identificationNumber: string
   application: [{ status: string }]
+  isActive: boolean
 }
 
 const DashboardCustomHooks = () => {
   const [scheduler, setScheduler] = useState<any>(null)
   const [classes, setClasses] = useState<any>(null)
-  const [myDayData, setMyDay] = useState<any>(null)
   const [profileImage, setProfileImage] = useState<string | undefined>()
   const [studentDetails, setStudentDetails] = useState<studentType>()
   const [applicationCode, setApplicationCode] = useState<string>('')
@@ -54,6 +53,7 @@ const DashboardCustomHooks = () => {
   const [programList, setProgramList] = useState<IProgramList[]>([])
   const [module, setModule] = useState<ICourseDetails[]>()
   const [electiveModule, setElectiveModule] = useState<any>([])
+  const [isLoading, setLoading] = useState<boolean>(false)
 
   const [rollover, setRollover] = useState<{ passedModules: any[]; rollOverModules: any[] }>({
     passedModules: [],
@@ -64,7 +64,6 @@ const DashboardCustomHooks = () => {
 
   useEffect(() => {
     getStudentScheduler()
-    getStudentMyDay()
     getStudentDetails()
     getRolloverList()
     getApplicationCode()
@@ -106,12 +105,14 @@ const DashboardCustomHooks = () => {
   const endDateString: string = endDate.format('DD-MM-YYYY')
 
   const getStudentScheduler = async () => {
+    setLoading(true)
     if (auth?.user?.studentCode) {
       const startDate = startDateString
       const endDate = endDateString
       const schedulerResponse = await StudentService?.studentScheduler(auth?.user?.studentCode, startDate, endDate)
       setScheduler(schedulerResponse?.data?.data)
     }
+    setLoading(false)
   }
   const getMyClasses = async () => {
     if (scheduleCode) {
@@ -121,31 +122,29 @@ const DashboardCustomHooks = () => {
   }
 
   const getAllInvigilator = async () => {
+    setLoading(true)
     const response = await AcademicService.getAllFacilitator()
     setInvigilator(response?.data)
+    setLoading(false)
   }
 
   const getProgramList = async () => {
+    setLoading(true)
     const response: Array<IProgramList> = await AcademicService?.getAllProgramList()
 
     setProgramList(response)
+    setLoading(false)
   }
 
   const getCourseList = async (code: number | string) => {
+    setLoading(true)
     const response = await AcademicService?.getProgramListByCode(code)
     await setCourseList(response?.course)
-  }
-
-  const getStudentMyDay = async () => {
-    if (auth?.user?.studentCode) {
-      const date = DDMMYYYDateFormat(new Date())
-      const schedulerResponse = await StudentService?.studentScheduler(auth?.user?.studentCode, date)
-
-      setMyDay(schedulerResponse?.data?.data)
-    }
+    setLoading(false)
   }
 
   const getStudentDetails = async () => {
+    setLoading(true)
     if (auth?.user?.studentCode) {
       const userProfileResponse = await StudentService?.UserProfile(auth?.user?.studentCode)
 
@@ -159,15 +158,19 @@ const DashboardCustomHooks = () => {
         setProfileImage(imgsrc?.data?.data)
       }
     }
+    setLoading(false)
   }
 
   const getRolloverList = async () => {
+    setLoading(true)
     if (auth?.user?.studentCode) {
       const rolloverResponse = await StudentService?.getRolloverList(auth?.user?.studentCode)
       setRollover(rolloverResponse?.data?.data)
     }
+    setLoading(false)
   }
   const getApplicationCode = async () => {
+    setLoading(true)
     if (auth?.user?.studentCode) {
       const payload = {
         q: '',
@@ -185,26 +188,30 @@ const DashboardCustomHooks = () => {
         filteredData?.map((entry: { paymentStatus: string }) => setPaymentStatus(entry.paymentStatus))
       }
     }
+    setLoading(false)
   }
 
   const getModuleList = async () => {
+    setLoading(true)
     const params = {
       programCode: studentDetails?.program?.code ? studentDetails?.program?.code : ''
     }
     const response = await AcademicService?.getModuleList(params)
     setModule(response?.data?.data)
+    setLoading(false)
   }
 
   const getElectiveModuleList = async () => {
+    setLoading(true)
     if (auth?.user?.studentCode) {
       const electiveResponse = await AcademicService?.getElectiveModule(auth?.user?.studentCode)
       setElectiveModule(electiveResponse?.data?.data)
     }
+    setLoading(false)
   }
 
   return {
     scheduler,
-    myDayData,
     profileImage,
     studentDetails,
     rollover,
@@ -216,7 +223,8 @@ const DashboardCustomHooks = () => {
     courseList,
     module,
     electiveModule,
-    getElectiveModuleList
+    getElectiveModuleList,
+    isLoading
   }
 }
 

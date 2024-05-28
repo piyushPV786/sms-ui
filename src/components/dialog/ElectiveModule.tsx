@@ -12,7 +12,6 @@ import {
 } from '@mui/material'
 import React, { ReactElement, Ref, forwardRef, useState } from 'react'
 import Chip from 'src/@core/components/mui/chip'
-import DashboardCustomHooks from '../dashboard/CustomHooks'
 import { ICourseDetails } from 'src/context/common'
 
 const Transition = forwardRef(function Transition(
@@ -26,10 +25,8 @@ interface CoreDataByYear {
   [key: string]: ICourseDetails[]
 }
 
-const ElectiveModule = () => {
+const ElectiveModule = ({ electiveModule, getElectiveModuleList }: any) => {
   const [dialogShow, setDialogShow] = useState<boolean>(false)
-
-  const { electiveModule, getElectiveModuleList } = DashboardCustomHooks()
 
   const filterElectiveData = electiveModule?.filter(
     (item: { course: { type: string } }) => item?.course?.type === 'elective'

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 // ** MUI Imports
-import { CircularProgress, Link } from '@mui/material'
+import { Backdrop, CircularProgress, Link } from '@mui/material'
 
 // ** Custom Components Imports
 import TableHeader from 'src/components/myAttendance/tableHeader'
@@ -35,7 +35,7 @@ const TableHeaderTypography = styled(Typography)<any>(() => ({
 }))
 
 const AttendanceList = () => {
-  const { studentDetails } = DashboardCustomHooks()
+  const { studentDetails, isLoading } = DashboardCustomHooks()
   const [value, setValue] = useState<string>('')
   const [pageSize, setPageSize] = useState<number>(10)
   const [count, setCount] = useState<number>(0)
@@ -86,6 +86,9 @@ const AttendanceList = () => {
   return (
     <>
       <Grid container spacing={8}>
+        <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
+          <CircularProgress color='primary' />
+        </Backdrop>
         <Grid item xs={12}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Grid item xs={12}>

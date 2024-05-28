@@ -17,7 +17,7 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   }
 }))
 
-const Program = ({ scheduler }: any) => {
+const Program = ({ scheduler, electiveModule, getElectiveModuleList }: any) => {
   const [progDetail, setProgDetail] = useState<any>({ completed: [], current: [] })
   const programData =
     scheduler &&
@@ -75,7 +75,7 @@ const Program = ({ scheduler }: any) => {
             </Box>
           )}
           <Box>
-            <ElectiveModule />
+            <ElectiveModule electiveModule={electiveModule} getElectiveModuleList={getElectiveModuleList} />
 
             {isGraduate ? <ApplyNewProgram programData={programData} application={application} /> : null}
           </Box>

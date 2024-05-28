@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material'
+import { Backdrop, CircularProgress, Grid, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import Assignments from 'src/components/dashboard/Assignments'
 import Classes from 'src/components/dashboard/Classes'
@@ -10,7 +10,21 @@ import { ISchedule, IScheduleData } from 'src/context/common'
 import { useAuth } from 'src/hooks/useAuth'
 
 const StudentDashboard = ({}) => {
-  const { scheduler, profileImage, classes, invigilator, programList } = DashboardCustomHooks()
+  const {
+    scheduler,
+    profileImage,
+    classes,
+    invigilator,
+    programList,
+    isLoading,
+    rollover,
+    studentDetails,
+    electiveModule,
+    getElectiveModuleList,
+    module,
+    applicationCode,
+    paymentStatus
+  } = DashboardCustomHooks()
 
   const courses = scheduler && scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i))
   const courseSchedule =
@@ -22,15 +36,31 @@ const StudentDashboard = ({}) => {
 
   return (
     <Box>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
+        <CircularProgress color='primary' />
+      </Backdrop>
       <Typography mt={5} mb={5} sx={{ fontWeight: 'bold' }}>
         Welcome to SM Dashboard
       </Typography>
       <Grid container spacing={6}>
         <Grid item xs={12} md={9}>
-          <StudentDetails profileImage={profileImage} />
+          <StudentDetails
+            profileImage={profileImage}
+            rollover={rollover}
+            studentDetails={studentDetails}
+            module={module}
+            electiveModule={electiveModule}
+            getElectiveModuleList={getElectiveModuleList}
+            applicationCode={applicationCode}
+            paymentStatus={paymentStatus}
+          />
           <Grid container spacing={4} mt={5}>
             <Grid item xs={4} md={4}>
-              <Program scheduler={scheduler} />
+              <Program
+                scheduler={scheduler}
+                electiveModule={electiveModule}
+                getElectiveModuleList={getElectiveModuleList}
+              />
             </Grid>
             <Grid item xs={4} md={4}>
               <Classes

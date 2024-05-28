@@ -18,14 +18,13 @@ import { downloadFile } from 'src/utils'
 import { successToastBottomRight } from '../common'
 import { downloadSuccess } from 'src/context/common'
 import { getName } from 'src/utils'
-import DashboardCustomHooks from '../dashboard/CustomHooks'
 
 interface ICategory {
   programCode: string | null
   url: string
   courseCode: string | null
 }
-const ExamTicket = () => {
+const ExamTicket = ({ module }: any) => {
   const {
     handleSubmit,
     control,
@@ -46,8 +45,6 @@ const ExamTicket = () => {
   useEffect(() => {
     examTicket()
   }, [])
-
-  const { module } = DashboardCustomHooks()
 
   const getFileName = (url: string) => {
     const urlParts = url?.split('/')

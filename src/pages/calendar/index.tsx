@@ -23,6 +23,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Calendar from 'src/components/calender/Calendar'
 import SidebarLeft from 'src/components/calender/SidebarLeft'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
+import { Backdrop, CircularProgress } from '@mui/material'
 
 // import AddEventSidebar from 'src/components/calender/AddEventSidebar'
 
@@ -49,7 +50,7 @@ const AppCalendar = () => {
   const [filterEvent, setFilterEvent] = useState<EventType[] | undefined>()
 
   const [addEventSidebarOpen, setAddEventSidebarOpen] = useState<boolean>(false)
-  const { scheduler } = DashboardCustomHooks()
+  const { scheduler, isLoading } = DashboardCustomHooks()
   const defaultSelectedCalendars = ['Assessments', 'Announcements', 'Exams']
   const [selectedCalendars, setSelectedCalendars] = useState<string[]>(defaultSelectedCalendars)
 
@@ -202,6 +203,9 @@ const AppCalendar = () => {
         ...(skin === 'bordered' && { border: theme => `1px solid ${theme.palette.divider}` })
       }}
     >
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
+        <CircularProgress color='primary' />
+      </Backdrop>
       <SidebarLeft
         store={store}
         mdAbove={mdAbove}

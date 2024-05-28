@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Backdrop, Box, CircularProgress, Grid, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
 
@@ -15,7 +15,6 @@ import { DDMMYYYDateFormat } from 'src/utils'
 const StudentDashboard = () => {
   const [graduatedDate, setDraduatedDate] = React.useState<string>('')
   const auth: any = useAuth()
-  const { studentDetails } = DashboardCustomHooks()
 
   // const handleOnDownloadClick = async () => {
   //   const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
@@ -38,7 +37,7 @@ const StudentDashboard = () => {
     await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
   }
 
-  const { electiveModule, getElectiveModuleList } = DashboardCustomHooks()
+  const { electiveModule, getElectiveModuleList, isLoading, studentDetails } = DashboardCustomHooks()
 
   React.useEffect(() => {
     getStudentList()
@@ -177,6 +176,9 @@ const StudentDashboard = () => {
 
   return (
     <Grid container spacing={6}>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
+        <CircularProgress color='primary' />
+      </Backdrop>
       <Grid item xs={12}>
         <Typography variant='h5' gutterBottom>
           Academic Transcript
@@ -230,7 +232,7 @@ const StudentDashboard = () => {
               <Grid item xs={2.4}>
                 <AcademicTypography variant='body2'>Status</AcademicTypography>
                 <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                  {studentDetails?.application[0]?.status ? studentDetails?.application[0]?.status : '-'}
+                  {studentDetails?.isActive ? 'Active' : 'Inactive'}
                 </AcademicTypography>
               </Grid>
               <Grid item xs={2.4}>

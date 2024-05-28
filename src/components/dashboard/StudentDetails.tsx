@@ -12,7 +12,6 @@ import CustomAvatar from 'src/@core/components/mui/avatar'
 import { getUserInfo } from 'src/utils'
 import { HelpBox, InformationOutline, React } from 'mdi-material-ui'
 import ExamTicket from '../dialog/ExamTicket'
-import DashboardCustomHooks from './CustomHooks'
 import SelectElective from '../dialog/SelectElective'
 import RollOver from '../dialog/RollOver'
 
@@ -33,8 +32,16 @@ const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
   marginRight: theme.spacing(4)
 }))
 
-const StudentDetails = ({ profileImage }: any) => {
-  const { rollover, studentDetails } = DashboardCustomHooks()
+const StudentDetails = ({
+  profileImage,
+  rollover,
+  studentDetails,
+  module,
+  electiveModule,
+  getElectiveModuleList,
+  applicationCode,
+  paymentStatus
+}: any) => {
   const selfRollover = true
   const electiveRollover = true
 
@@ -88,7 +95,7 @@ const StudentDetails = ({ profileImage }: any) => {
                 </Link>
 
                 <a href='#' style={{ color: '#fff' }}>
-                  <ExamTicket />
+                  <ExamTicket module={module} />
                 </a>
               </Box>
             </Box>
@@ -111,7 +118,12 @@ const StudentDetails = ({ profileImage }: any) => {
                   </Grid>
 
                   <Grid p={2}>
-                    <SelectElective />
+                    <SelectElective
+                      module={module}
+                      studentDetails={studentDetails}
+                      electiveModule={electiveModule}
+                      getElectiveModuleList={getElectiveModuleList}
+                    />
                   </Grid>
                 </Grid>
               </Card>
@@ -136,7 +148,7 @@ const StudentDetails = ({ profileImage }: any) => {
                   </Grid>
 
                   <Grid p={2}>
-                    <RollOver />
+                    <RollOver rollover={rollover} applicationCode={applicationCode} paymentStatus={paymentStatus} />
                   </Grid>
                 </Grid>
               </Card>
