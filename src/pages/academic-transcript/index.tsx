@@ -230,7 +230,7 @@ const StudentDashboard = () => {
               <Grid item xs={2.4}>
                 <AcademicTypography variant='body2'>Status</AcademicTypography>
                 <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                  {studentDetails?.status ? studentDetails?.status : '-'}
+                  {studentDetails?.application[0]?.status ? studentDetails?.application[0]?.status : '-'}
                 </AcademicTypography>
               </Grid>
               <Grid item xs={2.4}>
