@@ -21,12 +21,12 @@ const MyDays = ({ studentCode, programList }: IMyDays) => {
     queryFn: () => ApplyService?.getStudentDetail(studentCode),
     refetchOnWindowFocus: false
   })
-  window.sessionStorage.setItem('leadId', studentDetail?.lead?.leadId)
+  window.sessionStorage.setItem('leadId', studentDetail?.lead?.id)
   const { data: applicationDetails, isLoading } = useQuery({
     queryKey: ['applicationData', studentDetail?.lead?.leadId],
-    queryFn: () => ApplyService?.GetApplicationDetails(studentDetail?.lead?.leadId),
+    queryFn: () => ApplyService?.GetApplicationDetails(studentDetail?.lead?.id),
     refetchOnWindowFocus: false,
-    enabled: !!studentDetail?.lead?.leadId
+    enabled: !!studentDetail?.lead?.id
   })
 
   return (

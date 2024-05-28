@@ -54,6 +54,7 @@ const DashboardCustomHooks = () => {
   const [module, setModule] = useState<ICourseDetails[]>()
   const [electiveModule, setElectiveModule] = useState<any>([])
   const [isLoading, setLoading] = useState<boolean>(false)
+  const [courseCode, setCourseCode] = useState<string>('');
 
   const [rollover, setRollover] = useState<{ passedModules: any[]; rollOverModules: any[] }>({
     passedModules: [],
@@ -76,10 +77,6 @@ const DashboardCustomHooks = () => {
   useEffect(() => {
     studentDetails?.program && getModuleList()
   }, [studentDetails])
-
-  const courseCode = classes?.classManagementData?.map((item: DataType) => {
-    item.courseCode
-  })
 
   useEffect(() => {
     getCourseList(courseCode)
@@ -117,6 +114,9 @@ const DashboardCustomHooks = () => {
   const getMyClasses = async () => {
     if (scheduleCode) {
       const classesResponse = await OperationService?.getClass(scheduleCode)
+      setCourseCode(classesResponse?.classManagementData?.map((item: DataType) => {
+        item.courseCode
+      }))
       setClasses(classesResponse)
     }
   }
@@ -138,7 +138,7 @@ const DashboardCustomHooks = () => {
 
   const getCourseList = async (code: number | string) => {
     setLoading(true)
-    const response = await AcademicService?.getProgramListByCode(code)
+    const response = await AcademicService.getProgramListByCode(code)
     await setCourseList(response?.course)
     setLoading(false)
   }
