@@ -99,6 +99,7 @@ const PreviewCard = () => {
   const getStudentDetails = async () => {
     if (auth?.user?.studentCode) {
       const userProfileResponse = await StudentService?.UserProfile(auth?.user?.studentCode)
+
       if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
         setStudentDetails(userProfileResponse?.data?.data)
         const imgsrc = await CommonService.getProfileSource(
@@ -172,7 +173,7 @@ const PreviewCard = () => {
 
     if (qualificationResponse?.status === status?.successCode) {
       const imgsrc = await CommonService.getProfileSource(
-        qualificationResponse?.data?.data?.userDetail?.documentCode,
+        qualificationResponse?.data?.data?.userDetail?.student?.documentCode,
         auth?.user?.studentCode
       )
 
