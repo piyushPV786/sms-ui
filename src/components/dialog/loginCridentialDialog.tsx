@@ -64,11 +64,11 @@ const LoginCredentialDialog = ({ openCredentialDialog, setOpenCredentialDialog, 
             <Grid container md={12} sm={12} className='mt-3' rowSpacing={2} columnSpacing={10}>
               <Grid item md={6} sm={6} className='text-center'>
                 <p>Username</p>
-                <h5>{applicationDetail?.username}</h5>
+                <h5>{applicationDetail?.lead?.student?.userName}</h5>
               </Grid>
               <Grid item md={6} sm={6} className='text-center'>
                 <p>Password</p>
-                <h5>{applicationDetail?.password}</h5>
+                <h5>{applicationDetail?.lead?.student?.password}</h5>
               </Grid>
             </Grid>
           </Grid>
