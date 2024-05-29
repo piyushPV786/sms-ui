@@ -102,7 +102,7 @@ const PreviewCard = () => {
       if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
         setStudentDetails(userProfileResponse?.data?.data)
         const imgsrc = await CommonService.getProfileSource(
-          userProfileResponse?.data?.data.documentCode,
+          userProfileResponse?.data?.data?.student?.documentCode,
           auth?.user?.studentCode
         )
         setProfileImage(imgsrc?.data?.data)
