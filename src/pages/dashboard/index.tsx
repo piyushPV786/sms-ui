@@ -40,7 +40,7 @@ const StudentDashboard = ({}) => {
         <CircularProgress color='primary' />
       </Backdrop>
       <Typography mt={5} mb={5} sx={{ fontWeight: 'bold' }}>
-        Welcome to SM Dashboard
+        Welcome to SMS Dashboard
       </Typography>
       <Grid container spacing={6}>
         <Grid item xs={12} md={9}>

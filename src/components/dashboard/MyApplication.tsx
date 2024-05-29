@@ -99,7 +99,7 @@ const ApplicationCard = (props: any) => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <StudentIdCard bgColor='#4f958e'>Student ID: {application?.studentCode}</StudentIdCard>
+              <StudentIdCard bgColor='#4f958e'>Student ID: {application?.lead?.studentCode}</StudentIdCard>
             </Grid>
             <Grid item xs={12}>
               <StudentIdCard bgColor='#235290'>Application ID: {application?.applicationCode}</StudentIdCard>
