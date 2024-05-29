@@ -217,7 +217,7 @@ const PaymentList = () => {
               disableColumnMenu
               disableColumnFilter
               disableColumnSelector
-              rows={response?.data?.data || []}
+              rows={response?.data || []}
               columns={columns}
               disableSelectionOnClick
               pageSize={Number(pageSize)}
