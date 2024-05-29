@@ -67,14 +67,14 @@ const StudentDashboard = () => {
       flex: 0.25,
       field: 'courseCode',
       headerName: 'Module Code',
-      renderCell: (row: any) => <Typography>{row.row.course.code}</Typography>
+      renderCell: (row: any) => <Typography>{row?.row?.course?.code}</Typography>
     },
     {
       minWidth: 260,
       flex: 0.25,
       field: 'courseName',
       headerName: 'Module Name',
-      renderCell: (row: any) => <Typography>{row.row.course.name}</Typography>
+      renderCell: (row: any) => <Typography>{row?.row?.course?.name}</Typography>
     },
     {
       minWidth: 240,
@@ -86,8 +86,8 @@ const StudentDashboard = () => {
       renderCell: (row: any) => (
         <Typography>
           {row?.row?.isAssessmentPublish
-            ? row?.row?.assessment < row?.row?.moderateDigitalAssessment
-              ? row?.row?.moderateDigitalAssessment
+            ? row?.row?.assessment < row?.row?.moderatedAssessment
+              ? row?.row?.moderatedAssessment
               : row?.row?.assessment
             : '-'}
         </Typography>
@@ -102,9 +102,9 @@ const StudentDashboard = () => {
       renderHeader: () => <AcademicTypography>Assignments</AcademicTypography>,
       renderCell: (row: any) => (
         <Typography>
-          {row?.row?.isAssignmentPublish
-            ? row?.row?.assignments < row?.row?.moderateAssignments
-              ? row?.row?.moderateAssignments
+          {row?.row?.isAssignmentsPublish
+            ? row?.row?.assignments < row?.row?.moderatedAssignments
+              ? row?.row?.moderatedAssignments
               : row?.row?.assignments
             : '-'}
         </Typography>
@@ -120,8 +120,8 @@ const StudentDashboard = () => {
       renderCell: (row: any) => (
         <Typography>
           {row?.row?.isExaminationPublish
-            ? row?.row?.examination < row?.row?.moderateExamination
-              ? row?.row?.moderateExamination
+            ? row?.row?.examination < row?.row?.moderatedExamination
+              ? row?.row?.moderatedExamination
               : row?.row?.examination
             : '-'}
         </Typography>
@@ -136,7 +136,7 @@ const StudentDashboard = () => {
       renderHeader: () => <AcademicTypography>Total(100%)</AcademicTypography>,
       renderCell: (row: any) => (
         <Typography>
-          {row?.row?.isAssignmentPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+          {row?.row?.isAssignmentsPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
             ? row?.row?.total
             : '-'}
         </Typography>
@@ -149,7 +149,7 @@ const StudentDashboard = () => {
       headerName: 'Symbol',
       renderCell: (row: any) => (
         <Typography>
-          {row?.row?.isAssignmentPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+          {row?.row?.isAssignmentsPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
             ? row?.row?.symbol
             : '-'}
         </Typography>
@@ -162,7 +162,7 @@ const StudentDashboard = () => {
       headerName: 'Status',
       renderCell: (row: any) => (
         <Typography>
-          {row?.row?.isAssignmentPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+          {row?.row?.isAssignmentsPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
             ? row?.row?.status
             : '-'}
         </Typography>
