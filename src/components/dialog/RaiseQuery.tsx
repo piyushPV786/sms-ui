@@ -110,7 +110,7 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
     if (response?.data?.statusCode === status.successCodeOne && response) {
       if (data.file !== null) {
         const files = {
-          filename: `${response?.data?.data?.documentName}`,
+          filename: `${response?.data?.data?.supportingDocumentCode}`,
           filetype: data.file && data.file.type,
           file: data.file,
           studentCode: studentCode
