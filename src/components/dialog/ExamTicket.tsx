@@ -54,7 +54,7 @@ const ExamTicket = ({ module }: any) => {
   }
 
   const onSubmit = (data: FieldValues) => {
-    const item = category?.find((item: ICategory) => item?.programCode === data?.programCode)
+    const item = category?.find((item: ICategory) => item?.courseCode === data?.courseCode)
     if (!!item?.url) {
       const fileName = getFileName(item?.url)
       !!fileName && downloadFile(item?.url, fileName)
