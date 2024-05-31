@@ -45,8 +45,10 @@ const AuthProvider = ({ children }: Props) => {
       const studentCode = window.sessionStorage.getItem(authConfig.studentCode)!
       if (storedToken && refreshToken && studentCode) {
         const userProfileResponse = await StudentService?.UserProfile(studentCode)
-        if (userProfileResponse?.data?.data?.length) {
-          const userInfo = userProfileResponse?.data?.data[0]
+
+        if (userProfileResponse?.data?.data) {
+          const userInfo = userProfileResponse?.data?.data
+
           await setUser({
             id: userInfo?.id,
             role: 'admin',

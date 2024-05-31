@@ -72,7 +72,7 @@ const StudentDetails = ({
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
                 <Link href={`/calendar`} passHref>
                   <a href='' style={{ color: '#fff' }}>
-                    Calender
+                    Calendar
                   </a>
                 </Link>
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />

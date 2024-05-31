@@ -54,7 +54,7 @@ const DashboardCustomHooks = () => {
   const [module, setModule] = useState<ICourseDetails[]>()
   const [electiveModule, setElectiveModule] = useState<any>([])
   const [isLoading, setLoading] = useState<boolean>(false)
-  const [courseCode, setCourseCode] = useState<string>('');
+  const [courseCode, setCourseCode] = useState<string>('')
 
   const [rollover, setRollover] = useState<{ passedModules: any[]; rollOverModules: any[] }>({
     passedModules: [],
@@ -114,9 +114,11 @@ const DashboardCustomHooks = () => {
   const getMyClasses = async () => {
     if (scheduleCode) {
       const classesResponse = await OperationService?.getClass(scheduleCode)
-      setCourseCode(classesResponse?.classManagementData?.map((item: DataType) => {
-        item.courseCode
-      }))
+      setCourseCode(
+        classesResponse?.classManagementData?.map((item: DataType) => {
+          item.courseCode
+        })
+      )
       setClasses(classesResponse)
     }
   }
@@ -147,9 +149,7 @@ const DashboardCustomHooks = () => {
     setLoading(true)
     if (auth?.user?.studentCode) {
       const userProfileResponse = await StudentService?.UserProfile(auth?.user?.studentCode)
-
       setStudentDetails(userProfileResponse?.data?.data)
-
       if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
         const imgsrc = await CommonService.getProfileSource(
           userProfileResponse?.data?.data.documentCode,
