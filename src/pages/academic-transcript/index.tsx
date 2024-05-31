@@ -160,13 +160,15 @@ const StudentDashboard = () => {
       flex: 0.1,
       field: 'status',
       headerName: 'Status',
-      renderCell: (row: any) => (
-        <Typography>
-          {row?.row?.isAssignmentsPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
-            ? row?.row?.status
-            : '-'}
-        </Typography>
-      )
+      renderCell: (row: any) => {
+        return (
+          <Typography>
+            {row?.row?.isAssignmentsPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+              ? row?.row?.status
+              : row?.row?.status ?? '-'}
+          </Typography>
+        )
+      }
     }
   ]
 
