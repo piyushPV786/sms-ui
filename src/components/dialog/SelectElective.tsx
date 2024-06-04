@@ -21,7 +21,6 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import UseBgColor from 'src/@core/hooks/useBgColor'
 import { StudentService } from 'src/service'
-import DashboardCustomHooks from '../dashboard/CustomHooks'
 import { successToast } from '../common'
 import { useAuth } from 'src/hooks/useAuth'
 import { EnrollElective, ErrorMessage, ICourseDetails, status } from 'src/context/common'
@@ -46,13 +45,11 @@ const schema = yup.object().shape({
 interface CoreDataByYear {
   [key: string]: ICourseDetails[]
 }
-const SelectElective = () => {
+const SelectElective = ({ module, studentDetails, electiveModule, getElectiveModuleList }: any) => {
   const bgColors = UseBgColor()
   const [dialogShow, setDialogShow] = useState<boolean>(false)
 
   const auth = useAuth()
-
-  const { module, studentDetails, electiveModule, getElectiveModuleList } = DashboardCustomHooks()
 
   const coreData = module?.filter((item: { type: string }) => item?.type === 'core')
   const electiveData = module?.filter((item: { type: string }) => item?.type === 'elective')
@@ -64,7 +61,8 @@ const SelectElective = () => {
 
   if (electiveData && electiveEnrolledData) {
     filteredElectiveData = electiveData.filter(
-      obj1 => !electiveEnrolledData?.some((obj2: { course: { code: string } }) => obj1?.code === obj2?.course?.code)
+      (obj1: { code: string }) =>
+        !electiveEnrolledData?.some((obj2: { course: { code: string } }) => obj1?.code === obj2?.course?.code)
     )
   }
 
@@ -81,7 +79,7 @@ const SelectElective = () => {
     }
   }
 
-  coreData?.forEach(module => {
+  coreData?.forEach((module: ICourseDetails) => {
     const yearKey = `${module?.academicYearOfProgram}${getYearSuffix(Number(module?.academicYearOfProgram))}Year` // Creating keys like '1stYear', '2ndYear', etc.
     if (!coreDataByYear[yearKey]) {
       coreDataByYear[yearKey] = []

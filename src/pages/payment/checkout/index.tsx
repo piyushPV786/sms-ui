@@ -20,6 +20,7 @@ import { DDMMYYYDateFormat } from 'src/utils'
 import { FinanceService, StudentService } from 'src/service'
 import { status } from 'src/context/common'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
+import { Backdrop, CircularProgress } from '@mui/material'
 
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   padding: `${theme.spacing(4)} !important`
@@ -49,7 +50,7 @@ const Checkout = ({ applicationCode, id, rollover }: propsType) => {
   const [currencyCode, setCurrencyCode] = useState<string>('')
 
   const router = useRouter()
-  const { studentDetails } = DashboardCustomHooks()
+  const { studentDetails, isLoading } = DashboardCustomHooks()
 
   const amount = '500'
   const feeModeCode = 'Rollover'
@@ -93,6 +94,9 @@ const Checkout = ({ applicationCode, id, rollover }: propsType) => {
   return (
     <>
       <Grid container spacing={6}>
+        <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
+          <CircularProgress color='primary' />
+        </Backdrop>
         <Grid item xs={12}>
           <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
             <Grid item xs={12}>

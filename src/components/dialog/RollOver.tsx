@@ -22,7 +22,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import UseBgColor from 'src/@core/hooks/useBgColor'
 import { useRouter } from 'next/router'
 import { StudentService } from 'src/service'
-import DashboardCustomHooks from '../dashboard/CustomHooks'
 import { successToast } from '../common'
 import { useAuth } from 'src/hooks/useAuth'
 import { ErrorMessage, status } from 'src/context/common'
@@ -44,14 +43,12 @@ const schema = yup.object().shape({
   module: yup.array().min(1, 'Module are required')
 })
 
-const RollOver = () => {
+const RollOver = ({ rollover, applicationCode, paymentStatus }: any) => {
   const bgColors = UseBgColor()
   const router = useRouter()
   const [dialogShow, setDialogShow] = useState<boolean>(false)
 
   const auth = useAuth()
-
-  const { rollover, applicationCode, paymentStatus } = DashboardCustomHooks()
 
   const {
     register,

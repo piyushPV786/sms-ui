@@ -25,7 +25,7 @@ import { errorToast } from 'src/components/common'
 import { useRouter } from 'next/router'
 import { v4 as uuidv4 } from 'uuid'
 
-export const usePaymentHook = (applicationCode: string, leadCode: string) => {
+export const usePaymentHook = (applicationCode: string, leadId: string) => {
   const [masterData, setMasterData] = useState({
     applicationData: null,
     currencyData: null,
@@ -40,9 +40,10 @@ export const usePaymentHook = (applicationCode: string, leadCode: string) => {
     const getMasterData = async (applicationCode: string) => {
       const payload = { ...masterData }
       const result = await Promise.all([
-        ApplyService?.GetApplicationData(applicationCode, leadCode),
+        ApplyService?.GetApplicationData(applicationCode, leadId),
         CommonService.getStudyMode()
       ])
+
       const response = result[0]
       payload.applicationData = response
       payload.studyModeData = result[1]
@@ -73,10 +74,10 @@ export const usePaymentHook = (applicationCode: string, leadCode: string) => {
       }
     }
 
-    if (applicationCode && leadCode) {
+    if (applicationCode && leadId) {
       getMasterData(applicationCode)
     }
-  }, [applicationCode, leadCode])
+  }, [applicationCode, leadId])
 
   return {
     masterData
@@ -110,7 +111,8 @@ export const usePaymentDetailsHook = (masterData: any) => {
       } ${getConvertedAmount(masterData?.currencyData, String(feesStructure?.fee))}`
     }
   } else if (
-    !applicationFeesStatus.includes(masterData?.applicationData?.status) && masterData?.applicationData?.eligibility&&
+    !applicationFeesStatus.includes(masterData?.applicationData?.status) &&
+    masterData?.applicationData?.eligibility &&
     masterData?.applicationData?.eligibility[0]?.accessProgram &&
     masterData?.applicationData?.education?.programCode == DBMCode
   ) {
@@ -312,7 +314,7 @@ export const useUkhesheHook = (masterData: any, fees: any) => {
   const paymentStatusCheck = async () => {
     const res = await ApplyService?.GetApplicationData(
       masterData?.applicationData?.applicationCode,
-      masterData?.applicationData?.lead?.leadCode
+      masterData?.applicationData?.lead?.leadId
     )
     if (allowedPaymentStatus.includes(res?.status)) {
       return true

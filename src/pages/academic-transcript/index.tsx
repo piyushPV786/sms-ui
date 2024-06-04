@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Backdrop, Box, CircularProgress, Grid, Typography } from '@mui/material'
 import * as React from 'react'
 import Card from '@mui/material/Card'
 
@@ -15,7 +15,6 @@ import { DDMMYYYDateFormat } from 'src/utils'
 const StudentDashboard = () => {
   const [graduatedDate, setDraduatedDate] = React.useState<string>('')
   const auth: any = useAuth()
-  const { studentDetails } = DashboardCustomHooks()
 
   // const handleOnDownloadClick = async () => {
   //   const downloadedTranscript = await StudentService?.downloadTranscript(auth.user?.studentCode)
@@ -38,7 +37,7 @@ const StudentDashboard = () => {
     await StudentService?.getStudentAcademicDetails(auth.user?.studentCode)
   }
 
-  const { electiveModule, getElectiveModuleList } = DashboardCustomHooks()
+  const { electiveModule, getElectiveModuleList, isLoading, studentDetails } = DashboardCustomHooks()
 
   React.useEffect(() => {
     getStudentList()
@@ -70,14 +69,14 @@ const StudentDashboard = () => {
       flex: 0.25,
       field: 'courseCode',
       headerName: 'Module Code',
-      renderCell: (row: any) => <Typography>{row.row.course.code}</Typography>
+      renderCell: (row: any) => <Typography>{row?.row?.course?.code}</Typography>
     },
     {
       minWidth: 260,
       flex: 0.25,
       field: 'courseName',
       headerName: 'Module Name',
-      renderCell: (row: any) => <Typography>{row.row.course.name}</Typography>
+      renderCell: (row: any) => <Typography>{row?.row?.course?.name}</Typography>
     },
     {
       minWidth: 240,
@@ -89,8 +88,8 @@ const StudentDashboard = () => {
       renderCell: (row: any) => (
         <Typography>
           {row?.row?.isAssessmentPublish
-            ? row?.row?.assessment < row?.row?.moderateDigitalAssessment
-              ? row?.row?.moderateDigitalAssessment
+            ? row?.row?.assessment < row?.row?.moderatedAssessment
+              ? row?.row?.moderatedAssessment
               : row?.row?.assessment
             : '-'}
         </Typography>
@@ -105,9 +104,9 @@ const StudentDashboard = () => {
       renderHeader: () => <AcademicTypography>Assignments</AcademicTypography>,
       renderCell: (row: any) => (
         <Typography>
-          {row?.row?.isAssignmentPublish
-            ? row?.row?.assignments < row?.row?.moderateAssignments
-              ? row?.row?.moderateAssignments
+          {row?.row?.isAssignmentsPublish
+            ? row?.row?.assignments < row?.row?.moderatedAssignments
+              ? row?.row?.moderatedAssignments
               : row?.row?.assignments
             : '-'}
         </Typography>
@@ -123,8 +122,8 @@ const StudentDashboard = () => {
       renderCell: (row: any) => (
         <Typography>
           {row?.row?.isExaminationPublish
-            ? row?.row?.examination < row?.row?.moderateExamination
-              ? row?.row?.moderateExamination
+            ? row?.row?.examination < row?.row?.moderatedExamination
+              ? row?.row?.moderatedExamination
               : row?.row?.examination
             : '-'}
         </Typography>
@@ -139,7 +138,7 @@ const StudentDashboard = () => {
       renderHeader: () => <AcademicTypography>Total(100%)</AcademicTypography>,
       renderCell: (row: any) => (
         <Typography>
-          {row?.row?.isAssignmentPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+          {row?.row?.isAssignmentsPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
             ? row?.row?.total
             : '-'}
         </Typography>
@@ -152,7 +151,7 @@ const StudentDashboard = () => {
       headerName: 'Symbol',
       renderCell: (row: any) => (
         <Typography>
-          {row?.row?.isAssignmentPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+          {row?.row?.isAssignmentsPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
             ? row?.row?.symbol
             : '-'}
         </Typography>
@@ -163,7 +162,15 @@ const StudentDashboard = () => {
       flex: 0.1,
       field: 'status',
       headerName: 'Status',
-      renderCell: (row: any) => <Typography>{row?.row?.status ? row?.row?.status : '-'}</Typography>
+      renderCell: (row: any) => {
+        return (
+          <Typography>
+            {row?.row?.isAssignmentsPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
+              ? row?.row?.status
+              : row?.row?.status ?? '-'}
+          </Typography>
+        )
+      }
     }
   ]
 
@@ -173,6 +180,9 @@ const StudentDashboard = () => {
 
   return (
     <Grid container spacing={6}>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
+        <CircularProgress color='primary' />
+      </Backdrop>
       <Grid item xs={12}>
         <Typography variant='h5' gutterBottom>
           Academic Transcript
@@ -196,7 +206,7 @@ const StudentDashboard = () => {
               <Grid item xs={2.4}>
                 <AcademicTypography variant='body2'>ID Number</AcademicTypography>
                 <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                  {studentDetails?.idNo ? studentDetails?.idNo : '-'}
+                  {studentDetails?.identificationNumber ? studentDetails?.identificationNumber : '-'}
                 </AcademicTypography>
               </Grid>
               <Grid item xs={2.4}>
@@ -226,13 +236,13 @@ const StudentDashboard = () => {
               <Grid item xs={2.4}>
                 <AcademicTypography variant='body2'>Status</AcademicTypography>
                 <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                  {studentDetails?.status ? studentDetails?.status : '-'}
+                  {studentDetails?.isActive ? 'Active' : 'Inactive'}
                 </AcademicTypography>
               </Grid>
               <Grid item xs={2.4}>
                 <AcademicTypography variant='body2'>Graduation Date</AcademicTypography>
                 <AcademicTypography sx={{ mt: 0.5, mb: 2 }} variant='body2'>
-                  {DDMMYYYDateFormat(new Date(graduatedDate))}
+                  {graduatedDate ? DDMMYYYDateFormat(new Date(graduatedDate)) : '-'}
                 </AcademicTypography>
               </Grid>
             </Grid>
@@ -253,7 +263,7 @@ const StudentDashboard = () => {
                 <SearchBox handleFilter={handleFilter} />
               </Box> */}
 
-{/*           <Box>
+              {/*           <Box>
                 <Button
                   size='medium'
                   startIcon={<Download />}
@@ -270,36 +280,36 @@ const StudentDashboard = () => {
                 </Button>
               </Box> */}
             </Box>
-            <Box id="datagrid-container" sx={{ position: 'relative', minHeight: 300 }}>
+            <Box id='datagrid-container' sx={{ position: 'relative', minHeight: 300 }}>
               {/* Watermark */}
               <Typography
-                  variant="h1"
-                  sx={{
-                    position: 'absolute',
-                    zIndex: 'inherit',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%) rotate(-25deg)', 
-                    opacity: 0.2, 
-                    pointerEvents: 'none',
-                  }}
-                >
-                <div style={{ fontSize: electiveModule?.length ===0 ? '0' : '1em' }}>UNOFFICIAL</div>
-                </Typography>
-                <DataGrid
-                  autoHeight
-                  disableColumnMenu
-                  disableColumnFilter
-                  disableColumnSelector
-                  rows={electiveModule}
-                  columns={columns}
-                  disableSelectionOnClick
-                  sx={{
-                    position: 'relative', 
-                    zIndex: 0,
-                    '& .MuiTablePagination-root': { display: 'none' }
-                  }}
-                />
+                variant='h1'
+                sx={{
+                  position: 'absolute',
+                  zIndex: 'inherit',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%) rotate(-25deg)',
+                  opacity: 0.2,
+                  pointerEvents: 'none'
+                }}
+              >
+                <div style={{ fontSize: electiveModule?.length === 0 ? '0' : '1em' }}>UNOFFICIAL</div>
+              </Typography>
+              <DataGrid
+                autoHeight
+                disableColumnMenu
+                disableColumnFilter
+                disableColumnSelector
+                rows={electiveModule}
+                columns={columns}
+                disableSelectionOnClick
+                sx={{
+                  position: 'relative',
+                  zIndex: 0,
+                  '& .MuiTablePagination-root': { display: 'none' }
+                }}
+              />
             </Box>
           </TableCard>
         </Grid>

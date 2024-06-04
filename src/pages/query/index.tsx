@@ -163,9 +163,9 @@ const QueryList = () => {
       headerName: 'Supported Documents',
       renderCell: ({ row }: CellType) => (
         <Box>
-          {row?.documentCode ? (
+          {row?.supportingDocumentCode ? (
             <>
-              {viewFileLoader && viewFileLoader[row?.documentCode] ? (
+              {viewFileLoader && viewFileLoader[row?.supportingDocumentCode] ? (
                 <CircularProgress color='primary' size={20} />
               ) : (
                 <Tooltip placement='top' arrow disableInteractive title='View'>
@@ -173,10 +173,10 @@ const QueryList = () => {
                     fontWeight='bold'
                     color='primary'
                     fontSize='small'
-                    onClick={() => handleView(row?.documentName, row?.documentCode)}
+                    onClick={() => handleView(row?.supportingDocumentCode, row?.supportingDocumentCode)}
                     sx={{ cursor: 'pointer' }}
                   >
-                    {row?.documentName}
+                    {row?.supportingDocumentCode}
                   </Typography>
                 </Tooltip>
               )}

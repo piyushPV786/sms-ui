@@ -12,9 +12,9 @@ export default class Apply {
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-  async GetApplicationData(appCode: string, leadCode: string) {
+  async GetApplicationData(appCode: string, leadId: string) {
     nProgress.start()
-    const route = apiEndPoints?.applicationDetails.replace(':applicationCode', appCode).replace(':leadCode', leadCode)
+    const route = apiEndPoints?.applicationDetails.replace(':applicationCode', appCode).replace(':leadId', leadId)
     const endUrlName = `${this.baseUrl + route}`
 
     try {
@@ -55,9 +55,9 @@ export default class Apply {
       nProgress.done()
     }
   }
-  async GetApplicationDetails(leadCode: string) {
+  async GetApplicationDetails(leadId: string) {
     nProgress.start()
-    const route = apiEndPoints?.getLeadDetails?.replace(':leadCode', leadCode)
+    const route = apiEndPoints?.getLeadDetails?.replace(':leadId', leadId)
     const endUrlName = `${this.baseUrl + route}`
 
     try {
@@ -108,8 +108,8 @@ export default class Apply {
     const url = `${this.baseUrl}${apiEndPoints.application}/${applicationCode}${apiEndPoints.payu}`
     const response = await this.apiServer.post(url, payload)
     const result = response?.data?.data ? response?.data?.data : {}
-    
-return result
+
+    return result
   }
   async getRmatDetails(studentCode: string) {
     const route = apiEndPoints?.rmat.replace(':studentCode', studentCode)
