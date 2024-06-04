@@ -45,8 +45,6 @@ const StudentDashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log('electiveModule===========>', electiveModule)
-
   const getStudentDetails = async () => {
     const progCode = studentDetails?.program?.code ? studentDetails?.program?.code : ''
     const studentCode = studentDetails?.studentCode ? studentDetails?.studentCode : ''

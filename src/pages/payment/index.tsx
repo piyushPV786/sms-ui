@@ -60,8 +60,6 @@ const PaymentList = () => {
     setLoading(false)
   }
 
-  console.log('response-->', response)
-
   const getAllPrograms = async () => {
     const response = await AcademicService?.getallPrograms()
     if (response?.data?.statusCode === status.successCode && response?.data?.data) {
@@ -93,7 +91,7 @@ const PaymentList = () => {
       (item: { dueDate: string | null; dueAmount: number | null }) =>
         item.dueDate !== null && item.dueAmount !== null && item.dueAmount !== 0
     )
-  console.log('UpcomingPayment', UpcomingPayment)
+
   const columns = [
     {
       flex: 0.1,

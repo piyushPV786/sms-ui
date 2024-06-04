@@ -57,12 +57,15 @@ const Assignments = ({ courseData }: IAssignmentProps) => {
                     <Typography variant='body2' color={'primary'} sx={{ mb: 0.5, fontWeight: 600 }}>
                       {item?.course?.name}
                     </Typography>
-
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <label>Due Date</label>
-                      <Typography variant='body2' sx={{ pl: 2, fontWeight: 600 }}>
-                        {DDMMYYYDateFormat(item?.individualAssignmentDueDate)}
-                      </Typography>
+                      <label>Due Date -</label>
+                      <Box sx={{ display: 'grid', justifyContent: 'flex-end' }}>
+                        {item?.scheduleDates?.map((date: any) => (
+                          <Typography key={date} variant='body2' sx={{ pl: 2, fontWeight: 600 }}>
+                            {DDMMYYYDateFormat(date?.individualAssignmentDueDate)}
+                          </Typography>
+                        ))}
+                      </Box>
                     </Box>
                   </Grid>
                 </Grid>

@@ -450,14 +450,11 @@ export const setDocumentValue = (documents: any, setValue: any) => {
       lastModified: element?.updatedAt
     })
 
-    // console.log('element', element)
     const value = {
       file: [file],
       status: element?.status,
       comment: element?.comment
     }
-
-    console.log('value ==========>', value)
 
     setValue(element?.documentTypeCode, value)
   })

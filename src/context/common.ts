@@ -149,6 +149,7 @@ export interface ICourses {
   program: ICommonData
 }
 export interface ISchedule {
+  scheduleDates: any
   find: any
   map(arg0: (duration: any) => any): unknown
   scheduleDuration: unknown
