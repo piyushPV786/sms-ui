@@ -23,7 +23,6 @@ const StudentDashboard = ({}) => {
     electiveModule,
     getElectiveModuleList,
     module,
-
     paymentStatus
   } = DashboardCustomHooks()
 
