@@ -23,7 +23,7 @@ const MyDays = ({ studentCode, programList }: IMyDays) => {
   })
   window.sessionStorage.setItem('leadId', studentDetail?.lead?.id)
   const { data: applicationDetails, isLoading } = useQuery({
-    queryKey: ['applicationData', studentDetail?.lead?.leadId],
+    queryKey: ['applicationData'],
     queryFn: () => ApplyService?.GetApplicationDetails(studentDetail?.lead?.id),
     refetchOnWindowFocus: false,
     enabled: !!studentDetail?.lead?.id

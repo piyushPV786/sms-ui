@@ -1,5 +1,6 @@
 import { Backdrop, CircularProgress, Grid, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { applicationStatus } from 'src/components/common/Constants'
 import Assignments from 'src/components/dashboard/Assignments'
 import Classes from 'src/components/dashboard/Classes'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
@@ -22,7 +23,6 @@ const StudentDashboard = ({}) => {
     electiveModule,
     getElectiveModuleList,
     module,
-    applicationCode,
     paymentStatus
   } = DashboardCustomHooks()
 
@@ -30,6 +30,9 @@ const StudentDashboard = ({}) => {
   const courseSchedule =
     scheduler &&
     scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i.scheduleDuration))
+  const application: any = studentDetails?.application?.find(
+    (item: any) => item?.status !== applicationStatus.graduated
+  )
 
   // const dayData = myDayData && myDayData?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i))
   const studentData = useAuth()?.user
@@ -51,7 +54,7 @@ const StudentDashboard = ({}) => {
             module={module}
             electiveModule={electiveModule}
             getElectiveModuleList={getElectiveModuleList}
-            applicationCode={applicationCode}
+            applicationCode={application?.applicationCode}
             paymentStatus={paymentStatus}
           />
           <Grid container spacing={4} mt={5}>

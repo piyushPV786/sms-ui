@@ -149,12 +149,14 @@ const DashboardCustomHooks = () => {
     setLoading(true)
     if (auth?.user?.studentCode) {
       const userProfileResponse = await StudentService?.UserProfile(auth?.user?.studentCode)
+
       setStudentDetails(userProfileResponse?.data?.data)
       if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
         const imgsrc = await CommonService.getProfileSource(
-          userProfileResponse?.data?.data.documentCode,
+          userProfileResponse?.data?.data?.student?.documentCode,
           auth?.user?.studentCode
         )
+
         setProfileImage(imgsrc?.data?.data)
       }
     }

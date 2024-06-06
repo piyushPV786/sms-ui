@@ -24,13 +24,13 @@ const Program = ({ scheduler, electiveModule, getElectiveModuleList }: any) => {
     scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i)?.programSchedule?.program)
 
   const queryClient = useQueryClient()
-  const leadId = window.sessionStorage.getItem('leadId')
 
-  const applicationDetails: any[] | undefined = queryClient.getQueryData(['applicationData', leadId])
+  const applicationDetails: any[] | undefined = queryClient.getQueryData(['applicationData'])
   const application = applicationDetails?.find((item: any) => item?.status === applicationStatus.graduated)
 
   const isGraduate =
-    applicationDetails?.length && applicationDetails?.every(i => i.status === applicationStatus.graduated)
+    applicationDetails?.length &&
+    applicationDetails?.every(i => i.status === applicationStatus.graduated || i?.status == applicationStatus.cancelled)
 
   useEffect(() => {
     setProgDetail((prev: any) => ({

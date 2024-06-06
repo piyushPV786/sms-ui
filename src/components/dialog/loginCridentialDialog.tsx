@@ -10,7 +10,6 @@ import { GreenFormHeading } from '../common/style'
 
 const LoginCredentialDialog = ({ openCredentialDialog, setOpenCredentialDialog, applicationDetail }: any) => {
   // const url: any = process.env.NEXT_PUBLIC_CREDENTIAL_URL + RoutePaths.StudentDashboard
-console.log(applicationDetail, "-------applicationDetail---------------");
 
   return (
     <div>
