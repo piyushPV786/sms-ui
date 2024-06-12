@@ -9,9 +9,9 @@ import { DocumentUploadContainer } from './DocumentUploadContainer'
 
 const DocumentUploadPage = (props: any) => {
   const methods = useForm({ mode: 'all' })
-  const { applicationCode, leadCode } = props
+  const { applicationCode, leadId } = props
 
-  const { masterData } = UseDocumentHook(applicationCode, leadCode)
+  const { masterData } = UseDocumentHook(applicationCode, leadId)
   const { saveAsDraft, submitDocument, progress, setDocumentProgress } = UseDocumentAction()
   const { handleSubmit } = methods
 

@@ -21,12 +21,12 @@ const MyDays = ({ studentCode, programList }: IMyDays) => {
     queryFn: () => ApplyService?.getStudentDetail(studentCode),
     refetchOnWindowFocus: false
   })
-  window.sessionStorage.setItem('leadCode', studentDetail?.lead?.leadCode)
+  window.sessionStorage.setItem('leadId', studentDetail?.lead?.id)
   const { data: applicationDetails, isLoading } = useQuery({
-    queryKey: ['applicationData', studentDetail?.lead?.leadCode],
-    queryFn: () => ApplyService?.GetApplicationDetails(studentDetail?.lead?.leadCode),
+    queryKey: ['applicationData'],
+    queryFn: () => ApplyService?.GetApplicationDetails(studentDetail?.lead?.id),
     refetchOnWindowFocus: false,
-    enabled: !!studentDetail?.lead?.leadCode
+    enabled: !!studentDetail?.lead?.id
   })
 
   return (
@@ -99,7 +99,7 @@ const ApplicationCard = (props: any) => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <StudentIdCard bgColor='#4f958e'>Student ID: {application?.studentCode}</StudentIdCard>
+              <StudentIdCard bgColor='#4f958e'>Student ID: {application?.lead?.studentCode}</StudentIdCard>
             </Grid>
             <Grid item xs={12}>
               <StudentIdCard bgColor='#235290'>Application ID: {application?.applicationCode}</StudentIdCard>

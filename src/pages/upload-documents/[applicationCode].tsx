@@ -17,13 +17,13 @@ const UploadDocuments = () => {
     refetchOnWindowFocus: false,
     enabled: !!studentCode && !!applicationCode
   })
-  if (studentDetail?.lead?.leadCode) {
+  if (studentDetail?.lead?.leadId) {
     return (
       <BackdropProvider>
         <DocumentUploadPage
           applicationCode={applicationCode}
           studentCode={studentCode}
-          leadCode={studentDetail?.lead?.leadCode}
+          leadId={studentDetail?.lead?.leadId}
         />
       </BackdropProvider>
     )

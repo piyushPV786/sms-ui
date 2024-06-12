@@ -17,20 +17,20 @@ const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
   }
 }))
 
-const Program = ({ scheduler }: any) => {
+const Program = ({ scheduler, electiveModule, getElectiveModuleList }: any) => {
   const [progDetail, setProgDetail] = useState<any>({ completed: [], current: [] })
   const programData =
     scheduler &&
     scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i)?.programSchedule?.program)
 
   const queryClient = useQueryClient()
-  const leadCode = window.sessionStorage.getItem('leadCode')
 
-  const applicationDetails: any[] | undefined = queryClient.getQueryData(['applicationData', leadCode])
+  const applicationDetails: any[] | undefined = queryClient.getQueryData(['applicationData'])
   const application = applicationDetails?.find((item: any) => item?.status === applicationStatus.graduated)
 
   const isGraduate =
-    applicationDetails?.length && applicationDetails?.every(i => i.status === applicationStatus.graduated)
+    applicationDetails?.length &&
+    applicationDetails?.every(i => i.status === applicationStatus.graduated || i?.status == applicationStatus.cancelled)
 
   useEffect(() => {
     setProgDetail((prev: any) => ({
@@ -75,7 +75,7 @@ const Program = ({ scheduler }: any) => {
             </Box>
           )}
           <Box>
-            <ElectiveModule />
+            <ElectiveModule electiveModule={electiveModule} getElectiveModuleList={getElectiveModuleList} />
 
             {isGraduate ? <ApplyNewProgram programData={programData} application={application} /> : null}
           </Box>

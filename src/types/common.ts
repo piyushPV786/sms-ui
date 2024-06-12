@@ -69,6 +69,7 @@ export interface IQueryRowData {
   status: string
   documentCode: string
   documentName: string
+  supportingDocumentCode: string
 }
 export interface CellType {
   row: IQueryRowData

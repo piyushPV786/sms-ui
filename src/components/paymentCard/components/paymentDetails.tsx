@@ -2,9 +2,7 @@ import { Grid, Typography } from '@mui/material'
 import { GREEN, accountDetails } from 'src/components/common/Constants'
 
 const PaymentDetails = ({ masterData }: any) => {
-  console.log('master', masterData)
-  
-return (
+  return (
     <Grid container rowGap={2}>
       <Grid container direction='row' justifyContent='center' alignItems='center'>
         <Typography variant='h6' color={GREEN}>

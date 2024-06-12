@@ -1,5 +1,6 @@
-import { Grid, Typography } from '@mui/material'
+import { Backdrop, CircularProgress, Grid, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { applicationStatus } from 'src/components/common/Constants'
 import Assignments from 'src/components/dashboard/Assignments'
 import Classes from 'src/components/dashboard/Classes'
 import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
@@ -10,27 +11,59 @@ import { ISchedule, IScheduleData } from 'src/context/common'
 import { useAuth } from 'src/hooks/useAuth'
 
 const StudentDashboard = ({}) => {
-  const { scheduler, profileImage, classes, invigilator, programList } = DashboardCustomHooks()
+  const {
+    scheduler,
+    profileImage,
+    classes,
+    invigilator,
+    programList,
+    isLoading,
+    rollover,
+    studentDetails,
+    electiveModule,
+    getElectiveModuleList,
+    module,
+    paymentStatus
+  } = DashboardCustomHooks()
 
   const courses = scheduler && scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i))
   const courseSchedule =
     scheduler &&
     scheduler?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i.scheduleDuration))
+  const application: any = studentDetails?.application?.find(
+    (item: any) => item?.status !== applicationStatus.graduated
+  )
 
   // const dayData = myDayData && myDayData?.map((data: IScheduleData) => data?.courseSchedule?.find((i: ISchedule) => i))
   const studentData = useAuth()?.user
 
   return (
     <Box>
+      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={isLoading}>
+        <CircularProgress color='primary' />
+      </Backdrop>
       <Typography mt={5} mb={5} sx={{ fontWeight: 'bold' }}>
-        Welcome to SM Dashboard
+        Welcome to SMS Dashboard
       </Typography>
       <Grid container spacing={6}>
         <Grid item xs={12} md={9}>
-          <StudentDetails profileImage={profileImage} />
+          <StudentDetails
+            profileImage={profileImage}
+            rollover={rollover}
+            studentDetails={studentDetails}
+            module={module}
+            electiveModule={electiveModule}
+            getElectiveModuleList={getElectiveModuleList}
+            applicationCode={application?.applicationCode}
+            paymentStatus={paymentStatus}
+          />
           <Grid container spacing={4} mt={5}>
             <Grid item xs={4} md={4}>
-              <Program scheduler={scheduler} />
+              <Program
+                scheduler={scheduler}
+                electiveModule={electiveModule}
+                getElectiveModuleList={getElectiveModuleList}
+              />
             </Grid>
             <Grid item xs={4} md={4}>
               <Classes
