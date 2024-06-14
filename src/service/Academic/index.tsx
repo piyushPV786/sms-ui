@@ -149,4 +149,17 @@ return result
     
 return result
   }
+  async getStudentAcedamicYearData(programCode: string) {
+    nProgress.start()
+    const endUrlName = `${this.baseUrl + apiEndPoints.getStudentAcedamicYear}/${programCode}`
+    try {
+      const response = await this.apiServer.get(endUrlName)
+
+      return response
+    } catch (err: any) {
+      console.log('Error ========>', err?.message)
+    } finally {
+      nProgress.done()
+    }
+  }
 }

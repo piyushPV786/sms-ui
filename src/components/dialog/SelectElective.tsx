@@ -12,7 +12,7 @@ import {
   DialogActions,
   Button
 } from '@mui/material'
-import React, { ReactElement, Ref, forwardRef, useState } from 'react'
+import React, { ReactElement, Ref, forwardRef, useEffect, useState } from 'react'
 import WhiteButton from '../Button'
 import Chip from 'src/@core/components/mui/chip'
 import FormHelperText from '@mui/material/FormHelperText'
@@ -20,7 +20,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import UseBgColor from 'src/@core/hooks/useBgColor'
-import { StudentService } from 'src/service'
+import { AcademicService, StudentService } from 'src/service'
 import { successToast } from '../common'
 import { useAuth } from 'src/hooks/useAuth'
 import { EnrollElective, ErrorMessage, ICourseDetails, status } from 'src/context/common'
@@ -48,6 +48,7 @@ interface CoreDataByYear {
 const SelectElective = ({ module, studentDetails, electiveModule, getElectiveModuleList }: any) => {
   const bgColors = UseBgColor()
   const [dialogShow, setDialogShow] = useState<boolean>(false)
+  const [yearCount, setYearCount] = useState<any>(null)
 
   const auth = useAuth()
 
@@ -97,6 +98,7 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
     setValue,
     watch,
     reset,
+    setError,
     clearErrors,
     formState: { errors }
   } = useForm<IFormValue>({
@@ -106,6 +108,22 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
+
+  const getStudentAcedamicYear = async () => {
+    const programCode:string = studentDetails?.program?.code;
+    const apiResponse = await AcademicService?.getStudentAcedamicYearData(programCode);
+    if(apiResponse?.status === 200) {
+      const yearAllData = apiResponse?.data?.data;
+      const currentYear = new Date().getFullYear();
+      const getYearCount = yearAllData && yearAllData?.length > 0 && yearAllData.find((item:any) => item?.academicYearOfStudy === currentYear);
+      setYearCount(parseInt(getYearCount?.academicYearOfProgram));
+    }
+  }
+
+  useEffect(() => {
+    getStudentAcedamicYear()
+  },[studentDetails])
+
   const onSubmit = async (response: IFormValue) => {
     if (auth?.user?.studentCode) {
       const electiveParam = {
@@ -131,6 +149,18 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
     setDialogShow(false)
     reset()
   }
+
+  const handleChange = (_:any, value:any) => {
+    if (value?.length <= yearCount) {
+      setValue('module', value.map((i:any) => i?.code));
+      clearErrors('module');
+    } else {
+      setError('module', {
+        type: 'custom',
+        message: `you can not select elective module more then ${yearCount}`
+      })
+    }
+  };
 
   return (
     <Grid>
@@ -226,14 +256,7 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
                   <Autocomplete
                     {...register('module', { required: 'Module are required' })}
                     multiple
-                    onChange={(_, value) => {
-                      value &&
-                        setValue(
-                          'module',
-                          value?.map(i => i?.code)
-                        )
-                      clearErrors('module')
-                    }}
+                    onChange={handleChange}
                     options={filteredElectiveData ? filteredElectiveData?.filter(Boolean) : []}
                     value={
                       filteredElectiveData &&
@@ -251,7 +274,7 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
                       }
                     }}
                   />
-                  <FormHelperText error>{errors?.module && 'Module are required'}</FormHelperText>
+                  <FormHelperText error>{errors?.module && errors?.module?.message}</FormHelperText>
                 </FormControl>
               </Grid>
             </Grid>
