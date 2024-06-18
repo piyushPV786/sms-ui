@@ -20,12 +20,14 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import UseBgColor from 'src/@core/hooks/useBgColor'
-import { AcademicService, StudentService } from 'src/service'
+import { AcademicService, ApplyService, StudentService } from 'src/service'
 import { successToast } from '../common'
 import { useAuth } from 'src/hooks/useAuth'
 import { EnrollElective, ErrorMessage, ICourseDetails, status } from 'src/context/common'
 import { errorToast } from 'src/@core/components/common/Toast'
 import Styles from './SelectElective.module.css'
+import { useQuery } from '@tanstack/react-query'
+import { ControllerClassicOutline } from 'mdi-material-ui'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -48,9 +50,14 @@ interface CoreDataByYear {
 const SelectElective = ({ module, studentDetails, electiveModule, getElectiveModuleList }: any) => {
   const bgColors = UseBgColor()
   const [dialogShow, setDialogShow] = useState<boolean>(false)
-  const [yearCount, setYearCount] = useState<any>(null)
-
+  const [electiveCount, setElectiveCount] = useState<number>(0)
   const auth = useAuth()
+  const { studentCode }: any = useAuth()?.user
+  const { data: studentDetail } = useQuery({
+    queryKey: ['studentData', studentCode],
+    queryFn: () => ApplyService?.getStudentDetail(studentCode),
+    refetchOnWindowFocus: false
+  })
 
   const coreData = module?.filter((item: { type: string }) => item?.type === 'core')
   const electiveData = module?.filter((item: { type: string }) => item?.type === 'elective')
@@ -110,19 +117,37 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
   })
 
   const getStudentAcedamicYear = async () => {
-    const programCode:string = studentDetails?.program?.code;
-    const apiResponse = await AcademicService?.getStudentAcedamicYearData(programCode);
-    if(apiResponse?.status === 200) {
-      const yearAllData = apiResponse?.data?.data;
-      const currentYear = new Date().getFullYear();
-      const getYearCount = yearAllData && yearAllData?.length > 0 && yearAllData.find((item:any) => item?.academicYearOfStudy === currentYear);
-      setYearCount(parseInt(getYearCount?.academicYearOfProgram));
+    const programCode: string = studentDetails?.program?.code
+    const apiResponse = await AcademicService?.getStudentAcedamicYearData(programCode)
+    if (apiResponse?.status === 200) {
+      const yearAllData = apiResponse?.data?.data
+      const currentYear = new Date().getFullYear()
+      const getYearCount =
+        yearAllData &&
+        yearAllData?.length > 0 &&
+        yearAllData.find((item: any) => item?.academicYearOfStudy === currentYear)
+      return parseInt(getYearCount?.academicYearOfProgram)
     }
   }
 
+  const getElectiveCount = async (studentDetails: any) => {
+    let enrolledYear  = studentDetail?.enrolment?.enrolmentDate?.split('-')[0]
+    const programDetails = await AcademicService?.getProgramDetails(studentDetails?.program?.code)
+    const courseCount: any = programDetails?.courseCount.find((item: any) => item?.startYear == enrolledYear)
+    const totalYearCount = await getStudentAcedamicYear()
+    const yearwiseCourseCount = courseCount?.yearwiseCourseCount?.find(
+      (item: any) => item?.academicYear == totalYearCount
+    )
+    setElectiveCount(parseInt(yearwiseCourseCount?.elective))
+  }
+
+
   useEffect(() => {
-    getStudentAcedamicYear()
-  },[studentDetails])
+    if(studentDetails){      
+      getStudentAcedamicYear()
+      getElectiveCount(studentDetails)
+    }
+  }, [studentDetails])
 
   const onSubmit = async (response: IFormValue) => {
     if (auth?.user?.studentCode) {
@@ -150,17 +175,20 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
     reset()
   }
 
-  const handleChange = (_:any, value:any) => {
-    if (value?.length <= yearCount) {
-      setValue('module', value.map((i:any) => i?.code));
-      clearErrors('module');
+  const handleChange = (_: any, value: any) => {
+    if (value?.length <= electiveCount) {
+      setValue(
+        'module',
+        value.map((i: any) => i?.code)
+      )
+      clearErrors('module')
     } else {
       setError('module', {
         type: 'custom',
-        message: `you can not select elective module more then ${yearCount}`
+        message: `you can not select elective module more then ${electiveCount}`
       })
     }
-  };
+  }
 
   return (
     <Grid>
