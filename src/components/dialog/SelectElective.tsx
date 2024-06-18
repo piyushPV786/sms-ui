@@ -27,7 +27,6 @@ import { EnrollElective, ErrorMessage, ICourseDetails, status } from 'src/contex
 import { errorToast } from 'src/@core/components/common/Toast'
 import Styles from './SelectElective.module.css'
 import { useQuery } from '@tanstack/react-query'
-import { ControllerClassicOutline } from 'mdi-material-ui'
 
 const Transition = forwardRef(function Transition(
   props: FadeProps & { children?: ReactElement<any, any> },
@@ -126,12 +125,13 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
         yearAllData &&
         yearAllData?.length > 0 &&
         yearAllData.find((item: any) => item?.academicYearOfStudy === currentYear)
+
       return parseInt(getYearCount?.academicYearOfProgram)
     }
   }
 
   const getElectiveCount = async (studentDetails: any) => {
-    let enrolledYear  = studentDetail?.enrolment?.enrolmentDate?.split('-')[0]
+    const enrolledYear = studentDetail?.enrolment?.enrolmentDate?.split('-')[0]
     const programDetails = await AcademicService?.getProgramDetails(studentDetails?.program?.code)
     const courseCount: any = programDetails?.courseCount.find((item: any) => item?.startYear == enrolledYear)
     const totalYearCount = await getStudentAcedamicYear()
@@ -141,9 +141,8 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
     setElectiveCount(parseInt(yearwiseCourseCount?.elective))
   }
 
-
   useEffect(() => {
-    if(studentDetails){      
+    if (studentDetails) {
       getStudentAcedamicYear()
       getElectiveCount(studentDetails)
     }
