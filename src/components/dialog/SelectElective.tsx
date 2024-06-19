@@ -146,7 +146,7 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
       getStudentAcedamicYear()
       getElectiveCount(studentDetails)
     }
-  }, [studentDetails])
+  }, [studentDetails, studentDetail])
 
   const onSubmit = async (response: IFormValue) => {
     if (auth?.user?.studentCode) {
