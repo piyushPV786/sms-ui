@@ -46,7 +46,7 @@ const PersonalInformation = ({ handleEditDialogOpen, address, studentDetails }: 
                 >
                   <Typography variant='h6' color={theme => compareDates(new Date(studentDetails['passportExpiryDate']), new Date()) === -1 ? theme.palette.error.main : theme.palette.success.main}>
                     <label>Date of Expiry : </label>
-                    {DateFormat(studentDetails['passportExpiryDate'])}
+                    {DDMMYYYDateFormat(studentDetails['passportExpiryDate'])}
                   </Typography>
                 </Box>
               </Box>
