@@ -142,7 +142,7 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
   }
 
   useEffect(() => {
-    if (studentDetails) {
+    if (studentDetails && studentDetail) {
       getStudentAcedamicYear()
       getElectiveCount(studentDetails)
     }
