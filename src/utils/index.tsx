@@ -459,3 +459,18 @@ export const setDocumentValue = (documents: any, setValue: any) => {
     setValue(element?.documentTypeCode, value)
   })
 }
+
+export const compareDates = (date1: Date, date2: Date): number => {
+  // Convert both dates to milliseconds since epoch
+  const time1 = date1.getTime();
+  const time2 = date2.getTime();
+
+  // Compare the milliseconds
+  if (time1 < time2) {
+    return -1;
+  } else if (time1 > time2) {
+    return 1;
+  } else {
+    return 0;
+  }
+};
