@@ -3,7 +3,7 @@ import { ProfileInfo } from '.'
 import { Pencil } from 'mdi-material-ui'
 import { addressTypes } from 'src/types/dataTypes'
 import UseCustomHook from '../common/CustomHook'
-import { DDMMYYYDateFormat, DateFormat, compareDates, getName } from 'src/utils'
+import { DDMMYYYDateFormat, compareDates, getName } from 'src/utils'
 
 interface IProps {
   handleEditDialogOpen: () => void
