@@ -13,7 +13,6 @@ import { getUserInfo } from 'src/utils'
 import { HelpBox, InformationOutline, React } from 'mdi-material-ui'
 import ExamTicket from '../dialog/ExamTicket'
 import SelectElective from '../dialog/SelectElective'
-import RollOver from '../dialog/RollOver'
 
 // Styled CardContent component
 const CardContent = styled(MuiCardContent)<CardContentProps>(({ theme }) => ({
@@ -42,7 +41,11 @@ const StudentDetails = ({
   applicationCode,
   paymentStatus
 }: any) => {
-  const selfRollover = true
+  // Doing comment but it will be open soon with enhancement
+  // const selfRollover = true
+  // adding console because this will show lint error and the value need in future
+  console.log('rollover', rollover, applicationCode, paymentStatus)
+
   const electiveRollover = true
 
   return (
@@ -130,6 +133,8 @@ const StudentDetails = ({
             </Grid>
           )}
 
+          {/*
+          Doing comment but it will be open soon with enhancement
           {selfRollover && rollover && rollover?.rollOverModules?.length > 0 ? (
             <Grid item pt={2} pr={2}>
               <Card sx={{ background: theme => `${theme.spacing(6, 7.5)} !important` }}>
@@ -153,7 +158,7 @@ const StudentDetails = ({
                 </Grid>
               </Card>
             </Grid>
-          ) : null}
+          ) : null} */}
         </Grid>
       </CardContent>
     </Card>
