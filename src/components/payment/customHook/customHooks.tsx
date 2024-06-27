@@ -50,11 +50,12 @@ export const usePaymentHook = (applicationCode: string, leadId: string) => {
 
       if (response?.lead?.nationality && response?.education?.programCode) {
         const data = await Promise.all([
-          FinanceService.getCurrencyConversion(response?.address[0]?.country),
+          FinanceService.getCurrencyConversion(response?.lead?.address[0]?.country),
           FinanceService.getStudentProgram(response?.education?.programCode),
           AcademicService.getProgramDetails(response?.education?.programCode),
           AcademicService.getProgramRmatDetails(response?.education?.programCode)
         ])
+
         payload.feeData = data[1].find(
           (item: { programCode: any }) => item?.programCode === response?.education?.programCode
         )
@@ -314,7 +315,7 @@ export const useUkhesheHook = (masterData: any, fees: any) => {
   const paymentStatusCheck = async () => {
     const res = await ApplyService?.GetApplicationData(
       masterData?.applicationData?.applicationCode,
-      masterData?.applicationData?.lead?.leadId
+      masterData?.applicationData?.lead?.id
     )
     if (allowedPaymentStatus.includes(res?.status)) {
       return true
@@ -333,7 +334,7 @@ export const useUkhesheHook = (masterData: any, fees: any) => {
       paymentMechanism: 'CARD',
       paymentData: process.env.NEXT_PUBLIC_UKHESHE_WALLET_ID,
       callbackUrl: process.env.NEXT_PUBLIC_UKHESHE_CALLBACK_URL,
-      reference: masterData?.applicationData?.studentCode
+      reference: masterData?.applicationData?.lead?.studentCode
     }
     const headers = {
       'Content-Type': 'application/json',
@@ -400,7 +401,7 @@ export const useOfflinePaymentHook = (masterData: any, fees: any) => {
   const [disabled, setDisabled] = useState(false)
   const [documentCode, setDocumentCode] = useState('')
   const [uploadProgress, setUploadProgress] = useState(0)
-  const studentCode = masterData?.applicationData?.studentCode
+  const studentCode = masterData?.applicationData?.lead?.studentCode
   const router = useRouter()
 
   const setUploadPercent = (progressEvent: any) => {
@@ -447,7 +448,7 @@ export const useOfflinePaymentHook = (masterData: any, fees: any) => {
         : fees?.feeMode,
       isDraft: false,
       currencyCode: masterData?.currencyData?.currencyCode,
-      studentCode: masterData?.applicationData?.studentCode
+      studentCode: masterData?.applicationData?.lead?.studentCode
     }
 
     const response = await ApplyService?.uploadDocuments(apiPayload, masterData?.applicationData?.applicationCode)

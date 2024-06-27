@@ -36,7 +36,7 @@ const Checkout = ({ appCode, studentCode }: propsType) => {
     refetchOnWindowFocus: false
   })
 
-  const { masterData } = usePaymentHook(appCode, studentDetail?.lead?.leadId)
+  const { masterData } = usePaymentHook(appCode, studentDetail?.lead?.id)
   const { studyModes, fees, updateFeeMode } = usePaymentDetailsHook(masterData)
 
   const { getPayuDetails, payuDetails } = usePayuHook(masterData, fees)

@@ -43,8 +43,8 @@ const getTotalFeeAmount = (feesList: any[]) => {
   if (totalFee?.fee) {
     result = totalFee?.fee
   }
-  
-return result
+
+  return result
 }
 
 const feeCalculate = (TOTAL: number, noOfYears: number) => {
@@ -54,8 +54,8 @@ const feeCalculate = (TOTAL: number, noOfYears: number) => {
   const MONTHLY = checkGreaterThanZero(Math.round(TOTAL / numberOfMonths))
   const SEMESTER = checkGreaterThanZero(Math.round(TOTAL / numberOfSemesters))
   const ANNUALLY = checkGreaterThanZero(Math.round(TOTAL / numberOfYears))
-  
-return { MONTHLY, SEMESTER, ANNUALLY, TOTAL }
+
+  return { MONTHLY, SEMESTER, ANNUALLY, TOTAL }
 }
 
 const checkGreaterThanZero = (NumberOfEMi: number) => {
@@ -82,7 +82,7 @@ export const getUkheshePayload = (getPaymentResponse: any, fees: any, masterData
     paymentStatus: getPaymentResponse?.data?.status,
     discountCode: fees?.discountCode,
     discountAmount: fees.discountFee,
-    studentCode: masterData?.applicationData?.studentCode,
+    studentCode: masterData?.applicationData?.lead?.studentCode,
     applicationCode: masterData?.applicationData?.applicationCode,
     paymentType: 'ONLINE',
     ukheshe: {
@@ -112,6 +112,6 @@ export const changeFileExactions = (files: any, documentCode: string) => {
       documentCode: documentCode
     })
   })
-  
-return paymentProofPayload
+
+  return paymentProofPayload
 }

@@ -61,7 +61,7 @@ const PaymentDetails = ({ masterData }: any) => {
                 <Typography variant='caption' color='#a9a9a9'>
                   Reference:
                 </Typography>
-                <Typography variant='caption'>{masterData?.applicationData?.studentCode} </Typography>
+                <Typography variant='caption'>{masterData?.applicationData?.lead?.studentCode} </Typography>
               </Grid>
             </Grid>
           </Grid>
