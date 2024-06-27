@@ -57,9 +57,10 @@ interface IRaiseQuery {
   studentCode: string | undefined
   getQueriesList: () => void
   category: IQueryType[]
+  studentDetail: any
 }
 
-const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
+const RaiseQuery = ({ category, studentCode, studentDetail, getQueriesList }: IRaiseQuery) => {
   // ** States
   const [show, setShow] = useState<boolean>(false)
   const [disable, setDisable] = useState<boolean>(false)
@@ -103,7 +104,14 @@ const RaiseQuery = ({ category, studentCode, getQueriesList }: IRaiseQuery) => {
       description: data.description,
       fileName: data.file && data.file.name,
       fileType: data.file && data.file.type,
-      documentTypeCode: QueryDocumentCode.code
+      documentTypeCode: QueryDocumentCode.code,
+      firstName: studentDetail?.firstName,
+      lastName: studentDetail?.lastName,
+      email: studentDetail?.email,
+      mobileNo: studentDetail?.mobileNumber,
+      mobileCountryCode: studentDetail?.mobileCountryCode,
+      programCode: studentDetail?.program?.code,
+      programName: studentDetail?.program?.name
     }
     const response = await StudentService?.createQuery(API_Payload)
 
