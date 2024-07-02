@@ -74,8 +74,18 @@ const QueryList = () => {
   const [category, setCategory] = useState<IQueryType[]>([])
   const [queryStatus, setQueryStatus] = useState<IQueryStatus[]>([])
   const [viewFileLoader, setViewFileLoader] = useState<{ [key: string]: boolean }>()
+  const [studentDetails, setStudentDetails] = useState<any>()
 
   const auth = useAuth()
+
+  const getStudentDetails = async () => {
+    if (auth?.user?.studentCode) {
+      const userProfileResponse = await StudentService?.UserProfile(auth?.user?.studentCode)
+      if (userProfileResponse?.status === status?.successCode && userProfileResponse?.data?.data) {
+        setStudentDetails(userProfileResponse?.data?.data)
+      }
+    }
+  }
 
   const getQueriesList = async () => {
     const payload = {
@@ -114,6 +124,7 @@ const QueryList = () => {
   useEffect(() => {
     getQueryTypeList()
     getQueryStatusList()
+    getStudentDetails()
   }, [])
 
   const handleFilter = (val: string) => {
@@ -237,7 +248,7 @@ const QueryList = () => {
               </Grid>
             </Grid>
             <Grid item xs={12} sx={{ pt: '10px' }}>
-              <RaiseQuery category={category} studentCode={auth?.user?.studentCode} getQueriesList={getQueriesList} />
+              <RaiseQuery category={category} studentCode={auth?.user?.studentCode} studentDetail={studentDetails} getQueriesList={getQueriesList} />
             </Grid>
           </Box>
         </Grid>

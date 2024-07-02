@@ -84,5 +84,6 @@ export const apiEndPoints = Object.freeze({
   studyModeByCode: 'programs-fee/byProgramCode',
   user: 'user',
   studentData: 'application/:ProgCode/:studentCode',
-  documentRemove: 'document/documentCode'
+  documentRemove: 'document/documentCode',
+  getStudentAcedamicYear: 'intake/all'
 })
