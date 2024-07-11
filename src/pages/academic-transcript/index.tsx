@@ -13,7 +13,7 @@ import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { DDMMYYYDateFormat } from 'src/utils'
 
 const StudentDashboard = () => {
-  const [graduatedDate, setDraduatedDate] = React.useState<string>('')
+  const [graduatedDate, setGraduatedDate] = React.useState<string>('')
   const auth: any = useAuth()
 
   // const handleOnDownloadClick = async () => {
@@ -49,7 +49,7 @@ const StudentDashboard = () => {
     const progCode = studentDetails?.program?.code ? studentDetails?.program?.code : ''
     const studentCode = studentDetails?.studentCode ? studentDetails?.studentCode : ''
     const response = await EnrolmentService.GetStudentData(progCode, studentCode)
-    setDraduatedDate(response?.graduatedDate)
+    setGraduatedDate(response?.enrolment?.graduationDate)
   }
   React.useEffect(() => {
     studentDetails && getStudentDetails()
