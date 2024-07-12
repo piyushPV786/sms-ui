@@ -172,31 +172,38 @@ const QueryList = () => {
       minWidth: 200,
       field: 'documentCode',
       headerName: 'Supported Documents',
-      renderCell: ({ row }: CellType) => (
-        <Box>
-          {row?.supportingDocumentCode ? (
-            <>
-              {viewFileLoader && viewFileLoader[row?.supportingDocumentCode] ? (
-                <CircularProgress color='primary' size={20} />
-              ) : (
-                <Tooltip placement='top' arrow disableInteractive title='View'>
-                  <Typography
-                    fontWeight='bold'
-                    color='primary'
-                    fontSize='small'
-                    onClick={() => handleView(row?.supportingDocumentCode, row?.supportingDocumentCode)}
-                    sx={{ cursor: 'pointer' }}
-                  >
-                    {row?.supportingDocumentCode}
-                  </Typography>
-                </Tooltip>
-              )}
-            </>
-          ) : (
-            '-'
-          )}
-        </Box>
-      )
+      renderCell: ({ row }: CellType) => {
+        const doc: any = row?.supportingDocumentCode && row?.supportingDocumentCode?.split(',')
+
+        return (
+          <Box>
+            {row?.supportingDocumentCode ? (
+              <>
+                {viewFileLoader && viewFileLoader[row?.supportingDocumentCode] ? (
+                  <CircularProgress color='primary' size={20} />
+                ) : (
+                  doc?.length > 0 &&
+                  doc?.map((item: any, index: number) => (
+                    <Tooltip placement='top' arrow disableInteractive title='View' key={index}>
+                      <Typography
+                        fontWeight='bold'
+                        color='primary'
+                        fontSize='small'
+                        onClick={() => handleView(item?.trim(), item?.trim())}
+                        sx={{ cursor: 'pointer' }}
+                      >
+                        {item}
+                      </Typography>
+                    </Tooltip>
+                  ))
+                )}
+              </>
+            ) : (
+              '-'
+            )}
+          </Box>
+        )
+      }
     },
     {
       flex: 0.1,
@@ -248,7 +255,12 @@ const QueryList = () => {
               </Grid>
             </Grid>
             <Grid item xs={12} sx={{ pt: '10px' }}>
-              <RaiseQuery category={category} studentCode={auth?.user?.studentCode} studentDetail={studentDetails} getQueriesList={getQueriesList} />
+              <RaiseQuery
+                category={category}
+                studentCode={auth?.user?.studentCode}
+                studentDetail={studentDetails}
+                getQueriesList={getQueriesList}
+              />
             </Grid>
           </Box>
         </Grid>
