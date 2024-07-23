@@ -12,7 +12,9 @@ export const UseUploadDocumentHook = (masterData: any) => {
   }
 
   const uploadDocument = async (file: any, element: any) => {
-    const { studentCode, applicationCode } = masterData?.userDetails
+    const { applicationCode } = masterData?.userDetails
+    const studentCode = masterData?.userDetails?.lead?.studentCode
+
     const setUploadPercent = (progressEvent: any) => {
       const uploadPercent = Math.ceil((progressEvent.loaded / progressEvent.total) * 100)
       updateProgress(uploadPercent)
