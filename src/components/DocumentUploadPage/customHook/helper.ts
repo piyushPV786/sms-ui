@@ -2,15 +2,16 @@ import axios from 'axios'
 
 export const documentPayload = (data: any, isDraft: any, masterData: any, progress: any) => {
   let result = {}
-  if (masterData?.documentTypes && masterData?.userDetails?.studentCode) {
+  if (masterData?.documentTypes && masterData?.userDetails?.lead?.studentCode) {
     const Files: any = []
     masterData?.documentTypes.forEach((element: any) => {
       const fileObj = data[element?.code]
-      if (fileObj && fileObj?.length && fileObj[0]?.size > 0) {
+
+      if (fileObj && fileObj?.file?.length && fileObj?.file[0]?.size >= 0) {
         const Obj = {
           documentTypeCode: element?.code,
-          fileName: fileObj[0]?.name,
-          fileType: `.${fileObj[0].name?.split('.').pop()}`,
+          fileName: fileObj.file[0]?.name,
+          fileType: `.${fileObj.file[0].name?.split('.').pop()}`,
           documentCode: progress[element?.code]?.documentCode
         }
         Files.push(Obj)
@@ -21,12 +22,12 @@ export const documentPayload = (data: any, isDraft: any, masterData: any, progre
         files: Files,
         paymentModeCode: 'OFFLINE',
         isDraft: isDraft,
-        studentCode: masterData?.userDetails?.studentCode
+        studentCode: masterData?.userDetails?.lead?.studentCode
       }
     }
   }
-  
-return result
+
+  return result
 }
 
 export const studentBursaryPayload = (res: any, masterData: any) => {
@@ -35,7 +36,7 @@ export const studentBursaryPayload = (res: any, masterData: any) => {
     sanctionedAmount: 0,
     financialYear: new Date().getFullYear(),
     enrolmentCode: masterData?.userDetails?.applicationCode,
-    studentCode: masterData?.userDetails?.studentCode,
+    studentCode: masterData?.userDetails?.lead?.studentCode,
     status: 'BURSARY-REQUESTED',
     isActive: true
   }
@@ -62,8 +63,8 @@ export const signedUrlPayload = (response: any, payload: any) => {
       }
     })
   }
-  
-return signPayload
+
+  return signPayload
 }
 
 export const viewProofDetails = (url: string) => {

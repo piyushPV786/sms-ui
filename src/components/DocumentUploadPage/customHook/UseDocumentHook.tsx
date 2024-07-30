@@ -160,7 +160,7 @@ export const UsePreviewFile = () => {
       const url = URL.createObjectURL(file)
       window.open(url)
     } else {
-      const response = await CommonService?.getFileLink(file?.name, masterData?.userDetails?.studentCode)
+      const response = await CommonService?.getFileLink(file?.name, masterData?.userDetails?.lead?.studentCode)
       viewProofDetails(response)
     }
   }
