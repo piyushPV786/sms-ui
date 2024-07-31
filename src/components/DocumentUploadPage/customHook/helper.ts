@@ -4,15 +4,18 @@ export const documentPayload = (data: any, isDraft: any, masterData: any, progre
   let result = {}
   if (masterData?.documentTypes && masterData?.userDetails?.lead?.studentCode) {
     const Files: any = []
-    masterData?.documentTypes.forEach((element: any) => {
+    masterData?.documentTypes.forEach((element: { code: string | number }) => {
       const fileObj = data[element?.code]
+      const docCode = masterData?.documents?.find(
+        (data: { documentTypeCode: string | number }) => data.documentTypeCode === element?.code
+      )
 
-      if (fileObj && fileObj?.file?.length && fileObj?.file[0]?.size >= 0) {
+      if ((fileObj && fileObj?.length && fileObj?.[0]?.size > 0) || (fileObj && fileObj?.file?.length > 0)) {
         const Obj = {
           documentTypeCode: element?.code,
-          fileName: fileObj.file[0]?.name,
-          fileType: `.${fileObj.file[0].name?.split('.').pop()}`,
-          documentCode: progress[element?.code]?.documentCode
+          fileName: fileObj?.[0]?.name || fileObj?.file?.[0]?.name,
+          fileType: `.${fileObj?.[0]?.name?.split('.').pop() || fileObj?.file?.[0]?.name?.split('.').pop()}`,
+          documentCode: progress[element?.code]?.documentCode || docCode?.code
         }
         Files.push(Obj)
       }

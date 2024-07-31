@@ -276,7 +276,12 @@ export const nonMandatoryDocuments = [
   'MATRIC',
   'OTHERS',
   'INTERVIEWNOTES',
-  'EDFORALLCONTRACT'
+  'EDFORALLCONTRACT',
+  'DEBITORDER',
+  'COURSEAPPROVAL',
+  'MBCERTIFICATE',
+  'RPL',
+  'SAQA'
 ]
 
 export const bursarryFeilds = {
