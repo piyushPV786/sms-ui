@@ -442,6 +442,12 @@ export const fileValidation = (value: any, element: any) => {
   return true
 }
 
+export const removeExtension = (fileName: string) => {
+  const nameWithoutExtension = fileName?.split('.').slice(0, -1).join('.')
+
+  return nameWithoutExtension
+}
+
 export const setDocumentValue = (documents: any, setValue: any) => {
   documents?.forEach((element: any) => {
     const extension = element?.name?.split('.').pop()
@@ -462,15 +468,15 @@ export const setDocumentValue = (documents: any, setValue: any) => {
 
 export const compareDates = (date1: Date, date2: Date): number => {
   // Convert both dates to milliseconds since epoch
-  const time1 = date1.getTime();
-  const time2 = date2.getTime();
+  const time1 = date1.getTime()
+  const time2 = date2.getTime()
 
   // Compare the milliseconds
   if (time1 < time2) {
-    return -1;
+    return -1
   } else if (time1 > time2) {
-    return 1;
+    return 1
   } else {
-    return 0;
+    return 0
   }
-};
+}
