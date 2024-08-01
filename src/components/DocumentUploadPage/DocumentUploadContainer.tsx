@@ -24,15 +24,12 @@ export const DocumentUploadContainer = ({ element, masterData, setDocumentProgre
       setDocumentProgress(element, uploadProgress, documentCode)
     }
   }, [uploadProgress])
-
   const removeDocumnet = async (documentCode: string) => {
     await DocumentServices?.documentRemove(documentCode)
   }
-
-  const onRemoveFile = () => {
+  const onRemoveFile = (docCode: string) => {
     setUploadProgress(0)
-
-    removeDocumnet(documentCode)
+    removeDocumnet(documentCode ? documentCode : docCode)
   }
 
   return (

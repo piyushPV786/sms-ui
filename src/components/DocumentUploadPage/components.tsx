@@ -20,7 +20,7 @@ import {
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { FileUploadContainer, InnerContainer, ShortTypography, StyleLabel } from '../common/style'
-import { fileValidation } from 'src/utils'
+import { fileValidation, removeExtension } from 'src/utils'
 import { LinearProgressWithLabel } from '../common'
 import { UseDownloadDeclarationLatter, UsePreviewFile } from './customHook/UseDocumentHook'
 import { Close, EyeOutline } from 'mdi-material-ui'
@@ -262,7 +262,7 @@ export const HandleAction = ({ element, masterData, onRemoveFile }: any) => {
   const { getFileUrl } = UsePreviewFile()
   const handleRemoveFiles = () => {
     setValue(element?.code, undefined)
-    onRemoveFile()
+    onRemoveFile(removeExtension(fileWatch[0]?.name))
   }
 
   if (!fileWatch || fileWatch?.length === 0 || !fileWatch[0]?.name) {
