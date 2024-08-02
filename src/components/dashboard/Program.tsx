@@ -30,7 +30,12 @@ const Program = ({ scheduler, electiveModule, getElectiveModuleList }: any) => {
 
   const isGraduate =
     applicationDetails?.length &&
-    applicationDetails?.every(i => i.status === applicationStatus.graduated || i?.status == applicationStatus.cancelled)
+    applicationDetails?.every(
+      i =>
+        i.status === applicationStatus.graduated ||
+        i?.status == applicationStatus.cancelled ||
+        i.status === applicationStatus.completed
+    )
 
   useEffect(() => {
     setProgDetail((prev: any) => ({

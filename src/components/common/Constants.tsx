@@ -39,7 +39,8 @@ export const accountDetails = {
 }
 export const applicationStatus = {
   graduated: 'GRADUATED',
-  cancelled: 'CANCELLED'
+  cancelled: 'CANCELLED',
+  completed: 'COMPLETED'
 }
 export const APPLICATION_STATUS = {
   SAVED_AS_DRAFT: 'APP-DRAFT',
