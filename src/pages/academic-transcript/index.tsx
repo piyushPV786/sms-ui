@@ -79,52 +79,34 @@ const StudentDashboard = () => {
     {
       minWidth: 240,
       flex: 0.1,
-      field: 'assessment',
+      field: 'finalAssessment',
       headerClassName: 'digital-assessment',
       cellClassName: 'digital-assessment',
       renderHeader: () => <AcademicTypography>Digital Assessment</AcademicTypography>,
       renderCell: (row: any) => (
-        <Typography>
-          {row?.row?.isAssessmentPublish
-            ? row?.row?.assessment < row?.row?.moderatedAssessment
-              ? row?.row?.moderatedAssessment
-              : row?.row?.assessment
-            : '-'}
-        </Typography>
+        <Typography>{row?.row?.isAssessmentPublish ? row?.row?.finalAssessment : '-'}</Typography>
       )
     },
     {
       minWidth: 150,
       flex: 0.1,
-      field: 'assignments',
+      field: 'finalAssignments',
       headerClassName: 'assignments',
       cellClassName: 'assignments',
       renderHeader: () => <AcademicTypography>Assignments</AcademicTypography>,
       renderCell: (row: any) => (
-        <Typography>
-          {row?.row?.isAssignmentsPublish
-            ? row?.row?.assignments < row?.row?.moderatedAssignments
-              ? row?.row?.moderatedAssignments
-              : row?.row?.assignments
-            : '-'}
-        </Typography>
+        <Typography>{row?.row?.isAssignmentsPublish ? row?.row?.finalAssignments : '-'}</Typography>
       )
     },
     {
       minWidth: 160,
       flex: 0.1,
-      field: 'examination',
+      field: 'finalExamination',
       headerClassName: 'examination',
       cellClassName: 'examination',
       renderHeader: () => <AcademicTypography>Examination</AcademicTypography>,
       renderCell: (row: any) => (
-        <Typography>
-          {row?.row?.isExaminationPublish
-            ? row?.row?.examination < row?.row?.moderatedExamination
-              ? row?.row?.moderatedExamination
-              : row?.row?.examination
-            : '-'}
-        </Typography>
+        <Typography>{row?.row?.isExaminationPublish ? row?.row?.finalExamination : '-'}</Typography>
       )
     },
     {
