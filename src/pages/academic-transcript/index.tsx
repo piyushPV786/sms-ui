@@ -147,7 +147,7 @@ const StudentDashboard = () => {
           <Typography>
             {row?.row?.isAssignmentsPublish && row?.row?.isAssessmentPublish && row?.row?.isExaminationPublish
               ? row?.row?.status
-              : row?.row?.status ?? '-'}
+              : '-'}
           </Typography>
         )
       }
