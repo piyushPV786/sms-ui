@@ -76,7 +76,7 @@ export const BursaryFeilds = ({ element }: any) => {
 
   return (
     <Grid container sm={12} md={12} mb={2} columnSpacing={2} rowSpacing={2} mt={1}>
-      <Grid sm={4} md={4} item>
+      <Grid sm={4} md={4} item display='grid'>
         <StyledLabel required={element?.required}>Bursary Name</StyledLabel>
         <TextField
           size='small'
@@ -88,7 +88,7 @@ export const BursaryFeilds = ({ element }: any) => {
           placeholder={'e.g 10 church street'}
         />
       </Grid>
-      <Grid sm={4} md={4} item>
+      <Grid sm={4} md={4} item display='grid'>
         <StyledLabel required={element?.required}>Bursary Email Address</StyledLabel>
         <TextField
           size='small'
@@ -100,7 +100,7 @@ export const BursaryFeilds = ({ element }: any) => {
           placeholder={'e.g 10 church street'}
         />
       </Grid>
-      <Grid sm={4} md={4} item>
+      <Grid sm={4} md={4} item display='grid'>
         <StyledLabel required={element?.required}>Bursary Phone Number</StyledLabel>
         <PhoneInput
           {...register(`${element.code}Phone`, {
