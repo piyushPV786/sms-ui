@@ -16,7 +16,8 @@ const PaymentOptionCard = (props: any) => {
     disabled,
     updatePayment,
     masterData,
-    paymentStatusCheck
+    paymentStatusCheck,
+    documentCode
   } = props
   const methods = useForm()
   const { register, watch, setValue } = methods
@@ -97,6 +98,7 @@ const PaymentOptionCard = (props: any) => {
             disabled={disabled}
             updatePayment={updatePayment}
             paymentStatusCheck={paymentStatusCheck}
+            documentCode={documentCode}
           />
         )}
       </Grid>
