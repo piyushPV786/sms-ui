@@ -107,8 +107,8 @@ export default class Academic {
   }
   async getModuleList(params: IModuleListProps) {
     nProgress.start()
-
-    const endUrlName = `${this.baseUrl + apiEndPoints.courseFilter}/${params?.programCode}`
+    const route = apiEndPoints?.courseFilter.replace(':programCode', params?.programCode)
+    const endUrlName = `${this.baseUrl + route}`
 
     try {
       const response = await this.apiServer.get<any>(endUrlName)
@@ -139,15 +139,15 @@ export default class Academic {
     const url = `${this.baseUrl}${apiEndPoints.programDetail}`.replace(':programCode', programCode)
     const response = await this.apiServer.get(url)
     const result = response?.data?.data ? response?.data?.data : {}
-    
-return result
+
+    return result
   }
   async getProgramRmatDetails(programCode: string) {
     const url = `${this.baseUrl}${apiEndPoints.programRmat}`.replace(':programCode', programCode)
     const response = await this.apiServer.get(url)
     const result = response?.data?.data ? response?.data?.data : {}
-    
-return result
+
+    return result
   }
   async getStudentAcedamicYearData(programCode: string) {
     nProgress.start()
