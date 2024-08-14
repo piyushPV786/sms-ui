@@ -45,7 +45,10 @@ const Checkout = ({ appCode, studentCode }: propsType) => {
     fees
   )
 
-  const { uploadPaymentProof, disabled, updatePayment, uploadProgress } = useOfflinePaymentHook(masterData, fees)
+  const { uploadPaymentProof, disabled, updatePayment, uploadProgress, documentCode } = useOfflinePaymentHook(
+    masterData,
+    fees
+  )
 
   const isLoading =
     Object.values(masterData).every(data => data === null) && !studyModes?.fees?.length && fees?.fee == 0
@@ -116,6 +119,7 @@ const Checkout = ({ appCode, studentCode }: propsType) => {
               updatePayment={updatePayment}
               uploadProgress={uploadProgress}
               paymentStatusCheck={paymentStatusCheck}
+              documentCode={documentCode}
             />
           </Grid>
         </Grid>
