@@ -6,16 +6,15 @@ import { FinalFees } from './components';
 
 const OrderSummeryCard = ({ studyModes, fees, masterData, updateFeeMode, onUploadDocument }: any) => {
   const methods = useForm();
-  const { register, watch, setValue, reset, clearErrors } = methods;
+  const { register, watch, setValue } = methods;
   const data = watch('feeModeCode');
-  const [isFeeModeSelected, setIsFeeModeSelected] = useState(false);
-  const [isUploadInProgress, setIsUploadInProgress] = useState(false);
+  
 
   
   const handleFeeModeUpdate = useCallback(() => {
     if (data) {
       updateFeeMode(data);
-      setIsFeeModeSelected(true);
+      
     }
   }, [data, updateFeeMode]);
 
@@ -43,30 +42,9 @@ const OrderSummeryCard = ({ studyModes, fees, masterData, updateFeeMode, onUploa
     .reverse();
 
   
-  const handleUploadClick = async () => {
-    setIsUploadInProgress(true);
-    try {
-      await onUploadDocument();
-    } finally {
-      setIsUploadInProgress(false);
-    }
-  };
-
   
-  const handleCancelClick = () => {
-    
-    reset();
-    clearErrors();
-    setIsFeeModeSelected(false);
-    setIsUploadInProgress(false); 
-  };
-
   
-  useEffect(() => {
-    console.log('isUploadInProgress:', isUploadInProgress);
-    console.log('isFeeModeSelected:', isFeeModeSelected);
-    console.log('Form Values:', methods.getValues());
-  }, [isUploadInProgress, isFeeModeSelected]);
+  
 
   return (
     <Card>
@@ -130,7 +108,7 @@ const OrderSummeryCard = ({ studyModes, fees, masterData, updateFeeMode, onUploa
                     row 
                     onChange={(e) => {
                       setValue('feeModeCode', e.target.value);
-                      setIsFeeModeSelected(true); 
+                 
                     }}
                   >
                     {sortedFees?.map((item: any) => (
@@ -159,34 +137,10 @@ const OrderSummeryCard = ({ studyModes, fees, masterData, updateFeeMode, onUploa
               </Grid>
             )}
           </Grid>
-
-          
-          <Grid item md={6} xs={12}>
+          <Grid item md={6} xs={6}>
             <FinalFees masterData={masterData} studyModes={studyModes} fees={fees} />
           </Grid>
         </Grid>
-
-        
-        {isFeeModeSelected && (
-          <Grid container justifyContent='flex-end' mt={3}>
-            <Button
-              variant='contained'
-              color='primary'
-              onClick={handleUploadClick}
-              disabled={isUploadInProgress} 
-            >
-              Upload Document
-            </Button>
-            <Button
-              variant='outlined'
-              color='secondary'
-              onClick={handleCancelClick}
-              style={{ marginLeft: '16px' }}
-            >
-              Cancel
-            </Button>
-          </Grid>
-        )}
       </CardContent>
     </Card>
   );
