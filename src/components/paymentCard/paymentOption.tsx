@@ -14,7 +14,8 @@ const PaymentOptions = ({
   updatePayment,
   uploadProgress,
   masterData,
-  paymentStatusCheck
+  paymentStatusCheck,
+  documentCode
 }: any) => {
   return (
     <FullWidthCard>
@@ -37,6 +38,7 @@ const PaymentOptions = ({
                 updatePayment={updatePayment}
                 masterData={masterData}
                 paymentStatusCheck={paymentStatusCheck}
+                documentCode={documentCode}
               />
               {!!uploadProgress && <LinearProgressWithLabel value={uploadProgress} />}
             </Grid>
