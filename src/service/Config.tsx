@@ -1,17 +1,18 @@
-export const ENROLMENT_BACKEND_API = process.env.NEXT_PUBLIC_ENROLMENT_BACKEND_API
-export const NEXT_PUBLIC_ACADEMIC_BACKEND_API = process.env.NEXT_PUBLIC_ACADEMIC_BACKEND_API
-export const BaseStudentApi = process.env.NEXT_PUBLIC_STUDENT_BASE_API
-export const CommonBaseApiUrl = process.env.NEXT_PUBLIC_COMMON_BASE_API
-export const OperationBaseApiUrl = process.env.NEXT_PUBLIC_OPERATION_BASE_URL
-export const FinanceBaseApiUrl = process.env.NEXT_PUBLIC_FINANCE_BACKEND_API
-export const APPLY_BACKEND_API = process.env.NEXT_PUBLIC_APPLY_BACKEND_API
-export const DOCUMENT_BACKEND_API = process.env.NEXT_PUBLIC_DOCUMENT_BACKEND_API
-export const USER_BACKEND_API = process.env.NEXT_PUBLIC_USER_MANAGEMENT_REDIRECT_URI
+// export const ENROLMENT_BACKEND_API = process.env.NEXT_PUBLIC_ENROLMENT_BACKEND_API
+// export const NEXT_PUBLIC_ACADEMIC_BACKEND_API = process.env.NEXT_PUBLIC_ACADEMIC_BACKEND_API
+// export const BaseStudentApi = process.env.NEXT_PUBLIC_STUDENT_BASE_API
+// export const CommonBaseApiUrl = process.env.NEXT_PUBLIC_COMMON_BASE_API
+// export const OperationBaseApiUrl = process.env.NEXT_PUBLIC_OPERATION_BASE_URL
+// export const FinanceBaseApiUrl = process.env.NEXT_PUBLIC_FINANCE_BACKEND_API
+// export const APPLY_BACKEND_API = process.env.NEXT_PUBLIC_APPLY_BACKEND_API
+// export const DOCUMENT_BACKEND_API = process.env.NEXT_PUBLIC_DOCUMENT_BACKEND_API
+// export const USER_BACKEND_API = process.env.NEXT_PUBLIC_USER_MANAGEMENT_REDIRECT_URI
+export const baseApiURL = process.env.NEXT_PUBLIC_BASE_API_URL
 
 export const apiEndPoints = Object.freeze({
   paymentList: 'payments/payment-details',
   admission: 'admissions/',
-  academics: 'academics/academic-record/',
+  academics: 'academic-record/',
   forgotPassword: 'user/forgot-password',
   updatePassword: 'user/update-password',
   logout: 'user/logout',
@@ -43,7 +44,7 @@ export const apiEndPoints = Object.freeze({
   studentType: 'common/student-type',
   studyMode: 'common/study-mode',
   industry: 'common/employment-industry',
-  downloadTranscript: 'academics/donwload/academic-records',
+  downloadTranscript: 'donwload/academic-records',
   currency: 'common/currency',
   query: 'query',
   queryType: 'common/query-type',
@@ -54,7 +55,7 @@ export const apiEndPoints = Object.freeze({
   courses: 'courses',
   ukheshePyment: 'payments/ukheshe-payment',
   ukhesheToken: 'payments/get-ukheshe-token',
-  examTicket: 'academics/exam-ticket',
+  examTicket: 'exam-ticket',
   rollover: 'rollover',
   feeConversionRate: 'programs-fee/fee-conversion-rate',
   status: 'common/set-status',
@@ -64,8 +65,8 @@ export const apiEndPoints = Object.freeze({
   allProgram: 'programs/all',
   program: 'programs',
   courseFilter: 'courses/all-courses/:programCode/list',
-  enrollElective: 'academics/enroll-elective',
-  getElective: 'academics/all-academic-records',
+  enrollElective: 'enroll-elective',
+  getElective: 'all-academic-records',
   applicationDetails: 'lead/:leadId/application/:applicationCode',
   multipleApplication: 'application/multiple-applicaton',
   getStudentDetail: 'application/student-details/:studentCode',

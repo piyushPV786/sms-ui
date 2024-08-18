@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import { CommonBaseApiUrl, apiEndPoints } from '../Config'
+import { baseApiURL, apiEndPoints } from '../Config'
 import nProgress from 'nprogress'
 import { status } from 'src/context/common'
 
@@ -18,7 +18,7 @@ interface statusPayloadType {
 }
 export default class Common {
   apiServer: AxiosInstance
-  baseUrl = CommonBaseApiUrl
+  baseUrl = `${baseApiURL}/`
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }
@@ -334,8 +334,8 @@ export default class Common {
   async getFileSignUrl(fileName: any, filetype: any, studentCode: any) {
     const url = `${this.baseUrl}common/document/upload?filename=${fileName}&filetype=${filetype}&&studentCode=${studentCode}`
     const response = await this.apiServer.get(url)
-    
-return response?.data?.data ? response?.data?.data : null
+
+    return response?.data?.data ? response?.data?.data : null
   }
 
   async DocumentType() {
@@ -348,15 +348,15 @@ return response?.data?.data ? response?.data?.data : null
   async DocumentCode() {
     const url = `${this.baseUrl}${apiEndPoints?.documentCode}`
     const response = await this.apiServer.get(url)
-    
-return response?.data?.data ? response?.data?.data : null
+
+    return response?.data?.data ? response?.data?.data : null
   }
 
   async uploadDocumentToAws(url: any, files: any, setUploadPercent: any) {
     const response = await axios.put(url, files, {
       onUploadProgress: setUploadPercent
     })
-    
-return response ? response : null
+
+    return response ? response : null
   }
 }

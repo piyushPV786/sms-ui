@@ -1,11 +1,11 @@
 import { AxiosInstance } from 'axios'
 import nProgress from 'nprogress'
-import { USER_BACKEND_API, apiEndPoints } from '../Config'
+import { baseApiURL, apiEndPoints } from '../Config'
 import { status } from 'src/context/common'
 
 export default class User {
   apiServer: AxiosInstance
-  baseUrl = USER_BACKEND_API
+  baseUrl = `${baseApiURL}/user-management/`
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }
