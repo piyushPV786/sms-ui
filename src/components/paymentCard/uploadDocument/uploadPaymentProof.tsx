@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { GREEN, acceptedFileTypes } from 'src/components/common/Constants'
 import { Close, CloudUpload } from 'mdi-material-ui'
 import { errorToast } from 'src/components/common'
+import { DocumentServices } from 'src/service'
 
 interface UploadPaymentProofTypes {
   setValue: UseFormSetValue<any>
@@ -19,6 +20,7 @@ interface UploadPaymentProofTypes {
   errors: any
   uploadPaymentProof: any
   paymentStatusCheck: () => boolean
+  documentCode?: string
 }
 
 export const fileValidation = (value: any) => {
@@ -42,7 +44,8 @@ const UploadPaymentProof = ({
   name,
   errors,
   uploadPaymentProof,
-  paymentStatusCheck
+  paymentStatusCheck,
+  documentCode
 }: UploadPaymentProofTypes) => {
   const fileUpload = useRef<any>(null)
   const onDocUploadClick = () => {
@@ -50,6 +53,10 @@ const UploadPaymentProof = ({
     fileElement?.click() as any
   }
   const router = useRouter()
+
+  const removeDocumnet = async () => {
+    await DocumentServices?.documentRemove(documentCode)
+  }
 
   return (
     <Box width='70%' mx='auto' className={Styles.UploadDocsContainer} onClick={() => onDocUploadClick()}>
@@ -117,7 +124,12 @@ const UploadPaymentProof = ({
                   alignItems: 'center'
                 }}
               >
-                <IconButton onClick={() => unregister(name)}>
+                <IconButton
+                  onClick={() => {
+                    unregister(name)
+                    removeDocumnet()
+                  }}
+                >
                   <Close color='error' fontSize='small' />
                 </IconButton>
               </Grid>
