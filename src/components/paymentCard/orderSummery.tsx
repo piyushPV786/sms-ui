@@ -1,149 +1,144 @@
-import { Card, CardContent, Grid, Typography, FormControl, RadioGroup, FormControlLabel, Radio, Button } from '@mui/material';
-import { CommonEnums, applicationFeesStatus, feeMode } from '../common/Constants';
-import { useForm } from 'react-hook-form';
-import { useEffect, useCallback, useState } from 'react';
-import { FinalFees } from './components';
+import { Card, CardContent, Grid, Typography } from '@mui/material'
+import { CommonEnums, applicationFeesStatus, feeMode } from '../common/Constants'
+import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
+import { FinalFees } from './components'
 
-const OrderSummeryCard = ({ studyModes, fees, masterData, updateFeeMode, onUploadDocument }: any) => {
-  const methods = useForm();
-  const { register, watch, setValue } = methods;
-  const data = watch('feeModeCode');
-  
-
-  
-  const handleFeeModeUpdate = useCallback(() => {
-    if (data) {
-      updateFeeMode(data);
-      
-    }
-  }, [data, updateFeeMode]);
+const OrderSummeryCard = (props: any) => {
+  const { studyModes, fees, masterData, updateFeeMode } = props
+  const methods = useForm()
+  const { register, watch } = methods
+  const data = watch('feeModeCode')
 
   
   useEffect(() => {
-    handleFeeModeUpdate();
-  }, [data, handleFeeModeUpdate]);
-
-  
-  const isApplicationStatusValid = !applicationFeesStatus.includes(masterData?.applicationData?.status);
-
-  
-  const isFeeModeAllowed = isApplicationStatusValid && masterData?.applicationData?.eligibility &&
-    !masterData?.applicationData?.eligibility[0]?.accessProgram;
-
-  
-  const sortedFees = studyModes?.fees
-    ?.filter((item: { feeMode: feeMode; }) => item?.feeMode !== feeMode.APPLICATION && item?.feeMode !== feeMode.TOTAL)
-    .sort((a: { feeMode: string; }, b: { feeMode: string; }) => {
-      const aStartsWithA = a.feeMode.startsWith('A');
-      const bStartsWithA = b.feeMode.startsWith('A');
-
-      return aStartsWithA === bStartsWithA ? 0 : aStartsWithA ? -1 : 1;
-    })
-    .reverse();
-
-  
-  
-  
-  
+    updateFeeMode(data)
+  }, [data])
 
   return (
-    <Card>
-      <CardContent>
-        <Grid container spacing={6}>
-          <Grid item md={6} xs={12}>
-            <Typography variant='h6' mb={5} color='primary'>
-              ORDER SUMMARY
-            </Typography>
-
-            
-            <Grid container spacing={2} mb={5}>
-              <Grid item md={6} xs={12}>
-                <Typography variant='h6' color='secondary'>
-                  Interested Qualification
-                </Typography>
-                <Typography variant='body1' color='textSecondary'>
-                  <strong>{masterData?.feeData?.programName}</strong>
-                </Typography>
+    <>
+      <Card>
+        <CardContent>
+          <Grid>
+            <Grid item md={12} xs={12}>
+              <Typography variant='h6' mb={5} color={'primary'}>
+                ORDER SUMMARY
+              </Typography>
+            </Grid>
+            <Grid container spacing={6}>
+              <Grid item md={6} xs={6}>
+                <Grid item md={12} xs={12} display='flex' sx={{ pb: 5 }}>
+                  <Grid item md={6} xs={6}>
+                    <Typography variant='h6' color={'secondary'}>
+                      Interested Qualification
+                    </Typography>
+                    <Typography variant='body1' color={'dark'}>
+                      <strong>{masterData?.feeData?.programName}</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid item md={6} xs={6}>
+                    <Grid>
+                      <Typography variant='h6' color={'secondary'}>
+                        {fees?.label}( {fees?.amount} )
+                      </Typography>
+                      <Typography variant='body1'>
+                        <strong>
+                          {fees?.amount} {fees?.helpText}
+                        </strong>
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item md={12} xs={12} display='flex'>
+                  <Grid item md={6} xs={6}>
+                    <Typography variant='h6' color={'secondary'}>
+                      Fee Category
+                    </Typography>
+                    <Typography variant='body1' color={'dark'}>
+                      <strong>{fees?.label}</strong>
+                    </Typography>
+                  </Grid>
+                  <Grid item md={6} xs={6}>
+                    <Typography variant='h6' color={'secondary'}>
+                      Study Mode
+                    </Typography>
+                    <Typography variant='body1'>
+                      <strong>{studyModes?.studyModeCode}</strong>({studyModes?.helpText} )
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item md={12} xs={12}>
+                  {!applicationFeesStatus.includes(masterData?.applicationData?.status) && (
+                    <Grid item md={12} xs={12}>
+                      {!applicationFeesStatus.includes(masterData?.applicationData?.status) && masterData?.applicationData?.eligibility &&
+                        !masterData?.applicationData?.eligibility[0]?.accessProgram && (
+                          <Grid>
+                            <Typography variant='h6' color={'secondary'}>
+                              Fee Mode
+                            </Typography>
+                            <Grid item display='flex'>
+                              {studyModes?.fees
+                              ?.filter((item: { feeMode: feeMode }) => item?.feeMode !== feeMode.APPLICATION && item?.feeMode !== feeMode.TOTAL)
+                              .sort((a: { feeMode: string }, b: { feeMode: string }) => {
+                                        const aStartsWithA = a.feeMode.startsWith('A');
+                                        const bStartsWithA = b.feeMode.startsWith('A');
+                                        
+                                        if (aStartsWithA && !bStartsWithA) return -1;
+                                        if (!aStartsWithA && bStartsWithA) return 1;
+                                        
+                                        return 0;
+                                    })
+                                .reverse()
+                                .map((item: any, index: number) => {
+                                  if (item?.feeMode !== feeMode.APPLICATION && item?.feeMode !== feeMode.TOTAL) {
+                                    return (
+                                      // eslint-disable-next-line react/jsx-key
+                                      <Grid item xs={2.5}>
+                                        <div className='form-check form-check-inline'>
+                                          <input
+                                            {...register('feeModeCode', {
+                                              required: {
+                                                value: true,
+                                                message: 'Please select Fee mode'
+                                              }
+                                            })}
+                                            key={index}
+                                            className='form-check-input me-2'
+                                            type='radio'
+                                            value={item?.feeMode}
+                                            disabled={
+                                              item?.feeMode == feeMode?.MONTHLY &&
+                                              masterData?.applicationData?.status == CommonEnums?.MONTHLY_PAYMENT_REJECT
+                                            }
+                                          />
+                                          <label className='form-check-label'>
+                                            <strong>
+                                              {item?.feeMode}
+                                              <Typography sx={{ pl: 4 }}>R{item?.fee}</Typography>
+                                            </strong>
+                                          </label>
+                                        </div>
+                                      </Grid>
+                                    )
+                                  }
+                                })}
+                            </Grid>
+                          </Grid>
+                        )}
+                    </Grid>
+                  )}
+                </Grid>
               </Grid>
-              <Grid item md={6} xs={12}>
-                <Typography variant='h6' color='secondary'>
-                  {fees?.label} ({fees?.amount})
-                </Typography>
-                <Typography variant='body1'>
-                  <strong>{fees?.amount} {fees?.helpText}</strong>
-                </Typography>
+              <Grid item md={6} xs={6}>
+                <FinalFees masterData={masterData} studyModes={studyModes} fees={fees} />
               </Grid>
             </Grid>
-
-            
-            <Grid container spacing={2} mb={5}>
-              <Grid item md={6} xs={12}>
-                <Typography variant='h6' color='secondary'>
-                  Fee Category
-                </Typography>
-                <Typography variant='body1' color='textSecondary'>
-                  <strong>{fees?.label}</strong>
-                </Typography>
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <Typography variant='h6' color='secondary'>
-                  Study Mode
-                </Typography>
-                <Typography variant='body1'>
-                  <strong>{studyModes?.studyModeCode}</strong> ({studyModes?.helpText})
-                </Typography>
-              </Grid>
-            </Grid>
-
-            
-            {isFeeModeAllowed && (
-              <Grid item md={12} xs={12}>
-                <Typography variant='h6' color='secondary' mb={2}>
-                  Fee Mode
-                </Typography>
-                <FormControl component='fieldset'>
-                  <RadioGroup
-                    aria-label='fee-mode'
-                    {...register('feeModeCode', { required: 'Please select Fee mode' })}
-                    row 
-                    onChange={(e) => {
-                      setValue('feeModeCode', e.target.value);
-                 
-                    }}
-                  >
-                    {sortedFees?.map((item: any) => (
-                      <Grid item xs={12} sm={6} md={4} key={item?.feeMode} style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
-                        <FormControlLabel
-                          value={item?.feeMode}
-                          control={
-                            <Radio
-                              disabled={
-                                item?.feeMode === feeMode?.MONTHLY &&
-                                masterData?.applicationData?.status === CommonEnums?.MONTHLY_PAYMENT_REJECT
-                              }
-                            />
-                          }
-                          label={
-                            <strong>
-                              {item?.feeMode}
-                              <Typography sx={{ pl: 2 }}>R{item?.fee}</Typography>
-                            </strong>
-                          }
-                        />
-                      </Grid>
-                    ))}
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
-            )}
           </Grid>
-          <Grid item md={6} xs={6}>
-            <FinalFees masterData={masterData} studyModes={studyModes} fees={fees} />
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
-  );
+        </CardContent>
+      </Card>
+    </>
+  )
 }
 
-export default OrderSummeryCard;
+export default OrderSummeryCard
+
