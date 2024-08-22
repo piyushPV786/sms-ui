@@ -463,7 +463,8 @@ export const useOfflinePaymentHook = (masterData: any, fees: any) => {
     uploadPaymentProof,
     disabled,
     updatePayment,
-    uploadProgress
+    uploadProgress,
+    documentCode
   }
 }
 

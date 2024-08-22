@@ -10,7 +10,7 @@ export interface IFormValue {
 }
 
 const PaymentProofCard = (props: any) => {
-  const { uploadPaymentProof, disabled, updatePayment, masterData, paymentStatusCheck } = props
+  const { uploadPaymentProof, disabled, updatePayment, masterData, paymentStatusCheck, documentCode } = props
   const [isLoading, setLoading] = useState<boolean>(false)
 
   const {
@@ -55,6 +55,7 @@ const PaymentProofCard = (props: any) => {
           name='file'
           uploadPaymentProof={uploadPaymentProof}
           paymentStatusCheck={paymentStatusCheck}
+          documentCode={documentCode}
         />
       </Grid>
       <Grid item xs={12} display='flex' justifyContent='center'>
