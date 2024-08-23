@@ -10,7 +10,6 @@ const OrderSummeryCard = (props: any) => {
   const { register, watch } = methods
   const data = watch('feeModeCode')
 
-  
   useEffect(() => {
     updateFeeMode(data)
   }, [data])
@@ -70,7 +69,8 @@ const OrderSummeryCard = (props: any) => {
                 <Grid item md={12} xs={12}>
                   {!applicationFeesStatus.includes(masterData?.applicationData?.status) && (
                     <Grid item md={12} xs={12}>
-                      {!applicationFeesStatus.includes(masterData?.applicationData?.status) && masterData?.applicationData?.eligibility &&
+                      {!applicationFeesStatus.includes(masterData?.applicationData?.status) &&
+                        masterData?.applicationData?.eligibility &&
                         !masterData?.applicationData?.eligibility[0]?.accessProgram && (
                           <Grid>
                             <Typography variant='h6' color={'secondary'}>
@@ -78,16 +78,19 @@ const OrderSummeryCard = (props: any) => {
                             </Typography>
                             <Grid item display='flex'>
                               {studyModes?.fees
-                              ?.filter((item: { feeMode: feeMode }) => item?.feeMode !== feeMode.APPLICATION && item?.feeMode !== feeMode.TOTAL)
-                              .sort((a: { feeMode: string }, b: { feeMode: string }) => {
-                                        const aStartsWithA = a.feeMode.startsWith('A');
-                                        const bStartsWithA = b.feeMode.startsWith('A');
-                                        
-                                        if (aStartsWithA && !bStartsWithA) return -1;
-                                        if (!aStartsWithA && bStartsWithA) return 1;
-                                        
-                                        return 0;
-                                    })
+                                ?.filter(
+                                  (item: { feeMode: feeMode }) =>
+                                    item?.feeMode !== feeMode.APPLICATION && item?.feeMode !== feeMode.TOTAL
+                                )
+                                .sort((a: { feeMode: string }, b: { feeMode: string }) => {
+                                  const aStartsWithA = a.feeMode.startsWith('A')
+                                  const bStartsWithA = b.feeMode.startsWith('A')
+
+                                  if (aStartsWithA && !bStartsWithA) return -1
+                                  if (!aStartsWithA && bStartsWithA) return 1
+
+                                  return 0
+                                })
                                 .reverse()
                                 .map((item: any, index: number) => {
                                   if (item?.feeMode !== feeMode.APPLICATION && item?.feeMode !== feeMode.TOTAL) {
@@ -141,4 +144,3 @@ const OrderSummeryCard = (props: any) => {
 }
 
 export default OrderSummeryCard
-

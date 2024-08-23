@@ -23,7 +23,10 @@ const PersonalInformation = ({ handleEditDialogOpen, address, studentDetails }: 
           <ProfileInfo label='Gender' info={`${getName(gender, studentDetails['gender'])}`} />
           <ProfileInfo label='Date of Birth' info={`${DDMMYYYDateFormat(studentDetails['dateOfBirth'])}`} />
           <ProfileInfo label='Email' info={`${studentDetails['email']}`} />
-          <ProfileInfo label='Mobile Number' info={`+${studentDetails['mobileCountryCode']} ${studentDetails['mobileNumber']}`} />
+          <ProfileInfo
+            label='Mobile Number'
+            info={`+${studentDetails['mobileCountryCode']} ${studentDetails['mobileNumber']}`}
+          />
           <ProfileInfo label='Home Language' info={`${getName(language, studentDetails['language'])}`} />
           <ProfileInfo label='Race' info={`${getName(race, studentDetails['race'])}`} />
           <ProfileInfo
@@ -33,18 +36,36 @@ const PersonalInformation = ({ handleEditDialogOpen, address, studentDetails }: 
           <ProfileInfo label='Nationality' info={`${getName(nationality, studentDetails['nationality'])}`} />
           <ProfileInfo
             label='Identification Document Type / Id No'
-            info={`${getName(identificationType, studentDetails['identificationDocumentType'])} / ${studentDetails['identificationNumber']
-              }`}
+            info={`${getName(identificationType, studentDetails['identificationDocumentType'])} / ${
+              studentDetails['identificationNumber']
+            }`}
           >
-            {studentDetails['identificationDocumentType'] === "PASSPORT" && (
-              <Box sx={{ borderLeft: (theme) => compareDates(new Date(studentDetails['passportExpiryDate']), new Date()) === -1 ? `5px solid ${theme.palette.error.main}` : `5px solid ${theme.palette.success.main}` }}>
+            {studentDetails['identificationDocumentType'] === 'PASSPORT' && (
+              <Box
+                sx={{
+                  borderLeft: theme =>
+                    compareDates(new Date(studentDetails['passportExpiryDate']), new Date()) === -1
+                      ? `5px solid ${theme.palette.error.main}`
+                      : `5px solid ${theme.palette.success.main}`
+                }}
+              >
                 <Box
                   sx={{
-                    backgroundColor: compareDates(new Date(studentDetails['passportExpiryDate']), new Date()) === -1 ? `#FFEAEB` : `#F4FFF0`,
+                    backgroundColor:
+                      compareDates(new Date(studentDetails['passportExpiryDate']), new Date()) === -1
+                        ? `#FFEAEB`
+                        : `#F4FFF0`,
                     paddingLeft: 2
                   }}
                 >
-                  <Typography variant='h6' color={theme => compareDates(new Date(studentDetails['passportExpiryDate']), new Date()) === -1 ? theme.palette.error.main : theme.palette.success.main}>
+                  <Typography
+                    variant='h6'
+                    color={theme =>
+                      compareDates(new Date(studentDetails['passportExpiryDate']), new Date()) === -1
+                        ? theme.palette.error.main
+                        : theme.palette.success.main
+                    }
+                  >
                     <label>Date of Expiry : </label>
                     {DDMMYYYDateFormat(studentDetails['passportExpiryDate'])}
                   </Typography>
@@ -62,8 +83,9 @@ const PersonalInformation = ({ handleEditDialogOpen, address, studentDetails }: 
                 <Typography variant='h6' sx={{ color: '#4f958d' }}>{`${item?.addressType}  ADDRESS`}</Typography>
 
                 <Card sx={{ height: 130, padding: 7, marginTop: 1, position: 'relative', background: '#e0ece8' }}>
-                  {`${item?.street},   ${item?.city}, ${item.stateName}, ${getName(country, item?.country)}, ${item?.zipcode
-                    }`}
+                  {`${item?.street},   ${item?.city}, ${item.stateName}, ${getName(country, item?.country)}, ${
+                    item?.zipcode
+                  }`}
                   {item?.addressType === 'POSTAL' && (
                     <IconButton
                       aria-label='fingerprint'
