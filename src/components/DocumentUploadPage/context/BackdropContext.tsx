@@ -1,35 +1,31 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react'
 
 type BackdropContextType = {
-  open: boolean;
-  toggleBackdrop: (value:boolean) => void;
-};
+  open: boolean
+  toggleBackdrop: (value: boolean) => void
+}
 
-const BackdropContext = createContext<BackdropContextType | undefined>(undefined);
+const BackdropContext = createContext<BackdropContextType | undefined>(undefined)
 
 export const useBackdrop = () => {
-  const context = useContext(BackdropContext);
+  const context = useContext(BackdropContext)
   if (context === undefined) {
-    throw new Error('useBackdrop must be used within a BackdropProvider');
+    throw new Error('useBackdrop must be used within a BackdropProvider')
   }
-  
-return context;
-};
+
+  return context
+}
 
 type BackdropProviderProps = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 export const BackdropProvider: React.FC<BackdropProviderProps> = ({ children }) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
 
-  const toggleBackdrop = (value:boolean) => {
-    setOpen(value);
-  };
+  const toggleBackdrop = (value: boolean) => {
+    setOpen(value)
+  }
 
-  return (
-    <BackdropContext.Provider value={{ open, toggleBackdrop }}>
-      {children}
-    </BackdropContext.Provider>
-  );
-};
+  return <BackdropContext.Provider value={{ open, toggleBackdrop }}>{children}</BackdropContext.Provider>
+}

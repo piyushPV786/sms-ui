@@ -9,6 +9,7 @@ const OrderSummeryCard = (props: any) => {
   const methods = useForm()
   const { register, watch } = methods
   const data = watch('feeModeCode')
+
   useEffect(() => {
     updateFeeMode(data)
   }, [data])
@@ -68,7 +69,8 @@ const OrderSummeryCard = (props: any) => {
                 <Grid item md={12} xs={12}>
                   {!applicationFeesStatus.includes(masterData?.applicationData?.status) && (
                     <Grid item md={12} xs={12}>
-                      {!applicationFeesStatus.includes(masterData?.applicationData?.status) && masterData?.applicationData?.eligibility &&
+                      {!applicationFeesStatus.includes(masterData?.applicationData?.status) &&
+                        masterData?.applicationData?.eligibility &&
                         !masterData?.applicationData?.eligibility[0]?.accessProgram && (
                           <Grid>
                             <Typography variant='h6' color={'secondary'}>
@@ -76,7 +78,11 @@ const OrderSummeryCard = (props: any) => {
                             </Typography>
                             <Grid item display='flex'>
                               {studyModes?.fees
-                                ?.sort((a: { feeMode: string }, b: { feeMode: string }) => {
+                                ?.filter(
+                                  (item: { feeMode: feeMode }) =>
+                                    item?.feeMode !== feeMode.APPLICATION && item?.feeMode !== feeMode.TOTAL
+                                )
+                                .sort((a: { feeMode: string }, b: { feeMode: string }) => {
                                   const aStartsWithA = a.feeMode.startsWith('A')
                                   const bStartsWithA = b.feeMode.startsWith('A')
 
