@@ -1,10 +1,10 @@
 import { AxiosInstance } from 'axios'
 
-import { DOCUMENT_BACKEND_API, apiEndPoints } from '../Config'
+import { baseApiURL, apiEndPoints } from '../Config'
 
 export default class Document {
   apiServer: AxiosInstance
-  baseUrl = DOCUMENT_BACKEND_API
+  baseUrl = `${baseApiURL}/`
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }

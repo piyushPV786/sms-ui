@@ -1,10 +1,10 @@
 import axios, { AxiosInstance } from 'axios'
-import { FinanceBaseApiUrl, apiEndPoints } from '../Config'
+import { baseApiURL, apiEndPoints } from '../Config'
 import nProgress from 'nprogress'
 
 export default class Finance {
   apiServer: AxiosInstance
-  baseUrl = FinanceBaseApiUrl
+  baseUrl = `${baseApiURL}/finance/`
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }

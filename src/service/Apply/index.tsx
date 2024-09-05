@@ -1,11 +1,11 @@
 import { AxiosInstance } from 'axios'
-import { APPLY_BACKEND_API, apiEndPoints } from '../Config'
+import { baseApiURL, apiEndPoints } from '../Config'
 import nProgress from 'nprogress'
 import { ISumbitPayload } from 'src/context/common'
 
 export default class Apply {
   apiServer: AxiosInstance
-  baseUrl = APPLY_BACKEND_API
+  baseUrl = `${baseApiURL}/apply/`
 
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer

@@ -1,10 +1,10 @@
 import { AxiosInstance } from 'axios'
 import nProgress from 'nprogress'
-import { ENROLMENT_BACKEND_API, apiEndPoints } from '../Config'
+import { baseApiURL, apiEndPoints } from '../Config'
 
 export default class Enrolment {
   apiServer: AxiosInstance
-  baseUrl = ENROLMENT_BACKEND_API
+  baseUrl = `${baseApiURL}/enrolment/`
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }

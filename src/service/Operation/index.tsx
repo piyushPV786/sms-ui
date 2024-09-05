@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios'
 import nProgress from 'nprogress'
-import { OperationBaseApiUrl, apiEndPoints } from '../Config'
+import { baseApiURL, apiEndPoints } from '../Config'
 
 interface IPayloadProps {
   studentCode: number | string | undefined
@@ -10,7 +10,7 @@ interface IPayloadProps {
 }
 export default class Operation {
   apiServer: AxiosInstance
-  baseUrl = OperationBaseApiUrl
+  baseUrl = `${baseApiURL}/operation/`
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }

@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import { CommonBaseApiUrl, apiEndPoints } from '../Config'
+import { baseApiURL, apiEndPoints } from '../Config'
 import nProgress from 'nprogress'
 import { status } from 'src/context/common'
 
@@ -18,7 +18,7 @@ interface statusPayloadType {
 }
 export default class Common {
   apiServer: AxiosInstance
-  baseUrl = CommonBaseApiUrl
+  baseUrl = `${baseApiURL}/`
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }

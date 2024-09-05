@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import { BaseStudentApi, apiEndPoints } from './Config'
+import { baseApiURL, apiEndPoints } from './Config'
 import FeePayment from './FeePayment'
 import Academic from './Academic'
 import Student from './Student'
@@ -27,7 +27,7 @@ export const EnrolmentService = new Enrolment(appAPIServer)
 export const DocumentServices = new Document(appAPIServer)
 export const UserService = new User(appAPIServer)
 
-const refreshTokenUrl = `${BaseStudentApi + apiEndPoints.refreshToken}`
+const refreshTokenUrl = `${baseApiURL + '/' + apiEndPoints.refreshToken}`
 
 appAPIServer.interceptors.request.use(
   config => {

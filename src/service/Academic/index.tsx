@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios'
-import { NEXT_PUBLIC_ACADEMIC_BACKEND_API, apiEndPoints } from '../Config'
+import { baseApiURL, apiEndPoints } from '../Config'
 import nProgress from 'nprogress'
 
 interface IDataParams {
@@ -14,7 +14,7 @@ export interface IModuleListProps {
 
 export default class Academic {
   apiServer: AxiosInstance
-  baseUrl = NEXT_PUBLIC_ACADEMIC_BACKEND_API
+  baseUrl = `${baseApiURL}/academics/`
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }

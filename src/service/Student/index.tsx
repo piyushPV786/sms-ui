@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios'
-import { BaseStudentApi, apiEndPoints } from '../Config'
+import { baseApiURL, apiEndPoints } from '../Config'
 import nProgress from 'nprogress'
 
 export interface IPasswordUpdateRequest {
@@ -57,7 +57,7 @@ export interface electiveParam {
 
 export default class Student {
   apiServer: AxiosInstance
-  baseUrl = BaseStudentApi
+  baseUrl = `${baseApiURL}/student/`
   constructor(apiServer: AxiosInstance) {
     this.apiServer = apiServer
   }
@@ -352,7 +352,7 @@ export default class Student {
 
   async downloadTranscript(studentCode: number | string) {
     nProgress.start()
-    const endUrlName = this.baseUrl + apiEndPoints.downloadTranscript
+    const endUrlName = `${this.baseUrl}academics/` + apiEndPoints.downloadTranscript
     try {
       const response = await this.apiServer.get(`${endUrlName}/${studentCode}`, {
         responseType: 'blob'
@@ -428,7 +428,7 @@ export default class Student {
 
   async getStudentAcademicDetails(studentCode: string) {
     nProgress.start()
-    const endUrlName = `${this.baseUrl + apiEndPoints.academics}${studentCode}`
+    const endUrlName = `${this.baseUrl + 'academics/' + apiEndPoints.academics}${studentCode}`
     try {
       const response = await this.apiServer.get(endUrlName)
       nProgress.done()
@@ -443,7 +443,7 @@ export default class Student {
 
   async enrollElective(electiveParam: electiveParam) {
     nProgress.start()
-    const endUrlName = `${this.baseUrl + apiEndPoints.enrollElective}`
+    const endUrlName = `${this.baseUrl + 'academics/' + apiEndPoints.enrollElective}`
     try {
       const response = await this.apiServer.post(endUrlName, electiveParam)
 

@@ -29,6 +29,7 @@ import { DDMMYYYDateFormat, getFileUrl, getFileUrlToShow, minTwoDigits, serialNu
 import { IDocumentType, IUploadDocumentParam } from 'src/context/types'
 import { CircularProgress } from '@mui/material'
 import { StyledLink } from 'src/styles/styled'
+import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 
 interface IIndex {
   api: {
@@ -54,9 +55,9 @@ const DocumentList = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [viewFileLoader, setViewFileLoader] = useState<{ [key: string]: boolean }>()
   const [documentType, setDocumentType] = useState<ICommonData[]>([])
+  const { studentDetails }: any = DashboardCustomHooks()
 
   const auth = useAuth()
-
   const getUserDocumentList = async () => {
     setLoading(true)
     const params = {
@@ -73,14 +74,14 @@ const DocumentList = () => {
     }
     setLoading(false)
   }
-
   const uploadFile = async (payload: IUploadDocumentParam): Promise<any | undefined> => {
     const newPayload = {
       fileName: payload.file.name,
       fileType: payload.file.type.split('/').pop(),
       studentCode: auth?.user?.studentCode,
       documentTypeCode: payload.fileType,
-      status: 'ADMISSION-APPROVED'
+      status: 'ADMISSION-APPROVED',
+      applicationCode: studentDetails?.application[0]?.applicationCode
     }
 
     const myArray: any = []
