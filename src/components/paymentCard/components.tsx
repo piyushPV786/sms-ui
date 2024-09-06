@@ -19,6 +19,7 @@ export const FinalFees = (props: any) => {
     handleSubmit,
     setValue,
     register,
+    // eslint-disable-next-line no-empty-pattern
     formState: {}
   } = methods
 
@@ -149,6 +150,7 @@ export const FinalFees = (props: any) => {
   )
 }
 
+// eslint-disable-next-line no-empty-pattern
 const PaymentCard = styled(Card)(({}: { theme: Theme }) => ({
   background: '#f2f2f2 !important',
   borderRadius: '20px 20px',
@@ -157,6 +159,7 @@ const PaymentCard = styled(Card)(({}: { theme: Theme }) => ({
   marginBottom: '20px'
 }))
 
+// eslint-disable-next-line no-empty-pattern
 export const StyledLink = styled('a')(({}) => ({
   fontSize: '14px',
   color: '#008554',

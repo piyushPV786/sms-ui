@@ -1,5 +1,5 @@
 // ** React Imports
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -22,8 +22,9 @@ import CalendarWrapper from 'src/@core/styles/libs/fullcalendar'
 import 'react-datepicker/dist/react-datepicker.css'
 import Calendar from 'src/components/calender/Calendar'
 import SidebarLeft from 'src/components/calender/SidebarLeft'
-import DashboardCustomHooks from 'src/components/dashboard/CustomHooks'
 import { Backdrop, CircularProgress } from '@mui/material'
+import { StudentService } from 'src/service'
+import { useAuth } from 'src/hooks/useAuth'
 
 // import AddEventSidebar from 'src/components/calender/AddEventSidebar'
 
@@ -42,15 +43,24 @@ const AppCalendar = () => {
     date: string
   }
 
+  const auth = useAuth()
+
   // ** States
 
   const [calendarApi, setCalendarApi] = useState<null | any>(['Assessments'])
   const [leftSidebarOpen, setLeftSidebarOpen] = useState<boolean>(false)
-  const [event, setEvent] = useState<EventType[] | undefined>()
-  const [filterEvent, setFilterEvent] = useState<EventType[] | undefined>()
-
+  const [event, setEvent] = useState<EventType[] | undefined>([])
+  const [filterEvent, setFilterEvent] = useState<EventType[] | undefined>([])
   const [addEventSidebarOpen, setAddEventSidebarOpen] = useState<boolean>(false)
-  const { scheduler, isLoading } = DashboardCustomHooks()
+  const [scheduler, setScheduler] = useState<any>(null)
+  const [isLoading, setLoading] = useState<boolean>(false)
+  const currentDate: moment.Moment = moment()
+  const startDate: moment.Moment = currentDate.clone().startOf('year')
+  const endDate: moment.Moment = currentDate.clone().endOf('year')
+  const startDateString: string = startDate.format('DD-MM-YYYY')
+  const endDateString: string = endDate.format('DD-MM-YYYY')
+
+  // const { scheduler, isLoading } = DashboardCustomHooks()
   const defaultSelectedCalendars = ['Assessments', 'Announcements', 'Exams']
   const [selectedCalendars, setSelectedCalendars] = useState<string[]>(defaultSelectedCalendars)
 
@@ -130,7 +140,22 @@ const AppCalendar = () => {
     setFilterEvent(eventArr)
   }
 
-  useEffect(() => {
+  const getStudentScheduler = async () => {
+    setLoading(true)
+    if (auth?.user?.studentCode) {
+      const startDate = startDateString
+      const endDate = endDateString
+      const schedulerResponse = await StudentService?.studentScheduler(auth?.user?.studentCode, startDate, endDate)
+      setScheduler(schedulerResponse?.data?.data)
+    }
+    setLoading(false)
+  }
+
+  useMemo(() => {
+    getStudentScheduler()
+  }, [])
+
+  useMemo(() => {
     parse()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduler])

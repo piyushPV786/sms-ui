@@ -9,6 +9,7 @@ import { BackdropProvider } from 'src/components/DocumentUploadPage/context/Back
 const UploadDocuments = () => {
   const router: any = useRouter()
   const { applicationCode } = router.query as any
+  // eslint-disable-next-line no-unsafe-optional-chaining
   const { studentCode }: any = useAuth()?.user
 
   const { data: studentDetail } = useQuery({

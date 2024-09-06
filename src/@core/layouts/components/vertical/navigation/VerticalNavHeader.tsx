@@ -113,7 +113,7 @@ const VerticalNavHeader = (props: Props) => {
       {userVerticalNavMenuBranding ? (
         userVerticalNavMenuBranding(props)
       ) : (
-        <Link href='/' passHref>
+        <Link href='/' passHref legacyBehavior >
           <StyledLink>
             <Box sx={{ mb: 6, mt: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img

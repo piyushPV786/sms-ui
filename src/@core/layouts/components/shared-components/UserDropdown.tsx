@@ -116,7 +116,7 @@ const UserDropdown = (props: Props) => {
         <Box sx={{ pt: 2, pb: 3, px: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}></Box>
         </Box>
-        <Link href={`/myProfile`} passHref>
+        <Link href={`/myProfile`} passHref legacyBehavior >
           <MenuItem sx={{ py: 2 }}>
             <AccountCircleOutlined sx={{ mr: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
             My Profile

@@ -1,4 +1,3 @@
-// ** MUI Imports
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import { styled } from '@mui/material/styles'
@@ -10,7 +9,7 @@ import Link from 'next/link'
 // ** Custom Components Imports
 import CustomAvatar from 'src/@core/components/mui/avatar'
 import { getUserInfo } from 'src/utils'
-import { HelpBox, InformationOutline, React } from 'mdi-material-ui'
+import { HelpBox, InformationOutline } from 'mdi-material-ui'
 import ExamTicket from '../dialog/ExamTicket'
 import SelectElective from '../dialog/SelectElective'
 
@@ -33,18 +32,13 @@ const Avatar = styled(CustomAvatar)<AvatarProps>(({ theme }) => ({
 
 const StudentDetails = ({
   profileImage,
-  rollover,
   studentDetails,
   module,
   electiveModule,
   getElectiveModuleList,
-  applicationCode,
-  paymentStatus
+
 }: any) => {
-  // Doing comment but it will be open soon with enhancement
-  // const selfRollover = true
-  // adding console because this will show lint error and the value need in future
-  console.log('rollover', rollover, applicationCode, paymentStatus)
+
 
   const electiveRollover = true
 
@@ -66,40 +60,43 @@ const StudentDetails = ({
                 Welcome back to Regenesys, Lets Start Learning
               </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
-                <Link href={`/myProfile`} passHref>
-                  <a href='' style={{ color: '#fff' }}>
-                    My Profile
-                  </a>
-                </Link>
-
+              <Link href="/myProfile" passHref legacyBehavior >
+      <Box
+      href=''
+        component="a"
+        sx={{ color: '#fff', textDecoration: 'none' }}
+      >
+        My Profile
+      </Box>
+    </Link>
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
                 <Link href={`/calendar`} passHref>
-                  <a href='' style={{ color: '#fff' }}>
+                  <Typography component='a' sx={{ color: '#fff', textDecoration: 'none' }}>
                     Calendar
-                  </a>
+                  </Typography>
                 </Link>
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
                 <Link href={`/my-document`} passHref>
-                  <a href='' style={{ color: '#fff' }}>
+                  <Typography component='a' sx={{ color: '#fff', textDecoration: 'none' }}>
                     My Documents
-                  </a>
+                  </Typography>
                 </Link>
                 <Divider orientation='vertical' sx={{ bgcolor: '#fff' }} flexItem />
 
                 <Link href={`/query`} passHref>
-                  <a href='' style={{ color: '#fff' }}>
+                  <Typography component='a' sx={{ color: '#fff', textDecoration: 'none' }}>
                     <Box display='flex'>
                       <Box display='contents'>
                         <HelpBox />
                       </Box>
                       <Box pl={1}>My Queries</Box>
                     </Box>
-                  </a>
+                  </Typography>
                 </Link>
 
-                <a href='#' style={{ color: '#fff' }}>
+                <Typography component='a' sx={{ color: '#fff', textDecoration: 'none' }}>
                   <ExamTicket module={module} />
-                </a>
+                </Typography>
               </Box>
             </Box>
           </Grid>
@@ -132,33 +129,6 @@ const StudentDetails = ({
               </Card>
             </Grid>
           )}
-
-          {/*
-          Doing comment but it will be open soon with enhancement
-          {selfRollover && rollover && rollover?.rollOverModules?.length > 0 ? (
-            <Grid item pt={2} pr={2}>
-              <Card sx={{ background: theme => `${theme.spacing(6, 7.5)} !important` }}>
-                <Grid
-                  width='100%'
-                  sx={{
-                    display: 'flex',
-                    borderRadius: '2px',
-                    padding: 3,
-                    background: `#026b45 !important`,
-                    color: theme => theme.palette.primary.main
-                  }}
-                >
-                  <Grid p={2} display='flex' alignItems='center'>
-                    <InformationOutline color='warning' fontSize='large' />
-                  </Grid>
-
-                  <Grid p={2}>
-                    <RollOver rollover={rollover} applicationCode={applicationCode} paymentStatus={paymentStatus} />
-                  </Grid>
-                </Grid>
-              </Card>
-            </Grid>
-          ) : null} */}
         </Grid>
       </CardContent>
     </Card>

@@ -46,6 +46,7 @@ appAPIServer.interceptors.request.use(
 
 const refreshTokenFunction = async () => {
   const response = await StudentService?.getRefreshToken()
+  // eslint-disable-next-line no-unsafe-optional-chaining
   const { data } = response?.data
 
   if (data?.access_token && data?.refresh_token) {

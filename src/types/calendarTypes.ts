@@ -40,17 +40,6 @@ export type AddEventType = {
   }
 }
 
-export type EventStateType = {
-  url: string
-  title: string
-  allDay: boolean
-  guests: string[]
-  description: string
-  endDate: Date | string
-  startDate: Date | string
-  calendar: CalendarFiltersType | string
-}
-
 export type CalendarStoreType = {
   events: EventType[] | undefined
   selectedEvent: null | EventType

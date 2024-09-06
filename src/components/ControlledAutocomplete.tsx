@@ -49,7 +49,7 @@ const ControlledAutocomplete = <T extends {}>({
           isOptionEqualToValue={option => (option as any)?.code === field?.value}
           renderOption={renderOption}
           value={options?.find(item => (item as any)?.code === field?.value)}
-          onChange={(e, data) => field.onChange(!!data ? (data as any)?.code : '')}
+          onChange={(e, data) => field.onChange(data ? (data as any)?.code : '')}
           getOptionLabel={option => (option as any)?.name}
           groupBy={groupBy}
           PopperComponent={PopperComponent}

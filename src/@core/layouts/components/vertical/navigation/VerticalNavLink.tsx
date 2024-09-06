@@ -129,6 +129,7 @@ const VerticalNavLink = ({
       return false
     }
   }
+ 
 
   return (
     <CanViewNavLink navLink={item}>
@@ -142,7 +143,7 @@ const VerticalNavLink = ({
           px: parent ? '0 !important' : `${theme.spacing(navCollapsed && !navHover ? 2 : 3)} !important`
         }}
       >
-        <Link passHref href={item.path === undefined ? '/' : `${item.path}`}>
+        <Link passHref href={`${item.path}` || '/'} legacyBehavior >
           <MenuNavLink
             component={'a'}
             className={isNavLinkActive() ? 'active' : ''}

@@ -1,52 +1,41 @@
-// ** React Imports
-import { useState, useEffect, forwardRef, useCallback, Fragment } from 'react'
-
-// ** MUI Imports
-import Box from '@mui/material/Box'
-import Drawer from '@mui/material/Drawer'
-import Select from '@mui/material/Select'
-import Switch from '@mui/material/Switch'
-import Button from '@mui/material/Button'
-import MenuItem from '@mui/material/MenuItem'
-import TextField from '@mui/material/TextField'
-import InputLabel from '@mui/material/InputLabel'
-import Typography from '@mui/material/Typography'
-import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
-import FormControlLabel from '@mui/material/FormControlLabel'
-
-// ** Third Party Imports
-import DatePicker from 'react-datepicker'
-import { useForm, Controller } from 'react-hook-form'
-
-// ** Icons Imports
-import Close from 'mdi-material-ui/Close'
-import DeleteOutline from 'mdi-material-ui/DeleteOutline'
-
-// ** Styled Components
-import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-
-// ** Types
-import { EventDateType, AddEventSidebarType } from 'src/types/calendarTypes'
+import { useState, useEffect, forwardRef, useCallback, Fragment } from 'react';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import Select from '@mui/material/Select';
+import Switch from '@mui/material/Switch';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import Typography from '@mui/material/Typography';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import DatePicker from 'react-datepicker';
+import { useForm, Controller } from 'react-hook-form';
+import Close from 'mdi-material-ui/Close';
+import DeleteOutline from 'mdi-material-ui/DeleteOutline';
+import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker';
+import {  AddEventSidebarType } from 'src/types/calendarTypes';
 
 interface PickerProps {
-  label?: string
-  error?: boolean
-  registername?: string
+  label?: string;
+  error?: boolean;
+  registername?: string;
 }
 
 interface DefaultStateType {
-  url: string
-  title: string
-  allDay: boolean
-  calendar: string
-  description: string
-  endDate: Date | string
-  startDate: Date | string
-  guests: string[] | string | undefined
+  url: string;
+  title: string;
+  allDay: boolean;
+  calendar: string;
+  description: string;
+  endDate: Date | undefined;
+  startDate: Date | undefined;
+  guests: string[] | string | undefined;
 }
 
-const capitalize = (string: string) => string && string[0].toUpperCase() + string.slice(1)
+const capitalize = (string: string) => string && string[0].toUpperCase() + string.slice(1);
 
 const defaultState: DefaultStateType = {
   url: '',
@@ -60,7 +49,6 @@ const defaultState: DefaultStateType = {
 }
 
 const AddEventSidebar = (props: AddEventSidebarType) => {
-  // ** Props
   const {
     store,
     addEvent,
@@ -71,10 +59,9 @@ const AddEventSidebar = (props: AddEventSidebarType) => {
     handleSelectEvent,
     addEventSidebarOpen,
     handleAddEventSidebarToggle
-  } = props
+  } = props;
 
-  // ** States
-  const [values, setValues] = useState<DefaultStateType>(defaultState)
+  const [values, setValues] = useState<DefaultStateType>(defaultState);
 
   const {
     control,
@@ -82,57 +69,74 @@ const AddEventSidebar = (props: AddEventSidebarType) => {
     clearErrors,
     handleSubmit,
     formState: { errors }
-  } = useForm({ defaultValues: { title: '' } })
+  } = useForm({ defaultValues: { title: '' } });
 
   const handleSidebarClose = async () => {
-    setValues(defaultState)
-    clearErrors()
-    handleSelectEvent(null)
-    handleAddEventSidebarToggle()
-  }
+    setValues(defaultState);
+    clearErrors();
+    handleSelectEvent(null);
+    handleAddEventSidebarToggle();
+  };
 
   const onSubmit = (data: { title: string }) => {
-    const modifiedEvent = {
+    const modifiedEvent: {
+      url: string;
+      display: string;
+      title: string;
+      end: Date | string; // Adjust type here
+      allDay: boolean;
+      start: Date | string; // Adjust type here
+      extendedProps: {
+        calendar: string;
+        guests: string | string[] | undefined;
+        description: string | undefined;
+      };
+    } = {
       url: values.url,
       display: 'block',
       title: data.title,
-      end: values.endDate,
+      end: values.endDate ? values.endDate.toISOString() : '', // Convert Date to ISO string or set a default value
       allDay: values.allDay,
-      start: values.startDate,
+      start: values.startDate ? values.startDate.toISOString() : '', // Convert Date to ISO string or set a default value
       extendedProps: {
         calendar: capitalize(values.calendar),
         guests: values.guests && values.guests.length ? values.guests : undefined,
         description: values.description.length ? values.description : undefined
       }
-    }
+    };
+  
     if (store.selectedEvent === null || (store.selectedEvent !== null && !store.selectedEvent.title.length)) {
-      addEvent(modifiedEvent)
+      addEvent(modifiedEvent);
     } else {
-      updateEvent({ id: store.selectedEvent.id, ...modifiedEvent })
+      updateEvent({ id: store.selectedEvent.id, ...modifiedEvent });
     }
-    calendarApi.refetchEvents()
-    handleSidebarClose()
-  }
+    calendarApi.refetchEvents();
+    handleSidebarClose();
+  };
+  
 
   const handleDeleteEvent = () => {
     if (store.selectedEvent) {
-      deleteEvent(store.selectedEvent.id)
+      deleteEvent(store.selectedEvent.id);
     }
+    handleSidebarClose();
+  };
 
-    // calendarApi.getEventById(store.selectedEvent.id).remove()
-    handleSidebarClose()
-  }
-
-  const handleStartDate = (date: Date) => {
-    if (date > values.endDate) {
-      setValues({ ...values, startDate: new Date(date), endDate: new Date(date) })
+  const handleStartDate = (date: Date | null) => {
+    if (date) {
+      const newDate = new Date(date);
+      if (newDate > (values.endDate || new Date())) {
+        setValues({ ...values, startDate: newDate, endDate: newDate });
+      } else {
+        setValues({ ...values, startDate: newDate });
+      }
     }
-  }
+  };
 
   const resetToStoredValues = useCallback(() => {
     if (store.selectedEvent !== null) {
-      const event = store.selectedEvent
-      setValue('title', event.title || '')
+      const event = store.selectedEvent;
+      setValue('title', event.title || '');
       setValues({
         url: event.url || '',
         title: event.title || '',
@@ -140,24 +144,24 @@ const AddEventSidebar = (props: AddEventSidebarType) => {
         guests: event.extendedProps.guests || [],
         description: event.extendedProps.description || '',
         calendar: event.extendedProps.calendar || 'Business',
-        endDate: event.end !== null ? event.end : event.start,
-        startDate: event.start !== null ? event.start : new Date()
-      })
+        endDate: event.end !== null ? new Date(event.end) : undefined,
+        startDate: event.start !== null ? new Date(event.start) : undefined
+      });
     }
-  }, [setValue, store.selectedEvent])
+  }, [setValue, store.selectedEvent]);
 
   const resetToEmptyValues = useCallback(() => {
-    setValue('title', '')
-    setValues(defaultState)
-  }, [setValue])
+    setValue('title', '');
+    setValues(defaultState);
+  }, [setValue]);
 
   useEffect(() => {
     if (store.selectedEvent !== null) {
-      resetToStoredValues()
+      resetToStoredValues();
     } else {
-      resetToEmptyValues()
+      resetToEmptyValues();
     }
-  }, [addEventSidebarOpen, resetToStoredValues, resetToEmptyValues, store.selectedEvent])
+  }, [addEventSidebarOpen, resetToStoredValues, resetToEmptyValues, store.selectedEvent]);
 
   const PickersComponent = forwardRef(({ ...props }: PickerProps, ref) => {
     return (
@@ -169,8 +173,8 @@ const AddEventSidebar = (props: AddEventSidebarType) => {
         sx={{ width: '100%' }}
         error={props.error}
       />
-    )
-  })
+    );
+  });
 
   const RenderSidebarFooter = () => {
     if (store.selectedEvent === null || (store.selectedEvent !== null && !store.selectedEvent.title.length)) {
@@ -183,7 +187,7 @@ const AddEventSidebar = (props: AddEventSidebarType) => {
             Reset
           </Button>
         </Fragment>
-      )
+      );
     } else {
       return (
         <Fragment>
@@ -194,9 +198,9 @@ const AddEventSidebar = (props: AddEventSidebarType) => {
             Reset
           </Button>
         </Fragment>
-      )
+      );
     }
-  }
+  };
 
   return (
     <Drawer
@@ -266,13 +270,19 @@ const AddEventSidebar = (props: AddEventSidebarType) => {
               <DatePicker
                 selectsStart
                 id='event-start-date'
-                endDate={values.endDate as EventDateType}
-                selected={values.startDate as EventDateType}
-                startDate={values.startDate as EventDateType}
+                endDate={values.endDate}
+                selected={values.startDate}
+                startDate={values.startDate}
                 showTimeSelect={!values.allDay}
                 dateFormat={!values.allDay ? 'yyyy-MM-dd hh:mm' : 'yyyy-MM-dd'}
                 customInput={<PickersComponent label='Start Date' registername='startDate' />}
-                onChange={(date: Date) => setValues({ ...values, startDate: new Date(date) })}
+                onChange={(date: Date | null) => {
+                  if (date) {
+                    setValues({ ...values, startDate: new Date(date) });
+                  } else {
+                    setValues({ ...values, startDate: undefined });
+                  }
+                }}
                 onSelect={handleStartDate}
               />
             </Box>
@@ -280,14 +290,20 @@ const AddEventSidebar = (props: AddEventSidebarType) => {
               <DatePicker
                 selectsEnd
                 id='event-end-date'
-                endDate={values.endDate as EventDateType}
-                selected={values.endDate as EventDateType}
-                minDate={values.startDate as EventDateType}
-                startDate={values.startDate as EventDateType}
+                endDate={values.endDate}
+                selected={values.endDate}
+                minDate={values.startDate}
+                startDate={values.startDate}
                 showTimeSelect={!values.allDay}
                 dateFormat={!values.allDay ? 'yyyy-MM-dd hh:mm' : 'yyyy-MM-dd'}
                 customInput={<PickersComponent label='End Date' registername='endDate' />}
-                onChange={(date: Date) => setValues({ ...values, endDate: new Date(date) })}
+                onChange={(date: Date | null) => {
+                  if (date) {
+                    setValues({ ...values, endDate: new Date(date) });
+                  } else {
+                    setValues({ ...values, endDate: undefined });
+                  }
+                }}
               />
             </Box>
             <FormControl sx={{ mb: 6 }}>
@@ -341,7 +357,7 @@ const AddEventSidebar = (props: AddEventSidebarType) => {
         </DatePickerWrapper>
       </Box>
     </Drawer>
-  )
-}
+  );
+};
 
-export default AddEventSidebar
+export default AddEventSidebar;
