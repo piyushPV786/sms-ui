@@ -22,7 +22,7 @@ const SponsorInformation = ({ userProfileDetails, state }: IProps) => {
                 <Grid container xs={12} >
                   <ProfileInfo label='Sponsor Type' info={`${userProfileDetails?.sponsorModeCode}`} />
                   <ProfileInfo label='Relationship Type' info={`${userProfileDetails?.relationshipCode}`} />
-                  <ProfileInfo label='Guardian Name' info={`${userProfileDetails?.name}`} />
+                  <ProfileInfo label='Guardian Name' info={`${userProfileDetails?.firstName} ${userProfileDetails?.lastName}`} />
                   <ProfileInfo label='Guardian Email Address' info={`${userProfileDetails?.email}`} />
                   <ProfileInfo label='Guardian Phone Number' info={`${userProfileDetails?.mobileNumber}`} />
                 </Grid>
