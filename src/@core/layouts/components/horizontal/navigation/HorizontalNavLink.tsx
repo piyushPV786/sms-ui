@@ -87,7 +87,7 @@ const HorizontalNavLink = (props: Props) => {
   return (
     <CanViewNavLink navLink={item}>
       <Wrapper {...(!hasParent ? { component: 'div', sx: { py: settings.skin === 'bordered' ? 2.625 : 2.75 } } : {})}>
-        <Link href={`${item.path}`} passHref>
+        <Link href={`${item.path}`} passHref legacyBehavior>
           <ListItem
             component={'a'}
             disabled={item.disabled}

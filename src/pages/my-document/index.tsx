@@ -197,6 +197,7 @@ const DocumentList = () => {
       field: 'actions',
       headerName: 'Actions',
       renderCell: (row: CellType) => {
+        // eslint-disable-next-line no-unsafe-optional-chaining
         const { code, name } = row?.row
 
         return (

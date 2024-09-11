@@ -134,6 +134,7 @@ export default class Common {
     } finally {
       nProgress.done()
 
+      // eslint-disable-next-line no-unsafe-finally
       return response
     }
   }

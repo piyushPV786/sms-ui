@@ -51,6 +51,7 @@ const SelectElective = ({ module, studentDetails, electiveModule, getElectiveMod
   const [dialogShow, setDialogShow] = useState<boolean>(false)
   const [electiveCount, setElectiveCount] = useState<number>(0)
   const auth = useAuth()
+  // eslint-disable-next-line no-unsafe-optional-chaining
   const { studentCode }: any = useAuth()?.user
   const { data: studentDetail } = useQuery({
     queryKey: ['studentData', studentCode],

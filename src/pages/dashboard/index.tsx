@@ -10,6 +10,7 @@ import StudentDetails from 'src/components/dashboard/StudentDetails'
 import { ISchedule, IScheduleData } from 'src/context/common'
 import { useAuth } from 'src/hooks/useAuth'
 
+// eslint-disable-next-line no-empty-pattern
 const StudentDashboard = ({}) => {
   const {
     scheduler,

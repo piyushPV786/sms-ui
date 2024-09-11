@@ -83,11 +83,12 @@ export const formatExpirationDate = (value: string) => {
     .replace(/^(0?[1-9]|1[0-2])([0-9]{2})$/g, '$1/$2') // 141 > 01/41
     .replace(/^([0]+)\/|[0]+$/g, '0') // 0/ > 0 and 00 > 0
     // To allow only digits and `/`
-    .replace(/[^\d\/]|^[\/]*$/g, '')
+    .replace(/[^\d/]|^[/]*$/g, '') // Removed unnecessary escapes
     .replace(/\/\//g, '/') // Prevent entering more than 1 `/`
 
   return finalValue
 }
+
 
 // Format CVC in any credit card
 export const formatCVC = (value: string, cardNumber: string, Payment: PaymentTypes) => {

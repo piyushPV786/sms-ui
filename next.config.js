@@ -1,24 +1,13 @@
-const path = require('path')
-
 /** @type {import('next').NextConfig} */
-
-// Remove this if you're not using Fullcalendar features
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const withTM = require('next-transpile-modules')([
-  '@fullcalendar/common',
-  '@fullcalendar/react',
-  '@fullcalendar/daygrid',
-  '@fullcalendar/list',
-  '@fullcalendar/timegrid'
-])
-
-module.exports = withTM({
+const nextConfig = {
   basePath: '/student',
-  trailingSlash: false,
-  reactStrictMode: false,
+  trailingSlash: true,
+  reactStrictMode: true,
+  productionBrowserSourceMaps: false,
+  swcMinify: true,
   experimental: {
     esmExternals: false,
-    jsconfigPaths: true // enables it for both jsconfig.json and tsconfig.json
+    typedRoutes: true
   },
   async redirects() {
     return [
@@ -31,11 +20,19 @@ module.exports = withTM({
     ]
   },
   webpack: config => {
+    config.cache = {
+      type: 'filesystem'
+    }
     config.resolve.alias = {
-      ...config.resolve.alias,
-      apexcharts: path.resolve(__dirname, './node_modules/apexcharts-clevision')
+      ...config.resolve.alias
+    }
+
+    if (config.watchOptions) {
+      config.watchOptions.ignored = config.watchOptions.ignored || []
     }
 
     return config
   }
-})
+}
+
+module.exports = nextConfig

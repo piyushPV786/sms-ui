@@ -1,5 +1,6 @@
 import React from 'react'
 import { Grid, Typography, Button } from '@mui/material'
+import Link from 'next/link'
 
 interface ResponseItem {
   url: string
@@ -39,11 +40,11 @@ const CommonDueAmount = ({ fintechData }: IdueProps) => {
         <Grid item borderRight={theme => `1px solid ${theme.palette.grey[500]}`} />
         <Grid item display='flex' alignItems='center'>
           {fintechData?.length > 0 && fintechData[0]?.dcbalance > 0 ? (
-            <a href={paymentLink} target='_blank' rel='noopener noreferrer' style={{ textDecoration: 'none' }}>
+            <Link href={`${paymentLink}`} target='_blank' rel='noopener noreferrer' style={{ textDecoration: 'none' }} passHref>
               <Button sx={{ mr: 2 }} variant='outlined' size='small' color='warning'>
                 Pay
               </Button>
-            </a>
+            </Link>
           ) : (
             <Button
               sx={{ mr: 2, bgcolor: '#e0e0e3', borderRadius: 0.5 }}

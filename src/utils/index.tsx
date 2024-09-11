@@ -46,67 +46,12 @@ export const getUserInfo = () => {
   return userData
 }
 
-export const getQualificationName = (qualificationList: Array<commonListTypes>, qualificationCode: string) => {
-  let result = ''
-
-  if (qualificationList?.length) {
-    const response = qualificationList.find((item: commonListTypes) => item.code === qualificationCode)
-    result = response?.name || ''
-  }
-
-  return result
-}
-
-export const getProgramName = (programList: Array<commonListTypes>, programCode: string) => {
-  let result = ''
-
-  if (programList?.length) {
-    const response = programList.find((item: commonListTypes) => item.code === programCode)
-    result = response?.name || ''
-  }
-
-  return result
-}
-export const getAddressName = (programList: Array<commonListTypes>, programCode: string) => {
-  let result = ''
-
-  if (programList?.length) {
-    const response = programList.find((item: commonListTypes) => item.code === programCode)
-    result = response?.name || ''
-  }
-
-  return result
-}
-export const getStudyType = (studyTypeList: Array<commonListTypes>, studyTypeCode: string) => {
-  let result = ''
-  if (studyTypeList?.length > 0) {
-    const response = studyTypeList.find(item => item.code === studyTypeCode)
-    result = response?.name || ''
-  }
-
-  return result
-}
-
-export const getSelectedDocument = (selectedDocument: Array<string | number>, documentList: Array<documentTypes>) => {
-  const result: Array<documentTypes> = []
-  selectedDocument?.forEach((documentId: string | number) => {
-    documentList.find((item: documentTypes) => {
-      if (item?.id === documentId) {
-        result.push(item)
-      }
-    })
-  })
-
-  return result
-}
-
 export const getStatusColor = (status: any) => {
   const applicationStatus = status
 
   switch (applicationStatus) {
     case APPLICATION_STATUS.SAVED_AS_DRAFT:
       return DARK_GRAY
-      break
     case APPLICATION_STATUS.BURSARY_DOCUMENTS_ACCEPTED:
     case APPLICATION_STATUS.RESUBMIT_BURSARY_DOCUMENTS:
     case APPLICATION_STATUS.BURSARY_CONFIRMATION_PENDING:
@@ -115,25 +60,21 @@ export const getStatusColor = (status: any) => {
     case APPLICATION_STATUS.RMAT_PENDING:
     case APPLICATION_STATUS.PROGRAM_FEES_PENDING:
     case APPLICATION_STATUS.UPLOAD_BURSARY_DOCUMENTS:
+    // eslint-disable-next-line no-duplicate-case, no-fallthrough
     case APPLICATION_STATUS.RESUBMIT_BURSARY_DOCUMENTS:
       return ORANGE
-      break
     case APPLICATION_STATUS.ENROLLED_TO_APPLICATION:
     case APPLICATION_STATUS.APPLICATION_FEE_ACCEPTED:
     case APPLICATION_STATUS.ENROLMENT_ACCEPTED:
     case APPLICATION_STATUS.APPLICATION_DOCUMENTS_ACCEPTED:
       return BLUE
-      break
     case APPLICATION_STATUS.APPLICATION_DOCUMENTS_UPLOADED:
     case APPLICATION_STATUS.BURSARY_DOCUMENTS_UPLOADED:
       return GREEN
-      break
     case APPLICATION_STATUS.REQUEST_FOR_BURSARY:
       return NAVY_BLUE
-      break
     default:
       return DARK_GRAY
-      break
   }
 }
 export const GetPaymentImage = (type: string) => {
@@ -359,12 +300,6 @@ export const getUkheshePayload = (
   }
 }
 
-export const getExtension = (name: string) => {
-  const fileExtension = name?.split('/')?.pop()
-
-  return fileExtension
-}
-
 export const DDMMYYDateFormate = (date: Date) => {
   const newDate: Date = new Date(date)
   const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
@@ -394,13 +329,7 @@ export const getFileUrlToShow = async (
     viewProofDetails(response?.data?.data, setViewFileLoader, fileCode)
   }
 }
-export const getCourseName = (list: Array<commonListTypes>, code: string) => {
-  if (list?.length > 0) {
-    return list?.find(item => item.code === code)?.name ?? code
-  }
 
-  return code
-}
 export const getSessionStorageData = (key: string) => {
   const localData = window.sessionStorage.getItem(key)
   if (localData) {
@@ -413,13 +342,6 @@ export const getSessionStorageData = (key: string) => {
 export const checkProd = () => {
   if (process.env.NEXT_PUBLIC_USER_REDIRECT_URL === GoogleAnalyticsScript.prodURL) return true
   else return false
-}
-
-export const downloadDocument = (url: any, fileName: string) => {
-  const alink = document.createElement('a')
-  alink.href = url
-  alink.download = fileName
-  alink.click()
 }
 
 //common functions//

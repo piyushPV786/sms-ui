@@ -53,6 +53,7 @@ const PreviewCard = () => {
   const [state, setSponsorState] = useState<any>()
   const [empState, setEmpState] = useState<any>()
   const [openProfileModal, setProfileModal] = useState<boolean>(false)
+  // eslint-disable-next-line no-empty-pattern
   const AvatarWithStyles = styled(CustomAvatar)<AvatarProps>(({}) => ({
     width: 150,
     height: 150

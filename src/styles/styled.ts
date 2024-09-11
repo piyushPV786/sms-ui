@@ -1,4 +1,4 @@
-import { Card, styled, Typography, Theme, DialogContent } from '@mui/material'
+import { Card, styled, Typography, Theme } from '@mui/material'
 import MuiCardContent from '@mui/material/CardContent'
 import { getStatusColor } from 'src/utils'
 
@@ -14,6 +14,7 @@ export const StyledTypography = styled(Typography)(({ theme }: { theme: Theme })
   color: theme.palette.primary.main
 }))
 
+// eslint-disable-next-line no-empty-pattern
 export const TableCard = styled(Card)(({}: { theme: Theme }) => ({
   '& .digital-assessment': {
     backgroundColor: 'rgb(106, 118, 124, 0.1)',
@@ -45,13 +46,7 @@ export const CardContent = styled(MuiCardContent)(() => ({
   backgroundColor: 'rgb(80,149,142)'
 }))
 
-export const PopupDialog = styled(DialogContent)(() => ({
-  position: 'relative',
-  pb: 6,
-  px: { xs: 5 },
-  pt: { xs: 8 }
-}))
-
+// eslint-disable-next-line no-empty-pattern
 export const StyledLink = styled('a')(({}) => ({
   fontSize: '14px',
   color: '#008554',
