@@ -16,9 +16,9 @@ const SponsorInformation = ({ userProfileDetails, state }: IProps) => {
     <Box>
       {!!userProfileDetails && userProfileDetails?.sponsor?.length && (
         <>
-          {userProfileDetails?.sponsor?.map((userProfileDetails: any) => {
+          {userProfileDetails?.sponsor?.map((userProfileDetails: any, index: number) => {
             return (
-              <Card sx={{ padding: 3, marginTop: 3 }}>
+              <Card sx={{ padding: 3, marginTop: 3 }} key={index}>
                 <Grid container xs={12} >
                   <ProfileInfo label='Sponsor Type' info={`${userProfileDetails?.sponsorModeCode}`} />
                   <ProfileInfo label='Relationship Type' info={`${userProfileDetails?.relationshipCode}`} />
