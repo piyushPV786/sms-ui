@@ -14,6 +14,8 @@ import Autocomplete from 'src/layouts/components/Autocomplete'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
 import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
 import WhiteButton from 'src/components/Button'
+import Link from 'next/link'
+
 
 interface Props {
   hidden: boolean
@@ -39,11 +41,11 @@ const AppBarContent = (props: Props) => {
         <Autocomplete hidden={hidden} settings={settings} />
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
-        <a target='_blank' href={regenesysPortalUrl} rel='noopener noreferrer'>
-          <WhiteButton variant='contained' size='small' sx={{ borderRadius: 10 }}>
-            Start Learning
-          </WhiteButton>
-        </a>
+      <Link href={`${regenesysPortalUrl}`} passHref legacyBehavior>
+  <WhiteButton variant='contained' size='small' sx={{ borderRadius: 10 }}>
+    Start Learning
+  </WhiteButton>
+</Link>
 
         {/* <ModeToggler settings={settings} saveSettings={saveSettings} /> */}
 

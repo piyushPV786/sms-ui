@@ -2,6 +2,7 @@ import Close from 'mdi-material-ui/Close'
 import { Button, Dialog, DialogContent, Grid, IconButton } from '@mui/material'
 import Image from 'next/image'
 import { GreenFormHeading } from 'src/styles/styled'
+import Link from 'next/link'
 
 const RmatCredentialDialog = ({ rmatOpen, setRmatOpen }: any) => {
   return (
@@ -59,7 +60,7 @@ const RmatCredentialDialog = ({ rmatOpen, setRmatOpen }: any) => {
             <Grid container md={12} sm={12} className='mt-3' rowSpacing={2} columnSpacing={10}>
               <Grid item md={4} sm={4} className='text-center'>
                 <div> RMAT Test URL</div>
-                <a href={rmatOpen?.rmaturl}>{rmatOpen?.rmaturl}</a>
+                <Link href={`${rmatOpen?.rmaturl}`}>{rmatOpen?.rmaturl}</Link>
               </Grid>
               <Grid item md={4} sm={4} className='text-center'>
                 <div>Username</div>

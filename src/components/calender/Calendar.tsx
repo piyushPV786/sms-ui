@@ -1,5 +1,5 @@
 // ** React Import
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 // ** Full Calendar & it's Plugins
 import FullCalendar from '@fullcalendar/react'
@@ -13,6 +13,7 @@ import Menu from 'mdi-material-ui/Menu'
 
 // ** Types
 import { CalendarType } from 'src/types/calendarTypes'
+import FallbackSpinner from 'src/@core/components/spinner'
 
 const blankEvent = {
   title: '',
@@ -42,8 +43,8 @@ const Calendar = (props: CalendarType) => {
     handleAddEventSidebarToggle
   } = props
 
-  // ** Refs
-  const calendarRef = useRef()
+  const calendarRef = useRef(null)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     if (calendarApi === null) {
@@ -53,14 +54,22 @@ const Calendar = (props: CalendarType) => {
     }
   }, [calendarApi, setCalendarApi])
 
+  useEffect(() => {
+    // Set loading to false once events are ready
+    if (store?.events) {
+      setIsLoading(false)
+    }
+  }, [store?.events])
+
   if (store) {
     // ** calendarOptions(Props)
     const calendarOptions = {
-      events: store?.events?.length ? store.events : [],
+      // initialEvents: store.events, // Use initialEvents for initial rendering
+      events: store?.events || [],
       plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
       initialView: 'dayGridMonth',
       headerToolbar: {
-        start: 'sidebarToggle, prev, next, title',
+        start: 'sidebarToggle, prev, next, title,customButton',
         end: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
       },
 
@@ -116,10 +125,12 @@ const Calendar = (props: CalendarType) => {
       },
 
       customButtons: {
-        sidebarToggle: {
-          text: <Menu />,
-          click() {
-            handleLeftSidebarToggle()
+        customButtons: {
+          sidebarToggle: {
+            text: <Menu />,
+            click() {
+              handleLeftSidebarToggle()
+            }
           }
         }
       },
@@ -158,8 +169,12 @@ const Calendar = (props: CalendarType) => {
       direction
     }
 
+    if (isLoading) {
+      return <FallbackSpinner /> // Show a loading spinner or message
+    }
+
     // @ts-ignore
-    return <FullCalendar {...calendarOptions} />
+    return store?.events ? <FullCalendar {...calendarOptions} /> : null
   } else {
     return null
   }

@@ -157,36 +157,6 @@ export default class Student {
     nProgress.done()
   }
 
-  async payOnlinefee(
-    payload: {
-      amount: string | null
-      email: string | any
-      firstname: any
-      phone: any
-      discountAmount: string
-      discountCode: string
-      feeModeCode: string | null
-      productinfo: string
-      studentTypeCode: string
-      currencyCode: string | null
-    },
-    studentCode: string | undefined
-  ) {
-    nProgress.start()
-
-    const endUrlName = `${this.baseUrl + apiEndPoints.offlinePayment}/${studentCode}/payu-details`
-    try {
-      const response = await this.apiServer.post(endUrlName, { ...payload })
-      nProgress.done()
-
-      return response
-    } catch (err: any) {
-      console.log('Error ResetPasswordLink ========>', err?.message)
-      nProgress.done()
-    }
-    nProgress.done()
-  }
-
   async UserProfile(code: string) {
     nProgress.start()
     const endUrlName = `${this.baseUrl + apiEndPoints.userProfile}${code}`

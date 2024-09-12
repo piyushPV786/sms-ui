@@ -12,6 +12,7 @@ export const UseUploadDocumentHook = (masterData: any) => {
   }
 
   const uploadDocument = async (file: any, element: any) => {
+    // eslint-disable-next-line no-unsafe-optional-chaining
     const { applicationCode } = masterData?.userDetails
     const studentCode = masterData?.userDetails?.lead?.studentCode
 

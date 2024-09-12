@@ -78,6 +78,7 @@ export default class Apply {
       const result = response?.data?.data ? response?.data?.data : {}
 
       return result
+    // eslint-disable-next-line no-empty
     } catch (e) {}
   }
 
@@ -94,6 +95,7 @@ export default class Apply {
       const response = await this.apiServer.post(url, payload)
 
       return response?.data?.data ? response?.data?.data : null
+    // eslint-disable-next-line no-empty
     } catch (e) {}
   }
 

@@ -54,13 +54,15 @@ const AttendanceList = () => {
   const handleChangePage = (event: unknown, newPage: number) => {
     setPageNumber(newPage)
   }
-  const payload = {
-    studentCode: studentDetails?.studentCode,
-    pageNumber: pageNumber + 1,
-    pageSize: pageSize,
-    query: value
-  }
-  const getDetails = async () => {
+  
+
+  const getDetails = async (studentCode:string) => {
+    const payload = {
+      studentCode: studentCode,
+      pageNumber: pageNumber + 1,
+      pageSize: pageSize,
+      query: value
+    }
     try {
       setLoading(true)
       const response = await OperationService?.getAttendanceDetails(payload)
@@ -76,12 +78,10 @@ const AttendanceList = () => {
   }
 
   useEffect(() => {
-    getDetails()
-  }, [studentDetails?.studentCode])
+    studentDetails?.studentCode&& getDetails(studentDetails?.studentCode)
+  }, [studentDetails?.studentCode,value])
 
-  useEffect(() => {
-    getDetails()
-  }, [value])
+
 
   return (
     <>

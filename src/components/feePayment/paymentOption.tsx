@@ -104,6 +104,7 @@ const PaymentOption = ({ amount, feeModeCode, currencyCode, applicationCode, qua
     if (selectedPayment === 'payFast') {
       return 'payFastForm'
     }
+    // eslint-disable-next-line no-empty
     if (selectedPayment === 'ukheshe') {
     }
   }

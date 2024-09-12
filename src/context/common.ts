@@ -164,9 +164,7 @@ export interface IScheduleData {
   courseSchedule: ISchedule[]
 }
 
-export interface IScheduleCodeType {
-  code: string
-}
+
 export const PaymentTypes = [
   {
     registerName: 'paymentType',
@@ -201,11 +199,7 @@ export enum ErrorMessage {
   zipCodeMaxError = 'ZipCode must only be 10 digits',
   userNameRequired = 'User Name is required'
 }
-export interface IOnSubmit {
-  qualification: string
-  qualificationName: string
-  studyMode: string
-}
+
 export interface ISumbitPayload {
   studentCode: string
   education: {
@@ -241,24 +235,7 @@ export const AttendanceStatusObj: IAttendanceStatusType = {
   Upcoming: 'warning'
 }
 
-export const ClassResponse = {
-  count: 1,
-  data: [
-    {
-      id: 1,
-      Date: '15 feb 2023',
-      Day: 'Monday',
-      from: '10:30',
-      to: '12:30',
-      totalClass: '360',
-      totalAttend: '180',
-      percent: '100%',
-      Facilitator: 'Dr Kumlo',
-      Venue: 'Auckland park',
-      Status: 'Attended'
-    }
-  ]
-}
+
 
 export const documentResponse = {
   count: 1,

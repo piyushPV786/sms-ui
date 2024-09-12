@@ -125,13 +125,16 @@ const VerticalLayout = (props: LayoutProps) => {
               justifyContent: 'flex-end'
             }}
           >
-            <Link href='https://regeniusuat.regenesys.net/login/index.php'>
-              <a target='_blank'>
-                <IconButton sx={{ backgroundColor: theme => theme.palette.primary.main }}>
-                  <img src={`${EnvPaths.Base}/images/ticket.svg`} alt='Raise-Ticket' />
-                </IconButton>
-              </a>
-            </Link>
+              <Link href='https://regeniusuat.regenesys.net/login/index.php' passHref legacyBehavior shallow>
+    <IconButton
+      component='a'
+      target='_blank'
+      rel='noopener noreferrer'
+      sx={{ backgroundColor: theme => theme.palette.primary.main }}
+    >
+      <img src={`${EnvPaths.Base}/images/ticket.svg`} alt='Raise-Ticket' />
+    </IconButton>
+  </Link>
           </Box>
           {/* Footer Component */}
           <Footer {...props} />
